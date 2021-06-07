@@ -15,6 +15,7 @@ namespace WhatBug.Persistence
         {
         }
 
+        public DbSet<Project> Projects { get; set; }
         public DbSet<Issue> Issues { get; set; }
     }
 }

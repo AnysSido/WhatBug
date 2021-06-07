@@ -11,6 +11,7 @@ namespace WhatBug.Application.Common.Interfaces
 {
     public interface IWhatBugDbContext
     {
+        DbSet<Project> Projects { get; set; }
         DbSet<Issue> Issues { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
