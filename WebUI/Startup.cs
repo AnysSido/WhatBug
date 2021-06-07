@@ -23,9 +23,9 @@ namespace WhatBug.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WhatBugDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("WhatBugDatabase")));
+
+            services.AddPersistence(Configuration);
+
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<WhatBugDbContext>();
