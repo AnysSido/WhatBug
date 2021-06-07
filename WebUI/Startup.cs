@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WhatBug.Application;
 using WhatBug.Persistence;
 
 namespace WhatBug.WebUI
@@ -25,6 +26,7 @@ namespace WhatBug.WebUI
         {
 
             services.AddPersistence(Configuration);
+            services.AddApplication();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
