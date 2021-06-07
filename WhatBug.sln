@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{BED89DD3-1201-4F5B-9BA2-13637C733899}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BED89DD3-1201-4F5B-9BA2-13637C733899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED89DD3-1201-4F5B-9BA2-13637C733899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED89DD3-1201-4F5B-9BA2-13637C733899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED89DD3-1201-4F5B-9BA2-13637C733899}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
