@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebUI.Data
+namespace WhatBug.Persistence
 {
     public class ApplicationDbContext : IdentityDbContext
     {
