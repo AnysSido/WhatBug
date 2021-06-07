@@ -6,9 +6,9 @@ using System.Text;
 
 namespace WhatBug.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class WhatBugDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public WhatBugDbContext(DbContextOptions<WhatBugDbContext> options)
             : base(options)
         {
         }
