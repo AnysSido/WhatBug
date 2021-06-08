@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{79F47076-4E37-4CF7-84B0-A6C8BE3B71CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{DCBBD57C-0EDD-4D71-BBCC-160B8126D23C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{79F47076-4E37-4CF7-84B0-A6C8BE3B71CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79F47076-4E37-4CF7-84B0-A6C8BE3B71CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79F47076-4E37-4CF7-84B0-A6C8BE3B71CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCBBD57C-0EDD-4D71-BBCC-160B8126D23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCBBD57C-0EDD-4D71-BBCC-160B8126D23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCBBD57C-0EDD-4D71-BBCC-160B8126D23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCBBD57C-0EDD-4D71-BBCC-160B8126D23C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
