@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUIRazor", "WebUIRazor\WebUIRazor.csproj", "{69A9D82A-0A9C-4CC3-BF5C-E6E828E0AE0E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{BED89DD3-1201-4F5B-9BA2-13637C733899}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{69A9D82A-0A9C-4CC3-BF5C-E6E828E0AE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69A9D82A-0A9C-4CC3-BF5C-E6E828E0AE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69A9D82A-0A9C-4CC3-BF5C-E6E828E0AE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69A9D82A-0A9C-4CC3-BF5C-E6E828E0AE0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
