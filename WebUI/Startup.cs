@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebUI.Data;
 using WhatBug.Application;
 using WhatBug.Persistence;
 
@@ -35,7 +34,7 @@ namespace WebUI
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<WhatBugDbContext>();
             services.AddControllersWithViews();
         }
 
