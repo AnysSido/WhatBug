@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Projects;
 
 namespace WhatBug.Application.Services.Interfaces
 {
-    interface IProjectService
+    public interface IProjectService
     {
+        public bool CreateProject(CreateProjectDTO createProjectDTO);
     }
 }
