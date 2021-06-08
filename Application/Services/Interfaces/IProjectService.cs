@@ -9,6 +9,6 @@ namespace WhatBug.Application.Services.Interfaces
 {
     public interface IProjectService
     {
-        public bool CreateProject(CreateProjectDTO createProjectDTO);
+        public Task<bool> CreateProject(CreateProjectDTO createProjectDTO);
     }
 }
