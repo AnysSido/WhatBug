@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,11 @@ namespace WhatBug.Application.Services
 
             _context.Projects.Add(project);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<List<Project>> ListProjects()
+        {
+            return await _context.Projects.ToListAsync();
         }
     }
 }
