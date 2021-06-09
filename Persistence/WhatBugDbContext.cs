@@ -9,7 +9,7 @@ using WhatBug.Domain.Entities;
 
 namespace WhatBug.Persistence
 {
-    public class WhatBugDbContext : IdentityDbContext, IWhatBugDbContext
+    public class WhatBugDbContext : DbContext, IWhatBugDbContext
     {
         public WhatBugDbContext(DbContextOptions<WhatBugDbContext> options)
             : base(options)
