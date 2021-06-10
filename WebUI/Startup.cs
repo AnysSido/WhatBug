@@ -12,9 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application;
+using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure;
 using WhatBug.Infrastructure.Identity;
 using WhatBug.Persistence;
+using WhatBug.WebUI.Services;
 
 namespace WebUI
 {
@@ -33,6 +35,8 @@ namespace WebUI
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication();
+
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
