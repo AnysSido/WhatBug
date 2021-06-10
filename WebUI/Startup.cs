@@ -36,8 +36,7 @@ namespace WebUI
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
+            
             services.AddControllersWithViews();
         }
 
