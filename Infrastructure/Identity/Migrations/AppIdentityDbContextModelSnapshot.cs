@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WhatBug.Persistence;
+using WhatBug.Infrastructure.Identity;
 
-namespace WhatBug.Persistence.Migrations
+namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(WhatBugDbContext))]
-    [Migration("20210607131602_AddIssuesTable")]
-    partial class AddIssuesTable
+    [DbContext(typeof(AppIdentityDbContext))]
+    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,24 +217,6 @@ namespace WhatBug.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.Issue", b =>
-                {
-                    b.Property<int>("IssueId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IssueId");
-
-                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

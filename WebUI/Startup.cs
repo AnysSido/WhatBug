@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application;
+using WhatBug.Infrastructure;
+using WhatBug.Infrastructure.Identity;
 using WhatBug.Persistence;
 
 namespace WebUI
@@ -28,13 +30,14 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<WhatBugDbContext>();
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
             services.AddControllersWithViews();
         }
 
