@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure.Identity;
 
 namespace WhatBug.Infrastructure
@@ -20,6 +22,8 @@ namespace WhatBug.Infrastructure
 
             services.AddDefaultIdentity<PrincipalUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+            services.AddScoped<IPrincipalUserManager, PrincipalUserManager>();
 
             return services;
         }
