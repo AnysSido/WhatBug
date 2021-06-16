@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WhatBug.Application.Permissions;
 using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Common.Interfaces
@@ -13,6 +14,8 @@ namespace WhatBug.Application.Common.Interfaces
     {
         DbSet<Project> Projects { get; set; }
         DbSet<Issue> Issues { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<UserClaim> UserClaims { get; set; }        
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

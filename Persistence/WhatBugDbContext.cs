@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.Permissions;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
 
@@ -28,6 +29,8 @@ namespace WhatBug.Persistence
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Issue> Issues { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -36,11 +39,11 @@ namespace WhatBug.Persistence
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.CreatedBy = _currentUserService.PrincipalId;
                         entry.Entity.Created = DateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        entry.Entity.LastModifiedBy = _currentUserService.PrincipalId;
                         entry.Entity.LastModified = DateTime.Now;
                         break;
                 }
