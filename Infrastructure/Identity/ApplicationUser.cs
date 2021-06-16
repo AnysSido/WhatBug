@@ -9,5 +9,6 @@ namespace WhatBug.Infrastructure.Identity
 {
     public class ApplicationUser : IdentityUser<int>
     {
+        public int UserId { get; set; }
     }
 }
