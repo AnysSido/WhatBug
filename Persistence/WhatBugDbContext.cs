@@ -39,11 +39,11 @@ namespace WhatBug.Persistence
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.PrincipalId;
+                        entry.Entity.CreatedBy = _currentUserService.Username;
                         entry.Entity.Created = DateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.PrincipalId;
+                        entry.Entity.LastModifiedBy = _currentUserService.Username;
                         entry.Entity.LastModified = DateTime.Now;
                         break;
                 }
