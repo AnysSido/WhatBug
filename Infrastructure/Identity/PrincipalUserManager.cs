@@ -9,7 +9,7 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Models;
 using WhatBug.Infrastructure.Identity;
 
-namespace Infrastructure.Identity
+namespace WhatBug.Infrastructure.Identity
 {
     class PrincipalUserManager : IPrincipalUserManager
     {
