@@ -17,7 +17,7 @@ namespace WhatBug.Infrastructure
             services.AddDefaultIdentity<PrincipalUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
 
-            services.AddScoped<IPrincipalUserManager, PrincipalUserManager>();
+            services.AddScoped<IAuthenticationProvider, IdentityAuthenticationProvider>();
             services.AddScoped<IUserClaimsPrincipalFactory<PrincipalUser>, PrincipalUserClaimsPrincipalFactory>();
 
             return services;

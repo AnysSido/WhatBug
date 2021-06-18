@@ -14,18 +14,18 @@ namespace WhatBug.Application.Services
     class UserService : IUserService
     {
         private readonly IWhatBugDbContext _context;
-        private readonly IPrincipalUserManager _principalUserManager;
+        private readonly IAuthenticationProvider _authenticationProvider;
 
-        public UserService(IWhatBugDbContext context, IPrincipalUserManager principalUserManager)
+        public UserService(IWhatBugDbContext context, IAuthenticationProvider authenticationProvider)
         {
             _context = context;
-            _principalUserManager = principalUserManager;
+            _authenticationProvider = authenticationProvider;
         }
 
         public async Task<Result> CreateUserAsync(string username, string password)
         {
             // First create the principal user as this is where any credential validation is performed.
-            var result = await _principalUserManager.CreateUserAsync(username, password);
+            var result = await _authenticationProvider.CreateUserAsync(username, password);
             if (!result.Succeeded)
                 return result;
 
@@ -34,12 +34,12 @@ namespace WhatBug.Application.Services
             await _context.Users.AddAsync(user);
             if (await _context.SaveChangesAsync() == 0)
             {
-                await _principalUserManager.DeleteUserAsync(username);
+                await _authenticationProvider.DeleteUserAsync(username);
                 return Result.Failure(new string[] { $"An unknown error occured while creating user {username}." });
             }
 
             // Map the new application userId to the newly created principal user.
-            result = await _principalUserManager.SetUserId(username, user.UserId);
+            result = await _authenticationProvider.SetUserId(username, user.UserId);
 
             return result;
         }

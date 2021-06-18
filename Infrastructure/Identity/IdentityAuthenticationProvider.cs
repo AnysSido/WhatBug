@@ -11,11 +11,11 @@ using WhatBug.Infrastructure.Identity;
 
 namespace WhatBug.Infrastructure.Identity
 {
-    class PrincipalUserManager : IPrincipalUserManager
+    class IdentityAuthenticationProvider : IAuthenticationProvider
     {
         private readonly UserManager<PrincipalUser> _userManager;
 
-        public PrincipalUserManager(UserManager<PrincipalUser> userManager)
+        public IdentityAuthenticationProvider(UserManager<PrincipalUser> userManager)
         {
             _userManager = userManager;
         }
