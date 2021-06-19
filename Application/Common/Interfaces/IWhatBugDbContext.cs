@@ -15,7 +15,7 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<Project> Projects { get; set; }
         DbSet<Issue> Issues { get; set; }
         DbSet<User> Users { get; set; }
-        //DbSet<UserClaim> UserClaims { get; set; }        
+        DbSet<UserClaim> UserClaims { get; set; }        
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
