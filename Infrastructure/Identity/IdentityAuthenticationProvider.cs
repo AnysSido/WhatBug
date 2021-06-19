@@ -29,7 +29,6 @@ namespace WhatBug.Infrastructure.Identity
             };
 
             var result = await _userManager.CreateAsync(user, password);
-
             return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
         }
 
@@ -40,7 +39,6 @@ namespace WhatBug.Infrastructure.Identity
                 return Result.Failure(new string[] { $"User {username} not found." });
 
             var result = await _userManager.DeleteAsync(user);
-
             return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
         }
 
@@ -52,7 +50,6 @@ namespace WhatBug.Infrastructure.Identity
 
             user.UserId = userId;
             var result = await _userManager.UpdateAsync(user);
-
             return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
         }
     }
