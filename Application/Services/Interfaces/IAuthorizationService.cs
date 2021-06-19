@@ -4,9 +4,9 @@ using WhatBug.Application.Permissions;
 
 namespace WhatBug.Application.Services.Interfaces
 {
-    interface IAuthorizationService
+    public interface IAuthorizationService
     {
-        Task<Result> AddClaimAsync(int userId, ClaimType claimType, string claimValue);
+        Task<Result> AddClaimAsync(int userId, ClaimType claimType, string claimValue = null);
         Task<bool> UserHasClaimAsync(int userId, ClaimType claimType, string claimValue = null);
     }
 }
