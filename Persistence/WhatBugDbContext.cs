@@ -9,6 +9,7 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Permissions;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Entities.Permissions;
 
 namespace WhatBug.Persistence
 {
@@ -31,6 +32,11 @@ namespace WhatBug.Persistence
         public DbSet<Issue> Issues { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserClaim> UserClaims { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<ProjectUserRole> ProjectUserRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<Scheme> Schemes { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -50,6 +56,16 @@ namespace WhatBug.Persistence
             }
 
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Role>()
+                .Property(r => r.Type)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (RoleType)Enum.Parse(typeof(RoleType), v));
         }
     }
 }
