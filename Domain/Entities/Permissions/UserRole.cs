@@ -1,6 +1,6 @@
 ﻿namespace WhatBug.Domain.Entities.Permissions
 {
-    public class ProjectUserRole
+    public class UserRole
     {
         public int Id { get; set; }
         public int ProjectId { get; set; }

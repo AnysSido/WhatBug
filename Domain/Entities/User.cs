@@ -11,6 +11,6 @@ namespace WhatBug.Domain.Entities
     public class User
     {
         public int UserId { get; set; }
-        public List<ProjectUserRole> ProjectUserRoles = new List<ProjectUserRole>();
+        public List<UserRole> UserRoles = new List<UserRole>();
     }
 }
