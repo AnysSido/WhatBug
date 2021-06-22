@@ -66,6 +66,16 @@ namespace WhatBug.Persistence
                 .HasConversion(
                     v => v.ToString(),
                     v => (RoleType)Enum.Parse(typeof(RoleType), v));
+
+            modelBuilder
+                .Entity<Permission>()
+                .Property(p => p.Type)
+                .HasConversion(
+                    r => r.ToString(),
+                    r => (PermissionType)Enum.Parse(typeof(PermissionType), r));
+
+            modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.GlobalPermissions.Values);
+            modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.GlobalRoles.Values);
         }
     }
 }
