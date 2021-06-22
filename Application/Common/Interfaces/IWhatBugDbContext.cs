@@ -18,9 +18,9 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<User> Users { get; set; }
         DbSet<UserClaim> UserClaims { get; set; }       
         DbSet<Permission> Permissions { get; set; }
-        DbSet<UserRole> UserRoles { get; set; }
+        DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         DbSet<Role> Roles { get; set; }
-        DbSet<RolePermission> RolePermissions { get; set; }
+        DbSet<SchemeRolePermission> SchemeRolePermissions { get; set; }
         DbSet<Scheme> Schemes { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

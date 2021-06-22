@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
@@ -33,9 +30,9 @@ namespace WhatBug.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<UserClaim> UserClaims { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<SchemeRolePermission> SchemeRolePermissions { get; set; }
         public DbSet<Scheme> Schemes { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -61,21 +58,14 @@ namespace WhatBug.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<Role>()
-                .Property(r => r.Type)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (RoleType)Enum.Parse(typeof(RoleType), v));
-
-            modelBuilder
                 .Entity<Permission>()
                 .Property(p => p.Type)
                 .HasConversion(
                     r => r.ToString(),
                     r => (PermissionType)Enum.Parse(typeof(PermissionType), r));
 
-            modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.GlobalPermissions.Values);
-            modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.GlobalRoles.Values);
+            modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.GetAll());
+            modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.GetAll());
         }
     }
 }

@@ -6,19 +6,21 @@ namespace WhatBug.Domain.Data
 {
     public class Roles
     {
-        public enum Global { Administrator, User }
+        private static readonly List<Role> _roles = new List<Role>();
 
-        public static readonly ReadOnlyDictionary<Global, Role> GlobalRoles;
+        public static readonly Role Administrator = CreateRole(1, "Administrator");
+        public static readonly Role User = CreateRole(2, "User");
 
-        static Roles()
+        private static Role CreateRole(int id, string name)
         {
-            var globalRoles = new Dictionary<Global, Role>()
-            {
-                { Global.Administrator, new Role(1, "Administrator", RoleType.Global) },
-                { Global.User, new Role(2, "User", RoleType.Global) }
-            };
+            var role = new Role { Id = id, Name = name };
+            _roles.Add(role);
+            return role;
+        }
 
-            GlobalRoles = new ReadOnlyDictionary<Global, Role>(globalRoles);
+        public static ReadOnlyCollection<Role> GetAll()
+        {
+            return _roles.AsReadOnly();
         }
     }
 }

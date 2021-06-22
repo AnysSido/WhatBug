@@ -10,6 +10,6 @@ namespace WhatBug.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public List<UserRole> UserRoles = new List<UserRole>();
+        public List<ProjectRoleUser> RoleUsers = new List<ProjectRoleUser>();
     }
 }
