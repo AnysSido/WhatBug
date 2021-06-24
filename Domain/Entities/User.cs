@@ -11,6 +11,7 @@ namespace WhatBug.Domain.Entities
     public class User
     {
         public int UserId { get; set; }
+        public List<Permission> GlobalPermissions = new List<Permission>();
         public List<ProjectRoleUser> ProjectRoles = new List<ProjectRoleUser>();
     }
 }

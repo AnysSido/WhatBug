@@ -30,7 +30,8 @@ namespace WhatBug.Persistence
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<SchemeRolePermission> SchemeRolePermissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<Scheme> Schemes { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
