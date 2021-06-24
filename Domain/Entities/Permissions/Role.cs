@@ -6,5 +6,7 @@ namespace WhatBug.Domain.Entities.Permissions
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public List<RolePermission> RolePermissions { get; set; }
     }
 }

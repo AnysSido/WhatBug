@@ -10,8 +10,9 @@ namespace WhatBug.Domain.Entities
 {
     public class User
     {
-        public int UserId { get; set; }
-        public List<Permission> GlobalPermissions = new List<Permission>();
-        public List<ProjectRoleUser> ProjectRoles = new List<ProjectRoleUser>();
+        public int Id { get; set; }
+
+        public List<UserPermission> UserPermissions { get; set; }
+        public List<ProjectRoleUser> ProjectRoles { get; set; }
     }
 }
