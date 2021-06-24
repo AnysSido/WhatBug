@@ -39,7 +39,7 @@ namespace WhatBug.Application.Services
             }
 
             // Map the new application userId to the newly created principal user.
-            result = await _authenticationProvider.SetUserId(username, user.UserId);
+            result = await _authenticationProvider.SetUserId(username, user.Id);
 
             return result;
         }

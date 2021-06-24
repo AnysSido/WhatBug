@@ -1,14 +1,18 @@
-﻿namespace WhatBug.Domain.Entities.Permissions
+﻿using WhatBug.Domain.Common;
+
+namespace WhatBug.Domain.Entities.Permissions
 {
-    public class RolePermission
+    public class RolePermission : AuditableEntity
     {
         public int Id { get; set; }
-        public int RoleId { get; set; }
-        public int PermissionId { get; set; }
-        public int SchemeId { get; set; }
 
-        public Role Role { get; set; }
+        public int PermissionId { get; set; }
         public Permission Permission { get; set; }
+
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
+
+        public int SchemeId { get; set; }        
         public Scheme Scheme { get; set; }
     }
 }
