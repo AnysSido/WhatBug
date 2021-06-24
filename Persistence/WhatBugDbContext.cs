@@ -3,7 +3,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
-using WhatBug.Application.Permissions;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.Permissions;
@@ -28,7 +27,6 @@ namespace WhatBug.Persistence
         public DbSet<Project> Projects { get; set; }
         public DbSet<Issue> Issues { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserClaim> UserClaims { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Role> Roles { get; set; }

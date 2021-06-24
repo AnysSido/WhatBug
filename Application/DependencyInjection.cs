@@ -17,7 +17,6 @@ namespace WhatBug.Application
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IIssueService, IssueService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthorizationService, AuthorizationService>();
 
             return services;
         }

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WhatBug.Application.Permissions;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.Permissions;
 
@@ -15,8 +14,7 @@ namespace WhatBug.Application.Common.Interfaces
     {
         DbSet<Project> Projects { get; set; }
         DbSet<Issue> Issues { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<UserClaim> UserClaims { get; set; }       
+        DbSet<User> Users { get; set; }    
         DbSet<Permission> Permissions { get; set; }
         DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         DbSet<Role> Roles { get; set; }
