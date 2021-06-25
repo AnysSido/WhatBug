@@ -12,14 +12,15 @@ namespace WhatBug.Application.Common.Interfaces
 {
     public interface IWhatBugDbContext
     {
-        DbSet<Project> Projects { get; set; }
-        DbSet<Issue> Issues { get; set; }
-        DbSet<User> Users { get; set; }    
-        DbSet<Permission> Permissions { get; set; }
-        DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
-        DbSet<Role> Roles { get; set; }
-        DbSet<RolePermission> RolePermissions { get; set; }
-        DbSet<Scheme> Schemes { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Issue> Issues { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Scheme> Schemes { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
