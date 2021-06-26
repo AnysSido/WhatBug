@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Entities.Permissions;
 
 namespace WhatBug.Persistence
 {
@@ -28,6 +26,13 @@ namespace WhatBug.Persistence
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Issue> Issues { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Scheme> Schemes { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -47,6 +52,30 @@ namespace WhatBug.Persistence
             }
 
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Permission>()
+                .Property(p => p.Type)
+                .HasConversion(
+                    r => r.ToString(),
+                    r => (PermissionType)Enum.Parse(typeof(PermissionType), r));
+
+            //modelBuilder
+            //    .Entity<RolePermission>()
+            //    .HasOne(p => p.Permission)
+            //    .WithMany();
+
+            //modelBuilder
+            //    .Entity<UserPermission>()
+            //    .HasOne(p => p.Permission)
+            //    .WithMany();
+                
+
+            modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.GetAll());
+            modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.GetAll());
         }
     }
 }

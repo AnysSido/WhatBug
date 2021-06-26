@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WhatBug.Infrastructure.Identity
 {
-    public class AppIdentityDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public class AppIdentityDbContext : IdentityDbContext<PrincipalUser, IdentityRole<int>, int>
     {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options)

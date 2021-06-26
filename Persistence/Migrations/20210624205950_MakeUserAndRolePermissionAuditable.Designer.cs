@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210624205950_MakeUserAndRolePermissionAuditable")]
+    partial class MakeUserAndRolePermissionAuditable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,22 +64,15 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Create new projects.",
+                            Description = "Permission to create new projects.",
                             Name = "Create Project",
                             Type = "Global"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Delete existing projects.",
+                            Description = "Permission to delete existing projects.",
                             Name = "Delete Project",
-                            Type = "Global"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Edit global permissions assigned to users.",
-                            Name = "Edit User Permissions",
                             Type = "Global"
                         });
                 });

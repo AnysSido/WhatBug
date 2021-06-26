@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace WhatBug.Infrastructure.Identity
 {
-    public class ApplicationUser : IdentityUser<int>
+    public class PrincipalUser : IdentityUser<int>
     {
+        public int UserId { get; set; }
     }
 }

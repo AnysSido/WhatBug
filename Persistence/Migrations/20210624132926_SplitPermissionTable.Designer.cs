@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210624132926_SplitPermissionTable")]
+    partial class SplitPermissionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,22 +64,15 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Create new projects.",
+                            Description = "Permission to create new projects.",
                             Name = "Create Project",
                             Type = "Global"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Delete existing projects.",
+                            Description = "Permission to delete existing projects.",
                             Name = "Delete Project",
-                            Type = "Global"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Edit global permissions assigned to users.",
-                            Name = "Edit User Permissions",
                             Type = "Global"
                         });
                 });
@@ -143,18 +138,6 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("LastModifiedBy")
-                        .HasColumnType("int");
-
                     b.Property<int>("PermissionId")
                         .HasColumnType("int");
 
@@ -196,18 +179,6 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("LastModifiedBy")
-                        .HasColumnType("int");
 
                     b.Property<int>("PermissionId")
                         .HasColumnType("int");
@@ -256,12 +227,12 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
@@ -281,7 +252,7 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("WhatBug.Domain.Entities.User", "User")
-                        .WithMany("ProjectRoles")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -302,7 +273,7 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("WhatBug.Domain.Entities.Permissions.Role", "Role")
-                        .WithMany("RolePermissions")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -329,7 +300,7 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("WhatBug.Domain.Entities.User", "User")
-                        .WithMany("UserPermissions")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -337,18 +308,6 @@ namespace Persistence.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.Role", b =>
-                {
-                    b.Navigation("RolePermissions");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>
-                {
-                    b.Navigation("ProjectRoles");
-
-                    b.Navigation("UserPermissions");
                 });
 #pragma warning restore 612, 618
         }
