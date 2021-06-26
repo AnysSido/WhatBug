@@ -11,7 +11,7 @@ namespace WhatBug.Application.Services.Interfaces
 {
     public interface IProjectService
     {
-        public Task<Result> CreateProject(CreateProjectDTO createProjectDTO);
+        public Task CreateProject(CreateProjectDTO createProjectDTO);
         Task<List<Project>> ListProjects();
     }
 }
