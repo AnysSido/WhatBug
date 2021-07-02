@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using WebUI.Models;
+using WhatBug.WebUI.ViewModels;
 
 namespace WebUI.Controllers
 {

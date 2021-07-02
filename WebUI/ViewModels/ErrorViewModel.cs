@@ -1,6 +1,6 @@
 using System;
 
-namespace WebUI.Models
+namespace WhatBug.WebUI.ViewModels
 {
     public class ErrorViewModel
     {
