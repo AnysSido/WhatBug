@@ -11,6 +11,7 @@ namespace WhatBug.Domain.Data
         public static readonly Permission CreateProject = CreatePermission(1, "Create Project", "Create new projects.", PermissionType.Global);
         public static readonly Permission DeleteProject = CreatePermission(2, "Delete Project", "Delete existing projects.", PermissionType.Global);
         public static readonly Permission EditUserPermissions = CreatePermission(3, "Edit User Permissions", "Edit global permissions assigned to users.", PermissionType.Global);
+        public static readonly Permission ViewAllProjects = CreatePermission(4, "View All Projects", "View all projects in WhatBug. Users without this permission must be a member of a project to view it.", PermissionType.Global);
 
         private static Permission CreatePermission(int id, string name, string description, PermissionType type)
         {
