@@ -1,0 +1,38 @@
+﻿@model List<WhatBug.Application.DTOs.Users.UserWithPermissionsDTO>
+
+@{
+<!-- Modify Global Permissions Card -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Global User Permissions</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Granted Permissions</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var userPermission in Model)
+                    {
+                    <tr>
+                        <td>@userPermission.User.Username</td>
+                        <td>@userPermission.Permissions.Count</td>
+                        <td>
+                            <a asp-controller="Permissions" asp-action="Edit" asp-route-id="@userPermission.User.Id">
+                                <input type="button" class="btn btn-primary" value="Edit" />
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- End Modify Global Contents Card -->
+}
