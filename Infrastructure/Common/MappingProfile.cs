@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WhatBug.Application.Services;
+using WhatBug.Application.DTOs.Users;
 using WhatBug.Infrastructure.Identity;
 
 namespace WhatBug.Infrastructure.Common
