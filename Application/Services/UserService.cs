@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Models;
+using WhatBug.Application.DTOs.Users;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
 
@@ -14,11 +16,13 @@ namespace WhatBug.Application.Services
     class UserService : IUserService
     {
         private readonly IWhatBugDbContext _context;
+        private readonly IMapper _mapper;
         private readonly IAuthenticationProvider _authenticationProvider;
 
-        public UserService(IWhatBugDbContext context, IAuthenticationProvider authenticationProvider)
+        public UserService(IWhatBugDbContext context, IMapper mapper, IAuthenticationProvider authenticationProvider)
         {
             _context = context;
+            _mapper = mapper;
             _authenticationProvider = authenticationProvider;
         }
 
@@ -40,6 +44,24 @@ namespace WhatBug.Application.Services
 
             // Map the new application userId to the newly created principal user.
             result = await _authenticationProvider.SetUserId(username, user.Id);
+
+            return result;
+        }
+
+        public async Task<List<UserWithPermissionsDTO>> GetAllUsersWithPermissions()
+        {
+            // TODO: Check permission
+
+            // Load users with permissions
+            var users = await _context.Users
+                .Include(u => u.UserPermissions)
+                    .ThenInclude(p => p.Permission)
+                .ToListAsync();
+
+            var result = _mapper.Map<List<UserWithPermissionsDTO>>(users);
+
+            // Populate the DTOs with principle user info
+            await _authenticationProvider.PopulatePrincipleUserInfo(result.Select(r => r.User).ToList());
 
             return result;
         }

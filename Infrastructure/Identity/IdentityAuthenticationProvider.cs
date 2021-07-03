@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Models;
+using WhatBug.Application.DTOs.Users;
+using WhatBug.Application.Services;
 using WhatBug.Infrastructure.Identity;
 
 namespace WhatBug.Infrastructure.Identity
@@ -14,10 +17,12 @@ namespace WhatBug.Infrastructure.Identity
     class IdentityAuthenticationProvider : IAuthenticationProvider
     {
         private readonly UserManager<PrincipalUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public IdentityAuthenticationProvider(UserManager<PrincipalUser> userManager)
+        public IdentityAuthenticationProvider(UserManager<PrincipalUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<Result> CreateUserAsync(string username, string password)
@@ -51,6 +56,27 @@ namespace WhatBug.Infrastructure.Identity
             user.UserId = userId;
             var result = await _userManager.UpdateAsync(user);
             return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
+        }
+
+        // This method could be very inefficient for large userbases.
+        // As this application will not be used for real teams it will be fine.
+        public async Task<List<UserDTO>> PopulatePrincipleUserInfo(List<UserDTO> userDTOs)
+        {
+            var ids = userDTOs.Select(u => u.Id);
+            var principleUsers = await _userManager.Users
+                .Where(u => ids.Contains(u.UserId))
+                .ToListAsync();
+
+            foreach (var principalUser in principleUsers)
+            {
+                var userDTO = userDTOs.Where(u => u.Id == principalUser.UserId).Single();
+                if (userDTO != null)
+                {
+                    _mapper.Map(principalUser, userDTO);
+                }
+            }
+
+            return userDTOs;
         }
     }
 }
