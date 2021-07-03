@@ -20,6 +20,8 @@ namespace WhatBug.Infrastructure
             services.AddScoped<IAuthenticationProvider, IdentityAuthenticationProvider>();
             services.AddScoped<IUserClaimsPrincipalFactory<PrincipalUser>, PrincipalUserClaimsPrincipalFactory>();
 
+            services.AddAutoMapper(typeof(DependencyInjection));
+
             return services;
         }
     }
