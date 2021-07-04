@@ -16,7 +16,10 @@ namespace WhatBug.Domain.Entities
         public int ProjectId { get; set; }
         public Project Project { get; set; }
 
-        public int? AssignedToId { get; set; }
-        public User AssignedTo { get; set; }
+        public int ReporterId { get; set; }
+        public User Reporter { get; set; }
+
+        public int? AssigneeId { get; set; }
+        public User Assignee { get; set; }
     }
 }

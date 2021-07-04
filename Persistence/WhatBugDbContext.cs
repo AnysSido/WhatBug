@@ -63,15 +63,17 @@ namespace WhatBug.Persistence
                     r => r.ToString(),
                     r => (PermissionType)Enum.Parse(typeof(PermissionType), r));
 
-            //modelBuilder
-            //    .Entity<RolePermission>()
-            //    .HasOne(p => p.Permission)
-            //    .WithMany();
+            modelBuilder
+                .Entity<Issue>()
+                .HasOne(i => i.Assignee)
+                .WithMany(u => u.AssignedIssues)
+                .HasForeignKey(i => i.AssigneeId);
 
-            //modelBuilder
-            //    .Entity<UserPermission>()
-            //    .HasOne(p => p.Permission)
-            //    .WithMany();
+            modelBuilder
+                .Entity<Issue>()
+                .HasOne(i => i.Reporter)
+                .WithMany(u => u.ReportedIssues)
+                .HasForeignKey(i => i.ReporterId);
                 
 
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.GetAll());

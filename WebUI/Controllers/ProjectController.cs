@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.WebUI.ViewModels.Issue;
@@ -14,11 +15,13 @@ namespace WebUI.Controllers
     public class ProjectController : Controller
     {
         private readonly IProjectService _projectService;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public ProjectController(IProjectService projectService, IMapper mapper)
+        public ProjectController(IProjectService projectService, ICurrentUserService currentUserService, IMapper mapper)
         {
             _projectService = projectService;
+            _currentUserService = currentUserService;
             _mapper = mapper;
         }
 
@@ -46,12 +49,15 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateIssue(CreateIssueViewModel vm)
         {
-            await _projectService.CreateIssue(vm.ProjectId, _mapper.Map<IssueDTO>(vm.Issue));
+            // TODO: Handle permissions & overposting
+            var dto = _mapper.Map<IssueDTO>(vm.Issue);
+            dto.ReporterId = _currentUserService.UserId;
+
+            await _projectService.CreateIssue(vm.ProjectId, dto);
             return View(vm);
         }
     }
-
-    
 }

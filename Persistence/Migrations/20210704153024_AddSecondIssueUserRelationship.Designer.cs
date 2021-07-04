@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210704153024_AddSecondIssueUserRelationship")]
+    partial class AddSecondIssueUserRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,6 +55,9 @@ namespace Persistence.Migrations
                     b.Property<int>("ReporterId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AssigneeId");
@@ -60,6 +65,8 @@ namespace Persistence.Migrations
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("ReporterId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Issues");
                 });
@@ -303,7 +310,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("WhatBug.Domain.Entities.Issue", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.User", "Assignee")
-                        .WithMany("AssignedIssues")
+                        .WithMany()
                         .HasForeignKey("AssigneeId");
 
                     b.HasOne("WhatBug.Domain.Entities.Project", "Project")
@@ -313,10 +320,14 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("WhatBug.Domain.Entities.User", "Reporter")
-                        .WithMany("ReportedIssues")
+                        .WithMany()
                         .HasForeignKey("ReporterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("WhatBug.Domain.Entities.User", null)
+                        .WithMany("Issues")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Assignee");
 
@@ -412,11 +423,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>
                 {
-                    b.Navigation("AssignedIssues");
+                    b.Navigation("Issues");
 
                     b.Navigation("ProjectRoles");
-
-                    b.Navigation("ReportedIssues");
 
                     b.Navigation("UserPermissions");
                 });

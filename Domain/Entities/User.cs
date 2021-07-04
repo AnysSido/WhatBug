@@ -14,6 +14,7 @@ namespace WhatBug.Domain.Entities
 
         public List<UserPermission> UserPermissions { get; set; }
         public List<ProjectRoleUser> ProjectRoles { get; set; }
-        public List<Issue> Issues { get; set; }
+        public List<Issue> AssignedIssues { get; set; }
+        public List<Issue> ReportedIssues { get; set; }
     }
 }
