@@ -12,7 +12,8 @@ namespace WhatBug.Application.Common.Interfaces
     {
         Task<Result> CreateUserAsync(string username, string password);
         Task<Result> DeleteUserAsync(string username);
-        Task<List<UserDTO>> PopulatePrincipleUserInfo(List<UserDTO> userDTOs);
+        Task<UserDTO> PopulatePrincipleUserInfo(UserDTO userDTO);
+        Task<List<UserDTO>> PopulatePrincipleUsersInfo(List<UserDTO> userDTOs);
         Task<Result> SetUserId(string username, int userId);
     }
 }

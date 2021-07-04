@@ -10,6 +10,7 @@ using WhatBug.Application.Common.Models;
 using WhatBug.Application.DTOs.Users;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Exceptions;
 
 namespace WhatBug.Application.Services
 {
@@ -48,6 +49,23 @@ namespace WhatBug.Application.Services
             return result;
         }
 
+        public async Task<UserWithPermissionsDTO> GetUserWithPermissions(int id)
+        {
+            // TODO: Check permission
+
+            var user = await _context.Users
+                .Include(u => u.UserPermissions)
+                    .ThenInclude(p => p.Permission)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+                throw new UserNotFoundException(id);
+
+            var dto = _mapper.Map<UserWithPermissionsDTO>(user);
+            await _authenticationProvider.PopulatePrincipleUserInfo(dto.User);
+            return dto;
+        }
+
         public async Task<List<UserWithPermissionsDTO>> GetAllUsersWithPermissions()
         {
             // TODO: Check permission
@@ -58,12 +76,12 @@ namespace WhatBug.Application.Services
                     .ThenInclude(p => p.Permission)
                 .ToListAsync();
 
-            var result = _mapper.Map<List<UserWithPermissionsDTO>>(users);
+            var dtos = _mapper.Map<List<UserWithPermissionsDTO>>(users);
 
             // Populate the DTOs with principle user info
-            await _authenticationProvider.PopulatePrincipleUserInfo(result.Select(r => r.User).ToList());
+            await _authenticationProvider.PopulatePrincipleUsersInfo(dtos.Select(r => r.User).ToList());
 
-            return result;
+            return dtos;
         }
     }
 }

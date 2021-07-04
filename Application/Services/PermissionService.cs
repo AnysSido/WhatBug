@@ -11,6 +11,8 @@ using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Data;
 using WhatBug.Application.Common.Models;
 using WhatBug.Domain.Exceptions;
+using WhatBug.Application.DTOs.Users;
+using AutoMapper;
 
 namespace WhatBug.Application.Services
 {
@@ -18,11 +20,13 @@ namespace WhatBug.Application.Services
     {
         private readonly IWhatBugDbContext _context;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IMapper _mapper;
 
-        public PermissionService(IWhatBugDbContext context, ICurrentUserService currentUserService)
+        public PermissionService(IWhatBugDbContext context, ICurrentUserService currentUserService, IMapper mapper)
         {
             _context = context;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
 
         public async Task SetUserPermissions(SetUserPermissionDTO setUserPermissionDTO)
@@ -38,7 +42,7 @@ namespace WhatBug.Application.Services
                 throw new UserNotFoundException(setUserPermissionDTO.UserId);
 
             var newPermissions = setUserPermissionDTO.Permissions
-                .Select(p => new UserPermission() { User = user, Permission = p });
+                .Select(p => new UserPermission() { UserId = user.Id, PermissionId = p.Id });
 
             user.UserPermissions.Clear();
             user.UserPermissions.AddRange(newPermissions);
@@ -73,6 +77,11 @@ namespace WhatBug.Application.Services
                 .FirstOrDefaultAsync();
 
             return hasPermission != null;
+        }
+
+        public List<PermissionDTO> GetAllPermissions(PermissionType permissionType)
+        {
+            return _mapper.Map<List<PermissionDTO>>(Permissions.GetAll(PermissionType.Global).ToList());
         }
     }
 }

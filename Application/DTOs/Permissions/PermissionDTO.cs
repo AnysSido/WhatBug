@@ -1,6 +1,6 @@
 ﻿using WhatBug.Domain.Entities.Permissions;
 
-namespace WhatBug.Application.DTOs.Users
+namespace WhatBug.Application.DTOs.Permissions
 {
     public class PermissionDTO
     {

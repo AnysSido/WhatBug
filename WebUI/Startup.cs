@@ -40,7 +40,7 @@ namespace WebUI
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
         }
 

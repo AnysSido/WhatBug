@@ -10,6 +10,6 @@ namespace WhatBug.Application.DTOs.Permissions
     public class SetUserPermissionDTO
     {
         public int UserId { get; set; }
-        public List<Permission> Permissions { get; set; }
+        public List<PermissionDTO> Permissions { get; set; }
     }
 }

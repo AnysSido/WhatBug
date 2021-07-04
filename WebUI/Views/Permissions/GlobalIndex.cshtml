@@ -21,7 +21,7 @@
                     {
                     <tr>
                         <td>@userPermission.User.Username</td>
-                        <td>@userPermission.Permissions.Count</td>
+                        <td>@string.Join(" | ", userPermission.Permissions.Select(p=>p.Name))</td>
                         <td>
                             <a asp-controller="Permissions" asp-action="Edit" asp-route-id="@userPermission.User.Id">
                                 <input type="button" class="btn btn-primary" value="Edit" />

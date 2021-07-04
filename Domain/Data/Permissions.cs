@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using WhatBug.Domain.Entities.Permissions;
 
 namespace WhatBug.Domain.Data
@@ -23,6 +24,11 @@ namespace WhatBug.Domain.Data
         public static ReadOnlyCollection<Permission> GetAll()
         {
             return _permissions.AsReadOnly();
+        }
+
+        public static ReadOnlyCollection<Permission> GetAll(PermissionType type)
+        {
+            return _permissions.Where(p => p.Type == type).ToList().AsReadOnly();
         }
     }
 }

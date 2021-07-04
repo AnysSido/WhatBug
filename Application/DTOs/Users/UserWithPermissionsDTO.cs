@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WhatBug.Application.DTOs.Permissions;
 
 namespace WhatBug.Application.DTOs.Users
 {

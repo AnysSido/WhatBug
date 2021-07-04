@@ -58,9 +58,16 @@ namespace WhatBug.Infrastructure.Identity
             return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
         }
 
+        public async Task<UserDTO> PopulatePrincipleUserInfo(UserDTO userDTO)
+        {
+            var principalUser = await _userManager.Users.FirstOrDefaultAsync(u => u.UserId == userDTO.Id);
+            _mapper.Map(principalUser, userDTO);
+            return userDTO;
+        }
+
         // This method could be very inefficient for large userbases.
         // As this application will not be used for real teams it will be fine.
-        public async Task<List<UserDTO>> PopulatePrincipleUserInfo(List<UserDTO> userDTOs)
+        public async Task<List<UserDTO>> PopulatePrincipleUsersInfo(List<UserDTO> userDTOs)
         {
             var ids = userDTOs.Select(u => u.Id);
             var principleUsers = await _userManager.Users
