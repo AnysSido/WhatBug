@@ -23,7 +23,11 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Permissions",
                 columns: new[] { "Id", "Description", "Name", "Type" },
-                values: new object[] { 3, "Edit global permissions assigned to users.", "Edit User Permissions", "Global" });
+                values: new object[,]
+                {
+                    { 3, "Edit global permissions assigned to users.", "Edit User Permissions", "Global" },
+                    { 4, "View all projects in WhatBug. Users without this permission must be a member of a project to view it.", "View All Projects", "Global" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -32,6 +36,11 @@ namespace Persistence.Migrations
                 table: "Permissions",
                 keyColumn: "Id",
                 keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Permissions",
+                keyColumn: "Id",
+                keyValue: 4);
 
             migrationBuilder.UpdateData(
                 table: "Permissions",

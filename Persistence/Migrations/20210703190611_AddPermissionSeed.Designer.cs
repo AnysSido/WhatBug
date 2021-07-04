@@ -10,7 +10,7 @@ using WhatBug.Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    [Migration("20210625124015_AddPermissionSeed")]
+    [Migration("20210703190611_AddPermissionSeed")]
     partial class AddPermissionSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,13 @@ namespace Persistence.Migrations
                             Id = 3,
                             Description = "Edit global permissions assigned to users.",
                             Name = "Edit User Permissions",
+                            Type = "Global"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "View all projects in WhatBug. Users without this permission must be a member of a project to view it.",
+                            Name = "View All Projects",
                             Type = "Global"
                         });
                 });
