@@ -15,5 +15,8 @@ namespace WhatBug.Domain.Entities
 
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+
+        public int? AssignedToId { get; set; }
+        public User AssignedTo { get; set; }
     }
 }
