@@ -1,7 +1,6 @@
 ﻿@model WhatBug.WebUI.ViewModels.Project.ProjectIndexViewModel
 
 @{
-
     <div class="container-fluid">
         <h1 class="h3 mb-4 text-gray-800">@Model.Project.Name</h1>
 
@@ -14,7 +13,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Actions</h6>
                     </div>
                     <div class="card-body">
-                        <a href="#" class="btn btn-primary btn-icon-split">
+                        <a asp-controller="Project" asp-action="CreateIssue" asp-route-projectId="@Model.Project.Id" class="btn btn-primary btn-icon-split">
                             <span class="icon text-white-50">
                                 <i class="fas fa-flag"></i>
                             </span>

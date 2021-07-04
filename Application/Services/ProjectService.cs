@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Models;
+using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Data;
@@ -63,10 +64,17 @@ namespace WhatBug.Application.Services
             // TODO: Check permission
 
             var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
-
-            // TODO: If null throw
-
             return _mapper.Map<ProjectDTO>(project);
+        }
+
+        public async Task<IssueDTO> CreateIssue(int projectId, IssueDTO dto)
+        {
+            // TODO: Check permission
+
+            var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
+            project.Issues.Add(_mapper.Map<Issue>(dto));
+            await _context.SaveChangesAsync();
+            return dto;
         }
     }
 }

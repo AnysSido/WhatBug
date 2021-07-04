@@ -1,0 +1,41 @@
+﻿@model WhatBug.WebUI.ViewModels.Issue.CreateIssueViewModel
+
+@{
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Create Issue</h1>
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <!-- Issue Details Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Issue Details</h6>
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Project" asp-action="CreateIssue" method="post" class="needs-validation">
+                            <input asp-for="@Model.ProjectId" />
+                            <div class="form-group">
+                                <label asp-for="@Model.Issue.Name"></label>
+                                <input asp-for="@Model.Issue.Name" class="form-control" />
+                                <span asp-validation-for="@Model.Issue.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model.Issue.Description"></label>
+                                <textarea asp-for="@Model.Issue.Description" class="form-control" rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button asp-controller="Project" asp-action="CreateIssue" class="btn btn-primary btn-block">Create Issue</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- End Issue Details Card-->
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

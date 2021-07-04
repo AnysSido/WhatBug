@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.DTOs.Users;
@@ -28,6 +29,8 @@ namespace WhatBug.Application.Common
             CreateMap<Permission, PermissionDTO>().ReverseMap();
 
             CreateMap<ProjectDTO, Project>().ReverseMap();
+
+            CreateMap<IssueDTO, Issue>().ReverseMap();
         }
     }
 }
