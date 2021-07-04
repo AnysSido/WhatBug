@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,14 @@ namespace WhatBug.Application.Services
         private readonly IWhatBugDbContext _context;
         private readonly IPermissionService _permissionService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IMapper _mapper;
 
-        public ProjectService(IWhatBugDbContext whatBugDbContext, IPermissionService permissionService, ICurrentUserService currentUserService)
+        public ProjectService(IWhatBugDbContext whatBugDbContext, IPermissionService permissionService, ICurrentUserService currentUserService, IMapper mapper)
         {
             _context = whatBugDbContext;
             _permissionService = permissionService;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
 
         public async Task CreateProject(CreateProjectDTO createProjectDTO)
@@ -44,7 +47,26 @@ namespace WhatBug.Application.Services
 
         public async Task<List<Project>> ListProjects()
         {
-            return await _context.Projects.ToListAsync();
+            if (await _permissionService.UserHasPermission(_currentUserService.UserId, Permissions.ViewAllProjects))
+                return await _context.Projects.ToListAsync();
+
+            return await _context.ProjectRoleUsers
+                .Include(r => r.Project)
+                .Include(r => r.User)
+                .Where(r => r.UserId == _currentUserService.UserId)
+                .Select(r => r.Project)
+                .ToListAsync();
+        }
+
+        public async Task<ProjectDTO> GetProject(int id)
+        {
+            // TODO: Check permission
+
+            var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
+
+            // TODO: If null throw
+
+            return _mapper.Map<ProjectDTO>(project);
         }
     }
 }

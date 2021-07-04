@@ -1,0 +1,54 @@
+﻿@model WhatBug.WebUI.ViewModels.Project.ProjectIndexViewModel
+
+@{
+
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">@Model.Project.Name</h1>
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <!-- Actions Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-flag"></i>
+                            </span>
+                            <span class="text">Create Issue</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- End Actions Card-->
+
+                <!-- My Issues Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">My Issues</h6>
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+                <!-- End My Issues Card-->
+
+            </div>
+
+            <div class="col-lg-6">
+                <!-- Latest Issues Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Latest Issues</h6>
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+                <!-- End Latest Issues Card-->
+            </div>
+        </div>
+    </div>
+}

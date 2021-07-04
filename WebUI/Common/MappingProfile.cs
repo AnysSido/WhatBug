@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.DTOs.Permissions;
+using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.DTOs.Users;
 using WhatBug.WebUI.ViewModels.Permissions;
+using WhatBug.WebUI.ViewModels.Project;
 
 namespace WhatBug.WebUI.Common
 {
@@ -14,6 +16,7 @@ namespace WhatBug.WebUI.Common
         public MappingProfile()
         {
             CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();
+            CreateMap<ProjectDTO, ProjectViewModel>().ReverseMap();
         }
     }
 }
