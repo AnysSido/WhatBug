@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities.Priorities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace WhatBug.Application.Common.Interfaces
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Scheme> Schemes { get; set; }
+        DbSet<Priority> Priorities { get; set; }
+        DbSet<PriorityScheme> PrioritySchemes { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
