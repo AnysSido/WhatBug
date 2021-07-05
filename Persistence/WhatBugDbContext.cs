@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities.Priorities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,8 @@ namespace WhatBug.Persistence
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Scheme> Schemes { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
+        public DbSet<PriorityScheme> PrioritySchemes { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

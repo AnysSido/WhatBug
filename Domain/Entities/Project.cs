@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Domain.Entities.Priorities;
+using System.Collections.Generic;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities.Permissions;
 
@@ -9,6 +10,9 @@ namespace WhatBug.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public int PrioritySchemeId { get; set; }
+        public PriorityScheme PriorityScheme { get; set; }
 
         public List<ProjectRoleUser> RoleUsers { get; set; } = new List<ProjectRoleUser>();
         public List<Issue> Issues { get; set; } = new List<Issue>();
