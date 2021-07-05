@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhatBug.Domain.Entities.Priorities
+namespace WhatBug.Application.DTOs.Priorities
 {
-    public class Priority
+    public class PriorityDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

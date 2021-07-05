@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Priorities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Persistence
 {

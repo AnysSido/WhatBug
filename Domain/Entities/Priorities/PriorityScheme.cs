@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Domain.Entities;
 
-namespace Domain.Entities.Priorities
+namespace WhatBug.Domain.Entities.Priorities
 {
     public class PriorityScheme
     {

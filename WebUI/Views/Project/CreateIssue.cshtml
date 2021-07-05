@@ -13,7 +13,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Issue Details</h6>
                     </div>
                     <div class="card-body">
-                        <form asp-controller="Project" asp-action="CreateIssue" method="post" class="needs-validation">
+                        <form asp-controller="Project" asp-action="CreateIssue" method="post">
                             <input asp-for="@Model.ProjectId" />
                             <div class="form-group">
                                 <label asp-for="@Model.Issue.Name"></label>

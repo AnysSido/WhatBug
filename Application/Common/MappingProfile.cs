@@ -6,10 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
+using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.DTOs.Users;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Common
 {
@@ -31,6 +33,8 @@ namespace WhatBug.Application.Common
             CreateMap<ProjectDTO, Project>().ReverseMap();
 
             CreateMap<IssueDTO, Issue>().ReverseMap();
+
+            CreateMap<PriorityDTO, Priority>().ReverseMap();
         }
     }
 }

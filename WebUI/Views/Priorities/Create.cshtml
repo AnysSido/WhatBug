@@ -1,0 +1,37 @@
+﻿@model WhatBug.WebUI.ViewModels.Priorities.PriorityViewModel
+
+@{
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Create Priority</h1>
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <!-- Create Priority Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Priority Details</h6>
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Priorities" asp-action="Create" method="post">
+                            <input asp-for="@Model.Id" />
+                            <div class="form-group">
+                                <label asp-for="@Model.Name"></label>
+                                <input asp-for="@Model.Name" class="form-control" />
+                                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model.Description"></label>
+                                <textarea asp-for="@Model.Description" class="form-control" rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button asp-controller="Priorities" asp-action="Create" class="btn btn-primary btn-block">Create Priority</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- End Create Priority Card-->
+            </div>
+        </div>
+    </div>
+}

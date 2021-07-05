@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Priorities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Common.Interfaces
 {

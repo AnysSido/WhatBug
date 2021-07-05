@@ -1,7 +1,7 @@
-﻿using Domain.Entities.Priorities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Domain.Entities
 {
