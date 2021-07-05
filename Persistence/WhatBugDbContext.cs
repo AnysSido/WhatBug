@@ -81,6 +81,7 @@ namespace WhatBug.Persistence
 
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.GetAll());
             modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.GetAll());
+            modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme() { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
         }
     }
 }
