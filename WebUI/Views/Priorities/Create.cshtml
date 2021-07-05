@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.ViewModels.Priorities.PriorityViewModel
+﻿@model WhatBug.WebUI.ViewModels.Priorities.CreatePriorityViewModel
 
 @{
     <div class="container-fluid">
@@ -14,16 +14,32 @@
                     </div>
                     <div class="card-body">
                         <form asp-controller="Priorities" asp-action="Create" method="post">
-                            <input asp-for="@Model.Id" />
+                            <input asp-for="@Model.Priority.Id" />
                             <div class="form-group">
-                                <label asp-for="@Model.Name"></label>
-                                <input asp-for="@Model.Name" class="form-control" />
-                                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                                <label asp-for="@Model.Priority.Name"></label>
+                                <input asp-for="@Model.Priority.Name" class="form-control" />
+                                <span asp-validation-for="@Model.Priority.Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="@Model.Description"></label>
-                                <textarea asp-for="@Model.Description" class="form-control" rows="4"></textarea>
+                                <label asp-for="@Model.Priority.Description"></label>
+                                <textarea asp-for="@Model.Priority.Description" class="form-control" rows="4"></textarea>
                             </div>
+                            <div class="form-group">
+                                <select id="SelectedIcon" name="SelectedIcon">
+                                    <option>fas fa-fw fa-user</option>
+                                    <option>fas fa-fw fa-user-tie</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="SelectedIcon1" name="SelectedIcon1">
+                                    @for (int i = 0; i < Model.AllIcons.Count - 1; i++)
+                                    { 
+                                        <option>fas fa-fw fa-@Model.AllIcons[i].ClassName</option>
+                                    }
+                                </select>
+                            </div>
+                            <i class="fas fa-fw fa-arrow-circle-up"></i>
+
                             <div class="form-group">
                                 <button asp-controller="Priorities" asp-action="Create" class="btn btn-primary btn-block">Create Priority</button>
                             </div>
@@ -34,4 +50,13 @@
             </div>
         </div>
     </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        // Make sure to fire only when the DOM is ready
+        jQuery(document).ready(function ($) {
+            $('#SelectedIcon1').fontIconPicker(); // Load with default options
+        });
+    </script>
 }

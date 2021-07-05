@@ -35,6 +35,7 @@ namespace WhatBug.Application.Common
             CreateMap<IssueDTO, Issue>().ReverseMap();
 
             CreateMap<PriorityDTO, Priority>().ReverseMap();
+            CreateMap<PriorityIconDTO, PriorityIcon>().ReverseMap();
         }
     }
 }

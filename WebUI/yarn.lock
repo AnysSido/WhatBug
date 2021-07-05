@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@fonticonpicker/fonticonpicker@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@fonticonpicker/fonticonpicker/-/fonticonpicker-3.1.1.tgz#9dd48822a76ca6684e39c0b701b040a904bf102d"
+  integrity sha512-UJiBjng4UpOlUC6R5RQY7BWxO1zd2wf9D2yF8XNzI0n8PqbovEoIbfa2BnTtQaxELikp3rH7giwxTbD04lDWhQ==
+
 "@fortawesome/fontawesome-free@5.15.3", "@fortawesome/fontawesome-free@^5.15.3":
   version "5.15.3"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.3.tgz#c36ffa64a2a239bf948541a97b6ae8d729e09a9a"

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace WhatBug.Application.Services
             // TODO: Check permissions
             var priority = _mapper.Map<Priority>(dto);
             await _context.Priorities.AddAsync(priority);
+        }
+
+        public async Task<List<PriorityIconDTO>> LoadIconsAsync()
+        {
+            return _mapper.Map<List<PriorityIconDTO>>(await _context.PriorityIcons.ToListAsync());
         }
     }
 }
