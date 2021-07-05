@@ -13,6 +13,7 @@ namespace WhatBug.Domain.Entities.Priorities
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public List<Priority> Priorities { get; set; }
         public List<Project> Projects { get; set; }
     }
 }
