@@ -11,6 +11,7 @@ namespace WhatBug.Application.Services.Interfaces
     public interface IPriorityService
     {
         Task CreatePriorityAsync(PriorityDTO dto);
+        Task<List<PriorityDTO>> GetPrioritiesAsync();
         Task<List<PriorityIconDTO>> LoadIconsAsync();
     }
 }

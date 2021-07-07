@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,12 @@ namespace WhatBug.WebUI.Controllers
     public class PrioritiesController : Controller
     {
         private readonly IPriorityService _priorityService;
+        private readonly IMapper _mapper;
         private readonly Dictionary<string, string> _iconMap;
 
         private string _iconClassPrefix = "fas fa-fw fa-";
 
-        public PrioritiesController(IPriorityService priorityService)
+        public PrioritiesController(IPriorityService priorityService, IMapper mapper)
         {
             _priorityService = priorityService;
 
@@ -33,6 +35,7 @@ namespace WhatBug.WebUI.Controllers
                 {"CircleArrowLeft", "circle-arrow-left" },
                 {"CircleArrowRight", "circle-arrow-right" },
             };
+            _mapper = mapper;
         }
 
         private string GetIconClassName(string name)
@@ -46,9 +49,13 @@ namespace WhatBug.WebUI.Controllers
             return _iconMap.ContainsValue(iconClass) ? _iconMap.FirstOrDefault(x => x.Value == iconClass).Key : string.Empty;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var priorities = await _priorityService.GetPrioritiesAsync();
+            var vm = _mapper.Map<List<PriorityViewModel>>(priorities);
+            vm.ForEach(p => p.PriorityIcon.ClassName = GetIconClassName(p.PriorityIcon.Name));
+
+            return View(vm);
         }
 
         [HttpGet]
@@ -76,7 +83,7 @@ namespace WhatBug.WebUI.Controllers
                 Name = vm.Priority.Name,
                 Description = vm.Priority.Description,
                 Color = vm.SelectedIconColor,
-                Icon = new PriorityIconDTO()
+                PriorityIcon = new PriorityIconDTO()
                 {
                     Name = GetIconName(vm.SelectedIcon)
                 }

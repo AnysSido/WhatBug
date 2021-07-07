@@ -1,0 +1,84 @@
+﻿@model List<WhatBug.WebUI.ViewModels.Priorities.PriorityViewModel>
+
+@section Styles {
+    <link rel="stylesheet" href="~/lib/jquery-ui/css/jquery-ui.min.css" />
+}
+
+@{
+    ViewData["Title"] = "Priorities";
+}
+
+
+
+
+<!-- TO DO List -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="ion ion-clipboard mr-1"></i>
+            Priorities
+        </h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">Order</th>
+                    <th>Icon &amp; Name</th>
+                    <th>Description</th>
+                    <th style="width: 30px">Color</th>
+                    <th style="width: 40px">Options</th>
+                </tr>
+            </thead>
+            <tbody class="todo-list">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <!-- Drag Handle -->
+                        <td>
+                            <span class="handle">
+                                <i class="fas fa-ellipsis-v"></i>
+                                <i class="fas fa-ellipsis-v"></i>
+                            </span>
+                        </td>
+                        <!-- Icon & Name -->
+                        <td>
+                            <span>
+                                <i class="@Model[i].PriorityIcon.ClassName" style="color: @Model[i].Color"></i>
+                                <label for="High">@Model[i].Name</label>
+                            </span>
+                        </td>
+                        <!-- Description -->
+                        <td>
+                            <div>
+                                @Model[i].Description
+                            </div>
+                        </td>
+                        <!-- Color -->
+                        <td style="background-color: @Model[i].Color">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer clearfix">
+        <button type="button" class="btn btn-primary float-right"><i class="fas fa-save"></i> Save Priority Order</button>
+    </div>
+</div>
+<!-- /.card -->
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-ui/js/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            // jQuery UI sortable for the todo list
+            $('.todo-list').sortable({
+                placeholder: 'sort-highlight',
+                handle: '.handle',
+                forcePlaceholderSize: true,
+                zIndex: 999999
+            })
+        })
+    </script>
+}

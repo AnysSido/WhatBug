@@ -27,9 +27,17 @@ namespace WhatBug.Application.Services
         {
             // TODO: Check permissions, validate color
             var priority = _mapper.Map<Priority>(dto);
-            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.Icon.Name);
+            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIcon.Name);
             await _context.Priorities.AddAsync(priority);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<PriorityDTO>> GetPrioritiesAsync()
+        {
+            // Requires permission?
+            return _mapper.Map<List<PriorityDTO>>(await _context.Priorities
+                .Include(p => p.PriorityIcon)
+                .ToListAsync());
         }
 
         public async Task<List<PriorityIconDTO>> LoadIconsAsync()
