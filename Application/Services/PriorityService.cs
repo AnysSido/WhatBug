@@ -25,9 +25,11 @@ namespace WhatBug.Application.Services
 
         public async Task CreatePriorityAsync(PriorityDTO dto)
         {
-            // TODO: Check permissions
+            // TODO: Check permissions, validate color
             var priority = _mapper.Map<Priority>(dto);
+            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.Icon.Name);
             await _context.Priorities.AddAsync(priority);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<PriorityIconDTO>> LoadIconsAsync()

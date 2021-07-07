@@ -35,10 +35,10 @@
                             <div class="mr-auto">
                                 <label>Icon</label>
                                 <div class="form-group">
-                                    <select id="SelectedIcon1" name="SelectedIcon1">
+                                    <select id="SelectedIcon" name="SelectedIcon">
                                         @for (int i = 0; i < Model.AllIcons.Count - 1; i++)
                                         {
-                                            <option>fas fa-fw fa-@Model.AllIcons[i].ClassName</option>
+                                            <option value="@Model.AllIcons[i].ClassName">@Model.AllIcons[i].ClassName</option>
                                         }
                                     </select>
                                 </div>
@@ -46,7 +46,7 @@
                             <div class="mr-auto">
                                 <label>Icon Color</label>
                                 <div class="input-group icon-colorpicker">
-                                    <input type="text" class="form-control">
+                                    <input asp-for="@Model.SelectedIconColor" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mr-auto">
@@ -84,7 +84,7 @@
             }
 
             // Init font icon picker
-            $('#SelectedIcon1').fontIconPicker({
+            $('#SelectedIcon').fontIconPicker({
                 theme: 'fip-darkgrey',
                 emptyIcon: false,
             });
@@ -95,7 +95,7 @@
                 iconColor = event.color.toString();
                 updateIconPreview();
             })
-            $('#SelectedIcon1').on('change', function ()
+            $('#SelectedIcon').on('change', function ()
             {
                 updateIconPreview();
             });

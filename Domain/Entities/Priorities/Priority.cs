@@ -12,6 +12,7 @@ namespace WhatBug.Domain.Entities.Priorities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
+        public int Order { get; set; }
         
         public int PriorityIconId { get; set; }
         public PriorityIcon PriorityIcon { get; set; }
