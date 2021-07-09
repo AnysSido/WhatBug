@@ -6,3 +6,36 @@
 .colorpicker {
     width: 150px !important;
 }
+
+/* SweetAlert2 toast custom classes */
+.colored-toast.swal2-icon-success {
+    background-color: #28a745 !important;
+}
+
+.colored-toast.swal2-icon-error {
+    background-color: #dc3545 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+    background-color: #ffc107 !important;
+}
+
+.colored-toast.swal2-icon-info {
+    background-color: #17a2b8 !important;
+}
+
+.colored-toast.swal2-icon-question {
+    background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+    color: white;
+}
+
+.colored-toast .swal2-close {
+    color: white;
+}
+
+.colored-toast .swal2-content {
+    color: white;
+}
