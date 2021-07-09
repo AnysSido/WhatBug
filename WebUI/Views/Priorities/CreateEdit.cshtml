@@ -9,7 +9,7 @@
 }
 
 @{
-    ViewBag.Title = "Create Priority"; 
+    ViewBag.Title = ViewContext.RouteData.Values["Action"] + " Priority"; 
 }
 @{
     <div class="row">
@@ -19,8 +19,9 @@
                 <div class="card-header">
                     <h6 class="card-title">Priority Details</h6>
                 </div>
-                <form asp-controller="Priorities" asp-action="Create" method="post">
+                <form asp-controller="Priorities" method="post">
                     <div class="card-body">
+                        <input type="hidden" id="PrevSelectedIcon" value="@Model.SelectedIcon" />
                         <input asp-for="@Model.Priority.Id" />
                         <div class="form-group">
                             <label asp-for="@Model.Priority.Name"></label>
@@ -36,7 +37,7 @@
                                 <label>Icon</label>
                                 <div class="form-group">
                                     <select id="SelectedIcon" name="SelectedIcon">
-                                        @for (int i = 0; i < Model.AllIcons.Count - 1; i++)
+                                        @for (int i = 0; i < Model.AllIcons.Count; i++)
                                         {
                                             <option value="@Model.AllIcons[i].ClassName">@Model.AllIcons[i].ClassName</option>
                                         }
@@ -58,7 +59,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button asp-controller="Priorities" asp-action="Create" class="btn btn-primary">Create Priority</button>
+                        <button class="btn btn-primary float-right">Save</button>
                     </div>
                 </form>
             </div>
@@ -71,11 +72,11 @@
     <!-- FontIconPicker -->
     <script type="text/javascript" src="~/lib/fonticonpicker/js/jquery.fonticonpicker.min.js"></script>
     <!-- bootstrap color picker -->
-    <script src="~/lib/admin-lte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-
+    <script type="text/javascript" src="~/lib/admin-lte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    
     <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            var iconColor = '#495057';
+        $(function () {
+            var iconColor = ($('#SelectedIconColor').val() == '') ? '#495057' : $('#SelectedIconColor').val();
 
             // Update preview when icon or color change.
             function updateIconPreview() {
@@ -84,23 +85,25 @@
             }
 
             // Init font icon picker
-            $('#SelectedIcon').fontIconPicker({
+            var iconPicker = $('#SelectedIcon').fontIconPicker({
                 theme: 'fip-darkgrey',
                 emptyIcon: false,
             });
 
-            // Init color picker            
+            // Init color picker
             $('.icon-colorpicker').colorpicker();
             $('.icon-colorpicker').on('colorpickerChange', function (event) {
                 iconColor = event.color.toString();
                 updateIconPreview();
             })
-            $('#SelectedIcon').on('change', function ()
-            {
+            $('#SelectedIcon').on('change', function () {
                 updateIconPreview();
             });
 
-            
+            if ($('#PrevSelectedIcon').val() != '') {
+                iconPicker.setIcon($('#PrevSelectedIcon').val());                
+            }
+
             updateIconPreview();
         });
     </script>

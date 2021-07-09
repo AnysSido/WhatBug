@@ -2,38 +2,37 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/lib/jquery-ui/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/css/sweetalert2.min.css" />
 }
 
 @{
     ViewData["Title"] = "Priorities";
 }
 
-
-
-
-<!-- TO DO List -->
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="ion ion-clipboard mr-1"></i>
-            Priorities
-        </h3>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th style="width: 10px">Order</th>
-                    <th>Icon &amp; Name</th>
-                    <th>Description</th>
-                    <th style="width: 30px">Color</th>
-                    <th style="width: 40px">Options</th>
-                </tr>
-            </thead>
-            <tbody class="todo-list">
-                @for (int i = 0; i < Model.Count; i++)
-                {
+<form>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="ion ion-clipboard mr-1"></i>
+                Priorities
+            </h3>
+        </div>
+        <div class="card-body">
+            <button id="create-priority" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i>New Priority</button>
+            <table class="table table-bordered">
+                <thead>
                     <tr>
+                        <th style="width: 10px">Order</th>
+                        <th style="width: 40px">Actions</th>
+                        <th>Icon &amp; Name</th>
+                        <th>Description</th>
+                        <th style="width: 30px">Color</th>
+                    </tr>
+                </thead>
+                <tbody id="priorityList">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                    <tr id="@Model[i].Id">
                         <!-- Drag Handle -->
                         <td>
                             <span class="handle">
@@ -41,11 +40,23 @@
                                 <i class="fas fa-ellipsis-v"></i>
                             </span>
                         </td>
+                        <!-- Actions -->
+                        <td>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Action
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model[i].Id">Edit</a>
+                                    <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                            </div>
+                        </td>
                         <!-- Icon & Name -->
                         <td>
                             <span>
                                 <i class="@Model[i].PriorityIcon.ClassName" style="color: @Model[i].Color"></i>
-                                <label for="High">@Model[i].Name</label>
+                                <label asp-for="@Model[i].Name">@Model[i].Name</label>
                             </span>
                         </td>
                         <!-- Description -->
@@ -55,30 +66,82 @@
                             </div>
                         </td>
                         <!-- Color -->
-                        <td style="background-color: @Model[i].Color">
-                        </td>
+                        <td style="background-color: @Model[i].Color"></td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer clearfix">
+            <button id="submit-order" type="button" class="btn btn-primary float-right"><i class="fas fa-save"></i> Save Priority Order</button>
+        </div>
     </div>
-    <div class="card-footer clearfix">
-        <button type="button" class="btn btn-primary float-right"><i class="fas fa-save"></i> Save Priority Order</button>
-    </div>
-</div>
+</form>
 <!-- /.card -->
 
 @section Scripts {
     <script type="text/javascript" src="~/lib/jquery-ui/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/lib/sweetalert2/js/sweetalert2.all.min.js"></script>
+
     <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            // jQuery UI sortable for the todo list
-            $('.todo-list').sortable({
+        $(function ($) {
+            // Make the priority list sortable using JQuery-UI Sortable
+            $('#priorityList').sortable({
                 placeholder: 'sort-highlight',
                 handle: '.handle',
                 forcePlaceholderSize: true,
-                zIndex: 999999
+                zIndex: 999999,
             })
+
+            $('#submit-order').click(function () {
+                // Disable submit button when clicked
+                $('#submit-order').prop('disabled', true);
+
+                // Send the list of sorted IDs via ajax to be updated in DB.
+                $.ajax({
+                    url: '/Priorities/UpdateOrder',
+                    data: JSON.stringify($('#priorityList').sortable('toArray')),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    type: 'post',
+                    success: function (response) {
+                        // Re-enable the submit button
+                        $('#submit-order').prop('disabled', false);
+                        if (response.success) {
+                            showSuccessToast('Priority order updated successfully.');
+                        } else {
+                            showErrorToast(response.text);
+                        }
+                    }
+                });
+            });
+        });
+
+        // SweetAlert2 toast config
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            iconColor: 'white',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            customClass: {
+                popup: 'colored-toast'
+            },
         })
+
+        function showSuccessToast(msg) {
+            Toast.fire({
+                icon: 'success',
+                title: msg
+            });
+        };
+
+        function showErrorToast(msg) {
+            Toast.fire({
+                icon: 'error',
+                title: msg
+            });
+        }
     </script>
 }

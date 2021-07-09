@@ -12,6 +12,7 @@ namespace WhatBug.Application.DTOs.Priorities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
+        public int Order { get; set; }
         public PriorityIconDTO PriorityIcon { get; set; }
     }
 }

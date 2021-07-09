@@ -12,6 +12,9 @@ namespace WhatBug.Application.Services.Interfaces
     {
         Task CreatePriorityAsync(PriorityDTO dto);
         Task<List<PriorityDTO>> GetPrioritiesAsync();
+        Task<PriorityDTO> GetPriorityAsync(int id);
         Task<List<PriorityIconDTO>> LoadIconsAsync();
+        Task UpdatePriority(PriorityDTO dto);
+        Task UpdatePriorityOrder(List<int> ids);
     }
 }

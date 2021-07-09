@@ -32,6 +32,24 @@ namespace WhatBug.Application.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdatePriority(PriorityDTO dto)
+        {
+            // TODO: Check permissions, validate color
+            var priority = await _context.Priorities.FirstAsync(p => p.Id == dto.Id);
+            priority.Name = dto.Name;
+            priority.Description = dto.Description;
+            priority.Color = dto.Color;
+            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIcon.Name);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<PriorityDTO> GetPriorityAsync(int id)
+        {
+            return _mapper.Map<PriorityDTO>(await _context.Priorities
+                .Include(p => p.PriorityIcon)
+                .FirstOrDefaultAsync(p => p.Id == id));
+        }
+
         public async Task<List<PriorityDTO>> GetPrioritiesAsync()
         {
             // Requires permission?
@@ -43,6 +61,17 @@ namespace WhatBug.Application.Services
         public async Task<List<PriorityIconDTO>> LoadIconsAsync()
         {
             return _mapper.Map<List<PriorityIconDTO>>(await _context.PriorityIcons.ToListAsync());
+        }
+
+        public async Task UpdatePriorityOrder(List<int> ids)
+        {
+            // TODO: Check permissions
+            var priorities = await _context.Priorities.ToListAsync();
+            foreach (var priority in priorities)
+            {
+                priority.Order = ids.IndexOf(priority.Id);
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }
