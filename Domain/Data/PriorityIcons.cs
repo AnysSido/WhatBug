@@ -37,6 +37,7 @@ namespace WhatBug.Domain.Data
         public static readonly PriorityIcon TriangleExclaimation = CreateIcon(23, "TriangleExclaimation");
         public static readonly PriorityIcon XMark = CreateIcon(24, "XMark");
         public static readonly PriorityIcon Ban = CreateIcon(25, "Ban");
+        public static readonly PriorityIcon EqualsSign = CreateIcon(26, "Equals");
 
         private static PriorityIcon CreateIcon(int id, string name)
         {
