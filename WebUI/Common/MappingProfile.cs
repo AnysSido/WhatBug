@@ -10,6 +10,7 @@ using WhatBug.Application.DTOs.Projects;
 using WhatBug.WebUI.ViewModels.Issue;
 using WhatBug.WebUI.ViewModels.Permissions;
 using WhatBug.WebUI.ViewModels.Priorities;
+using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Project;
 
 namespace WhatBug.WebUI.Common
@@ -23,6 +24,8 @@ namespace WhatBug.WebUI.Common
             CreateMap<IssueDTO, IssueViewModel>().ReverseMap();
             CreateMap<PriorityDTO, PriorityViewModel>().ReverseMap();
             CreateMap<PriorityIconDTO, PriorityIconViewModel>().ReverseMap();
+            CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>().ReverseMap();
+            CreateMap<CreatePrioritySchemeViewModel, CreatePrioritySchemeDTO>();
         }
     }
 }

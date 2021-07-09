@@ -19,6 +19,7 @@ namespace WhatBug.Application
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPriorityService, PriorityService>();
+            services.AddScoped<IPrioritySchemeService, PrioritySchemeService>();
             services.AddAutoMapper(typeof(DependencyInjection));
 
             return services;
