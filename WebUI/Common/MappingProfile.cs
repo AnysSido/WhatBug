@@ -11,7 +11,7 @@ using WhatBug.WebUI.ViewModels.Issue;
 using WhatBug.WebUI.ViewModels.Permissions;
 using WhatBug.WebUI.ViewModels.Priorities;
 using WhatBug.WebUI.ViewModels.PrioritySchemes;
-using WhatBug.WebUI.ViewModels.Project;
+using WhatBug.WebUI.ViewModels.Projects;
 
 namespace WhatBug.WebUI.Common
 {
@@ -34,6 +34,11 @@ namespace WhatBug.WebUI.Common
                 .ForMember(
                     dest => dest.PriorityIds,
                     opt => opt.MapFrom(src => src.SelectedPriorityIds));
+
+            CreateMap<CreateProjectViewModel, CreateProjectDTO>()
+                .ForMember(
+                    dest => dest.PrioritySchemeId,
+                    opt => opt.MapFrom(src => src.SelectedPriorityScheme));
         }
     }
 }

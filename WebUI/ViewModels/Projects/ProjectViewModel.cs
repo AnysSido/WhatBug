@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WhatBug.WebUI.ViewModels.Project
+namespace WhatBug.WebUI.ViewModels.Projects
 {
     public class ProjectViewModel
     {

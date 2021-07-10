@@ -39,7 +39,8 @@ namespace WhatBug.Application.Services
             var project = new Project()
             {
                 Name = createProjectDTO.Name,
-                Description = createProjectDTO.Description
+                Description = createProjectDTO.Description,
+                PrioritySchemeId = createProjectDTO.PrioritySchemeId
             };
 
             await _context.Projects.AddAsync(project);

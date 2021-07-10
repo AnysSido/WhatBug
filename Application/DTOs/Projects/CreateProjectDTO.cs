@@ -11,5 +11,6 @@ namespace WhatBug.Application.DTOs.Projects
         public int OwnerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int PrioritySchemeId { get; set; }
     }
 }

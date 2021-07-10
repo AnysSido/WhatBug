@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhatBug.WebUI.ViewModels.Project;
+using WhatBug.WebUI.ViewModels.Projects;
 
-namespace WhatBug.WebUI.ViewModels.Project
+namespace WhatBug.WebUI.ViewModels.Projects
 {
     public class ProjectIndexViewModel
     {

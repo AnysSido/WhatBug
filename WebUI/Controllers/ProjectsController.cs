@@ -2,23 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
 using WhatBug.Persistence;
+using WhatBug.WebUI.ViewModels.PrioritySchemes;
+using WhatBug.WebUI.ViewModels.Projects;
 
 namespace WhatBug.WebUI.Controllers
 {
     public class ProjectsController : Controller
     {
         private readonly IProjectService _projectService;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IPrioritySchemeService _prioritySchemeService;
+        private readonly IMapper _mapper;
 
-        public ProjectsController(IProjectService projectService)
+        public ProjectsController(IProjectService projectService, ICurrentUserService currentUserService, IPrioritySchemeService prioritySchemeService, IMapper mapper)
         {
             _projectService = projectService;
+            _currentUserService = currentUserService;
+            _prioritySchemeService = prioritySchemeService;
+            _mapper = mapper;
         }
 
         // GET: Projects
@@ -45,25 +55,28 @@ namespace WhatBug.WebUI.Controllers
         //    return View(project);
         //}
 
-        // GET: Projects/Create
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var vm = new CreateProjectViewModel()
+            {
+                PrioritySchemes = _mapper.Map<List<PrioritySchemeViewModel>>(await _prioritySchemeService.GetPrioritySchemesAsync())
+            };
+            return View(vm);
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateProjectDTO createProjectDTO)
+        public async Task<IActionResult> Create(CreateProjectViewModel vm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _projectService.CreateProject(createProjectDTO);
-                return RedirectToAction(nameof(Index));
+                vm.PrioritySchemes = _mapper.Map<List<PrioritySchemeViewModel>>(await _prioritySchemeService.GetPrioritySchemesAsync());
+                return View(vm);
             }
-            return View(createProjectDTO);
+
+            await _projectService.CreateProject(_mapper.Map<CreateProjectDTO>(vm));
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Projects/Edit/5
@@ -145,11 +158,5 @@ namespace WhatBug.WebUI.Controllers
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}
-
-        private bool ProjectExists(int id)
-        {
-            return true;
-            //return _context.Projects.Any(e => e.ProjectId == id);
-        }
     }
 }
