@@ -37,7 +37,6 @@ namespace WhatBug.WebUI.Controllers
             var priorities = await _priorityService.GetPrioritiesAsync();
             var vm = _mapper.Map<List<PriorityViewModel>>(priorities);
             vm.ForEach(p => p.PriorityIcon.ClassName = _priorityIconService.IconNameToClass(p.PriorityIcon.Name));
-            vm = vm.OrderBy(p => p.Order).ToList();
             return View(vm);
         }
 

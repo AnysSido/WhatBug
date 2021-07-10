@@ -1,11 +1,11 @@
-﻿@model WhatBug.WebUI.ViewModels.PrioritySchemes.CreatePrioritySchemeViewModel
+﻿@model WhatBug.WebUI.ViewModels.PrioritySchemes.EditPrioritySchemeViewModel
 
 @section Styles {
     <link rel="stylesheet" type="text/css" href="~/lib/bootstrap4-duallistbox/css/bootstrap-duallistbox.min.css" />
 }
 
 @{
-    ViewData["Title"] = "Create Priority Scheme";
+    ViewData["Title"] = "Edit Priority Scheme";
 }
 
 @{
@@ -26,7 +26,7 @@
                             <label asp-for="@Model.Description"></label>
                             <textarea asp-for="@Model.Description" class="form-control" rows="2"></textarea>
                         </div>
-                        <!-- Duallistbox-->                        
+                        <!-- Duallistbox-->
                         <div class="form-group">
                             <select asp-for="@Model.SelectedPriorityIds" asp-items="@Model.PriorityListItems" class="duallistbox"></select>
                         </div>

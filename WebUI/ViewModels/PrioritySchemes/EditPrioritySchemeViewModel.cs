@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,8 +9,10 @@ using WhatBug.WebUI.ViewModels.Priorities;
 
 namespace WhatBug.WebUI.ViewModels.PrioritySchemes
 {
-    public class CreatePrioritySchemeViewModel
+    public class EditPrioritySchemeViewModel
     {
+        [HiddenInput]
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }

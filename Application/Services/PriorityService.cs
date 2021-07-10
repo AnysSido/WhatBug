@@ -55,7 +55,8 @@ namespace WhatBug.Application.Services
             // Requires permission?
             return _mapper.Map<List<PriorityDTO>>(await _context.Priorities
                 .Include(p => p.PriorityIcon)
-                .ToListAsync());
+                .ToListAsync())
+                .OrderBy(p => p.Order).ToList();
         }
 
         public async Task<List<PriorityIconDTO>> LoadIconsAsync()

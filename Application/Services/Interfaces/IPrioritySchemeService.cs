@@ -11,5 +11,7 @@ namespace WhatBug.Application.Services.Interfaces
     {
         Task<List<PrioritySchemeDTO>> GetPrioritySchemesAsync();
         Task CreatePrioritySchemeAsync(CreatePrioritySchemeDTO prioritySchemeDTO);
+        Task<PrioritySchemeDTO> GetPrioritySchemeAsync(int id);
+        Task EditPrioritySchemeAsync(EditPrioritySchemeDTO dto);
     }
 }

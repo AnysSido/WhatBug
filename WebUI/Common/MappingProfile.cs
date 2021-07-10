@@ -25,7 +25,15 @@ namespace WhatBug.WebUI.Common
             CreateMap<PriorityDTO, PriorityViewModel>().ReverseMap();
             CreateMap<PriorityIconDTO, PriorityIconViewModel>().ReverseMap();
             CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>().ReverseMap();
-            CreateMap<CreatePrioritySchemeViewModel, CreatePrioritySchemeDTO>();
+
+            CreateMap<CreatePrioritySchemeViewModel, CreatePrioritySchemeDTO>()
+                .ForMember(
+                    dest => dest.PriorityIds,
+                    opt => opt.MapFrom(src => src.SelectedPriorityIds));
+            CreateMap<EditPrioritySchemeViewModel, EditPrioritySchemeDTO>()
+                .ForMember(
+                    dest => dest.PriorityIds,
+                    opt => opt.MapFrom(src => src.SelectedPriorityIds));
         }
     }
 }

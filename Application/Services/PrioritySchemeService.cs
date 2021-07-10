@@ -23,10 +23,25 @@ namespace WhatBug.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<PrioritySchemeDTO> GetPrioritySchemeAsync(int id)
+        {
+            // TODO: Check permission
+            var priorityScheme = await _context.PrioritySchemes
+                .Include(s => s.Priorities)
+                    .ThenInclude(p => p.PriorityIcon)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            priorityScheme.Priorities = priorityScheme.Priorities.OrderBy(p => p.Id).ToList();
+            return _mapper.Map<PrioritySchemeDTO>(priorityScheme);
+        }
+
         public async Task<List<PrioritySchemeDTO>> GetPrioritySchemesAsync()
         {
             // TODO: Check permission
-            var prioritySchemes = await _context.PrioritySchemes.ToListAsync();
+            var prioritySchemes = await _context.PrioritySchemes
+                .Include(s => s.Priorities)
+                    .ThenInclude(p => p.PriorityIcon)
+                .ToListAsync();
+            prioritySchemes.ForEach(s => s.Priorities = s.Priorities.OrderBy(p => p.Order).ToList());
             return _mapper.Map<List<PrioritySchemeDTO>>(prioritySchemes);
         }
 
@@ -34,10 +49,21 @@ namespace WhatBug.Application.Services
         {
             // TODO: Check permission
             var scheme = _mapper.Map<PriorityScheme>(dto);
-            var priorities = await _context.Priorities.Where(p => dto.PriorityIds.Contains(p.Id)).ToListAsync();
-            scheme.Priorities = priorities;
+            scheme.Priorities = await _context.Priorities.Where(p => dto.PriorityIds.Contains(p.Id)).ToListAsync();
 
             await _context.PrioritySchemes.AddAsync(scheme);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task EditPrioritySchemeAsync(EditPrioritySchemeDTO dto)
+        {
+            // TODO: Check permission
+            var scheme = await _context.PrioritySchemes
+                .Include(s => s.Priorities)
+                .FirstAsync(s => s.Id == dto.Id);
+
+            _mapper.Map(dto, scheme);
+            scheme.Priorities = await _context.Priorities.Where(p => dto.PriorityIds.Contains(p.Id)).ToListAsync();
             await _context.SaveChangesAsync();
         }
     }
