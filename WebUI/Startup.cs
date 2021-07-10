@@ -17,6 +17,7 @@ using WhatBug.Infrastructure;
 using WhatBug.Infrastructure.Identity;
 using WhatBug.Persistence;
 using WhatBug.WebUI.Services;
+using WhatBug.WebUI.Services.Interfaces;
 
 namespace WebUI
 {
@@ -37,6 +38,7 @@ namespace WebUI
             services.AddApplication();
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IPriorityIconService, FontAwesomePriorityIconService>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

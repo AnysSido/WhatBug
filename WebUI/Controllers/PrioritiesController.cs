@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Data;
+using WhatBug.WebUI.Services.Interfaces;
 using WhatBug.WebUI.ViewModels.Priorities;
 
 namespace WhatBug.WebUI.Controllers
@@ -15,69 +16,27 @@ namespace WhatBug.WebUI.Controllers
     public class PrioritiesController : Controller
     {
         private readonly IPriorityService _priorityService;
+        private readonly IPriorityIconService _priorityIconService;
         private readonly IMapper _mapper;
-        private readonly Dictionary<string, string> _iconMap;
 
-        private string _iconClassPrefix = "fas fa-fw fa-";
-
-        public PrioritiesController(IPriorityService priorityService, IMapper mapper)
+        public PrioritiesController(IPriorityService priorityService, IPriorityIconService priorityIconService, IMapper mapper)
         {
             _priorityService = priorityService;
+            _priorityIconService = priorityIconService;
             _mapper = mapper;
-
-            _iconMap = new Dictionary<string, string>()
-            {
-                {"ArrowUp", "arrow-up" },
-                {"ArrowDown", "arrow-down" },
-                {"ArrowLeft", "arrow-left" },
-                {"ArrowRight", "arrow-right" },
-                {"CircleArrowUp", "arrow-circle-up" },
-                {"CircleArrowDown", "arrow-circle-down" },
-                {"CircleArrowLeft", "arrow-circle-left" },
-                {"CircleArrowRight", "arrow-circle-right" },
-                {"ChevronUp", "chevron-up" },
-                {"ChevronDown", "chevron-down" },
-                {"ChevronLeft", "chevron-left" },
-                {"ChevronRight", "chevron-right" },
-                {"AngleUp", "angle-up" },
-                {"AngleDown", "angle-down" },
-                {"AngleLeft", "angle-left" },
-                {"AngleRight", "angle-right" },
-                {"AnglesUp", "angle-double-up" },
-                {"AnglesDown", "angle-double-down" },
-                {"AnglesLeft", "angle-double-left" },
-                {"AnglesRight", "angle-double-right" },
-                {"Exclaimation", "exclamation" },
-                {"CircleExclaimation", "exclamation-circle" },
-                {"TriangleExclaimation", "exclamation-triangle" },
-                {"XMark", "times" },
-                {"Ban", "ban" },
-                {"Equals", "equals" },
-            };
-        }
-
-        private string GetIconClassName(string name)
-        {
-            return _iconMap.ContainsKey(name) ? _iconClassPrefix + _iconMap[name] : _iconClassPrefix + "xmark";
-        }
-
-        private string GetIconName(string className)
-        {
-            var iconClass = className.Substring(_iconClassPrefix.Length);
-            return _iconMap.ContainsValue(iconClass) ? _iconMap.FirstOrDefault(x => x.Value == iconClass).Key : string.Empty;
         }
 
         private async Task<List<PriorityIconViewModel>> LoadIconVMs()
         {
             var icons = await _priorityService.LoadIconsAsync();
-            return icons.Select(i => new PriorityIconViewModel { ClassName = GetIconClassName(i.Name) }).ToList();
+            return icons.Select(i => new PriorityIconViewModel { ClassName = _priorityIconService.IconNameToClass(i.Name) }).ToList();
         }
 
         public async Task<IActionResult> Index()
         {
             var priorities = await _priorityService.GetPrioritiesAsync();
             var vm = _mapper.Map<List<PriorityViewModel>>(priorities);
-            vm.ForEach(p => p.PriorityIcon.ClassName = GetIconClassName(p.PriorityIcon.Name));
+            vm.ForEach(p => p.PriorityIcon.ClassName = _priorityIconService.IconNameToClass(p.PriorityIcon.Name));
             vm = vm.OrderBy(p => p.Order).ToList();
             return View(vm);
         }
@@ -110,7 +69,7 @@ namespace WhatBug.WebUI.Controllers
                 Color = vm.SelectedIconColor,
                 PriorityIcon = new PriorityIconDTO()
                 {
-                    Name = GetIconName(vm.SelectedIcon)
+                    Name = _priorityIconService.ClassToIconName(vm.SelectedIcon)
                 }
             };
 
@@ -127,7 +86,7 @@ namespace WhatBug.WebUI.Controllers
             {
                 Priority = _mapper.Map<PriorityViewModel>(dto),
                 AllIcons = await LoadIconVMs(),
-                SelectedIcon = GetIconClassName(dto.PriorityIcon.Name),
+                SelectedIcon = _priorityIconService.IconNameToClass(dto.PriorityIcon.Name),
                 SelectedIconColor = dto.Color
             };
 
@@ -145,7 +104,7 @@ namespace WhatBug.WebUI.Controllers
                 Color = vm.SelectedIconColor,
                 PriorityIcon = new PriorityIconDTO()
                 {
-                    Name = GetIconName(vm.SelectedIcon)
+                    Name = _priorityIconService.ClassToIconName(vm.SelectedIcon)
                 }
             };
 
