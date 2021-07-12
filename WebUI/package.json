@@ -5,6 +5,7 @@
   "dependencies": {
     "@fonticonpicker/fonticonpicker": "^3.1.1",
     "admin-lte": "3.1.0",
+    "bootstrap-select": "^1.13.18",
     "bootstrap4-duallistbox": "^4.0.2",
     "highlight.js": "^11.1.0",
     "jquery-ui-dist": "^1.12.1",
