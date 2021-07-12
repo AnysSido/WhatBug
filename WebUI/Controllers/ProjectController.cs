@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.WebUI.ViewModels.Issue;
+using WhatBug.WebUI.ViewModels.Issues;
 using WhatBug.WebUI.ViewModels.Projects;
 
 namespace WebUI.Controllers

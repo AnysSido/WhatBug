@@ -33,6 +33,8 @@ namespace WhatBug.Application.Common
             CreateMap<ProjectDTO, Project>().ReverseMap();
 
             CreateMap<IssueDTO, Issue>().ReverseMap();
+            CreateMap<CreateIssueDTO, Issue>()
+                .AfterMap((src, dest) => dest.AssigneeId = dest.AssigneeId == 0 ? null : dest.AssigneeId);
 
             CreateMap<PriorityDTO, Priority>().ReverseMap();
             CreateMap<PriorityIconDTO, PriorityIcon>().ReverseMap();

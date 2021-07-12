@@ -1,25 +1,40 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.Services.Interfaces;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Services
 {
     class IssueService : IIssueService
     {
         private readonly IWhatBugDbContext _context;
+        private readonly IMapper _mapper;
 
-        public IssueService(IWhatBugDbContext context)
+        public IssueService(IWhatBugDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public void CreateIssue(string name, string description)
+        public async Task CreateIssueAsync(CreateIssueDTO dto)
         {
-            throw new NotImplementedException();
+            // TODO: Check permissions
+            var issue = _mapper.Map<Issue>(dto);
+            await _context.Issues.AddAsync(issue);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<IssueDTO>> GetAllIssuesAsync(int projectId)
+        {
+            // TODO: Check permissions
+            return _mapper.Map<List<IssueDTO>>(await _context.Issues.Where(i => i.ProjectId == projectId).ToListAsync());
         }
     }
 }

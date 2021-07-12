@@ -10,7 +10,7 @@ namespace WhatBug.Domain.Entities
     public class Issue : AuditableEntity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Summary { get; set; }
         public string Description { get; set; }
 
         public int ProjectId { get; set; }
