@@ -2,6 +2,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap-select/css/bootstrap-select.min.css" />
     <link rel="stylesheet" href="~/lib/quill/quill.snow.css" />
 }
 
@@ -24,6 +25,15 @@
                             <span asp-validation-for="@Model.Summary" class="text-danger"></span>
                         </div>
                         <div class="form-group">
+                            <label asp-for="@Model.SchemePriorityId"></label>
+                            <select class="form-control selectpicker" asp-for="@Model.SchemePriorityId">
+                                @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
+                                {
+                                    <option value="@Model.AllSchemePriorities[i].Id" data-content="<i style='color: @Model.AllSchemePriorities[i].Color' class='@Model.AllSchemePriorities[i].PriorityIcon.ClassName'></i>@Model.AllSchemePriorities[i].Name"></option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="@Model.Description"></label>
                             <input asp-for="@Model.Description" name="Description" type="hidden" class="form-control quill-content" />
                             <div class="quill-editor"></div>
@@ -41,6 +51,7 @@
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
     <script type="text/javascript" src="~/lib/quill/quill.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="~/js/quill.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

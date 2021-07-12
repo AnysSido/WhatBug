@@ -6,19 +6,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.Services.Interfaces;
+using WhatBug.WebUI.Services.Interfaces;
 using WhatBug.WebUI.ViewModels.Issues;
+using WhatBug.WebUI.ViewModels.Priorities;
 
 namespace WhatBug.WebUI.Controllers
 {
     public class IssuesController : Controller
     {
         private readonly IIssueService _issueService;
+        private readonly IProjectService _projectService;
+        private readonly IPriorityIconService _priorityIconService;
         private readonly IMapper _mapper;
 
-        public IssuesController(IIssueService issueService, IMapper mapper)
+        public IssuesController(IIssueService issueService, IMapper mapper, IProjectService projectService, IPriorityIconService priorityIconService)
         {
             _issueService = issueService;
             _mapper = mapper;
+            _projectService = projectService;
+            _priorityIconService = priorityIconService;
         }
 
         [HttpGet]
@@ -34,9 +40,15 @@ namespace WhatBug.WebUI.Controllers
 
         [HttpGet]
         [Route("Projects/{projectId}/CreateIssue")]
-        public IActionResult Create(int projectId)
+        public async Task<IActionResult> Create(int projectId)
         {
-            var vm = new CreateIssueViewModel() { };
+            var project = await _projectService.GetProjectAsync(projectId);
+            var vm = new CreateIssueViewModel()
+            {
+                AllSchemePriorities = _mapper.Map<List<PriorityViewModel>>(project.PriorityScheme.Priorities)
+            };
+            vm.AllSchemePriorities.ForEach(p => p.PriorityIcon.ClassName = _priorityIconService.IconNameToClass(p.PriorityIcon.Name));
+
             return View(vm);
         }
 

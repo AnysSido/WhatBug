@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.WebUI.ViewModels.Priorities;
 
 namespace WhatBug.WebUI.ViewModels.Issues
 {
@@ -16,6 +17,9 @@ namespace WhatBug.WebUI.ViewModels.Issues
         public string Description { get; set; }
         public int ReporterId { get; set; }
         public int AssigneeId { get; set; }
+        [Display(Name = "Priority")]
         public int SchemePriorityId { get; set; }
+
+        public List<PriorityViewModel> AllSchemePriorities { get; set; }
     }
 }

@@ -60,22 +60,16 @@ namespace WhatBug.Application.Services
                 .ToListAsync();
         }
 
-        public async Task<ProjectDTO> GetProject(int id)
+        public async Task<ProjectDTO> GetProjectAsync(int id)
         {
             // TODO: Check permission
 
-            var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
+            var project = await _context.Projects
+                .Include(p => p.PriorityScheme)
+                    .ThenInclude(s => s.Priorities)
+                        .ThenInclude(p => p.PriorityIcon)
+                .FirstOrDefaultAsync(p => p.Id == id);
             return _mapper.Map<ProjectDTO>(project);
-        }
-
-        public async Task<IssueDTO> CreateIssue(int projectId, IssueDTO dto)
-        {
-            // TODO: Check permission
-
-            var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
-            project.Issues.Add(_mapper.Map<Issue>(dto));
-            await _context.SaveChangesAsync();
-            return dto;
         }
     }
 }
