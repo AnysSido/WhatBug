@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-WebUI-00B92A10-D54B-4209-B721-610C6584755D</UserSecretsId>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <RootNamespace>WhatBug.WebUI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
