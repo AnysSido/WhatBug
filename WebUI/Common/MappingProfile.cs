@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.Priorities;
+using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.WebUI.ViewModels.Issues;
 using WhatBug.WebUI.ViewModels.Permissions;

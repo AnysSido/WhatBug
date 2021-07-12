@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhatBug.Application.DTOs.Priorities
+namespace WhatBug.Application.DTOs.PrioritySchemes
 {
     public class CreatePrioritySchemeDTO
     {

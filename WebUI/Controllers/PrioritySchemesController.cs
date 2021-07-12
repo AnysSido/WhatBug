@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhatBug.Application.DTOs.Priorities;
+using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.WebUI.Services.Interfaces;
 using WhatBug.WebUI.ViewModels.Priorities;

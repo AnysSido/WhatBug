@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
-using WhatBug.Application.DTOs.Priorities;
+using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.Domain.Entities.Priorities;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Services
 {

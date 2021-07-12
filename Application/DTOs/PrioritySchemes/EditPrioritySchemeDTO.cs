@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhatBug.Application.DTOs.Priorities
+namespace WhatBug.Application.DTOs.PrioritySchemes
 {
-    public class PrioritySchemeDTO
+    public class EditPrioritySchemeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<PriorityDTO> Priorities { get; set; }
+        public List<int> PriorityIds { get; set; }
     }
 }
