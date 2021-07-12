@@ -19,14 +19,54 @@ namespace WhatBug.WebUI.Common
     {
         public MappingProfile()
         {
-            CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();
+            // Projects
             CreateMap<ProjectDTO, ProjectViewModel>().ReverseMap();
-            CreateMap<IssueDTO, IssueViewModel>().ReverseMap();
-            CreateMap<CreateIssueDTO, CreateIssueViewModel>().ReverseMap();
-            CreateMap<PriorityDTO, PriorityViewModel>().ReverseMap();
-            CreateMap<PriorityIconDTO, PriorityIconViewModel>().ReverseMap();
-            CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>().ReverseMap();
+            CreateMap<CreateProjectViewModel, CreateProjectDTO>()
+                .ForMember(
+                    dest => dest.PrioritySchemeId,
+                    opt => opt.MapFrom(src => src.SelectedPriorityScheme));
 
+            // Permissions
+            CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();
+
+            // Priorities
+            CreateMap<PriorityDTO, PriorityViewModel>().ReverseMap();
+            CreateMap<PriorityIconDTO, PriorityIconViewModel>()
+                .ForMember(
+                    dest => dest.ClassName,
+                    opt => opt.MapFrom<PriorityIconClassNameResolver, string>(src => src.Name));
+
+            CreateMap<PriorityIconViewModel, PriorityIconDTO>()
+                .ForMember(
+                    dest => dest.Name,
+                    opt => opt.MapFrom<PriorityIconNameResolver, string>(src => src.Name));
+
+            CreateMap<CreatePriorityViewModel, CreatePriorityDTO>()
+                .ForMember(
+                    dest => dest.Color,
+                    opt => opt.MapFrom(src => src.SelectedIconColor))
+                .ForMember(
+                    dest => dest.PriorityIconName,
+                    opt => opt.MapFrom<PriorityIconNameResolver, string>(src => src.SelectedIcon));
+
+            CreateMap<PriorityDTO, EditPriorityViewModel>()
+                .ForMember(
+                    dest => dest.SelectedIconColor,
+                    opt => opt.MapFrom(src => src.Color))
+                .ForMember(
+                    dest => dest.SelectedIconName,
+                    opt => opt.MapFrom<PriorityIconClassNameResolver, string>(src => src.PriorityIcon.Name));
+
+            CreateMap<EditPriorityViewModel, EditPriorityDTO>()
+                .ForMember(
+                    dest => dest.Color,
+                    opt => opt.MapFrom(src => src.SelectedIconColor))
+                .ForMember(
+                    dest => dest.PriorityIconName,
+                    opt => opt.MapFrom<PriorityIconNameResolver, string>(src => src.SelectedIconName));
+
+            // Priority Schemes
+            CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>().ReverseMap();
             CreateMap<CreatePrioritySchemeViewModel, CreatePrioritySchemeDTO>()
                 .ForMember(
                     dest => dest.PriorityIds,
@@ -36,10 +76,9 @@ namespace WhatBug.WebUI.Common
                     dest => dest.PriorityIds,
                     opt => opt.MapFrom(src => src.SelectedPriorityIds));
 
-            CreateMap<CreateProjectViewModel, CreateProjectDTO>()
-                .ForMember(
-                    dest => dest.PrioritySchemeId,
-                    opt => opt.MapFrom(src => src.SelectedPriorityScheme));
+            // Issues
+            CreateMap<IssueDTO, IssueViewModel>().ReverseMap();
+            CreateMap<CreateIssueDTO, CreateIssueViewModel>().ReverseMap();
         }
     }
 }

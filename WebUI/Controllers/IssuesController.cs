@@ -47,7 +47,6 @@ namespace WhatBug.WebUI.Controllers
             {
                 AllSchemePriorities = _mapper.Map<List<PriorityViewModel>>(project.PriorityScheme.Priorities)
             };
-            vm.AllSchemePriorities.ForEach(p => p.PriorityIcon.ClassName = _priorityIconService.IconNameToClass(p.PriorityIcon.Name));
 
             return View(vm);
         }

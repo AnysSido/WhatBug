@@ -23,23 +23,22 @@ namespace WhatBug.Application.Services
             _mapper = mapper;
         }
 
-        public async Task CreatePriorityAsync(PriorityDTO dto)
+        public async Task CreatePriorityAsync(CreatePriorityDTO dto)
         {
             // TODO: Check permissions, validate color
             var priority = _mapper.Map<Priority>(dto);
-            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIcon.Name);
+            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIconName);
+            priority.Order = await _context.Priorities.MaxAsync(p => p.Order) + 1;
             await _context.Priorities.AddAsync(priority);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdatePriority(PriorityDTO dto)
+        public async Task EditPriorityAsync(EditPriorityDTO dto)
         {
             // TODO: Check permissions, validate color
             var priority = await _context.Priorities.FirstAsync(p => p.Id == dto.Id);
-            priority.Name = dto.Name;
-            priority.Description = dto.Description;
-            priority.Color = dto.Color;
-            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIcon.Name);
+            _mapper.Map(dto, priority);
+            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIconName);
             await _context.SaveChangesAsync();
         }
 
@@ -64,7 +63,7 @@ namespace WhatBug.Application.Services
             return _mapper.Map<List<PriorityIconDTO>>(await _context.PriorityIcons.ToListAsync());
         }
 
-        public async Task UpdatePriorityOrder(List<int> ids)
+        public async Task UpdatePriorityOrderAsync(List<int> ids)
         {
             // TODO: Check permissions
             var priorities = await _context.Priorities.ToListAsync();

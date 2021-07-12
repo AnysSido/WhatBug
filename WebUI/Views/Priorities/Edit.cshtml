@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.ViewModels.Priorities.CreatePriorityViewModel
+﻿@model WhatBug.WebUI.ViewModels.Priorities.EditPriorityViewModel
 
 @section Styles {
     <!-- FontIconPicker -->
@@ -9,34 +9,33 @@
 }
 
 @{
-    ViewBag.Title = ViewContext.RouteData.Values["Action"] + " Priority"; 
+    ViewBag.Title = "Edit Priority";
 }
 @{
     <div class="row">
         <div class="col-md-6">
-            <!-- Create Priority Card -->
             <div class="card card-primary">
                 <div class="card-header">
                     <h6 class="card-title">Priority Details</h6>
                 </div>
                 <form asp-controller="Priorities" method="post">
                     <div class="card-body">
-                        <input type="hidden" id="PrevSelectedIcon" value="@Model.SelectedIcon" />
-                        <input asp-for="@Model.Priority.Id" />
+                        <input type="hidden" id="PrevSelectedIcon" value="@Model.SelectedIconName" />
+                        <input asp-for="@Model.Id" />
                         <div class="form-group">
-                            <label asp-for="@Model.Priority.Name"></label>
-                            <input asp-for="@Model.Priority.Name" class="form-control" />
-                            <span asp-validation-for="@Model.Priority.Name" class="text-danger"></span>
+                            <label asp-for="@Model.Name"></label>
+                            <input asp-for="@Model.Name" class="form-control" />
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="@Model.Priority.Description"></label>
-                            <textarea asp-for="@Model.Priority.Description" class="form-control" rows="2"></textarea>
+                            <label asp-for="@Model.Description"></label>
+                            <textarea asp-for="@Model.Description" class="form-control" rows="2"></textarea>
                         </div>
                         <div class="d-flex flex-row">
                             <div class="mr-auto">
                                 <label>Icon</label>
                                 <div class="form-group">
-                                    <select id="SelectedIcon" name="SelectedIcon">
+                                    <select id="SelectedIcon" name="SelectedIconName">
                                         @for (int i = 0; i < Model.AllIcons.Count; i++)
                                         {
                                             <option value="@Model.AllIcons[i].ClassName">@Model.AllIcons[i].ClassName</option>
@@ -63,7 +62,6 @@
                     </div>
                 </form>
             </div>
-            <!-- End Create Priority Card-->
         </div>
     </div>
 }
@@ -73,38 +71,6 @@
     <script type="text/javascript" src="~/lib/fonticonpicker/js/jquery.fonticonpicker.min.js"></script>
     <!-- bootstrap color picker -->
     <script type="text/javascript" src="~/lib/admin-lte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-    
-    <script type="text/javascript">
-        $(function () {
-            var iconColor = ($('#SelectedIconColor').val() == '') ? '#495057' : $('#SelectedIconColor').val();
-
-            // Update preview when icon or color change.
-            function updateIconPreview() {
-                $('#iconPreview .fas').attr('class', $('.selected-icon .fas').attr('class'));
-                $('#iconPreview').css('color', iconColor);
-            }
-
-            // Init font icon picker
-            var iconPicker = $('#SelectedIcon').fontIconPicker({
-                theme: 'fip-darkgrey',
-                emptyIcon: false,
-            });
-
-            // Init color picker
-            $('.icon-colorpicker').colorpicker();
-            $('.icon-colorpicker').on('colorpickerChange', function (event) {
-                iconColor = event.color.toString();
-                updateIconPreview();
-            })
-            $('#SelectedIcon').on('change', function () {
-                updateIconPreview();
-            });
-
-            if ($('#PrevSelectedIcon').val() != '') {
-                iconPicker.setIcon($('#PrevSelectedIcon').val());                
-            }
-
-            updateIconPreview();
-        });
-    </script>
+    <!-- Icon Color Picker -->
+    <script type="text/javascript" src="~/js/iconcolorpicker.js"></script>
 }

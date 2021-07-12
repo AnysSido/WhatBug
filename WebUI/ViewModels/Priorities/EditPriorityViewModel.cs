@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace WhatBug.WebUI.ViewModels.Priorities
 {
-    public class CreatePriorityViewModel
+    public class EditPriorityViewModel
     {
-
+        [HiddenInput]
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
 
@@ -17,7 +18,7 @@ namespace WhatBug.WebUI.ViewModels.Priorities
         public string Description { get; set; }
 
         [Required]
-        public string SelectedIcon { get; set; }
+        public string SelectedIconName { get; set; }
 
         [Required]
         public string SelectedIconColor { get; set; }

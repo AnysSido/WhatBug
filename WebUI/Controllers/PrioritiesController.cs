@@ -16,27 +16,17 @@ namespace WhatBug.WebUI.Controllers
     public class PrioritiesController : Controller
     {
         private readonly IPriorityService _priorityService;
-        private readonly IPriorityIconService _priorityIconService;
         private readonly IMapper _mapper;
 
-        public PrioritiesController(IPriorityService priorityService, IPriorityIconService priorityIconService, IMapper mapper)
+        public PrioritiesController(IPriorityService priorityService, IMapper mapper)
         {
             _priorityService = priorityService;
-            _priorityIconService = priorityIconService;
             _mapper = mapper;
-        }
-
-        private async Task<List<PriorityIconViewModel>> LoadIconVMs()
-        {
-            var icons = await _priorityService.LoadIconsAsync();
-            return icons.Select(i => new PriorityIconViewModel { ClassName = _priorityIconService.IconNameToClass(i.Name) }).ToList();
         }
 
         public async Task<IActionResult> Index()
         {
-            var priorities = await _priorityService.GetPrioritiesAsync();
-            var vm = _mapper.Map<List<PriorityViewModel>>(priorities);
-            vm.ForEach(p => p.PriorityIcon.ClassName = _priorityIconService.IconNameToClass(p.PriorityIcon.Name));
+            var vm = _mapper.Map<List<PriorityViewModel>>(await _priorityService.GetPrioritiesAsync());
             return View(vm);
         }
 
@@ -45,10 +35,9 @@ namespace WhatBug.WebUI.Controllers
         {
             var vm = new CreatePriorityViewModel()
             {
-                Priority = new PriorityViewModel(),
-                AllIcons = await LoadIconVMs()
+                AllIcons = _mapper.Map<List<PriorityIconViewModel>>(await _priorityService.LoadIconsAsync())
             };
-            return View("CreateEdit", vm);
+            return View(vm);
         }
 
         [HttpPost]
@@ -57,64 +46,34 @@ namespace WhatBug.WebUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                vm.AllIcons = await LoadIconVMs();
-                return View("CreateEdit", vm);
+                vm.AllIcons = _mapper.Map<List<PriorityIconViewModel>>(await _priorityService.LoadIconsAsync());
+                return View(vm);
             }
 
-            var dto = new PriorityDTO()
-            {
-                Name = vm.Priority.Name,
-                Description = vm.Priority.Description,
-                Color = vm.SelectedIconColor,
-                PriorityIcon = new PriorityIconDTO()
-                {
-                    Name = _priorityIconService.ClassToIconName(vm.SelectedIcon)
-                }
-            };
-
-            await _priorityService.CreatePriorityAsync(dto);
-
+            await _priorityService.CreatePriorityAsync(_mapper.Map<CreatePriorityDTO>(vm));
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var dto = await _priorityService.GetPriorityAsync(id);
-            var vm = new CreatePriorityViewModel()
-            {
-                Priority = _mapper.Map<PriorityViewModel>(dto),
-                AllIcons = await LoadIconVMs(),
-                SelectedIcon = _priorityIconService.IconNameToClass(dto.PriorityIcon.Name),
-                SelectedIconColor = dto.Color
-            };
-
-            return View("CreateEdit", vm);
+            var vm = _mapper.Map<EditPriorityViewModel>(await _priorityService.GetPriorityAsync(id));
+            vm.AllIcons = _mapper.Map<List<PriorityIconViewModel>>(await _priorityService.LoadIconsAsync());
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(CreatePriorityViewModel vm)
+        public async Task<IActionResult> Edit(EditPriorityViewModel vm)
         {
-            var dto = new PriorityDTO()
-            {
-                Id = vm.Priority.Id,
-                Name = vm.Priority.Name,
-                Description = vm.Priority.Description,
-                Color = vm.SelectedIconColor,
-                PriorityIcon = new PriorityIconDTO()
-                {
-                    Name = _priorityIconService.ClassToIconName(vm.SelectedIcon)
-                }
-            };
-
-            await _priorityService.UpdatePriority(dto);
+            var dto = _mapper.Map<EditPriorityDTO>(vm);
+            await _priorityService.EditPriorityAsync(dto);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateOrder([FromBody] List<int> ids)
         {
-            await _priorityService.UpdatePriorityOrder(ids);
+            await _priorityService.UpdatePriorityOrderAsync(ids);
             // TODO: Handle errors
             return Json(new { success = true, text = "Success from controller!" });
         }

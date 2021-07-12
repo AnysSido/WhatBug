@@ -19,6 +19,29 @@ namespace WhatBug.Application.Common
     {
         public MappingProfile()
         {
+            // Projects
+            CreateMap<ProjectDTO, Project>().ReverseMap();
+
+            // Permissions
+            CreateMap<Permission, PermissionDTO>().ReverseMap();
+
+            // Priorities
+            CreateMap<PriorityDTO, Priority>().ReverseMap();
+            CreateMap<PriorityIconDTO, PriorityIcon>().ReverseMap();
+            CreateMap<CreatePriorityDTO, Priority>();
+            CreateMap<EditPriorityDTO, Priority>();
+
+            // Priority Schemes
+            CreateMap<PrioritySchemeDTO, PriorityScheme>().ReverseMap();
+            CreateMap<CreatePrioritySchemeDTO, PriorityScheme>();
+            CreateMap<EditPrioritySchemeDTO, PriorityScheme>();
+
+            // Issues
+            CreateMap<IssueDTO, Issue>().ReverseMap();
+            CreateMap<CreateIssueDTO, Issue>()
+                .AfterMap((src, dest) => dest.AssigneeId = dest.AssigneeId == 0 ? null : dest.AssigneeId);
+
+            // Users
             CreateMap<User, UserDTO>();
             CreateMap<User, UserWithPermissionsDTO>()
                 .ForMember(
@@ -27,20 +50,6 @@ namespace WhatBug.Application.Common
                 .ForMember(
                     dest => dest.Permissions,
                     opt => opt.MapFrom(src => src.UserPermissions.Select(p => p.Permission)));
-
-            CreateMap<Permission, PermissionDTO>().ReverseMap();
-
-            CreateMap<ProjectDTO, Project>().ReverseMap();
-
-            CreateMap<IssueDTO, Issue>().ReverseMap();
-            CreateMap<CreateIssueDTO, Issue>()
-                .AfterMap((src, dest) => dest.AssigneeId = dest.AssigneeId == 0 ? null : dest.AssigneeId);
-
-            CreateMap<PriorityDTO, Priority>().ReverseMap();
-            CreateMap<PriorityIconDTO, PriorityIcon>().ReverseMap();
-            CreateMap<PrioritySchemeDTO, PriorityScheme>().ReverseMap();
-            CreateMap<CreatePrioritySchemeDTO, PriorityScheme>();
-            CreateMap<EditPrioritySchemeDTO, PriorityScheme>();
         }
     }
 }
