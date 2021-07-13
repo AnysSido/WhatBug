@@ -42,6 +42,8 @@ namespace WhatBug.Application.Common
             CreateMap<CreateIssueDTO, Issue>()
                 .AfterMap((src, dest) => dest.AssigneeId = dest.AssigneeId == 0 ? null : dest.AssigneeId);
 
+            CreateMap<Issue, IssueDTO>();
+
             // Users
             CreateMap<User, UserDTO>();
             CreateMap<User, UserWithPermissionsDTO>()

@@ -36,5 +36,15 @@ namespace WhatBug.Application.Services
             // TODO: Check permissions
             return _mapper.Map<List<IssueDTO>>(await _context.Issues.Where(i => i.ProjectId == projectId).ToListAsync());
         }
+
+        public async Task<IssueDTO> GetIssue(int issueId)
+        {
+            // TODO: Check permissions
+            return _mapper.Map<IssueDTO>(
+                await _context.Issues
+                    .Include(i => i.Assignee)
+                    .Include(i => i.Reporter)
+                    .FirstOrDefaultAsync(i => i.Id == issueId));
+        }
     }
 }

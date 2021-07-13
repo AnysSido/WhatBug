@@ -66,5 +66,13 @@ namespace WhatBug.WebUI.Controllers
 
             return View(vm);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var issue = await _issueService.GetIssue(id);
+            var vm = _mapper.Map<IssueDetailViewModel>(issue);
+            return View(vm);
+        }
     }
 }

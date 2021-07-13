@@ -37,11 +37,6 @@ namespace WhatBug.WebUI.Common
                     dest => dest.ClassName,
                     opt => opt.MapFrom<PriorityIconClassNameResolver, string>(src => src.Name));
 
-            CreateMap<PriorityIconViewModel, PriorityIconDTO>()
-                .ForMember(
-                    dest => dest.Name,
-                    opt => opt.MapFrom<PriorityIconNameResolver, string>(src => src.Name));
-
             CreateMap<CreatePriorityViewModel, CreatePriorityDTO>()
                 .ForMember(
                     dest => dest.Color,
@@ -80,6 +75,7 @@ namespace WhatBug.WebUI.Common
             // Issues
             CreateMap<IssueDTO, IssueViewModel>().ReverseMap();
             CreateMap<CreateIssueDTO, CreateIssueViewModel>().ReverseMap();
+            CreateMap<IssueDTO, IssueDetailViewModel>();
         }
     }
 }
