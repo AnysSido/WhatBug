@@ -74,7 +74,13 @@ namespace WhatBug.WebUI.Common
 
             // Issues
             CreateMap<IssueDTO, IssueViewModel>().ReverseMap();
-            CreateMap<CreateIssueDTO, CreateIssueViewModel>().ReverseMap();
+            CreateMap<CreateIssueDTO, CreateIssueViewModel>();
+
+            CreateMap<CreateIssueViewModel, CreateIssueDTO>()
+                .ForMember(
+                    dest => dest.PriorityId,
+                    opt => opt.MapFrom(src => src.SelectedPriorityId));
+
             CreateMap<IssueDTO, IssueDetailViewModel>();
         }
     }

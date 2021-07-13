@@ -64,7 +64,7 @@ namespace WhatBug.WebUI.Controllers
             vm.ReporterId = 5; // TODO: Remove this
             await _issueService.CreateIssueAsync(_mapper.Map<CreateIssueDTO>(vm));
 
-            return View(vm);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

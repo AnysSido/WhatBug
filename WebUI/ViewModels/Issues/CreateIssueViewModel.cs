@@ -18,7 +18,7 @@ namespace WhatBug.WebUI.ViewModels.Issues
         public int ReporterId { get; set; }
         public int AssigneeId { get; set; }
         [Display(Name = "Priority")]
-        public int SchemePriorityId { get; set; }
+        public int SelectedPriorityId { get; set; }
 
         public List<PriorityViewModel> AllSchemePriorities { get; set; }
     }

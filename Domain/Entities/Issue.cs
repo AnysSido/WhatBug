@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Domain.Common;
+using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Domain.Entities
 {
@@ -21,5 +22,8 @@ namespace WhatBug.Domain.Entities
 
         public int? AssigneeId { get; set; }
         public User Assignee { get; set; }
+
+        public int PriorityId { get; set; }
+        public Priority Priority { get; set; }
     }
 }

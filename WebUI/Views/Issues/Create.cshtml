@@ -20,13 +20,13 @@
                 <form asp-controller="Issues" asp-action="Create" method="post" class="quill-form">
                     <div class="card-body">
                         <div class="form-group">
-                            <label asp-for="@Model.Summary"></label>
-                            <input asp-for="@Model.Summary" class="form-control" />
-                            <span asp-validation-for="@Model.Summary" class="text-danger"></span>
+                            <label asp-for="Summary"></label>
+                            <input asp-for="Summary" class="form-control" />
+                            <span asp-validation-for="Summary" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="@Model.SchemePriorityId"></label>
-                            <select class="form-control selectpicker" asp-for="@Model.SchemePriorityId">
+                            <label asp-for="SelectedPriorityId"></label>
+                            <select class="form-control selectpicker" asp-for="SelectedPriorityId">
                                 @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
                                 {
                                     <option value="@Model.AllSchemePriorities[i].Id" data-content="<i style='color: @Model.AllSchemePriorities[i].Color' class='@Model.AllSchemePriorities[i].PriorityIcon.ClassName'></i>@Model.AllSchemePriorities[i].Name"></option>
@@ -34,8 +34,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label asp-for="@Model.Description"></label>
-                            <input asp-for="@Model.Description" name="Description" type="hidden" class="form-control quill-content" />
+                            <label asp-for="Description"></label>
+                            <input asp-for="Description" name="Description" type="hidden" class="form-control quill-content" />
                             <div class="quill-editor"></div>
                         </div>
                     </div>

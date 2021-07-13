@@ -34,7 +34,12 @@ namespace WhatBug.Application.Services
         public async Task<List<IssueDTO>> GetAllIssuesAsync(int projectId)
         {
             // TODO: Check permissions
-            return _mapper.Map<List<IssueDTO>>(await _context.Issues.Where(i => i.ProjectId == projectId).ToListAsync());
+            return _mapper.Map<List<IssueDTO>>(await _context.Issues
+                .Include(i => i.Assignee)
+                .Include(i => i.Reporter)
+                .Include(i => i.Priority)
+                    .ThenInclude(p => p.PriorityIcon)
+                .Where(i => i.ProjectId == projectId).ToListAsync());
         }
 
         public async Task<IssueDTO> GetIssue(int issueId)
@@ -44,6 +49,8 @@ namespace WhatBug.Application.Services
                 await _context.Issues
                     .Include(i => i.Assignee)
                     .Include(i => i.Reporter)
+                    .Include(i => i.Priority)
+                        .ThenInclude(p => p.PriorityIcon)
                     .FirstOrDefaultAsync(i => i.Id == issueId));
         }
     }

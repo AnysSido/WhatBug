@@ -13,6 +13,6 @@ namespace WhatBug.Application.DTOs.Issues
         public string Description { get; set; }
         public int ReporterId { get; set; }
         public int AssigneeId { get; set; }
-        public int SchemePriorityId { get; set; }
+        public int PriorityId { get; set; }
     }
 }
