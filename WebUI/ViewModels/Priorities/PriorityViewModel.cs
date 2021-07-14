@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.WebUI.ViewModels.Common;
 
 namespace WhatBug.WebUI.ViewModels.Priorities
 {
@@ -21,6 +22,6 @@ namespace WhatBug.WebUI.ViewModels.Priorities
         public string Color { get; set; }
         public int Order { get; set; }
 
-        public PriorityIconViewModel PriorityIcon { get; set; }
+        public IconViewModel Icon { get; set; }
     }
 }

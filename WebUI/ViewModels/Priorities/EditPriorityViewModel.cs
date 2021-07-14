@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.WebUI.ViewModels.Common;
 
 namespace WhatBug.WebUI.ViewModels.Priorities
 {
@@ -23,6 +24,6 @@ namespace WhatBug.WebUI.ViewModels.Priorities
         [Required]
         public string SelectedIconColor { get; set; }
 
-        public List<PriorityIconViewModel> AllIcons { get; set; }
+        public List<IconViewModel> AllIcons { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities.Priorities;
@@ -27,7 +28,7 @@ namespace WhatBug.Application.Services
         {
             // TODO: Check permissions, validate color
             var priority = _mapper.Map<Priority>(dto);
-            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIconName);
+            priority.Icon = await _context.Icons.FirstAsync(i => i.Name == dto.IconName);
             priority.Order = await _context.Priorities.MaxAsync(p => p.Order) + 1;
             await _context.Priorities.AddAsync(priority);
             await _context.SaveChangesAsync();
@@ -38,14 +39,14 @@ namespace WhatBug.Application.Services
             // TODO: Check permissions, validate color
             var priority = await _context.Priorities.FirstAsync(p => p.Id == dto.Id);
             _mapper.Map(dto, priority);
-            priority.PriorityIcon = await _context.PriorityIcons.FirstAsync(i => i.Name == dto.PriorityIconName);
+            priority.Icon = await _context.Icons.FirstAsync(i => i.Name == dto.IconName);
             await _context.SaveChangesAsync();
         }
 
         public async Task<PriorityDTO> GetPriorityAsync(int id)
         {
             return _mapper.Map<PriorityDTO>(await _context.Priorities
-                .Include(p => p.PriorityIcon)
+                .Include(p => p.Icon)
                 .FirstOrDefaultAsync(p => p.Id == id));
         }
 
@@ -53,14 +54,14 @@ namespace WhatBug.Application.Services
         {
             // Requires permission?
             return _mapper.Map<List<PriorityDTO>>(await _context.Priorities
-                .Include(p => p.PriorityIcon)
+                .Include(p => p.Icon)
                 .ToListAsync())
                 .OrderBy(p => p.Order).ToList();
         }
 
-        public async Task<List<PriorityIconDTO>> LoadIconsAsync()
+        public async Task<List<IconDTO>> LoadIconsAsync()
         {
-            return _mapper.Map<List<PriorityIconDTO>>(await _context.PriorityIcons.ToListAsync());
+            return _mapper.Map<List<IconDTO>>(await _context.Icons.ToListAsync());
         }
 
         public async Task UpdatePriorityOrderAsync(List<int> ids)

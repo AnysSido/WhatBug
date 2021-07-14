@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.DTOs.Projects;
+using WhatBug.WebUI.ViewModels.Common;
 using WhatBug.WebUI.ViewModels.Issues;
 using WhatBug.WebUI.ViewModels.Permissions;
 using WhatBug.WebUI.ViewModels.Priorities;
@@ -32,18 +34,18 @@ namespace WhatBug.WebUI.Common
 
             // Priorities
             CreateMap<PriorityDTO, PriorityViewModel>().ReverseMap();
-            CreateMap<PriorityIconDTO, PriorityIconViewModel>()
+            CreateMap<IconDTO, IconViewModel>()
                 .ForMember(
                     dest => dest.ClassName,
-                    opt => opt.MapFrom<PriorityIconClassNameResolver, string>(src => src.Name));
+                    opt => opt.MapFrom<IconClassNameResolver, string>(src => src.Name));
 
             CreateMap<CreatePriorityViewModel, CreatePriorityDTO>()
                 .ForMember(
                     dest => dest.Color,
                     opt => opt.MapFrom(src => src.SelectedIconColor))
                 .ForMember(
-                    dest => dest.PriorityIconName,
-                    opt => opt.MapFrom<PriorityIconNameResolver, string>(src => src.SelectedIcon));
+                    dest => dest.IconName,
+                    opt => opt.MapFrom<IconNameResolver, string>(src => src.SelectedIcon));
 
             CreateMap<PriorityDTO, EditPriorityViewModel>()
                 .ForMember(
@@ -51,15 +53,15 @@ namespace WhatBug.WebUI.Common
                     opt => opt.MapFrom(src => src.Color))
                 .ForMember(
                     dest => dest.SelectedIconName,
-                    opt => opt.MapFrom<PriorityIconClassNameResolver, string>(src => src.PriorityIcon.Name));
+                    opt => opt.MapFrom<IconClassNameResolver, string>(src => src.Icon.Name));
 
             CreateMap<EditPriorityViewModel, EditPriorityDTO>()
                 .ForMember(
                     dest => dest.Color,
                     opt => opt.MapFrom(src => src.SelectedIconColor))
                 .ForMember(
-                    dest => dest.PriorityIconName,
-                    opt => opt.MapFrom<PriorityIconNameResolver, string>(src => src.SelectedIconName));
+                    dest => dest.IconName,
+                    opt => opt.MapFrom<IconNameResolver, string>(src => src.SelectedIconName));
 
             // Priority Schemes
             CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>().ReverseMap();

@@ -16,15 +16,15 @@ namespace WhatBug.WebUI.Controllers
     {
         private readonly IPrioritySchemeService _prioritySchemeService;
         private readonly IPriorityService _priorityService;
-        private readonly IPriorityIconService _priorityIconService;
+        private readonly IIconService _iconService;
         private readonly IMapper _mapper;
 
-        public PrioritySchemesController(IPrioritySchemeService prioritySchemeService, IPriorityService priorityService, IMapper mapper, IPriorityIconService priorityIconService)
+        public PrioritySchemesController(IPrioritySchemeService prioritySchemeService, IPriorityService priorityService, IMapper mapper, IIconService iconService)
         {
             _prioritySchemeService = prioritySchemeService;
             _priorityService = priorityService;
             _mapper = mapper;
-            _priorityIconService = priorityIconService;
+            _iconService = iconService;
         }
 
         public async Task<IActionResult> Index()
@@ -37,7 +37,7 @@ namespace WhatBug.WebUI.Controllers
 
             vm.PrioritySchemes.ForEach(s =>
                 s.Priorities.ForEach(p =>
-                    p.PriorityIcon.ClassName = _priorityIconService.IconNameToClass(p.PriorityIcon.Name))
+                    p.Icon.ClassName = _iconService.IconNameToClass(p.Icon.Name))
             );
 
             return View(vm);

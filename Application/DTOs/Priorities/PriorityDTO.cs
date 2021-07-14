@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Common;
 
 namespace WhatBug.Application.DTOs.Priorities
 {
@@ -13,6 +14,6 @@ namespace WhatBug.Application.DTOs.Priorities
         public string Description { get; set; }
         public string Color { get; set; }
         public int Order { get; set; }
-        public PriorityIconDTO PriorityIcon { get; set; }
+        public IconDTO Icon { get; set; }
     }
 }

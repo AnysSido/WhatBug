@@ -38,7 +38,7 @@ namespace WebUI
             services.AddApplication();
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
-            services.AddScoped<IPriorityIconService, FontAwesomePriorityIconService>();
+            services.AddScoped<IIconService, FontAwesomeIconService>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

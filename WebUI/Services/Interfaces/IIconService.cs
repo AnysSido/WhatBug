@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WhatBug.WebUI.Services.Interfaces
 {
-    public interface IPriorityIconService
+    public interface IIconService
     {
         string IconNameToClass(string iconName);
         string ClassToIconName(string className);

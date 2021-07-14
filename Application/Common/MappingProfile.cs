@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.Priorities;
@@ -28,7 +29,7 @@ namespace WhatBug.Application.Common
 
             // Priorities
             CreateMap<PriorityDTO, Priority>().ReverseMap();
-            CreateMap<PriorityIconDTO, PriorityIcon>().ReverseMap();
+            CreateMap<IconDTO, Icon>().ReverseMap();
             CreateMap<CreatePriorityDTO, Priority>();
             CreateMap<EditPriorityDTO, Priority>();
 

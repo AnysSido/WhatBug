@@ -6,7 +6,7 @@ using WhatBug.WebUI.Services.Interfaces;
 
 namespace WhatBug.WebUI.Services
 {
-    public class FontAwesomePriorityIconService : IPriorityIconService
+    public class FontAwesomeIconService : IIconService
     {
         private string _iconClassPrefix = "fas fa-fw fa-";
         private string _default = "times";

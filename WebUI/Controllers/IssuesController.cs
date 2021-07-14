@@ -16,15 +16,15 @@ namespace WhatBug.WebUI.Controllers
     {
         private readonly IIssueService _issueService;
         private readonly IProjectService _projectService;
-        private readonly IPriorityIconService _priorityIconService;
+        private readonly IIconService _iconService;
         private readonly IMapper _mapper;
 
-        public IssuesController(IIssueService issueService, IMapper mapper, IProjectService projectService, IPriorityIconService priorityIconService)
+        public IssuesController(IIssueService issueService, IMapper mapper, IProjectService projectService, IIconService iconService)
         {
             _issueService = issueService;
             _mapper = mapper;
             _projectService = projectService;
-            _priorityIconService = priorityIconService;
+            _iconService = iconService;
         }
 
         [HttpGet]

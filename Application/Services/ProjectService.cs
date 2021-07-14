@@ -67,7 +67,7 @@ namespace WhatBug.Application.Services
             var project = await _context.Projects
                 .Include(p => p.PriorityScheme)
                     .ThenInclude(s => s.Priorities)
-                        .ThenInclude(p => p.PriorityIcon)
+                        .ThenInclude(p => p.Icon)
                 .FirstOrDefaultAsync(p => p.Id == id);
             project.PriorityScheme.Priorities.Sort((a, b) => a.Order.CompareTo(b.Order));
             return _mapper.Map<ProjectDTO>(project);

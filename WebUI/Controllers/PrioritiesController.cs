@@ -9,6 +9,7 @@ using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Data;
 using WhatBug.WebUI.Services.Interfaces;
+using WhatBug.WebUI.ViewModels.Common;
 using WhatBug.WebUI.ViewModels.Priorities;
 
 namespace WhatBug.WebUI.Controllers
@@ -35,7 +36,7 @@ namespace WhatBug.WebUI.Controllers
         {
             var vm = new CreatePriorityViewModel()
             {
-                AllIcons = _mapper.Map<List<PriorityIconViewModel>>(await _priorityService.LoadIconsAsync())
+                AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync())
             };
             return View(vm);
         }
@@ -46,7 +47,7 @@ namespace WhatBug.WebUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                vm.AllIcons = _mapper.Map<List<PriorityIconViewModel>>(await _priorityService.LoadIconsAsync());
+                vm.AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync());
                 return View(vm);
             }
 
@@ -58,7 +59,7 @@ namespace WhatBug.WebUI.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var vm = _mapper.Map<EditPriorityViewModel>(await _priorityService.GetPriorityAsync(id));
-            vm.AllIcons = _mapper.Map<List<PriorityIconViewModel>>(await _priorityService.LoadIconsAsync());
+            vm.AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync());
             return View(vm);
         }
 

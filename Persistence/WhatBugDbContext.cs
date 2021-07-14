@@ -36,7 +36,7 @@ namespace WhatBug.Persistence
         public DbSet<Scheme> Schemes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<PriorityScheme> PrioritySchemes { get; set; }
-        public DbSet<PriorityIcon> PriorityIcons { get; set; }
+        public DbSet<Icon> Icons { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -82,7 +82,7 @@ namespace WhatBug.Persistence
 
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.GetAll());
             modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.GetAll());
-            modelBuilder.Entity<PriorityIcon>().HasData(Domain.Data.PriorityIcons.GetAll());
+            modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.GetAll());
             modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme() { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
         }
     }

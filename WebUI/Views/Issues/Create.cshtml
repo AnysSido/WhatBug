@@ -29,7 +29,7 @@
                             <select class="form-control selectpicker" asp-for="SelectedPriorityId">
                                 @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
                                 {
-                                    <option value="@Model.AllSchemePriorities[i].Id" data-content="<i style='color: @Model.AllSchemePriorities[i].Color' class='@Model.AllSchemePriorities[i].PriorityIcon.ClassName'></i>@Model.AllSchemePriorities[i].Name"></option>
+                                    <option value="@Model.AllSchemePriorities[i].Id" data-content="<i style='color: @Model.AllSchemePriorities[i].Color' class='@Model.AllSchemePriorities[i].Icon.ClassName'></i>@Model.AllSchemePriorities[i].Name"></option>
                                 }
                             </select>
                         </div>
