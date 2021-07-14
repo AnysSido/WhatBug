@@ -18,7 +18,7 @@ namespace WhatBug.Domain.Data
             return role;
         }
 
-        public static ReadOnlyCollection<Role> GetAll()
+        public static ReadOnlyCollection<Role> Seed()
         {
             return _roles.AsReadOnly();
         }

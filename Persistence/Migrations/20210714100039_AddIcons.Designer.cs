@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210714100039_AddIcons")]
+    partial class AddIcons
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,52 +266,6 @@ namespace Persistence.Migrations
                     b.HasIndex("ReporterId");
 
                     b.ToTable("Issues");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.IssueType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IconId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IconId");
-
-                    b.ToTable("IssueTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IconId = 29,
-                            Name = "Task"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IconId = 27,
-                            Name = "Bug"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IconId = 28,
-                            Name = "New Feature"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IconId = 30,
-                            Name = "Improvement"
-                        });
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.Permission", b =>
@@ -654,17 +610,6 @@ namespace Persistence.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Reporter");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.IssueType", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
-                        .WithMany()
-                        .HasForeignKey("IconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Icon");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.ProjectRoleUser", b =>

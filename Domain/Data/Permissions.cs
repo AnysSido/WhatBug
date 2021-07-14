@@ -21,7 +21,7 @@ namespace WhatBug.Domain.Data
             return permission;
         }
 
-        public static ReadOnlyCollection<Permission> GetAll()
+        public static ReadOnlyCollection<Permission> Seed()
         {
             return _permissions.AsReadOnly();
         }

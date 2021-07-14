@@ -38,6 +38,13 @@ namespace WhatBug.Domain.Data
         public static readonly Icon XMark = CreateIcon(24, "XMark");
         public static readonly Icon Ban = CreateIcon(25, "Ban");
         public static readonly Icon EqualsSign = CreateIcon(26, "Equals");
+        public static readonly Icon Bug = CreateIcon(27, "Bug");
+        public static readonly Icon PlusSquare = CreateIcon(28, "PlusSquare");
+        public static readonly Icon CheckSquare = CreateIcon(29, "CheckSquare");
+        public static readonly Icon CaretSquareUp = CreateIcon(30, "CaretSquareUp");
+        public static readonly Icon CaretSquareDown = CreateIcon(31, "CaretSquareDown");
+        public static readonly Icon CaretSquareLeft = CreateIcon(32, "CaretSquareLeft");
+        public static readonly Icon CaretSquareRight = CreateIcon(33, "CaretSquareRight");
 
         private static Icon CreateIcon(int id, string name)
         {
@@ -46,7 +53,7 @@ namespace WhatBug.Domain.Data
             return icon;
         }
 
-        public static ReadOnlyCollection<Icon> GetAll()
+        public static ReadOnlyCollection<Icon> Seed()
         {
             return _icons.AsReadOnly();
         }
