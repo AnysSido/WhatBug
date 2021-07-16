@@ -1,0 +1,36 @@
+//
+// Plugin: SweetAlert2
+//
+
+// Custom toast styles
+.colored-toast.swal2-icon-success {
+    background-color: $primary !important;
+}
+
+.colored-toast.swal2-icon-error {
+    background-color: $danger !important;
+}
+
+.colored-toast.swal2-icon-warning {
+    background-color: $warning !important;
+}
+
+.colored-toast.swal2-icon-info {
+    background-color: $info !important;
+}
+
+.colored-toast.swal2-icon-question {
+    background-color: $info !important;
+}
+
+.colored-toast .swal2-title {
+    color: white;
+}
+
+.colored-toast .swal2-close {
+    color: white;
+}
+
+.colored-toast .swal2-content {
+    color: white;
+}
