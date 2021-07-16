@@ -1,0 +1,13 @@
+// Generate WhatBug colors
+@each $name, $color in $colors {
+    .wb-color-#{$name} {
+        color: $color;
+    }
+}
+
+// Generate icon theme colors
+@each $name, $color in $theme-colors {
+    .icon-#{$name} {
+        color: $color;
+    }
+}

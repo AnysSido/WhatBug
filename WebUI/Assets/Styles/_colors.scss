@@ -1,0 +1,189 @@
+﻿// WhatBug colors
+
+// Whites
+$white: #ffffff;
+$chiffon: #fafaf2;
+$frost: #ecfcfc;
+
+// Tans
+$tan: #e6dbad;
+$buttermilk: #fdefb2;
+$beige: #ecdd9a;
+$oat: #dec98a;
+$cookie: #f3ebad;
+$latte: #e9c17b;
+
+// Yellows
+$lemon: #effd5f;
+$yellow: #fde64b;
+$honey: #ffc30b;
+
+// Oranges
+$gold: #fea303;
+$apricot: #ed820e;
+$orange: #ed7014;
+
+// Reds
+$blush: #bc5449;
+$red: #d0312d;
+$rose: #e2252b;
+$candy: #d21502;
+$apple: #a91b0d;
+$cherry: #990f02;
+
+// Pinks
+$pink: #f69acd;
+$fushcia: #fc47a9;
+$hotpink: #ff1694;
+$magenta: #e11584;
+
+// Purples
+$lilac: #b660cd;
+$amethyst: #a45ee5;
+$iris: #a45ee5;
+$purple: #a32cc4;
+$violet: #710193;
+
+// Blues
+$sky: #62c5da;
+$sapphire: #52b2c0;
+$cerulean: #0492c2;
+$blue: #3a43ba;
+$cobalt: #1338bd;
+$navy: #0b1171;
+
+// Greens
+$mint: #98edc3;
+$seafoam: #3cec97;
+$pear: #74b62e;
+$pickle: #597d35;
+$green: #3bb143;
+$shamrock: #03ac13;
+$emerald: #028910;
+$lime: #028910;
+$basil: #32612d;
+$olive: #32612d;
+
+// Browns
+$tortilla: #9a7b4f;
+$peanut: #795c34;
+$hickory: #795c34;
+$tawny: #7e471c;
+$caramel: #65350f;
+$coffee: #4b371c;
+$mocha: #3c280d;
+$brown: #231709;
+
+// Grays
+$cloud: #c6c6d0;
+$silver: #adadc7;
+$coin: #9897a9;
+$ash: #787176;
+$gray: #6c626d;
+$pewter: #6a6880;
+$smoke: #59515e;
+$slate: #3f3d53;
+
+// Blacks
+$black: #000000;
+
+// Theme Colors (Bootstrap 4)
+$theme-blue:    #007bff;
+$theme-indigo:  #6610f2;
+$theme-purple:  #6f42c1;
+$theme-pink:    #e83e8c;
+$theme-red:     #dc3545;
+$theme-orange:  #fd7e14;
+$theme-yellow:  #ffc107;
+$theme-green:   #28a745;
+$theme-teal:    #20c997;
+$theme-cyan:    #17a2b8;
+$theme-gray-100: #f8f9fa;
+$theme-gray-600: #6c757d;
+$theme-gray-800: #343a40;
+
+$primary:       $theme-blue !default;
+$secondary:     $theme-gray-600 !default;
+$success:       $theme-green !default;
+$info:          $theme-cyan !default;
+$warning:       $theme-yellow !default;
+$danger:        $theme-red !default;
+$light:         $theme-gray-100 !default;
+$dark:          $theme-gray-800 !default;
+
+$theme-colors: (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+);
+
+$colors: (
+    "white":	$white,
+    "chiffon":	$chiffon,
+    "frost":	$frost,
+    "tan":		$tan,
+    "buttermilk":$buttermilk,
+    "beige":	$beige,
+    "oat":		$oat,
+    "cookie":	$cookie,
+    "latte":	$latte,
+    "lemon":	$lemon,
+    "yellow":   $yellow,
+    "honey":	$honey,
+    "gold":		$gold,
+    "apricot":	$apricot,
+    "orange":	$orange,
+    "blush":	$blush,
+    "red":		$red,
+    "rose":		$rose,
+    "candy":	$candy,
+    "apple":	$apple,
+    "cherry":	$cherry,
+    "pink":		$pink,
+    "fushcia":	$fushcia,
+    "hotpink":	$hotpink,
+    "magenta":	$magenta,
+    "lilac":	$lilac,
+    "amethyst":	$amethyst,
+    "iris":		$iris,
+    "purple":	$purple,
+    "violet":	$violet,
+    "sky":		$sky,
+    "sapphire":	$sapphire,
+    "cerulean":	$cerulean,
+    "blue":		$blue,
+    "cobalt":	$cobalt,
+    "navy":		$navy,
+    "mint":		$mint,
+    "seafoam":	$seafoam,
+    "pear":		$pear,
+    "pickle":	$pickle,
+    "green":	$green,
+    "shamrock":	$shamrock,
+    "emerald":	$emerald,
+    "lime":		$lime,
+    "basil":	$basil,
+    "olive":	$olive,
+    "tortilla":	$tortilla,
+    "peanut":	$peanut,
+    "hickory":	$hickory,
+    "tawny":	$tawny,
+    "caramel":	$caramel,
+    "coffee":	$coffee,
+    "mocha":	$mocha,
+    "brown":	$brown,
+    "cloud":	$cloud,
+    "silver":	$silver,
+    "coin":		$coin,
+    "ash":		$ash,
+    "gray":		$gray,
+    "pewter":	$pewter,
+    "smoke":	$smoke,
+    "slate":	$slate,
+    "black":	$black
+);
