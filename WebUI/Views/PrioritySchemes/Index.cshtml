@@ -44,7 +44,7 @@
                         <td>
                             @foreach (var priority in Model.PrioritySchemes[i].Priorities)
                             {
-                                <i class="@priority.Icon.ClassName" style="color: @priority.Color"></i>
+                                <i class="wb-color-@priority.ColorIcon.Color.LowerName @priority.ColorIcon.Icon.ClassName"></i>
                                 <span>@priority.Name</span><br />
                             }
                         </td>

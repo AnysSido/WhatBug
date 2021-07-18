@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210718144609_AddColorIconsTable")]
+    partial class AddColorIconsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -867,11 +869,14 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ColorIconId")
-                        .HasColumnType("int");
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IconId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -881,7 +886,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorIconId");
+                    b.HasIndex("IconId");
 
                     b.ToTable("Priorities");
                 });
@@ -1112,13 +1117,13 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Priorities.Priority", b =>
                 {
-                    b.HasOne("WhatBug.Domain.Entities.ColorIcon", "ColorIcon")
-                        .WithMany()
-                        .HasForeignKey("ColorIconId")
+                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
+                        .WithMany("Priorities")
+                        .HasForeignKey("IconId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ColorIcon");
+                    b.Navigation("Icon");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Project", b =>
@@ -1130,6 +1135,11 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("PriorityScheme");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Icon", b =>
+                {
+                    b.Navigation("Priorities");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.Role", b =>

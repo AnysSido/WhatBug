@@ -38,7 +38,11 @@ namespace WhatBug.Application.Services
                 .Include(i => i.Assignee)
                 .Include(i => i.Reporter)
                 .Include(i => i.Priority)
-                    .ThenInclude(p => p.Icon)
+                    .ThenInclude(p => p.ColorIcon)
+                        .ThenInclude(ci => ci.Color)
+                .Include(i => i.Priority)
+                    .ThenInclude(p => p.ColorIcon)
+                        .ThenInclude(ci => ci.Icon)
                 .Where(i => i.ProjectId == projectId).ToListAsync());
         }
 
@@ -50,7 +54,11 @@ namespace WhatBug.Application.Services
                     .Include(i => i.Assignee)
                     .Include(i => i.Reporter)
                     .Include(i => i.Priority)
-                        .ThenInclude(p => p.Icon)
+                        .ThenInclude(p => p.ColorIcon)
+                            .ThenInclude(ci => ci.Color)
+                    .Include(i => i.Priority)
+                        .ThenInclude(p => p.ColorIcon)
+                            .ThenInclude(ci => ci.Icon)
                     .FirstOrDefaultAsync(i => i.Id == issueId));
         }
     }

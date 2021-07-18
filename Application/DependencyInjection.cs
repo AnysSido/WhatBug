@@ -20,6 +20,7 @@ namespace WhatBug.Application
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPriorityService, PriorityService>();
             services.AddScoped<IPrioritySchemeService, PrioritySchemeService>();
+            services.AddScoped<IColorService, ColorService>();
             services.AddAutoMapper(typeof(DependencyInjection));
 
             return services;

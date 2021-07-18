@@ -11,11 +11,10 @@ namespace WhatBug.Domain.Entities.Priorities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Color { get; set; }
         public int Order { get; set; }
         
-        public int IconId { get; set; }
-        public Icon Icon { get; set; }
+        public int ColorIconId { get; set; }
+        public ColorIcon ColorIcon{ get; set; }
 
         public List<PriorityScheme> PrioritySchemes { get; set; }
     }

@@ -4,8 +4,8 @@
     <!-- FontIconPicker -->
     <link rel="stylesheet" href="~/lib/fonticonpicker/css/base/jquery.fonticonpicker.min.css" />
     <link rel="stylesheet" href="~/lib/fonticonpicker/css/themes/dark-grey-theme/jquery.fonticonpicker.darkgrey.min.css" />
-    <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href="~/lib/admin-lte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap Select-->
+    <link rel="stylesheet" href="~/lib/bootstrap-select/css/bootstrap-select.min.css" />
 }
 
 @{
@@ -19,9 +19,10 @@
                     <h6 class="card-title">Priority Details</h6>
                 </div>
                 <form asp-controller="Priorities" method="post">
+                    <input type="hidden" asp-for="SelectedColor" />
+                    <input type="hidden" asp-for="SelectedIcon" />
+                    <input asp-for="@Model.Id" />
                     <div class="card-body">
-                        <input type="hidden" id="PrevSelectedIcon" value="@Model.SelectedIconName" />
-                        <input asp-for="@Model.Id" />
                         <div class="form-group">
                             <label asp-for="@Model.Name"></label>
                             <input asp-for="@Model.Name" class="form-control" />
@@ -31,22 +32,34 @@
                             <label asp-for="@Model.Description"></label>
                             <textarea asp-for="@Model.Description" class="form-control" rows="2"></textarea>
                         </div>
+
+                        <!-- Color Selection -->
+                        <div class="form-group">
+                            <label asp-for="AllColors"></label>
+                            <select class="form-control selectpicker">
+                                @for (int i = 0; i < Model.AllColors.Count; i++)
+                                {
+                                    var code =
+                                         "<div class='row'>"
+                                        + "<div class='col-4 wb-bg-color-" + Model.AllColors[i].LowerName + "'></div>"
+                                        + "<div class='col-8'>" + Model.AllColors[i].Name + "</div>"
+                                        + "</div>";
+
+                                    <option value="@Model.AllColors[i].Id" data-content="@code" data-color="@Model.AllColors[i].LowerName">@i</option>
+                                }
+                            </select>
+                        </div>
+
                         <div class="d-flex flex-row">
                             <div class="mr-auto">
                                 <label>Icon</label>
                                 <div class="form-group">
-                                    <select id="SelectedIcon" name="SelectedIconName">
+                                    <select id="IconPicker" name="IconPicker">
                                         @for (int i = 0; i < Model.AllIcons.Count; i++)
                                         {
-                                            <option value="@Model.AllIcons[i].ClassName">@Model.AllIcons[i].ClassName</option>
+                                            <option data-iconid="@Model.AllIcons[i].Id">@Model.AllIcons[i].ClassName</option>
                                         }
                                     </select>
-                                </div>
-                            </div>
-                            <div class="mr-auto">
-                                <label>Icon Color</label>
-                                <div class="input-group icon-colorpicker">
-                                    <input asp-for="@Model.SelectedIconColor" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mr-auto">
@@ -69,8 +82,76 @@
 @section Scripts {
     <!-- FontIconPicker -->
     <script type="text/javascript" src="~/lib/fonticonpicker/js/jquery.fonticonpicker.min.js"></script>
-    <!-- bootstrap color picker -->
-    <script type="text/javascript" src="~/lib/admin-lte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-    <!-- Icon Color Picker -->
-    <script type="text/javascript" src="~/js/iconcolorpicker.js"></script>
+    <!-- Bootstrap Select -->
+    <script type="text/javascript" src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // Styling fix for bootstrap-select wrapping all options in a text span.
+            $('.selectpicker').on('show.bs.select', function () {
+                $('.dropdown-menu li .text').removeClass('text');
+            });
+
+            // Update preview to match selection when changed by user
+            $('.selectpicker').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                // clickedIndex is null when SelectedColor is set programatically
+                if (clickedIndex != null) {
+                    var newColor = $('.selectpicker option').eq(clickedIndex).data('color');
+                    var oldColor = $('.selectpicker option').eq(previousValue - 1).data('color');
+
+                    $('#SelectedColor').val(clickedIndex + 1);
+                    $('#iconPreview').removeClass('wb-color-' + oldColor);
+                    $('#iconPreview').addClass('wb-color-' + newColor);
+                }
+            });
+
+            // Update preview to match selection when SelectedColor changed programatically (e.g. controller)
+            $('.selectpicker').on('loaded.bs.select', function (e) {
+                var selectedColorId = $('#SelectedColor').val();
+                var selectedColor = $('.selectpicker option').eq(selectedColorId - 1).data('color');
+
+                $('.selectpicker').selectpicker('val', selectedColorId);
+                $('#iconPreview').addClass('wb-color-' + selectedColor);
+            });
+
+
+            // Update preview when icon to match icon selector.
+            function updateIconPreview() {
+                $('#iconPreview .fas').attr('class', GetIconClassFromId($('#SelectedIcon').val()));
+            }
+
+            // Init font icon picker
+            var iconPicker = $('#IconPicker').fontIconPicker({
+                theme: 'fip-darkgrey',
+                emptyIcon: false,
+            });
+
+            // Set the icon to the previously selected icon on page reload (i.e. validation fail)
+            // or set default icon value to 1
+            if ($('#SelectedIcon').val() != '0') {
+                iconPicker.setIcon(GetIconClassFromId($('#SelectedIcon').val()));
+            } else {
+                $('#SelectedIcon').val(1);
+            }
+
+            // Update preview icon on page load
+            updateIconPreview();
+
+            iconPicker.on('change', function () {
+                var selectedClass = $('.selected-icon .fas').attr('class');
+                var selectedIconId = GetIconIdFromClass(selectedClass);
+                $('#SelectedIcon').val(selectedIconId);
+                updateIconPreview();
+            });
+
+            function GetIconClassFromId(id) {
+                var option = $('#IconPicker option[data-iconid="' + id + '"]');
+                return option.val();
+            };
+
+            function GetIconIdFromClass(name) {
+                var option = $('#IconPicker option:contains("' + name + '")');
+                return option.data('iconid');
+            }
+        });
+    </script>
 }
