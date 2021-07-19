@@ -45,10 +45,8 @@ namespace WhatBug.Application.Services
         public async Task<PriorityDTO> GetPriorityAsync(int id)
         {
             return _mapper.Map<PriorityDTO>(await _context.Priorities
-                .Include(p => p.ColorIcon)
-                    .ThenInclude(ci => ci.Color)
-                .Include(p => p.ColorIcon)
-                    .ThenInclude(ci => ci.Icon)
+                .Include(p => p.ColorIcon.Color)
+                .Include(p => p.ColorIcon.Icon)
                 .FirstOrDefaultAsync(p => p.Id == id));
         }
 
@@ -56,10 +54,8 @@ namespace WhatBug.Application.Services
         {
             // Requires permission?
             return _mapper.Map<List<PriorityDTO>>(await _context.Priorities
-                .Include(p => p.ColorIcon)
-                    .ThenInclude(ci => ci.Color)
-                .Include(p => p.ColorIcon)
-                    .ThenInclude(ci => ci.Icon)
+                .Include(p => p.ColorIcon.Color)
+                .Include(p => p.ColorIcon.Icon)
                 .ToListAsync())
                 .OrderBy(p => p.Order).ToList();
         }

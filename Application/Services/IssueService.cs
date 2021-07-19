@@ -37,12 +37,8 @@ namespace WhatBug.Application.Services
             return _mapper.Map<List<IssueDTO>>(await _context.Issues
                 .Include(i => i.Assignee)
                 .Include(i => i.Reporter)
-                .Include(i => i.Priority)
-                    .ThenInclude(p => p.ColorIcon)
-                        .ThenInclude(ci => ci.Color)
-                .Include(i => i.Priority)
-                    .ThenInclude(p => p.ColorIcon)
-                        .ThenInclude(ci => ci.Icon)
+                .Include(i => i.Priority.ColorIcon.Color)
+                .Include(i => i.Priority.ColorIcon.Icon)
                 .Where(i => i.ProjectId == projectId).ToListAsync());
         }
 
@@ -53,12 +49,8 @@ namespace WhatBug.Application.Services
                 await _context.Issues
                     .Include(i => i.Assignee)
                     .Include(i => i.Reporter)
-                    .Include(i => i.Priority)
-                        .ThenInclude(p => p.ColorIcon)
-                            .ThenInclude(ci => ci.Color)
-                    .Include(i => i.Priority)
-                        .ThenInclude(p => p.ColorIcon)
-                            .ThenInclude(ci => ci.Icon)
+                    .Include(i => i.Priority.ColorIcon.Color)
+                    .Include(i => i.Priority.ColorIcon.Icon)
                     .FirstOrDefaultAsync(i => i.Id == issueId));
         }
 
