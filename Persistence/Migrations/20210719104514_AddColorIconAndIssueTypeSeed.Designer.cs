@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210719104514_AddColorIconAndIssueTypeSeed")]
+    partial class AddColorIconAndIssueTypeSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -603,9 +605,6 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IssueTypeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
@@ -627,8 +626,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssigneeId");
-
-                    b.HasIndex("IssueTypeId");
 
                     b.HasIndex("PriorityId");
 
@@ -1006,12 +1003,6 @@ namespace Persistence.Migrations
                         .WithMany("AssignedIssues")
                         .HasForeignKey("AssigneeId");
 
-                    b.HasOne("WhatBug.Domain.Entities.IssueType", "IssueType")
-                        .WithMany()
-                        .HasForeignKey("IssueTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WhatBug.Domain.Entities.Priorities.Priority", "Priority")
                         .WithMany()
                         .HasForeignKey("PriorityId")
@@ -1031,8 +1022,6 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Assignee");
-
-                    b.Navigation("IssueType");
 
                     b.Navigation("Priority");
 

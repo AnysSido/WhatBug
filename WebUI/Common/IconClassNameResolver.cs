@@ -23,19 +23,4 @@ namespace WhatBug.WebUI.Common
             return _iconService.IconNameToClass(sourceMember);
         }
     }
-
-    public class IconNameResolver : IMemberValueResolver<object, object, string, string>
-    {
-        private readonly IIconService _iconService;
-
-        public IconNameResolver(IIconService iconService)
-        {
-            _iconService = iconService;
-        }
-
-        public string Resolve(object source, object destination, string sourceMember, string destMember, ResolutionContext context)
-        {
-            return _iconService.ClassToIconName(sourceMember);
-        }
-    }
 }

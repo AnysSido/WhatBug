@@ -36,8 +36,7 @@
                         <!-- Drag Handle -->
                         <td>
                             <span class="handle">
-                                <i class="fas fa-ellipsis-v"></i>
-                                <i class="fas fa-ellipsis-v"></i>
+                                <i class="fas fa-arrows-alt-v"></i>
                             </span>
                         </td>
                         <!-- Actions -->
@@ -55,7 +54,7 @@
                         <!-- Icon & Name -->
                         <td>
                             <span>
-                                <i class="@Model[i].Icon.ClassName" style="color: @Model[i].Color"></i>
+                                <i class="@Model[i].ColorIcon.Icon.ClassName wb-color-@Model[i].ColorIcon.Color.LowerName"></i>
                                 <label asp-for="@Model[i].Name">@Model[i].Name</label>
                             </span>
                         </td>
@@ -66,7 +65,7 @@
                             </div>
                         </td>
                         <!-- Color -->
-                        <td style="background-color: @Model[i].Color"></td>
+                        <td class="wb-bg-color-@Model[i].ColorIcon.Color.LowerName"></td>
                     </tr>
                     }
                 </tbody>

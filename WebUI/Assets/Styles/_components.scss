@@ -5,9 +5,9 @@
     }
 }
 
-// Generate icon theme colors
-@each $name, $color in $theme-colors {
-    .icon-#{$name} {
-        color: $color;
+// Generate WhatBug background colors
+@each $name, $color in $colors {
+    .wb-bg-color-#{$name} {
+        background-color: $color;
     }
 }

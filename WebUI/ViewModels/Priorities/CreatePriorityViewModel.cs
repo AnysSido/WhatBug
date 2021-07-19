@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,11 +19,17 @@ namespace WhatBug.WebUI.ViewModels.Priorities
         public string Description { get; set; }
 
         [Required]
-        public string SelectedIcon { get; set; }
+        [HiddenInput]
+        public int SelectedIcon { get; set; }
 
         [Required]
-        public string SelectedIconColor { get; set; }
+        [HiddenInput]
+        public int SelectedColor { get; set; }    
 
+        [Display(Name = "Icon")]
         public List<IconViewModel> AllIcons { get; set; }
+
+        [Display(Name = "Color")]
+        public List<ColorViewModel> AllColors { get; set; }
     }
 }

@@ -45,7 +45,8 @@ namespace WhatBug.WebUI.Controllers
             var project = await _projectService.GetProjectAsync(projectId);
             var vm = new CreateIssueViewModel()
             {
-                AllSchemePriorities = _mapper.Map<List<PriorityViewModel>>(project.PriorityScheme.Priorities)
+                AllSchemePriorities = _mapper.Map<List<PriorityViewModel>>(project.PriorityScheme.Priorities),
+                AllIssueTypes = _mapper.Map<List<IssueTypeViewModel>>(await _issueService.GetIssueTypesAsync())
             };
 
             return View(vm);

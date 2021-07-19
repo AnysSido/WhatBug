@@ -9,6 +9,7 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.Services.Interfaces;
+using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Services
@@ -28,8 +29,7 @@ namespace WhatBug.Application.Services
         {
             // TODO: Check permissions, validate color
             var priority = _mapper.Map<Priority>(dto);
-            priority.Icon = await _context.Icons.FirstAsync(i => i.Name == dto.IconName);
-            priority.Order = await _context.Priorities.MaxAsync(p => p.Order) + 1;
+            priority.Order = await _context.Priorities.MaxAsync(p => (int?)p.Order) + 1 ?? 1;
             await _context.Priorities.AddAsync(priority);
             await _context.SaveChangesAsync();
         }
@@ -37,16 +37,18 @@ namespace WhatBug.Application.Services
         public async Task EditPriorityAsync(EditPriorityDTO dto)
         {
             // TODO: Check permissions, validate color
-            var priority = await _context.Priorities.FirstAsync(p => p.Id == dto.Id);
+            var priority = await _context.Priorities.Include(p => p.ColorIcon).FirstAsync(p => p.Id == dto.Id);
             _mapper.Map(dto, priority);
-            priority.Icon = await _context.Icons.FirstAsync(i => i.Name == dto.IconName);
             await _context.SaveChangesAsync();
         }
 
         public async Task<PriorityDTO> GetPriorityAsync(int id)
         {
             return _mapper.Map<PriorityDTO>(await _context.Priorities
-                .Include(p => p.Icon)
+                .Include(p => p.ColorIcon)
+                    .ThenInclude(ci => ci.Color)
+                .Include(p => p.ColorIcon)
+                    .ThenInclude(ci => ci.Icon)
                 .FirstOrDefaultAsync(p => p.Id == id));
         }
 
@@ -54,7 +56,10 @@ namespace WhatBug.Application.Services
         {
             // Requires permission?
             return _mapper.Map<List<PriorityDTO>>(await _context.Priorities
-                .Include(p => p.Icon)
+                .Include(p => p.ColorIcon)
+                    .ThenInclude(ci => ci.Color)
+                .Include(p => p.ColorIcon)
+                    .ThenInclude(ci => ci.Icon)
                 .ToListAsync())
                 .OrderBy(p => p.Order).ToList();
         }

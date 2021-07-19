@@ -38,6 +38,8 @@ namespace WhatBug.Persistence
         public DbSet<PriorityScheme> PrioritySchemes { get; set; }
         public DbSet<Icon> Icons { get; set; }
         public DbSet<IssueType> IssueTypes { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<ColorIcon> ColorIcons { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -79,12 +81,34 @@ namespace WhatBug.Persistence
                 .HasOne(i => i.Reporter)
                 .WithMany(u => u.ReportedIssues)
                 .HasForeignKey(i => i.ReporterId);
-                
+
+            modelBuilder
+                .Entity<ColorIcon>()
+                .HasOne(ci => ci.Color)
+                .WithMany()
+                .HasForeignKey(ci => ci.ColorId)
+                .IsRequired();
+
+            modelBuilder
+                .Entity<ColorIcon>()
+                .HasOne(ci => ci.Icon)
+                .WithMany()
+                .HasForeignKey(ci => ci.IconId)
+                .IsRequired();
+
+            modelBuilder
+                .Entity<Issue>()
+                .HasOne(i => i.IssueType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.Seed());
             modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.Seed());
             modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.Seed());
             modelBuilder.Entity<IssueType>().HasData(Domain.Data.IssueTypes.Seed());
+            modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());
+            modelBuilder.Entity<ColorIcon>().HasData(Domain.Data.ColorIcons.Seed());
             modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme() { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
         }
     }

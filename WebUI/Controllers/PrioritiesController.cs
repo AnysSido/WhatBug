@@ -17,12 +17,14 @@ namespace WhatBug.WebUI.Controllers
     public class PrioritiesController : Controller
     {
         private readonly IPriorityService _priorityService;
+        private readonly IColorService _colorService;
         private readonly IMapper _mapper;
 
-        public PrioritiesController(IPriorityService priorityService, IMapper mapper)
+        public PrioritiesController(IPriorityService priorityService, IMapper mapper, IColorService colorService)
         {
             _priorityService = priorityService;
             _mapper = mapper;
+            _colorService = colorService;
         }
 
         public async Task<IActionResult> Index()
@@ -36,8 +38,10 @@ namespace WhatBug.WebUI.Controllers
         {
             var vm = new CreatePriorityViewModel()
             {
-                AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync())
+                AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync()),
+                AllColors = _mapper.Map<List<ColorViewModel>>(await _colorService.GetAllAsync())
             };
+            vm.SelectedColor = vm.AllColors.Single(c => c.Id == Colors.Rose.Id).Id;
             return View(vm);
         }
 
@@ -48,6 +52,7 @@ namespace WhatBug.WebUI.Controllers
             if (!ModelState.IsValid)
             {
                 vm.AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync());
+                vm.AllColors = _mapper.Map<List<ColorViewModel>>(await _colorService.GetAllAsync());
                 return View(vm);
             }
 
@@ -60,12 +65,19 @@ namespace WhatBug.WebUI.Controllers
         {
             var vm = _mapper.Map<EditPriorityViewModel>(await _priorityService.GetPriorityAsync(id));
             vm.AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync());
+            vm.AllColors = _mapper.Map<List<ColorViewModel>>(await _colorService.GetAllAsync());
             return View(vm);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(EditPriorityViewModel vm)
         {
+            if (!ModelState.IsValid)
+            {
+                vm.AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync());
+                vm.AllColors = _mapper.Map<List<ColorViewModel>>(await _colorService.GetAllAsync());
+                return View(vm);
+            };
             var dto = _mapper.Map<EditPriorityDTO>(vm);
             await _priorityService.EditPriorityAsync(dto);
             return RedirectToAction(nameof(Index));

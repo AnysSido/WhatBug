@@ -38,6 +38,13 @@ namespace WhatBug.WebUI.Services
             {"XMark", "times" },
             {"Ban", "ban" },
             {"Equals", "equals" },
+            {"Bug", "bug" },
+            {"PlusSquare", "plus-square" },
+            {"CheckSquare", "check-square" },
+            {"CaretSquareUp", "caret-square-up" },
+            {"CaretSquareDown", "caret-square-down" },
+            {"CaretSquareLeft", "caret-square-left" },
+            {"CaretSquareRight", "caret-square-right" },
         };
 
         public string IconNameToClass(string name)

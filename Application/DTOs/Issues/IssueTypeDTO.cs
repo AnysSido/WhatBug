@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Common;
 
-namespace WhatBug.Application.DTOs.Priorities
+namespace WhatBug.Application.DTOs.Issues
 {
-    public class EditPriorityDTO
+    public class IssueTypeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public int ColorId { get; set; }
-        public int IconId { get; set; }
+        public ColorIconDTO ColorIcon { get; set; }
     }
 }

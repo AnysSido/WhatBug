@@ -19,9 +19,8 @@ namespace WhatBug.WebUI.ViewModels.Priorities
         [Required]
         public string Description { get; set; }
 
-        public string Color { get; set; }
         public int Order { get; set; }
 
-        public IconViewModel Icon { get; set; }
+        public ColorIconViewModel ColorIcon { get; set; }
     }
 }

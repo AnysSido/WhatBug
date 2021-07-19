@@ -29,9 +29,21 @@ namespace WhatBug.Application.Common
 
             // Priorities
             CreateMap<PriorityDTO, Priority>().ReverseMap();
-            CreateMap<IconDTO, Icon>().ReverseMap();
-            CreateMap<CreatePriorityDTO, Priority>();
-            CreateMap<EditPriorityDTO, Priority>();
+            CreateMap<CreatePriorityDTO, Priority>()
+                .ForPath(
+                    dest => dest.ColorIcon.ColorId,
+                    opt => opt.MapFrom(src => src.ColorId))
+                .ForPath(
+                    dest => dest.ColorIcon.IconId,
+                    opt => opt.MapFrom(src => src.IconId));
+
+            CreateMap<EditPriorityDTO, Priority>()
+                .ForPath(
+                    dest => dest.ColorIcon.ColorId,
+                    opt => opt.MapFrom(src => src.ColorId))
+                .ForPath(
+                    dest => dest.ColorIcon.IconId,
+                    opt => opt.MapFrom(src => src.IconId));
 
             // Priority Schemes
             CreateMap<PrioritySchemeDTO, PriorityScheme>().ReverseMap();
@@ -44,6 +56,7 @@ namespace WhatBug.Application.Common
                 .AfterMap((src, dest) => dest.AssigneeId = dest.AssigneeId == 0 ? null : dest.AssigneeId);
 
             CreateMap<Issue, IssueDTO>();
+            CreateMap<IssueType, IssueTypeDTO>();
 
             // Users
             CreateMap<User, UserDTO>();
@@ -54,6 +67,11 @@ namespace WhatBug.Application.Common
                 .ForMember(
                     dest => dest.Permissions,
                     opt => opt.MapFrom(src => src.UserPermissions.Select(p => p.Permission)));
+
+            // Common
+            CreateMap<Color, ColorDTO>();
+            CreateMap<ColorIcon, ColorIconDTO>();
+            CreateMap<Icon, IconDTO>();
         }
     }
 }

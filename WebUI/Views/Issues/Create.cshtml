@@ -24,12 +24,29 @@
                             <input asp-for="Summary" class="form-control" />
                             <span asp-validation-for="Summary" class="text-danger"></span>
                         </div>
+                        <!-- Issue Type -->
+                        <div class="form-group">
+                            <label asp-for="SelectedIssueType"></label>
+                            <select class="form-control selectpicker" asp-for="SelectedIssueType">
+                                @for (int i = 0; i < Model.AllIssueTypes.Count; i++)
+                                {
+                                    var dataContent = "<i class='" + @Model.AllIssueTypes[i].ColorIcon.Icon.ClassName
+                                                     + " wb-color-" + @Model.AllIssueTypes[i].ColorIcon.Color.LowerName + "'></i>"
+                                                     + @Model.AllIssueTypes[i].Name;
+                                    <option value="@Model.AllIssueTypes[i].Id" data-content="@dataContent"></option>
+                                }
+                            </select>
+                        </div>
+                        <!-- Issue Priority -->
                         <div class="form-group">
                             <label asp-for="SelectedPriorityId"></label>
                             <select class="form-control selectpicker" asp-for="SelectedPriorityId">
                                 @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
                                 {
-                                    <option value="@Model.AllSchemePriorities[i].Id" data-content="<i style='color: @Model.AllSchemePriorities[i].Color' class='@Model.AllSchemePriorities[i].Icon.ClassName'></i>@Model.AllSchemePriorities[i].Name"></option>
+                                    var dataContent = "<i class='" + @Model.AllSchemePriorities[i].ColorIcon.Icon.ClassName
+                                                     + " wb-color-" + @Model.AllSchemePriorities[i].ColorIcon.Color.LowerName + "'></i>"
+                                                     + @Model.AllSchemePriorities[i].Name;
+                                    <option value="@Model.AllSchemePriorities[i].Id" data-content="@dataContent"></option>
                                 }
                             </select>
                         </div>

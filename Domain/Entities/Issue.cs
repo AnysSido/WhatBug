@@ -23,6 +23,9 @@ namespace WhatBug.Domain.Entities
         public int? AssigneeId { get; set; }
         public User Assignee { get; set; }
 
+        public int IssueTypeId { get; set; }
+        public IssueType IssueType { get; set; }
+
         public int PriorityId { get; set; }
         public Priority Priority { get; set; }
     }

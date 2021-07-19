@@ -28,7 +28,11 @@ namespace WhatBug.Application.Services
             // TODO: Check permission
             var priorityScheme = await _context.PrioritySchemes
                 .Include(s => s.Priorities)
-                    .ThenInclude(p => p.Icon)
+                    .ThenInclude(p => p.ColorIcon)
+                        .ThenInclude(ci => ci.Color)
+                 .Include(s => s.Priorities)
+                    .ThenInclude(p => p.ColorIcon)
+                        .ThenInclude(ci => ci.Icon)
                 .FirstOrDefaultAsync(s => s.Id == id);
             priorityScheme.Priorities = priorityScheme.Priorities.OrderBy(p => p.Id).ToList();
             return _mapper.Map<PrioritySchemeDTO>(priorityScheme);
@@ -39,7 +43,11 @@ namespace WhatBug.Application.Services
             // TODO: Check permission
             var prioritySchemes = await _context.PrioritySchemes
                 .Include(s => s.Priorities)
-                    .ThenInclude(p => p.Icon)
+                    .ThenInclude(p => p.ColorIcon)
+                        .ThenInclude(ci => ci.Color)
+                 .Include(s => s.Priorities)
+                    .ThenInclude(p => p.ColorIcon)
+                        .ThenInclude(ci => ci.Icon)
                 .ToListAsync();
             prioritySchemes.ForEach(s => s.Priorities = s.Priorities.OrderBy(p => p.Order).ToList());
             return _mapper.Map<List<PrioritySchemeDTO>>(prioritySchemes);

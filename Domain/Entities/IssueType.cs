@@ -11,7 +11,7 @@ namespace WhatBug.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public int IconId { get; set; }
-        public Icon Icon{ get; set; }
+        public int ColorIconId { get; set; }
+        public ColorIcon ColorIcon{ get; set; }
     }
 }
