@@ -56,6 +56,7 @@ namespace WhatBug.Application.Common
                 .AfterMap((src, dest) => dest.AssigneeId = dest.AssigneeId == 0 ? null : dest.AssigneeId);
 
             CreateMap<Issue, IssueDTO>();
+            CreateMap<IssueType, IssueTypeDTO>();
 
             // Users
             CreateMap<User, UserDTO>();

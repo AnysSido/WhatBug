@@ -26,6 +26,7 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<PriorityScheme> PrioritySchemes { get; set; }
         DbSet<Icon> Icons { get; set; }
         DbSet<Color> Colors { get; set; }
+        DbSet<IssueType> IssueTypes { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

@@ -87,7 +87,6 @@ namespace WhatBug.Persistence
                 .HasOne(ci => ci.Color)
                 .WithMany()
                 .HasForeignKey(ci => ci.ColorId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             modelBuilder
@@ -95,8 +94,13 @@ namespace WhatBug.Persistence
                 .HasOne(ci => ci.Icon)
                 .WithMany()
                 .HasForeignKey(ci => ci.IconId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
+
+            modelBuilder
+                .Entity<Issue>()
+                .HasOne(i => i.IssueType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.Seed());
@@ -104,6 +108,7 @@ namespace WhatBug.Persistence
             modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.Seed());
             modelBuilder.Entity<IssueType>().HasData(Domain.Data.IssueTypes.Seed());
             modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());
+            modelBuilder.Entity<ColorIcon>().HasData(Domain.Data.ColorIcons.Seed());
             modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme() { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
         }
     }

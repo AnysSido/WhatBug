@@ -61,5 +61,15 @@ namespace WhatBug.Application.Services
                             .ThenInclude(ci => ci.Icon)
                     .FirstOrDefaultAsync(i => i.Id == issueId));
         }
+
+        public async Task<List<IssueTypeDTO>> GetIssueTypesAsync()
+        {
+            // TODO: Check permissions
+            return _mapper.Map<List<IssueTypeDTO>>(
+                await _context.IssueTypes
+                    .Include(i => i.ColorIcon.Color)
+                    .Include(i => i.ColorIcon.Icon)
+                    .ToListAsync());
+        }
     }
 }

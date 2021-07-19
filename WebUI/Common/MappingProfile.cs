@@ -23,17 +23,17 @@ namespace WhatBug.WebUI.Common
         public MappingProfile()
         {
             // Projects
-            CreateMap<ProjectDTO, ProjectViewModel>().ReverseMap();
+            CreateMap<ProjectDTO, ProjectViewModel>();
             CreateMap<CreateProjectViewModel, CreateProjectDTO>()
                 .ForMember(
                     dest => dest.PrioritySchemeId,
                     opt => opt.MapFrom(src => src.SelectedPriorityScheme));
 
             // Permissions
-            CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();
+            CreateMap<PermissionDTO, PermissionViewModel>();
 
             // Priorities
-            CreateMap<PriorityDTO, PriorityViewModel>().ReverseMap();
+            CreateMap<PriorityDTO, PriorityViewModel>();
 
             CreateMap<PriorityDTO, EditPriorityViewModel>()
                 .ForMember(
@@ -60,7 +60,7 @@ namespace WhatBug.WebUI.Common
                     opt => opt.MapFrom(src => src.SelectedIcon));
 
             // Priority Schemes
-            CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>().ReverseMap();
+            CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>();
             CreateMap<CreatePrioritySchemeViewModel, CreatePrioritySchemeDTO>()
                 .ForMember(
                     dest => dest.PriorityIds,
@@ -71,15 +71,19 @@ namespace WhatBug.WebUI.Common
                     opt => opt.MapFrom(src => src.SelectedPriorityIds));
 
             // Issues
-            CreateMap<IssueDTO, IssueViewModel>().ReverseMap();
+            CreateMap<IssueDTO, IssueViewModel>();
             CreateMap<CreateIssueDTO, CreateIssueViewModel>();
 
             CreateMap<CreateIssueViewModel, CreateIssueDTO>()
                 .ForMember(
                     dest => dest.PriorityId,
-                    opt => opt.MapFrom(src => src.SelectedPriorityId));
+                    opt => opt.MapFrom(src => src.SelectedPriorityId))
+                .ForMember(
+                    dest => dest.IssueTypeId,
+                    opt => opt.MapFrom(src => src.SelectedIssueType));
 
             CreateMap<IssueDTO, IssueDetailViewModel>();
+            CreateMap<IssueTypeDTO, IssueTypeViewModel>();
 
             // Common
             CreateMap<ColorDTO, ColorViewModel>().ReverseMap();
