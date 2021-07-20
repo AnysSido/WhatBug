@@ -13,6 +13,6 @@ namespace WhatBug.Domain.Entities.Permissions
         public Role Role { get; set; }
 
         public int SchemeId { get; set; }        
-        public Scheme Scheme { get; set; }
+        public PermissionScheme PermissionScheme { get; set; }
     }
 }

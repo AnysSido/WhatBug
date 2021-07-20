@@ -21,7 +21,7 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<UserPermission> UserPermissions { get; set; }
         DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         DbSet<Role> Roles { get; set; }
-        DbSet<Scheme> Schemes { get; set; }
+        DbSet<PermissionScheme> PermissionSchemes { get; set; }
         DbSet<Priority> Priorities { get; set; }
         DbSet<PriorityScheme> PrioritySchemes { get; set; }
         DbSet<Icon> Icons { get; set; }

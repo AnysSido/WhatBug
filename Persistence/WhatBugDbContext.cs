@@ -33,7 +33,7 @@ namespace WhatBug.Persistence
         public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Scheme> Schemes { get; set; }
+        public DbSet<PermissionScheme> PermissionSchemes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<PriorityScheme> PrioritySchemes { get; set; }
         public DbSet<Icon> Icons { get; set; }

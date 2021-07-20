@@ -15,10 +15,10 @@ namespace WhatBug.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("IdentityDatabase")));
 
             services.AddDefaultIdentity<PrincipalUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddClaimsPrincipalFactory<PrincipalUserClaimsPrincipalFactory>();
 
             services.AddScoped<IAuthenticationProvider, IdentityAuthenticationProvider>();
-            services.AddScoped<IUserClaimsPrincipalFactory<PrincipalUser>, PrincipalUserClaimsPrincipalFactory>();
 
             services.AddAutoMapper(typeof(DependencyInjection));
 

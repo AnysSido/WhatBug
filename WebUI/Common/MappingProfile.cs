@@ -12,6 +12,7 @@ using WhatBug.Application.DTOs.Projects;
 using WhatBug.WebUI.ViewModels.Common;
 using WhatBug.WebUI.ViewModels.Issues;
 using WhatBug.WebUI.ViewModels.Permissions;
+using WhatBug.WebUI.ViewModels.PermissionSchemes;
 using WhatBug.WebUI.ViewModels.Priorities;
 using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Projects;
@@ -31,6 +32,9 @@ namespace WhatBug.WebUI.Common
 
             // Permissions
             CreateMap<PermissionDTO, PermissionViewModel>();
+
+            // Permission Schemes
+            CreateMap<CreatePermissionSchemeViewModel, CreatePermissionSchemeDTO>();
 
             // Priorities
             CreateMap<PriorityDTO, PriorityViewModel>();

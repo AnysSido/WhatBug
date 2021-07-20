@@ -26,6 +26,8 @@ namespace WhatBug.Application.Common
 
             // Permissions
             CreateMap<Permission, PermissionDTO>().ReverseMap();
+            CreateMap<PermissionScheme, PermissionSchemeDTO>();
+            CreateMap<CreatePermissionSchemeDTO, PermissionScheme>();
 
             // Priorities
             CreateMap<PriorityDTO, Priority>().ReverseMap();
