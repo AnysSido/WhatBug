@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +17,7 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure;
 using WhatBug.Infrastructure.Identity;
 using WhatBug.Persistence;
+using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Services;
 using WhatBug.WebUI.Services.Interfaces;
 
@@ -44,6 +46,8 @@ namespace WebUI
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
+
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +70,7 @@ namespace WebUI
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseMiddleware<PermissionMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

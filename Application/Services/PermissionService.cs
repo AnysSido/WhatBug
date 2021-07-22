@@ -69,14 +69,21 @@ namespace WhatBug.Application.Services
 
         }
 
-        public async Task<bool> UserHasPermission(int userId, Permission permission)
+        public async Task<bool> UserHasPermission(int userId, string permission)
         {
+            var permissionEntity = Permissions.ToEntity(permission);
             var hasPermission = await _context.UserPermissions
                 .Where(p => p.UserId == userId)
-                .Where(p => p.PermissionId == permission.Id)
+                .Where(p => p.PermissionId == permissionEntity.Id)
                 .FirstOrDefaultAsync();
 
             return hasPermission != null;
+        }
+
+        public async Task<List<PermissionDTO>> GetUserPermissions(int userId)
+        {
+            return _mapper.Map<List<PermissionDTO>>(await _context.UserPermissions.Where(p => p.UserId == userId)
+                .Select(p => p.Permission).ToListAsync());
         }
 
         public List<PermissionDTO> GetAllPermissions(PermissionType permissionType)
