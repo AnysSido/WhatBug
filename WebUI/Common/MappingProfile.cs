@@ -31,7 +31,7 @@ namespace WhatBug.WebUI.Common
                     opt => opt.MapFrom(src => src.SelectedPriorityScheme));
 
             // Permissions
-            CreateMap<PermissionDTO, PermissionViewModel>();
+            CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();
 
             // Permission Schemes
             CreateMap<CreatePermissionSchemeViewModel, CreatePermissionSchemeDTO>();

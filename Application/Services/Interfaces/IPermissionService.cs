@@ -13,9 +13,10 @@ namespace WhatBug.Application.Services.Interfaces
     public interface IPermissionService
     {
         List<PermissionDTO> GetAllPermissions(PermissionType permissionType);
+        Task<List<PermissionDTO>> GetUserPermissions(int userId);
         Task SetRolePermissions(SetRolePermissionsDTO setRolePermissionsDTO);
         Task SetUserPermissions(SetUserPermissionDTO setUserGlobalPermissionsDTO);
         Task SetUserProjectRole(SetUserProjectRoleDTO setUserProjectRoleDTO);
-        Task<bool> UserHasPermission(int userId, Permission permission);
+        Task<bool> UserHasPermission(int userId, string permission);
     }
 }

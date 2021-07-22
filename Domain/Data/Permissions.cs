@@ -9,10 +9,18 @@ namespace WhatBug.Domain.Data
     {
         private static readonly List<Permission> _permissions = new List<Permission>();
 
-        public static readonly Permission CreateProject = CreatePermission(1, "Create Project", "Create new projects.", PermissionType.Global);
-        public static readonly Permission DeleteProject = CreatePermission(2, "Delete Project", "Delete existing projects.", PermissionType.Global);
-        public static readonly Permission EditUserPermissions = CreatePermission(3, "Edit User Permissions", "Edit global permissions assigned to users.", PermissionType.Global);
-        public static readonly Permission ViewAllProjects = CreatePermission(4, "View All Projects", "View all projects in WhatBug. Users without this permission must be a member of a project to view it.", PermissionType.Global);
+        public const string CreateProject = "Create Project";
+        public const string DeleteProject = "Delete Project";
+        public const string EditUserPermissions = "Edit User Permissions";
+        public const string ViewAllProjects = "View All Projects";
+
+        static Permissions()
+        {
+            CreatePermission(1, CreateProject, "Create new projects.", PermissionType.Global);
+            CreatePermission(2, DeleteProject, "Delete existing projects.", PermissionType.Global);
+            CreatePermission(3, EditUserPermissions, "Edit global permissions assigned to users.", PermissionType.Global);
+            CreatePermission(4, ViewAllProjects, "View all projects in WhatBug. Users without this permission must be a member of a project to view it.", PermissionType.Global);
+        }
 
         private static Permission CreatePermission(int id, string name, string description, PermissionType type)
         {
@@ -21,14 +29,19 @@ namespace WhatBug.Domain.Data
             return permission;
         }
 
-        public static ReadOnlyCollection<Permission> Seed()
+        public static Permission ToEntity(string permission)
         {
-            return _permissions.AsReadOnly();
+            return _permissions.First(p => p.Name == permission);
         }
 
         public static ReadOnlyCollection<Permission> GetAll(PermissionType type)
         {
             return _permissions.Where(p => p.Type == type).ToList().AsReadOnly();
+        }
+
+        public static ReadOnlyCollection<Permission> Seed()
+        {
+            return _permissions.AsReadOnly();
         }
     }
 }

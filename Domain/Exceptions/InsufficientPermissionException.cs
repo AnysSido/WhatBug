@@ -7,20 +7,20 @@ namespace WhatBug.Domain.Exceptions
     public class InsufficientPermissionException : Exception
     {
         public int UserId { get; set; }
-        public int PermissionId { get;set; }
+        public string Permission { get;set; }
 
-        public InsufficientPermissionException(int userId, Permission permission)
-            : base($"User ({userId}) lacks required permission ({permission.Name}).")
+        public InsufficientPermissionException(int userId, string permission)
+            : base($"User ({userId}) lacks required permission ({permission}).")
         {
             UserId = userId;
-            PermissionId = permission.Id;
+            Permission = permission;
         }
 
-        public InsufficientPermissionException(int userId, Permission permission, Exception inner)
-            : base($"User ({userId}) lacks required permission ({permission.Name}).", inner)
+        public InsufficientPermissionException(int userId, string permission, Exception inner)
+            : base($"User ({userId}) lacks required permission ({permission}).", inner)
         {
             UserId = userId;
-            PermissionId = permission.Id;
+            Permission = permission;
         }
     }
 }
