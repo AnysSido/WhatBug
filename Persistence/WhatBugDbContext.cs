@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Entities.JoinTables;
 using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Entities.Priorities;
 
@@ -31,7 +32,6 @@ namespace WhatBug.Persistence
         public DbSet<ProjectRole> ProjectRoles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
-        public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<PermissionScheme> PermissionSchemes { get; set; }
@@ -70,6 +70,21 @@ namespace WhatBug.Persistence
                 .HasConversion(
                     r => r.ToString(),
                     r => (PermissionType)Enum.Parse(typeof(PermissionType), r));
+
+            modelBuilder
+                .Entity<UserPermission>()
+                .HasKey(p => new { p.UserId, p.PermissionId });
+
+            modelBuilder
+                .Entity<UserPermission>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.UserPermissions);
+
+            modelBuilder
+                .Entity<UserPermission>()
+                .HasOne(p => p.Permission)
+                .WithMany()
+                .HasForeignKey(p => p.PermissionId);
 
             modelBuilder
                 .Entity<Issue>()

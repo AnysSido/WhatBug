@@ -41,21 +41,9 @@ namespace WhatBug.WebUI.Controllers
         //[Route("Permissions/Global/Edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
-            // Get all permissions
-
-            var vm = new PermissionsGlobalEditViewModel()
-            {
-                userWithPermissions = await _userService.GetUserWithPermissions(id),
-                allPermissions = _mapper.Map<List<PermissionViewModel>>(_permissionService.GetAllPermissions(PermissionType.Global))
-            };
-
-            foreach (var vmPermission in vm.allPermissions)
-            {
-                if (vm.userWithPermissions.Permissions.Any(p => p.Id == vmPermission.Id))
-                {
-                    vmPermission.IsGranted = true;
-                }
-            }
+            var allPermissions = _mapper.Map<List<PermissionViewModel>>(_permissionService.GetAllPermissions(PermissionType.Global));
+            var userWithPermissions = await _userService.GetUserWithPermissions(id);
+            var vm = new PermissionsGlobalEditViewModel(allPermissions, userWithPermissions);
 
             return View("~/Views/Permissions/GlobalEdit.cshtml", vm);
         }
@@ -67,12 +55,10 @@ namespace WhatBug.WebUI.Controllers
             if (!ModelState.IsValid)
                 return View("~/Views/Permissions/GlobalEdit.cshtml", vm);
 
-            var grantedPermissions = vm.allPermissions.Where(p => p.IsGranted).ToList();
-
-            var dto = new SetUserPermissionDTO()
+            var dto = new SetUserPermissionsDTO()
             {
-                UserId = vm.userWithPermissions.User.Id,
-                Permissions = _mapper.Map<List<PermissionDTO>>(grantedPermissions)
+                UserId = vm.UserWithPermissions.User.Id,
+                PermissionIds = vm.GrantedPermissionIds
             };
 
             await _permissionService.SetUserPermissions(dto);

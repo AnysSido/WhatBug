@@ -4,12 +4,12 @@
     <!-- Modify Global Permissions Card -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">@Model.userWithPermissions.User.Username Global Permissions</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@Model.UserWithPermissions.User.Username Global Permissions</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <form method="post" asp-controller="Permissions" asp-action="Edit">
-                    <input asp-for="@Model.userWithPermissions.User.Id" type="hidden" />
+                    <input asp-for="@Model.UserWithPermissions.User.Id" type="hidden" />
                     <table class="table table-bordered" id="dataTable" cellspacing="0">
                         <thead>
                             <tr>
@@ -19,15 +19,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < Model.allPermissions.Count; i++)
+                            @for (int i = 0; i < Model.AllPermissions.Count; i++)
                             {
                                 <tr>
                                     <td>
-                                        <input asp-for="@Model.allPermissions[i].IsGranted" />
-                                        <input asp-for="@Model.allPermissions[i].Id" type="hidden"/>
+                                        <input asp-for="@Model.GrantablePermissions[i].PermissionId" type="hidden"  />
+                                        <input asp-for="@Model.GrantablePermissions[i].IsGranted" />
                                     </td>
-                                    <td>@Model.allPermissions[i].Name</td>
-                                    <td>@Model.allPermissions[i].Description</td>
+                                    <td>@Model.AllPermissions[i].Name</td>
+                                    <td>@Model.AllPermissions[i].Description</td>
                                 </tr>
                             }
                         </tbody>

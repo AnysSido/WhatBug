@@ -13,6 +13,7 @@ using WhatBug.Application.Common.Models;
 using WhatBug.Domain.Exceptions;
 using WhatBug.Application.DTOs.Users;
 using AutoMapper;
+using WhatBug.Domain.Entities.JoinTables;
 
 namespace WhatBug.Application.Services
 {
@@ -29,23 +30,20 @@ namespace WhatBug.Application.Services
             _mapper = mapper;
         }
 
-        public async Task SetUserPermissions(SetUserPermissionDTO setUserPermissionDTO)
+        public async Task SetUserPermissions(SetUserPermissionsDTO setUserPermissionDTO)
         {
             if (!await UserHasPermission(_currentUserService.UserId, Permissions.EditUserPermissions))
                 throw new InsufficientPermissionException(_currentUserService.UserId, Permissions.EditUserPermissions);
 
             var user = await _context.Users
-                .Where(u => u.Id == setUserPermissionDTO.UserId)
-                .Include(u => u.UserPermissions).FirstOrDefaultAsync();
+                .Include(u => u.UserPermissions)
+                    .ThenInclude(p => p.Permission)
+                .FirstOrDefaultAsync(u => u.Id == setUserPermissionDTO.UserId);
 
-            if (user == null)
-                throw new UserNotFoundException(setUserPermissionDTO.UserId);
-
-            var newPermissions = setUserPermissionDTO.Permissions
-                .Select(p => new UserPermission() { UserId = user.Id, PermissionId = p.Id });
+            var permissionsToGrant = await _context.Permissions.Where(p => setUserPermissionDTO.PermissionIds.Contains(p.Id)).ToListAsync();
 
             user.UserPermissions.Clear();
-            user.UserPermissions.AddRange(newPermissions);
+            user.UserPermissions.AddRange(permissionsToGrant.Select(p => new UserPermission { User = user, Permission = p }));
 
             await _context.SaveChangesAsync();
             return;
@@ -72,18 +70,22 @@ namespace WhatBug.Application.Services
         public async Task<bool> UserHasPermission(int userId, string permission)
         {
             var permissionEntity = Permissions.ToEntity(permission);
-            var hasPermission = await _context.UserPermissions
-                .Where(p => p.UserId == userId)
-                .Where(p => p.PermissionId == permissionEntity.Id)
-                .FirstOrDefaultAsync();
 
-            return hasPermission != null;
+            var hasPermission = await _context.Users
+                .Where(u => u.Id == userId && u.UserPermissions.Select(p => p.Permission).Contains(permissionEntity))
+                .AnyAsync();
+
+            return hasPermission;
         }
 
         public async Task<List<PermissionDTO>> GetUserPermissions(int userId)
         {
-            return _mapper.Map<List<PermissionDTO>>(await _context.UserPermissions.Where(p => p.UserId == userId)
-                .Select(p => p.Permission).ToListAsync());
+            var user = await _context.Users
+                .Include(u => u.UserPermissions)
+                    .ThenInclude(p => p.Permission)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            return _mapper.Map<List<PermissionDTO>>(user.UserPermissions.Select(p => p.Permission));
         }
 
         public List<PermissionDTO> GetAllPermissions(PermissionType permissionType)

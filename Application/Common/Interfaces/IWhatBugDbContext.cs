@@ -18,7 +18,6 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<User> Users { get; set; }
         DbSet<Permission> Permissions { get; set; }
         DbSet<RolePermission> RolePermissions { get; set; }
-        DbSet<UserPermission> UserPermissions { get; set; }
         DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<PermissionScheme> PermissionSchemes { get; set; }
