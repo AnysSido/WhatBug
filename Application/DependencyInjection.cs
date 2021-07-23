@@ -14,6 +14,7 @@ namespace WhatBug.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IIssueService, IssueService>();
             services.AddScoped<IUserService, UserService>();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Admin;
 using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
@@ -21,6 +22,10 @@ namespace WhatBug.Application.Common
     {
         public MappingProfile()
         {
+            // Admin
+            CreateMap<CreateProjectRoleDTO, ProjectRole>();
+            CreateMap<ProjectRole, ProjectRoleDTO>();
+
             // Projects
             CreateMap<ProjectDTO, Project>().ReverseMap();
 

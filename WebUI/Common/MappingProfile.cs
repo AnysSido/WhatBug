@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.Application.DTOs.Admin;
 using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.DTOs.Projects;
+using WhatBug.WebUI.ViewModels.Admin;
 using WhatBug.WebUI.ViewModels.Common;
 using WhatBug.WebUI.ViewModels.Issues;
 using WhatBug.WebUI.ViewModels.Permissions;
@@ -23,6 +25,10 @@ namespace WhatBug.WebUI.Common
     {
         public MappingProfile()
         {
+            // Admin
+            CreateMap<CreateProjectRoleViewModel, CreateProjectRoleDTO>();
+            CreateMap<ProjectRoleDTO, ProjectRoleViewModel>();
+
             // Projects
             CreateMap<ProjectDTO, ProjectViewModel>();
             CreateMap<CreateProjectViewModel, CreateProjectDTO>()
