@@ -41,6 +41,7 @@ namespace WhatBug.WebUI.Common
 
             // Permission Schemes
             CreateMap<CreatePermissionSchemeViewModel, CreatePermissionSchemeDTO>();
+            CreateMap<PermissionSchemeDTO, PermissionSchemeViewModel>();
 
             // Priorities
             CreateMap<PriorityDTO, PriorityViewModel>();

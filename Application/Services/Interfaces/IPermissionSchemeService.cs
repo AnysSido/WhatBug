@@ -10,5 +10,6 @@ namespace WhatBug.Application.Services.Interfaces
     public interface IPermissionSchemeService
     {
         Task CreatePermissionScheme(CreatePermissionSchemeDTO dto);
+        Task<List<PermissionSchemeDTO>> GetPermissionSchemes();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,12 @@ namespace WhatBug.Application.Services
             var permissionScheme = _mapper.Map<PermissionScheme>(dto);
             await _context.PermissionSchemes.AddAsync(permissionScheme);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<PermissionSchemeDTO>> GetPermissionSchemes()
+        {
+            // TODO: Check permissions
+            return _mapper.Map<List<PermissionSchemeDTO>>(await _context.PermissionSchemes.ToListAsync());
         }
     }
 }

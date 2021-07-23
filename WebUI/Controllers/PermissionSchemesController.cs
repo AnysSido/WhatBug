@@ -21,9 +21,13 @@ namespace WhatBug.WebUI.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var vm = new PermissionSchemeIndexViewModel
+            {
+                PermissionSchemes = _mapper.Map<List<PermissionSchemeViewModel>>(await _permissionSchemeService.GetPermissionSchemes())
+            };
+            return View(vm);
         }
 
         [HttpGet]
