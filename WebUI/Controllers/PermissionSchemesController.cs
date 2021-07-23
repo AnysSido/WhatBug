@@ -49,5 +49,12 @@ namespace WhatBug.WebUI.Controllers
             await _permissionSchemeService.CreatePermissionScheme(dto);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        [Route("PermissionSchemes/{schemeId}/Permissions")]
+        public async Task<IActionResult> Permissions(int schemeId)
+        {
+            return View();
+        }
     }
 }
