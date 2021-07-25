@@ -62,8 +62,7 @@
 </form>
 
 <!-- Project Role Permissions Modal populated by partial view -->
-<div id="projectRoleModal"></div>
-
+<div class="modal fade" id="projectRolePermissionsModal"></div>
 
 @section Scripts {
     <script type="text/javascript">
@@ -76,12 +75,12 @@
                     type: 'post',
                     data: $('#projectRoleModalData').serialize(),
                     datatype: 'json',
-                    success: function (response) {                       
-                        $('#projectRoleModal').html(response);
+                    success: function (response) {
+                        $('#projectRolePermissionsModal').html(response);
                         $('#projectRolePermissionsModal').modal('show');
                     }
                 });
             });
-        });        
+        });
     </script>
 }

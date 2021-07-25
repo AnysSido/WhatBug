@@ -49,23 +49,6 @@ namespace WhatBug.Application.Services
             return result;
         }
 
-        public async Task<UserWithPermissionsDTO> GetUserWithPermissions(int id)
-        {
-            // TODO: Check permission
-
-            var user = await _context.Users
-                .Include(u => u.UserPermissions)
-                    .ThenInclude(p => p.Permission)
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (user == null)
-                throw new UserNotFoundException(id);
-
-            var dto = _mapper.Map<UserWithPermissionsDTO>(user);
-            await _authenticationProvider.PopulatePrincipleUserInfo(dto.User);
-            return dto;
-        }
-
         public async Task<List<UserWithPermissionsDTO>> GetAllUsersWithPermissions()
         {
             // TODO: Check permission

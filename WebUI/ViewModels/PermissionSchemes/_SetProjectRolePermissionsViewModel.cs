@@ -8,7 +8,7 @@ using WhatBug.WebUI.ViewModels.Permissions;
 
 namespace WhatBug.WebUI.ViewModels.PermissionSchemes
 {
-    public class _ProjectRolePermissionsViewModel
+    public class _SetProjectRolePermissionsViewModel
     {
         [HiddenInput]
         public int SchemeId { get; set; }
@@ -19,8 +19,6 @@ namespace WhatBug.WebUI.ViewModels.PermissionSchemes
         public string ProjectRoleName { get; set; }
 
         public IList<GrantablePermissionViewModel> GrantablePermissions { get; set; } = new List<GrantablePermissionViewModel>();
-
-        public List<int> GrantedPermissionIds => GrantablePermissions
-            .Where(p => p.IsGranted).Select(p => p.Id).ToList();
+        public List<int> GrantedPermissionIds => GrantablePermissions.Where(p => p.IsGranted).Select(p => p.Id).ToList();
     }
 }

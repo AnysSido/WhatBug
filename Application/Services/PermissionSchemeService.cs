@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.PermissionSchemes;
 using WhatBug.Application.Services.Interfaces;
+using WhatBug.Domain.Data;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.JoinTables;
 
@@ -23,6 +23,11 @@ namespace WhatBug.Application.Services
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        public List<PermissionDTO> GetAvailableProjectRolePermissions()
+        {
+            return _mapper.Map<List<PermissionDTO>>(Permissions.GetAll(PermissionType.Project).ToList());
         }
 
         public async Task CreatePermissionSchemeAsync(CreatePermissionSchemeDTO dto)

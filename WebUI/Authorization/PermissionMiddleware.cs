@@ -26,7 +26,7 @@ namespace WhatBug.WebUI.Authorization
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IPermissionService permissionService)
+        public async Task InvokeAsync(HttpContext context, IGlobalPermissionService globalPermissionService)
         {
             if (context.User.Identity == null || !context.User.Identity.IsAuthenticated)
             {
@@ -42,7 +42,7 @@ namespace WhatBug.WebUI.Authorization
             }
 
             // Load the users' permissions and convert them to claims
-            var userPermissions = await permissionService.GetUserPermissions(userId);
+            var userPermissions = await globalPermissionService.GetUserGlobalPermissionsAsync(userId);
             var userPermissionClaims = userPermissions.Select(p => new Claim("Permissions", p.Name));
 
             // Build a new identity and add the claims, then attach the identity to the user principal.

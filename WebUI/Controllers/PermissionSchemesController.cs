@@ -73,22 +73,22 @@ namespace WhatBug.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetProjectRolePermissionsPartial(_ProjectRolePermissionsViewModel vm)
+        public async Task<IActionResult> GetProjectRolePermissionsPartial(_SetProjectRolePermissionsViewModel vm)
         {            
             var grantedPermissions = _mapper.Map<List<PermissionViewModel>>(
                 await _permissionSchemeService.GetProjectRolePermissionsAsync(vm.SchemeId, vm.ProjectRoleId));
 
             vm.GrantablePermissions = _mapper.Map<List<GrantablePermissionViewModel>>(
-                _permissionService.GetAllPermissions(PermissionType.Project));
+                _permissionSchemeService.GetAvailableProjectRolePermissions());
 
             foreach (var permission in vm.GrantablePermissions)
                 permission.IsGranted = grantedPermissions.Any(p => p.Id == permission.Id);
             
-            return PartialView("_ProjectRolePermissionsPartial", vm);
+            return PartialView("_SetProjectRolePermissionsPartial", vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SetProjectRolePermissions(_ProjectRolePermissionsViewModel vm)
+        public async Task<IActionResult> SetProjectRolePermissions(_SetProjectRolePermissionsViewModel vm)
         {
             var dto = _mapper.Map<SetProjectRolePermissionsDTO>(vm);
             await _permissionSchemeService.SetProjectRolePermissionsAsync(dto);
