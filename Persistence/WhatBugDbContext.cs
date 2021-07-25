@@ -31,9 +31,7 @@ namespace WhatBug.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<ProjectRole> ProjectRoles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<PermissionScheme> PermissionSchemes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<PriorityScheme> PrioritySchemes { get; set; }
@@ -142,7 +140,6 @@ namespace WhatBug.Persistence
 
 
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.Seed());
-            modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.Seed());
             modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.Seed());
             modelBuilder.Entity<IssueType>().HasData(Domain.Data.IssueTypes.Seed());
             modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());
