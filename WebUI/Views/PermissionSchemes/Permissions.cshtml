@@ -70,15 +70,12 @@
             $('.mdl').on('click', function () {
                 $('#SelectedProjectRoleId').val($(this).data('id'));
                 $('#SelectedProjectRoleName').val($(this).data('name'));
-                $.ajax({
-                    url: '/permissionschemes/getprojectrolepermissionspartial',
-                    type: 'post',
-                    data: $('#projectRoleModalData').serialize(),
-                    datatype: 'json',
-                    success: function (response) {
-                        $('#projectRolePermissionsModal').html(response);
-                        $('#projectRolePermissionsModal').modal('show');
-                    }
+
+                $.post('/permissionschemes/getprojectrolepermissionspartial',
+                    $('#projectRoleModalData').serialize()
+                ).done(function (response) {
+                    $('#projectRolePermissionsModal').html(response);
+                    $('#projectRolePermissionsModal').modal('show');
                 });
             });
         });

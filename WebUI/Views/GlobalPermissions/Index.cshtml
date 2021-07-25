@@ -1,54 +1,54 @@
 ﻿@model WhatBug.WebUI.ViewModels.GlobalPermissions.GlobalPermissionIndexViewModel
 
-@{
-    <!-- Modify Global Permissions Card -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Global User Permissions</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" cellspacing="0">
-                    <thead>
+
+<!-- Modify Global Permissions Card -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Global User Permissions</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Edit</th>
+                        <th>Username</th>
+                        <th>Granted Permissions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Users.Count; i++)
+                    {
                         <tr>
-                            <th>Edit</th>
-                            <th>Username</th>
-                            <th>Granted Permissions</th>
+                            <td>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-default mdl"
+                                            data-id="@Model.Users[i].Id"
+                                            data-username="@Model.Users[i].Username">
+                                        Edit Permissions
+                                    </button>
+                                </div>
+                            </td>
+                            <td>@Model.Users[i].Username</td>
+                            <td>@string.Join(" | ", Model.Users[i].Permissions.Select(p => p.Name))</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.Users.Count; i++)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-default mdl"
-                                                data-id="@Model.Users[i].Id"
-                                                data-username="@Model.Users[i].Username">
-                                            Edit Permissions
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>@Model.Users[i].Username</td>
-                                <td>@string.Join(" | ", Model.Users[i].Permissions.Select(p => p.Name))</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-    <!-- End Modify Global Contents Card -->
+</div>
+<!-- End Modify Global Contents Card -->
 
-    <!-- Data to bind to modal partial viewmodel -->
-    <form id="globalPermissionModalData">
-        <input id="SelectedUserId" name="UserId" type="hidden" />
-        <input id="SelectedUsername" name="Username" type="hidden" />
-    </form>
+<!-- Data to bind to modal partial viewmodel -->
+<form id="globalPermissionModalData">
+    <input id="SelectedUserId" name="UserId" type="hidden" />
+    <input id="SelectedUsername" name="Username" type="hidden" />
+</form>
 
-    <!-- Global Permission Modal populated by partial view -->    
-    <div class="modal fade" id="globalPermissionModal"></div>    
-}
+<!-- Global Permission Modal populated by partial view -->    
+<div class="modal fade" id="globalPermissionModal"></div>    
+
 
 @section Scripts {
     <script type="text/javascript">
@@ -56,15 +56,12 @@
             $('.mdl').on('click', function () {
                 $('#SelectedUserId').val($(this).data('id'));
                 $('#SelectedUsername').val($(this).data('username'));
-                $.ajax({
-                    url: '/globalpermissions/getglobalpermissionspartial',
-                    type: 'post',
-                    data: $('#globalPermissionModalData').serialize(),
-                    datatype: 'json',
-                    success: function (response) {
-                        $('#globalPermissionModal').html(response);
-                        $('#globalPermissionModal').modal('show');
-                    }
+
+                $.post('/globalpermissions/getglobalpermissionspartial',
+                    $('#globalPermissionModalData').serialize()
+                ).done(function (response) {
+                    $('#globalPermissionModal').html(response);
+                    $('#globalPermissionModal').modal('show');
                 });
             });
         });
