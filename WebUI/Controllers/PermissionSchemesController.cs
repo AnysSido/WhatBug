@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.PermissionSchemes;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
