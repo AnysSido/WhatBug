@@ -9,8 +9,8 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.PermissionSchemes;
 using WhatBug.Application.Services.Interfaces;
+using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.JoinTables;
-using WhatBug.Domain.Entities.Permissions;
 
 namespace WhatBug.Application.Services
 {

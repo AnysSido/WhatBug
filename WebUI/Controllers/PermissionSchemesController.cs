@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.PermissionSchemes;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities;
 using WhatBug.WebUI.ViewModels.Admin;
 using WhatBug.WebUI.ViewModels.Permissions;
 using WhatBug.WebUI.ViewModels.PermissionSchemes;

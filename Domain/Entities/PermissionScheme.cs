@@ -2,7 +2,7 @@
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities.JoinTables;
 
-namespace WhatBug.Domain.Entities.Permissions
+namespace WhatBug.Domain.Entities
 {
     public class PermissionScheme : AuditableEntity
     {

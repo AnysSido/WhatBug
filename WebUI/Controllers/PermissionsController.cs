@@ -8,7 +8,7 @@ using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.Users;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Data;
-using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities;
 using WhatBug.WebUI.ViewModels.Permissions;
 
 namespace WhatBug.WebUI.Controllers

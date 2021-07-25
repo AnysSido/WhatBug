@@ -1,4 +1,4 @@
-﻿using WhatBug.Domain.Entities.Permissions;
+﻿using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.DTOs.Permissions
 {

@@ -13,7 +13,6 @@ using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.DTOs.Users;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Common

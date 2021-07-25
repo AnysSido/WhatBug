@@ -14,6 +14,7 @@ using WhatBug.Domain.Exceptions;
 using WhatBug.Application.DTOs.Users;
 using AutoMapper;
 using WhatBug.Domain.Entities.JoinTables;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Services
 {

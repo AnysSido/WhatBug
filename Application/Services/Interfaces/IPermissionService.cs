@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Models;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.Users;
-using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Services.Interfaces
 {

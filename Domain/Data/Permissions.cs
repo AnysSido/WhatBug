@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using WhatBug.Domain.Entities.Permissions;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Domain.Data
 {
