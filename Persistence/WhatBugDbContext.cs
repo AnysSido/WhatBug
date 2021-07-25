@@ -87,6 +87,28 @@ namespace WhatBug.Persistence
                 .HasForeignKey(p => p.PermissionId);
 
             modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasKey(p => new { p.PermissionSchemeId, p.ProjectRoleId, p.PermissionId });
+
+            modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasOne(p => p.PermissionScheme)
+                .WithMany(s => s.ProjectRolePermissions)
+                .HasForeignKey(p => p.PermissionSchemeId);
+
+            modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasOne(p => p.ProjectRole)
+                .WithMany()
+                .HasForeignKey(p => p.ProjectRoleId);
+
+            modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasOne(p => p.Permission)
+                .WithMany()
+                .HasForeignKey(p => p.PermissionId);
+
+            modelBuilder
                 .Entity<Issue>()
                 .HasOne(i => i.Assignee)
                 .WithMany(u => u.AssignedIssues)

@@ -90,7 +90,7 @@ namespace WhatBug.Application.Services
 
         public List<PermissionDTO> GetAllPermissions(PermissionType permissionType)
         {
-            return _mapper.Map<List<PermissionDTO>>(Permissions.GetAll(PermissionType.Global).ToList());
+            return _mapper.Map<List<PermissionDTO>>(Permissions.GetAll(permissionType).ToList());
         }
     }
 }

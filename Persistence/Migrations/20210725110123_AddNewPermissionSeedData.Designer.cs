@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210725110123_AddNewPermissionSeedData")]
+    partial class AddNewPermissionSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -673,26 +675,6 @@ namespace Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
-                {
-                    b.Property<int>("PermissionSchemeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PermissionSchemeId", "ProjectRoleId", "PermissionId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("ProjectRoleId");
-
-                    b.ToTable("PermissionSchemeProjectRolePermission");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
                 {
                     b.Property<int>("UserId")
@@ -1120,33 +1102,6 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("ColorIcon");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Permissions.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.Permissions.PermissionScheme", "PermissionScheme")
-                        .WithMany()
-                        .HasForeignKey("PermissionSchemeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.ProjectRole", "ProjectRole")
-                        .WithMany()
-                        .HasForeignKey("ProjectRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("PermissionScheme");
-
-                    b.Navigation("ProjectRole");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
