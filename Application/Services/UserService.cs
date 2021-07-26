@@ -49,6 +49,14 @@ namespace WhatBug.Application.Services
             return result;
         }
 
+        public async Task<List<UserDTO>> GetAllUsersAsync()
+        {
+            // TODO: Check permissions
+            var users = _mapper.Map<List<UserDTO>>(await _context.Users.ToListAsync());
+            await _authenticationProvider.PopulatePrincipleUsersInfo(users);
+            return users;
+        }
+
         public async Task<List<UserWithPermissionsDTO>> GetAllUsersWithPermissions()
         {
             // TODO: Check permission
