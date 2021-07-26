@@ -60,5 +60,23 @@ namespace WhatBug.WebUI.Controllers
             await _projectService.CreateProject(_mapper.Map<CreateProjectDTO>(vm));
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        [Route("/Project/{projectId}/UsersAndRoles")]
+        public async Task<IActionResult> UsersAndRoles(int projectId)
+        {
+            var vm = new ProjectUsersAndRolesViewModel
+            {
+                ProjectId = projectId
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetAddUserToProjectRolePartial(_AddUserToProjectRoleViewModel vm)
+        {
+            var project = await _projectService.GetProjectAsync(vm.ProjectId);
+            return PartialView("_AddUserToProjectRolePartial", vm);
+        }
     }
 }
