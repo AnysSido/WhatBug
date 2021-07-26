@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Entities.JoinTables;
 using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Entities.Priorities;
 
@@ -30,10 +31,7 @@ namespace WhatBug.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<ProjectRole> ProjectRoles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<RolePermission> RolePermissions { get; set; }
-        public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<PermissionScheme> PermissionSchemes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<PriorityScheme> PrioritySchemes { get; set; }
@@ -72,6 +70,43 @@ namespace WhatBug.Persistence
                     r => (PermissionType)Enum.Parse(typeof(PermissionType), r));
 
             modelBuilder
+                .Entity<UserPermission>()
+                .HasKey(p => new { p.UserId, p.PermissionId });
+
+            modelBuilder
+                .Entity<UserPermission>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.UserPermissions);
+
+            modelBuilder
+                .Entity<UserPermission>()
+                .HasOne(p => p.Permission)
+                .WithMany()
+                .HasForeignKey(p => p.PermissionId);
+
+            modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasKey(p => new { p.PermissionSchemeId, p.ProjectRoleId, p.PermissionId });
+
+            modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasOne(p => p.PermissionScheme)
+                .WithMany(s => s.ProjectRolePermissions)
+                .HasForeignKey(p => p.PermissionSchemeId);
+
+            modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasOne(p => p.ProjectRole)
+                .WithMany()
+                .HasForeignKey(p => p.ProjectRoleId);
+
+            modelBuilder
+                .Entity<PermissionSchemeProjectRolePermission>()
+                .HasOne(p => p.Permission)
+                .WithMany()
+                .HasForeignKey(p => p.PermissionId);
+
+            modelBuilder
                 .Entity<Issue>()
                 .HasOne(i => i.Assignee)
                 .WithMany(u => u.AssignedIssues)
@@ -105,7 +140,6 @@ namespace WhatBug.Persistence
 
 
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.Seed());
-            modelBuilder.Entity<Role>().HasData(Domain.Data.Roles.Seed());
             modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.Seed());
             modelBuilder.Entity<IssueType>().HasData(Domain.Data.IssueTypes.Seed());
             modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210725110123_AddNewPermissionSeedData")]
+    partial class AddNewPermissionSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -673,26 +675,6 @@ namespace Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
-                {
-                    b.Property<int>("PermissionSchemeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PermissionSchemeId", "ProjectRoleId", "PermissionId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("ProjectRoleId");
-
-                    b.ToTable("PermissionSchemeProjectRolePermission");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
                 {
                     b.Property<int>("UserId")
@@ -843,9 +825,80 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("RoleId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("ProjectRoleUsers");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Administrator"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "User"
+                        });
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.RolePermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PermissionSchemeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SchemeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("PermissionSchemeId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Priorities.Priority", b =>
@@ -1051,33 +1104,6 @@ namespace Persistence.Migrations
                     b.Navigation("ColorIcon");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Permissions.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.Permissions.PermissionScheme", "PermissionScheme")
-                        .WithMany("ProjectRolePermissions")
-                        .HasForeignKey("PermissionSchemeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.ProjectRole", "ProjectRole")
-                        .WithMany()
-                        .HasForeignKey("ProjectRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("PermissionScheme");
-
-                    b.Navigation("ProjectRole");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.Permissions.Permission", "Permission")
@@ -1105,6 +1131,12 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WhatBug.Domain.Entities.Permissions.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WhatBug.Domain.Entities.User", "User")
                         .WithMany("ProjectRoles")
                         .HasForeignKey("UserId")
@@ -1113,7 +1145,34 @@ namespace Persistence.Migrations
 
                     b.Navigation("Project");
 
+                    b.Navigation("Role");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.RolePermission", b =>
+                {
+                    b.HasOne("WhatBug.Domain.Entities.Permissions.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WhatBug.Domain.Entities.Permissions.PermissionScheme", "PermissionScheme")
+                        .WithMany()
+                        .HasForeignKey("PermissionSchemeId");
+
+                    b.HasOne("WhatBug.Domain.Entities.Permissions.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("PermissionScheme");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Priorities.Priority", b =>
@@ -1138,9 +1197,9 @@ namespace Persistence.Migrations
                     b.Navigation("PriorityScheme");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.PermissionScheme", b =>
+            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.Role", b =>
                 {
-                    b.Navigation("ProjectRolePermissions");
+                    b.Navigation("RolePermissions");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.PriorityScheme", b =>

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhatBug.Application.DTOs.Permissions
+namespace WhatBug.Application.DTOs.GlobalPermissions
 {
-    public class SetUserProjectRoleDTO
+    public class SetGlobalPermissionsDTO
     {
         public int UserId { get; set; }
-        public int ProjectId { get; set; }
-        public int RoleId { get; set; }
+        public IEnumerable<int> GrantedPermissionIds { get; set; }
     }
 }

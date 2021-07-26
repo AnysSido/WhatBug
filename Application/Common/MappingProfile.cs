@@ -8,12 +8,12 @@ using WhatBug.Application.DTOs.Admin;
 using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
+using WhatBug.Application.DTOs.PermissionSchemes;
 using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.DTOs.Users;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Common
