@@ -13,6 +13,7 @@ using WhatBug.Domain.Entities;
 using WhatBug.Persistence;
 using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Projects;
+using WhatBug.WebUI.ViewModels.User;
 
 namespace WhatBug.WebUI.Controllers
 {
@@ -21,14 +22,16 @@ namespace WhatBug.WebUI.Controllers
         private readonly IProjectService _projectService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IPrioritySchemeService _prioritySchemeService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public ProjectsController(IProjectService projectService, ICurrentUserService currentUserService, IPrioritySchemeService prioritySchemeService, IMapper mapper)
+        public ProjectsController(IProjectService projectService, ICurrentUserService currentUserService, IPrioritySchemeService prioritySchemeService, IMapper mapper, IUserService userService)
         {
             _projectService = projectService;
             _currentUserService = currentUserService;
             _prioritySchemeService = prioritySchemeService;
             _mapper = mapper;
+            _userService = userService;
         }
 
         // GET: Projects
@@ -75,8 +78,17 @@ namespace WhatBug.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> GetAddUserToProjectRolePartial(_AddUserToProjectRoleViewModel vm)
         {
-            var project = await _projectService.GetProjectAsync(vm.ProjectId);
+            var project = _mapper.Map<ProjectViewModel>(await _projectService.GetProjectAsync(vm.ProjectId));
+            vm.ProjectName = project.Name;
+            vm.Users = _mapper.Map<List<UserViewModel>>(await _userService.GetAllUsersAsync());
+
             return PartialView("_AddUserToProjectRolePartial", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUsersToProjectRole(_AddUserToProjectRoleViewModel vm)
+        {
+            return RedirectToAction(nameof(UsersAndRoles), new { projectId = vm.ProjectId });
         }
     }
 }

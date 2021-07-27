@@ -35,6 +35,7 @@ namespace WhatBug.WebUI.Common
             CreateMap<ProjectRoleDTO, ProjectRoleViewModel>();
 
             // User
+            CreateMap<UserDTO, UserViewModel>();
             CreateMap<UserWithPermissionsDTO, UserWithPermissionsViewModel>()
                 .ForMember(
                     dest => dest.Id,
