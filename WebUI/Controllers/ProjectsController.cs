@@ -90,6 +90,7 @@ namespace WhatBug.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUsersToProjectRole(_AddUserToProjectRoleViewModel vm)
         {
+            await _projectService.AddUsersToProjectRoleAsync(_mapper.Map<AddUsersToProjectRoleDTO>(vm));
             return RedirectToAction(nameof(UsersAndRoles), new { projectId = vm.ProjectId });
         }
     }

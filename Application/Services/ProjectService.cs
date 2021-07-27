@@ -12,6 +12,7 @@ using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Data;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Entities.JoinTables;
 using WhatBug.Domain.Exceptions;
 
 namespace WhatBug.Application.Services
@@ -65,13 +66,32 @@ namespace WhatBug.Application.Services
             // TODO: Check permission
 
             var project = await _context.Projects
-                .Include(p => p.PriorityScheme.Priorities)
-                    .ThenInclude(p => p.ColorIcon.Color)
-                .Include(p => p.PriorityScheme.Priorities)
-                    .ThenInclude(p => p.ColorIcon.Icon)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Color)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Icon)
                 .FirstOrDefaultAsync(p => p.Id == id);
             project.PriorityScheme.Priorities.Sort((a, b) => a.Order.CompareTo(b.Order));
             return _mapper.Map<ProjectDTO>(project);
+        }
+
+        public async Task AddUsersToProjectRoleAsync(AddUsersToProjectRoleDTO dto)
+        {
+            // TODO: Check permission
+
+            var project = await _context.Projects
+                .Include(p => p.ProjectRoleUsers).ThenInclude(p => p.User)
+                .Include(p => p.ProjectRoleUsers).ThenInclude(p => p.ProjectRole)
+                .SingleAsync(p => p.Id == dto.ProjectId);
+
+            var projectRole = await _context.ProjectRoles.SingleAsync(r => r.Id == dto.ProjectRoleId);
+            var users = await _context.Users.Where(u => dto.UserIds.Contains(u.Id)).ToListAsync();
+
+            users.ForEach(u => project.ProjectRoleUsers.Add(new ProjectUserProjectRole
+            {
+                User = u,
+                ProjectRole = projectRole
+            }));
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -113,7 +113,7 @@ namespace WhatBug.Persistence
             modelBuilder
                 .Entity<ProjectUserProjectRole>()
                 .HasOne(p => p.Project)
-                .WithMany()
+                .WithMany(p => p.ProjectRoleUsers)
                 .HasForeignKey(p => p.ProjectId);
 
             modelBuilder

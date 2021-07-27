@@ -12,6 +12,7 @@ namespace WhatBug.Application.Services.Interfaces
 {
     public interface IProjectService
     {
+        Task AddUsersToProjectRoleAsync(AddUsersToProjectRoleDTO dto);
         public Task CreateProject(CreateProjectDTO createProjectDTO);
         Task<ProjectDTO> GetProjectAsync(int id);
         Task<List<Project>> ListProjects();
