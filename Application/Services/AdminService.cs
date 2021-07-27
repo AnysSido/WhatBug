@@ -23,7 +23,7 @@ namespace WhatBug.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ProjectRoleDTO>> GetProjectRoles()
+        public async Task<List<ProjectRoleDTO>> GetProjectRolesAsync()
         {
             return _mapper.Map<List<ProjectRoleDTO>>(await _context.ProjectRoles.ToListAsync());
         }

@@ -66,7 +66,7 @@ namespace WhatBug.WebUI.Controllers
             {
                 SchemeId = schemeId,
                 SchemeName = scheme.Name,
-                ProjectRoles = _mapper.Map<List<ProjectRoleViewModel>>(await _adminService.GetProjectRoles())
+                ProjectRoles = _mapper.Map<List<ProjectRoleViewModel>>(await _adminService.GetProjectRolesAsync())
             };
             return View(vm);
         }
