@@ -15,10 +15,20 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <label asp-for="@Model.SelectedUserIds">Assign these users</label>
                     <select asp-for="@Model.SelectedUserIds" class="select2 input-medium" multiple="multiple">
                         @for (int i = 0; i < Model.Users.Count; i++)
                         {
                             <option value="@Model.Users[i].Id">@Model.Users[i].Username</option>
+                        }
+                    </select>
+                </div>
+                <div class="row">
+                    <label asp-for="@Model.SelectedRoleId">To the following role</label>
+                    <select asp-for="@Model.SelectedRoleId" class="select2 input-medium">
+                        @for (int i = 0; i < Model.ProjectRoles.Count; i++)
+                        {
+                            <option value="@Model.ProjectRoles[i].Id">@Model.ProjectRoles[i].Name</option>
                         }
                     </select>
                 </div>
