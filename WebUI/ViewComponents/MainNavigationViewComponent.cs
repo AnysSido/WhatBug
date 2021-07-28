@@ -13,13 +13,11 @@ namespace WhatBug.WebUI.ViewComponents
     public class MainNavigationViewComponent : ViewComponent
     {
         private readonly IProjectService _projectService;
-        private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public MainNavigationViewComponent(IProjectService projectService, ICurrentUserService currentUserService, IMapper mapper)
+        public MainNavigationViewComponent(IProjectService projectService, IMapper mapper)
         {
             _projectService = projectService;
-            _currentUserService = currentUserService;
             _mapper = mapper;
         }
 

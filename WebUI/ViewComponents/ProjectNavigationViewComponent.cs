@@ -24,7 +24,7 @@ namespace WhatBug.WebUI.ViewComponents
             var project = await _projectService.GetProjectAsync(projectId);
             var vm = new ProjectNavigationComponentViewModel
             {
-                ProjectId = projectId,
+                ProjectId = project.Id,
                 ProjectName = project.Name
             };
 

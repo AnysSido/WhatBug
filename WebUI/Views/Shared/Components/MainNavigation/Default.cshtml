@@ -1,8 +1,7 @@
 ﻿@model WhatBug.WebUI.ViewComponents.MainNavigationComponentViewModel
+@using static WhatBug.WebUI.Helpers.RouteHelper
 
-@{
-    
-
+@{   
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
@@ -35,7 +34,10 @@
                 </div>
             </div>
 
-            @await Component.InvokeAsync("ProjectNavigation", 8)
+            @if (Url.IsProjectRoute() && Url.GetRouteInt("projectId") != null)
+            {
+                @await Component.InvokeAsync("ProjectNavigation", Url.GetRouteInt("projectId"));
+            }
 
         </div>
         <!-- /.sidebar -->
