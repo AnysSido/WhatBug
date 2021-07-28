@@ -11,5 +11,6 @@ namespace WhatBug.WebUI.ViewModels.Projects
         [HiddenInput]
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
+        public IList<ProjectRoleWithUsersViewModel> ProjectRolesWithUsers { get; set; }
     }
 }

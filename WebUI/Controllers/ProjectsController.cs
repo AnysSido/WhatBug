@@ -69,10 +69,14 @@ namespace WhatBug.WebUI.Controllers
         [Route("/Project/{projectId}/UsersAndRoles")]
         public async Task<IActionResult> UsersAndRoles(int projectId)
         {
+            var project = await _projectService.GetProjectAsync(projectId);
             var vm = new ProjectUsersAndRolesViewModel
             {
-                ProjectId = projectId
+                ProjectId = projectId,
+                ProjectName = project.Name,
+                ProjectRolesWithUsers = _mapper.Map<List<ProjectRoleWithUsersViewModel>>(await _projectService.GetProjectRolesWithUsersAsync(projectId))
             };
+
             return View(vm);
         }
 

@@ -15,6 +15,7 @@ namespace WhatBug.Application.Services.Interfaces
         Task AddUsersToProjectRoleAsync(AddUsersToProjectRoleDTO dto);
         public Task CreateProject(CreateProjectDTO createProjectDTO);
         Task<ProjectDTO> GetProjectAsync(int id);
+        Task<List<ProjectRoleWithUsersDTO>> GetProjectRolesWithUsersAsync(int projectId);
         Task<List<Project>> ListProjects();
     }
 }

@@ -67,7 +67,7 @@ namespace WhatBug.Infrastructure.Identity
 
         // This method could be very inefficient for large userbases.
         // As this application will not be used for real teams it will be fine.
-        public async Task<List<UserDTO>> PopulatePrincipleUsersInfo(List<UserDTO> userDTOs)
+        public async Task<IList<UserDTO>> PopulatePrincipleUsersInfo(IList<UserDTO> userDTOs)
         {
             var ids = userDTOs.Select(u => u.Id);
             var principleUsers = await _userManager.Users

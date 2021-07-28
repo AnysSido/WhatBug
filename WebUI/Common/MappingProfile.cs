@@ -57,6 +57,7 @@ namespace WhatBug.WebUI.Common
                 .ForMember(
                     dest => dest.UserIds,
                     opt => opt.MapFrom(u => u.SelectedUserIds));
+            CreateMap<ProjectRoleWithUsersDTO, ProjectRoleWithUsersViewModel>();
 
             // Permissions
             CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();
