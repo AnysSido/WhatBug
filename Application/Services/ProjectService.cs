@@ -76,6 +76,12 @@ namespace WhatBug.Application.Services
             return _mapper.Map<ProjectDTO>(project);
         }
 
+        public async Task<List<ProjectDTO>> GetAllProjects()
+        {
+            // TODO: Check permissions
+            return _mapper.Map<List<ProjectDTO>>(await _context.Projects.ToListAsync());
+        }
+
         public async Task<List<ProjectRoleWithUsersDTO>> GetProjectRolesWithUsersAsync(int projectId)
         {
             // TODO: Check permissions
