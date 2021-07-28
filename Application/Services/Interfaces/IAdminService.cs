@@ -10,6 +10,6 @@ namespace WhatBug.Application.Services.Interfaces
     public interface IAdminService
     {
         Task CreateProjectRole(CreateProjectRoleDTO dto);
-        Task<List<ProjectRoleDTO>> GetProjectRoles();
+        Task<List<ProjectRoleDTO>> GetProjectRolesAsync();
     }
 }

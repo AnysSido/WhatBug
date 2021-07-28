@@ -35,6 +35,7 @@ namespace WhatBug.WebUI.Common
             CreateMap<ProjectRoleDTO, ProjectRoleViewModel>();
 
             // User
+            CreateMap<UserDTO, UserViewModel>();
             CreateMap<UserWithPermissionsDTO, UserWithPermissionsViewModel>()
                 .ForMember(
                     dest => dest.Id,
@@ -49,6 +50,14 @@ namespace WhatBug.WebUI.Common
                 .ForMember(
                     dest => dest.PrioritySchemeId,
                     opt => opt.MapFrom(src => src.SelectedPriorityScheme));
+            CreateMap<_AddUserToProjectRoleViewModel, AddUsersToProjectRoleDTO>()
+                .ForMember(
+                    dest => dest.ProjectRoleId,
+                    opt => opt.MapFrom(src => src.SelectedRoleId))
+                .ForMember(
+                    dest => dest.UserIds,
+                    opt => opt.MapFrom(u => u.SelectedUserIds));
+            CreateMap<ProjectRoleWithUsersDTO, ProjectRoleWithUsersViewModel>();
 
             // Permissions
             CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();

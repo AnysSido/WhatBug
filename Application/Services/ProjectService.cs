@@ -9,9 +9,11 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Models;
 using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Projects;
+using WhatBug.Application.DTOs.Users;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Data;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Entities.JoinTables;
 using WhatBug.Domain.Exceptions;
 
 namespace WhatBug.Application.Services
@@ -20,15 +22,17 @@ namespace WhatBug.Application.Services
     {
         private readonly IWhatBugDbContext _context;
         private readonly IPermissionService _permissionService;
+        private readonly IAuthenticationProvider _authenticationProvider;
         private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public ProjectService(IWhatBugDbContext whatBugDbContext, IPermissionService permissionService, ICurrentUserService currentUserService, IMapper mapper)
+        public ProjectService(IWhatBugDbContext whatBugDbContext, IPermissionService permissionService, ICurrentUserService currentUserService, IMapper mapper, IAuthenticationProvider authenticationProvider)
         {
             _context = whatBugDbContext;
             _permissionService = permissionService;
             _currentUserService = currentUserService;
             _mapper = mapper;
+            _authenticationProvider = authenticationProvider;
         }
 
         public async Task CreateProject(CreateProjectDTO createProjectDTO)
@@ -65,13 +69,58 @@ namespace WhatBug.Application.Services
             // TODO: Check permission
 
             var project = await _context.Projects
-                .Include(p => p.PriorityScheme.Priorities)
-                    .ThenInclude(p => p.ColorIcon.Color)
-                .Include(p => p.PriorityScheme.Priorities)
-                    .ThenInclude(p => p.ColorIcon.Icon)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Color)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Icon)
                 .FirstOrDefaultAsync(p => p.Id == id);
             project.PriorityScheme.Priorities.Sort((a, b) => a.Order.CompareTo(b.Order));
             return _mapper.Map<ProjectDTO>(project);
+        }
+
+        public async Task<List<ProjectRoleWithUsersDTO>> GetProjectRolesWithUsersAsync(int projectId)
+        {
+            // TODO: Check permissions
+
+            var project = await _context.Projects
+                .Include(p => p.ProjectRoleUsers).ThenInclude(p => p.User)
+                .Include(p => p.ProjectRoleUsers).ThenInclude(p => p.ProjectRole)
+                .SingleAsync(p => p.Id == projectId);
+
+            var rolesWithUsers = project.ProjectRoleUsers
+                .GroupBy(r => r.ProjectRole)
+                .SelectMany(r => new List<ProjectRoleWithUsersDTO> {
+                    new ProjectRoleWithUsersDTO
+                    {
+                        RoleId = r.Key.Id,
+                        RoleName = r.Key.Name,
+                        Users = r.Select(u => _mapper.Map<UserDTO>(u.User)).ToList()
+                    }
+                }).ToList();
+
+            foreach (var role in rolesWithUsers)
+                await _authenticationProvider.PopulatePrincipleUsersInfo(role.Users);
+
+            return rolesWithUsers;
+        }
+
+        public async Task AddUsersToProjectRoleAsync(AddUsersToProjectRoleDTO dto)
+        {
+            // TODO: Check permission
+
+            var project = await _context.Projects
+                .Include(p => p.ProjectRoleUsers).ThenInclude(p => p.User)
+                .Include(p => p.ProjectRoleUsers).ThenInclude(p => p.ProjectRole)
+                .SingleAsync(p => p.Id == dto.ProjectId);
+
+            var projectRole = await _context.ProjectRoles.SingleAsync(r => r.Id == dto.ProjectRoleId);
+            var users = await _context.Users.Where(u => dto.UserIds.Contains(u.Id)).ToListAsync();
+
+            users.ForEach(u => project.ProjectRoleUsers.Add(new ProjectUserProjectRole
+            {
+                User = u,
+                ProjectRole = projectRole
+            }));
+
+            await _context.SaveChangesAsync();
         }
     }
 }

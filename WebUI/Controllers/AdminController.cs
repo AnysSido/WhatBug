@@ -27,7 +27,7 @@ namespace WhatBug.WebUI.Controllers
         {
             var vm = new AllProjectRolesViewModel
             {
-                ProjectRoles = _mapper.Map<List<ProjectRoleViewModel>>(await _adminService.GetProjectRoles())
+                ProjectRoles = _mapper.Map<List<ProjectRoleViewModel>>(await _adminService.GetProjectRolesAsync())
             };
             
             return View(vm);

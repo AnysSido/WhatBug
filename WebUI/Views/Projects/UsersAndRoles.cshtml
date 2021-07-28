@@ -1,14 +1,47 @@
 ﻿@model WhatBug.WebUI.ViewModels.Projects.ProjectUsersAndRolesViewModel 
 
+@section Styles {
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+}
+
 @{
     ViewData["Title"] = "UsersAndRoles";
 }
 
-<div class="input-group">
-    <button type="button" class="btn btn-default mdl">
-        Add User to Role
-    </button>
+<div class="row mb-3">
+    <div class="input-group">
+        <button type="button" class="btn btn-default mdl">
+            Add User to Role
+        </button>
+    </div>
 </div>
+
+<div class="row">
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Project Roles</th>
+                <th>Users</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.ProjectRolesWithUsers)
+            {
+                <tr>
+                    <td>@role.RoleName</td>
+                    <td>
+                        @foreach (var user in role.Users)
+                        {
+                            <p>@user.Username</p>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 <!-- Data for add user to role modal -->
 <form id="addUserToRoleModalData">
@@ -19,6 +52,8 @@
 <div class="modal fade" id="addUserToRoleModal"></div>
 
 @section Scripts {
+    <script type="text/javascript" src="~/lib/select2/js/select2.min.js"></script>
+
     <script type="text/javascript">
         $(function () {
             $('.mdl').on('click', function () {
@@ -26,9 +61,18 @@
                     $('#addUserToRoleModalData').serialize()
                 ).done(function (response) {
                     $('#addUserToRoleModal').html(response);
+                    RegisterPartialJS();
                     $('#addUserToRoleModal').modal('show');
                 });
             });
         });
+
+        function RegisterPartialJS() {
+            $('.select2').select2({
+                width: '100%',
+                theme: 'bootstrap4',
+                dropdownParent: $('#addUserToRoleModal .modal-body')
+            });
+        };
     </script>
-} 
+}

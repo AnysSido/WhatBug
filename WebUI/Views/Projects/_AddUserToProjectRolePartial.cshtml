@@ -1,11 +1,12 @@
 ﻿@model WhatBug.WebUI.ViewModels.Projects._AddUserToProjectRoleViewModel
 
-<form method="post" asp-controller="Projects" asp-action="">
+<form method="post" asp-controller="Projects" asp-action="AddUsersToProjectRole">
     <input asp-for="@Model.ProjectId" />
+    
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modify Scheme Permissions</h5>
+                <h5 class="modal-title">Add Users to Project Role</h5>
                 <br />
                 <p>Project: @Model.ProjectId</p>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -13,7 +14,24 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <div class="row">
+                    <label asp-for="@Model.SelectedUserIds">Assign these users</label>
+                    <select asp-for="@Model.SelectedUserIds" class="select2 input-medium" multiple="multiple">
+                        @for (int i = 0; i < Model.Users.Count; i++)
+                        {
+                            <option value="@Model.Users[i].Id">@Model.Users[i].Username</option>
+                        }
+                    </select>
+                </div>
+                <div class="row">
+                    <label asp-for="@Model.SelectedRoleId">To the following role</label>
+                    <select asp-for="@Model.SelectedRoleId" class="select2 input-medium">
+                        @for (int i = 0; i < Model.ProjectRoles.Count; i++)
+                        {
+                            <option value="@Model.ProjectRoles[i].Id">@Model.ProjectRoles[i].Name</option>
+                        }
+                    </select>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
