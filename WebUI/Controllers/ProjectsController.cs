@@ -11,6 +11,7 @@ using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
 using WhatBug.Persistence;
+using WhatBug.WebUI.Routing;
 using WhatBug.WebUI.ViewModels.Admin;
 using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Projects;
@@ -67,6 +68,7 @@ namespace WhatBug.WebUI.Controllers
 
         [HttpGet]
         [Route("/Project/{projectId}/UsersAndRoles")]
+        [RouteCategory(RouteCategory.Project)]
         public async Task<IActionResult> UsersAndRoles(int projectId)
         {
             var project = await _projectService.GetProjectAsync(projectId);

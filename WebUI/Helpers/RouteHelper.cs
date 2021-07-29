@@ -1,31 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Helpers
 {
     public static class RouteHelper
     {
-        public static bool IsProjectRoute(this IUrlHelper urlHelper)
+        public static RouteCategory GetRouteCategory(this IUrlHelper urlHelper)
         {
-            return IsControllerType<ProjectsController>(urlHelper) || IsControllerType<IssuesController>(urlHelper);
+            if (urlHelper.ActionContext.HttpContext.Items.TryGetValue("RouteCategory", out var category))
+            {
+                return (RouteCategory)category;
+            }
+            return RouteCategory.None;
         }
 
-        public static bool IsControllerType<T>(IUrlHelper urlHelper) where T : Controller
-        {
-            // Check if the controller name from the route e.g. "Projects" matches the type name prefix (e.g. "Projects" from "ProjectsController")
-            return urlHelper.ActionContext.RouteData.Values["controller"].ToString() == typeof(T).Name[0..^10];
-        }
-
-        public static int? GetRouteInt(this IUrlHelper urlHelper, string key)
+        public static bool TryGetRouteInt(this IUrlHelper urlHelper, string key, out int value)
         {
             if (urlHelper.ActionContext.RouteData.Values.TryGetValue(key, out object val))
-                return Int32.Parse((string)val);
-
-            return null;
+            {
+                if (int.TryParse((string)val, out int result))
+                {
+                    value = result;
+                    return true;
+                }
+            }
+            
+            value = 0;
+            return false;
         }
     }
 }

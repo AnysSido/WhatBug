@@ -1,5 +1,4 @@
 ﻿@model WhatBug.WebUI.ViewComponents.MainNavigationComponentViewModel
-@using static WhatBug.WebUI.Helpers.RouteHelper
 
 @{   
     <!-- Main Sidebar Container -->
@@ -34,9 +33,9 @@
                 </div>
             </div>
 
-            @if (Url.IsProjectRoute() && Url.GetRouteInt("projectId") != null)
+            @if (Url.GetRouteCategory() == RouteCategory.Project && Url.TryGetRouteInt("projectId", out int projectId))
             {
-                @await Component.InvokeAsync("ProjectNavigation", Url.GetRouteInt("projectId"));
+                @await Component.InvokeAsync("ProjectNavigation", projectId);
             }
 
         </div>
