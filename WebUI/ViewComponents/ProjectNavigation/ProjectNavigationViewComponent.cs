@@ -29,10 +29,4 @@ namespace WhatBug.WebUI.ViewComponents
             return View(vm);
         }
     }
-
-    public class ProjectNavigationComponentViewModel
-    {
-        public int ProjectId { get; set; }
-        public string ProjectName { get; set; }
-    }
 }
