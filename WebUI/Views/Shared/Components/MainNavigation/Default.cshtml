@@ -4,9 +4,9 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a asp-controller="Home" asp-action="Index" class="brand-link">
             <img src="~/lib/admin-lte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light">WhatBug</span>
         </a>
 
         <!-- Sidebar -->
@@ -33,7 +33,11 @@
                 </div>
             </div>
 
-            @if (Url.GetRouteCategory() == RouteCategory.Project && Url.TryGetRouteInt("projectId", out int projectId))
+            @if (Url.GetRouteCategory() == RouteCategory.None)
+            {
+                @await Component.InvokeAsync("DefaultNavigation");
+            }
+            else if (Url.GetRouteCategory() == RouteCategory.Project && Url.TryGetRouteInt("projectId", out int projectId))
             {
                 @await Component.InvokeAsync("ProjectNavigation", projectId);
             }

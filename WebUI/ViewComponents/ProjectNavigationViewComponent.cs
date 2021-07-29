@@ -11,12 +11,10 @@ namespace WhatBug.WebUI.ViewComponents
     public class ProjectNavigationViewComponent : ViewComponent
     {
         private readonly IProjectService _projectService;
-        private readonly IMapper _mapper;
 
-        public ProjectNavigationViewComponent(IProjectService projectService, IMapper mapper)
+        public ProjectNavigationViewComponent(IProjectService projectService)
         {
             _projectService = projectService;
-            _mapper = mapper;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int projectId)
