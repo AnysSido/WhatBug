@@ -24,7 +24,6 @@ namespace WhatBug.WebUI.ViewComponents
 
         [Display(Name = "Priority")]
         public int SelectedPriorityId { get; set; }
-        public IList<PriorityViewModel> AllSchemePriorities { get; set; }
 
         [Display(Name = "Issue Type")]
         public int SelectedIssueType { get; set; }

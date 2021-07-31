@@ -26,11 +26,13 @@
         $('#CancelConfirm').on('click', () => {
             $('#ConfirmModal').modal('hide');
             $('#CreateIssueModal').modal('hide');
-        })
+        });
 
         $('#CancelGoBack').on('click', () => {
             $('#ConfirmModal').modal('hide');
-        })        
+        });
+
+        this.prioritySelectComponent = new IssuePrioritySelectComponent($('#IssuePrioritySelectComponent'), $('#CreateIssue-SelectedProjectId').val());
     }
 
     #DestryModals = () => {
@@ -43,8 +45,6 @@
     }
 
     #BuildSelectPickers = () => {
-        $('#CreateIssueModal .selectpicker').selectpicker();
-
         function templating(iconElement) {
             if (!iconElement.id) {
                 return iconElement.text;
@@ -52,7 +52,7 @@
             return $('<span><i class="' + iconElement.element.dataset.class +'"></i>' + iconElement.text + '</span>');
         }
         
-        $('.select2').select2({
+        $('#CreateIssueModal .select2').select2({
             width: '100%',
             theme: 'bootstrap4',
             dropdownParent: $('#CreateIssueModal .modal-body'),
@@ -60,8 +60,8 @@
             templateResult: templating
         });
 
-        $('#CreateIssueModal .projectselector').on('select2:select', () => {
-            console.log("done");
+        $('#CreateIssueModal .projectselector').on('select2:select', (e) => {
+            this.prioritySelectComponent.Refresh(e.params.data.id);
         });
     }
 

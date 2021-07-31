@@ -13,5 +13,11 @@ namespace WhatBug.WebUI.Controllers
         {
             return ViewComponent("CreateIssue");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetIssuePrioritySelectComponent(int projectId)
+        {
+            return ViewComponent("IssuePrioritySelect", new { projectId });
+        }
     }
 }

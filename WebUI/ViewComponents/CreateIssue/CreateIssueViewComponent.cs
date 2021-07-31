@@ -47,7 +47,6 @@ namespace WhatBug.WebUI.ViewComponents
             //}
 
             vm.SelectedProjectId = selectedProject.Id;
-            vm.AllSchemePriorities = _mapper.Map<List<PriorityViewModel>>(selectedProject.PriorityScheme.Priorities);
 
             return View(vm);
         }

@@ -13,7 +13,7 @@
                             <!-- Projects -->
                             <div class="form-group col-sm-4">
                                 <label asp-for="SelectedProjectId"></label>
-                                <select asp-for="SelectedProjectId" class="select2 projectselector">
+                                <select asp-for="SelectedProjectId" class="select2 projectselector" id="CreateIssue-SelectedProjectId">
                                     @for (int i = 0; i < Model.AllProjects.Count; i++)
                                     {
                                         var dataContent = Model.AllProjects[i].Name;
@@ -38,14 +38,8 @@
                                 <!-- Issue Priority -->
                                 <div class="form-group col-sm-4">
                                     <label asp-for="@Model.SelectedPriorityId"></label>
-                                    <select asp-for="@Model.SelectedPriorityId" class="select2">
-                                        @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
-                                        {
-                                            var iconClass = @Model.AllSchemePriorities[i].ColorIcon.Icon.ClassName;
-                                            var iconColorClass = "wb-color-" + @Model.AllSchemePriorities[i].ColorIcon.Color.LowerName;
-                                            <option value="@Model.AllSchemePriorities[i].Id" data-class="@iconClass + @iconColorClass">@Model.AllSchemePriorities[i].Name</option>
-                                        }
-                                    </select>
+                                    <!-- Container for component loaded via ajax -->
+                                    <div id="IssuePrioritySelectComponent"></div>
                                 </div>
                             </div>
                             <hr />

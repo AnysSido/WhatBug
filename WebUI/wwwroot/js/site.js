@@ -1,3 +1,3 @@
 ﻿function ShowCreateIssueComponent() {
-    new CreateIssueComponent()
+    new CreateIssueComponent();
 }
