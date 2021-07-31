@@ -16,7 +16,8 @@
                     @foreach (var project in Model.Projects)
                     {
                         <li class="nav-item">
-                            <a asp-controller="Projects" asp-action="UsersAndRoles" asp-route-projectId="@project.Id" class="nav-link"> <!-- TODO: Change to Dashboard -->
+                            <!-- TODO: Change to Dashboard -->
+                            <a asp-controller="Projects" asp-action="UsersAndRoles" asp-route-projectId="@project.Id" class="nav-link">
                                 <i class="fas fa-columns nav-icon"></i>
                                 <p>@project.Name</p>
                             </a>

@@ -1,0 +1,83 @@
+﻿@model WhatBug.WebUI.ViewComponents.CreateIssueComponentViewModel
+
+@{
+    <div id="CreateIssueComponent">
+        <div class="modal fade" data-backdrop="static" id="CreateIssueModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="card-title">Create Issue</h6>
+                    </div>
+                    <form asp-controller="Issues" asp-action="Create" asp-route-projectId="@Model.ProjectId" method="post" class="quill-form">
+                        <div class="modal-body">
+                            <!-- Issue Type -->
+                            <div class="form-group col-sm-4">
+                                <label asp-for="SelectedIssueType"></label>
+                                <select class="form-control selectpicker" asp-for="SelectedIssueType">
+                                    @for (int i = 0; i < Model.AllIssueTypes.Count; i++)
+                                    {
+                                        var dataContent = "<i class='" + @Model.AllIssueTypes[i].ColorIcon.Icon.ClassName
+                                                            + " wb-color-" + @Model.AllIssueTypes[i].ColorIcon.Color.LowerName + "'></i>"
+                                                            + @Model.AllIssueTypes[i].Name;
+                                        <option value="@Model.AllIssueTypes[i].Id" data-content="@dataContent"></option>
+                                    }
+                                </select>
+                            </div>
+                            <!-- Issue Priority -->
+                            <div class="form-group col-sm-4">
+                                <label asp-for="SelectedPriorityId"></label>
+                                <select class="form-control selectpicker" asp-for="SelectedPriorityId">
+                                    @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
+                                    {
+                                        var dataContent = "<i class='" + @Model.AllSchemePriorities[i].ColorIcon.Icon.ClassName
+                                                            + " wb-color-" + @Model.AllSchemePriorities[i].ColorIcon.Color.LowerName + "'></i>"
+                                                            + @Model.AllSchemePriorities[i].Name;
+                                        <option value="@Model.AllSchemePriorities[i].Id" data-content="@dataContent"></option>
+                                    }
+                                </select>
+                            </div>
+                            <hr />
+                            <!-- Summary -->
+                            <div class="form-group col-12">
+                                <label asp-for="Summary"></label>
+                                <input asp-for="Summary" class="form-control" id="CreateIssueSummary" />
+                                <span asp-validation-for="Summary" class="text-danger"></span>
+                            </div>
+                            <!-- Quill Editor -->
+                            <div class="form-group col-12">
+                                <label asp-for="Description"></label>
+                                <input asp-for="Description" name="Description" type="hidden" class="form-control quill-content" />
+                                <div class="quill-editor"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-end">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">Create another</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create</button>
+                            <a href="#" class="text-primary modal-cancel">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" data-backdrop="static" id="ConfirmModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-danger">
+                    <div class="modal-header">
+                        <h6 class="card-title">Are you sure?</h6>
+                    </div>
+                    <div class="modal-body">
+                        <p>You have unsaved changes that will be lost. Are you sure you want to cancel?</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="submit" id="CancelConfirm" class="btn btn-outline-light">Confirm</button>
+                        <a href="#" id="CancelGoBack" class="modal-cancel btn btn-outline-light">Go back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

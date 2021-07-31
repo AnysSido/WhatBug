@@ -1,0 +1,30 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using WhatBug.WebUI.ViewModels.Issues;
+using WhatBug.WebUI.ViewModels.Priorities;
+
+namespace WhatBug.WebUI.ViewComponents
+{
+    public class CreateIssueComponentViewModel
+    {
+        [HiddenInput]
+        public int ProjectId { get; set; }
+        [Required]
+        public string Summary { get; set; }
+        public string Description { get; set; }
+        public int ReporterId { get; set; }
+        public int AssigneeId { get; set; }
+
+        [Display(Name = "Priority")]
+        public int SelectedPriorityId { get; set; }
+        public List<PriorityViewModel> AllSchemePriorities { get; set; }
+
+        [Display(Name = "Issue Type")]
+        public int SelectedIssueType { get; set; }
+        public List<IssueTypeViewModel> AllIssueTypes { get; set; }
+    }
+}
