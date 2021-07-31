@@ -1,9 +1,4 @@
-﻿@model WhatBug.WebUI.ViewModels.Projects.ProjectUsersAndRolesViewModel 
-
-@section Styles {
-    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
-    <link rel="stylesheet" href="~/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
-}
+﻿@model WhatBug.WebUI.ViewModels.Projects.ProjectUsersAndRolesViewModel
 
 @{
     ViewData["Title"] = "UsersAndRoles";
@@ -52,8 +47,6 @@
 <div class="modal fade" id="addUserToRoleModal"></div>
 
 @section Scripts {
-    <script type="text/javascript" src="~/lib/select2/js/select2.min.js"></script>
-
     <script type="text/javascript">
         $(function () {
             $('.mdl').on('click', function () {

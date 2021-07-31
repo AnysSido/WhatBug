@@ -8,33 +8,45 @@
                     <div class="modal-header">
                         <h6 class="card-title">Create Issue</h6>
                     </div>
-                    <form asp-controller="Issues" asp-action="Create" asp-route-projectId="@Model.ProjectId" method="post" class="quill-form">
+                    <form asp-controller="Issues" asp-action="Create" asp-route-projectId="@Model.SelectedProjectId" method="post" class="quill-form">
                         <div class="modal-body">
-                            <!-- Issue Type -->
+                            <!-- Projects -->
                             <div class="form-group col-sm-4">
-                                <label asp-for="SelectedIssueType"></label>
-                                <select class="form-control selectpicker" asp-for="SelectedIssueType">
-                                    @for (int i = 0; i < Model.AllIssueTypes.Count; i++)
+                                <label asp-for="SelectedProjectId"></label>
+                                <select asp-for="SelectedProjectId" class="select2 projectselector">
+                                    @for (int i = 0; i < Model.AllProjects.Count; i++)
                                     {
-                                        var dataContent = "<i class='" + @Model.AllIssueTypes[i].ColorIcon.Icon.ClassName
-                                                            + " wb-color-" + @Model.AllIssueTypes[i].ColorIcon.Color.LowerName + "'></i>"
-                                                            + @Model.AllIssueTypes[i].Name;
-                                        <option value="@Model.AllIssueTypes[i].Id" data-content="@dataContent"></option>
+                                        var dataContent = Model.AllProjects[i].Name;
+                                    <option value="@Model.AllProjects[i].Id">@Model.AllProjects[i].Name</option>
                                     }
                                 </select>
                             </div>
-                            <!-- Issue Priority -->
-                            <div class="form-group col-sm-4">
-                                <label asp-for="SelectedPriorityId"></label>
-                                <select class="form-control selectpicker" asp-for="SelectedPriorityId">
-                                    @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
-                                    {
-                                        var dataContent = "<i class='" + @Model.AllSchemePriorities[i].ColorIcon.Icon.ClassName
-                                                            + " wb-color-" + @Model.AllSchemePriorities[i].ColorIcon.Color.LowerName + "'></i>"
-                                                            + @Model.AllSchemePriorities[i].Name;
-                                        <option value="@Model.AllSchemePriorities[i].Id" data-content="@dataContent"></option>
-                                    }
-                                </select>
+                            <div class="row col-sm-12">
+                                <!-- Issue Type -->
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="SelectedIssueType"></label>
+                                    <select asp-for="SelectedIssueType" class="select2">
+                                        @for (int i = 0; i < Model.AllIssueTypes.Count; i++)
+                                        {
+                                            var iconClass = @Model.AllIssueTypes[i].ColorIcon.Icon.ClassName;
+                                            var iconColorClass = "wb-color-" + @Model.AllIssueTypes[i].ColorIcon.Color.LowerName;
+                                            <option value="@Model.AllIssueTypes[i].Id" data-class="@iconClass + @iconColorClass">@Model.AllIssueTypes[i].Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-sm-1"></div>
+                                <!-- Issue Priority -->
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="@Model.SelectedPriorityId"></label>
+                                    <select asp-for="@Model.SelectedPriorityId" class="select2">
+                                        @for (int i = 0; i < Model.AllSchemePriorities.Count; i++)
+                                        {
+                                            var iconClass = @Model.AllSchemePriorities[i].ColorIcon.Icon.ClassName;
+                                            var iconColorClass = "wb-color-" + @Model.AllSchemePriorities[i].ColorIcon.Color.LowerName;
+                                            <option value="@Model.AllSchemePriorities[i].Id" data-class="@iconClass + @iconColorClass">@Model.AllSchemePriorities[i].Name</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                             <hr />
                             <!-- Summary -->

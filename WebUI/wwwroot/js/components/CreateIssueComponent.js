@@ -3,20 +3,19 @@
         $.get('/components/getcreateissuecomponent').done((modal) => {
             $('body').append(modal);
             this.#PrepareModal();
+            this.#BuildSelectPickers();
             this.#CreateEditor();
             $('#CreateIssueModal').modal('show');
         });
     }
 
-    #PrepareModal = () => {
-        $('#CreateIssueModal .selectpicker').selectpicker();
-
+    #PrepareModal = () => {       
         $('#CreateIssueModal').on('hidden.bs.modal', () => {
             this.#DestryModals();
         });
 
         $('.modal-cancel').click(() => {
-            if (this.#ChangesMade()) {
+            if (this.#HasChanges()) {
                 $('body').append($('#ConfirmModal'));
                 $('#ConfirmModal').modal('show');
             } else {
@@ -39,8 +38,31 @@
         $('#ConfirmModal').remove();
     }
 
-    #ChangesMade = () => {
+    #HasChanges = () => {
         return this.quill.getLength() > 1 || $('#CreateIssueSummary').val().length > 0;
+    }
+
+    #BuildSelectPickers = () => {
+        $('#CreateIssueModal .selectpicker').selectpicker();
+
+        function templating(iconElement) {
+            if (!iconElement.id) {
+                return iconElement.text;
+            }
+            return $('<span><i class="' + iconElement.element.dataset.class +'"></i>' + iconElement.text + '</span>');
+        }
+        
+        $('.select2').select2({
+            width: '100%',
+            theme: 'bootstrap4',
+            dropdownParent: $('#CreateIssueModal .modal-body'),
+            templateSelection: templating,
+            templateResult: templating
+        });
+
+        $('#CreateIssueModal .projectselector').on('select2:select', () => {
+            console.log("done");
+        });
     }
 
     #CreateEditor = () => {

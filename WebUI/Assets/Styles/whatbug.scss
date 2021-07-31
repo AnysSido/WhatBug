@@ -4,7 +4,8 @@
 @import "plugins/bootstrapcolorpicker";
 @import "plugins/quill";
 @import "plugins/bootstrap-select.scss";
+@import "plugins/select2";
 
-.form-control {
+#CreateIssueComponent .form-control {
     background-color: #f4f5f7;
 }
