@@ -9,7 +9,6 @@ class CreateIssueComponent {
             this.#SetVars();
             this.#RegisterEvents();
             this.#LoadComponents();
-            this.#BuildSelectPickers();
             this.createIssueModal.modal('show');
         });
     }
@@ -67,6 +66,11 @@ class CreateIssueComponent {
             container: this.quillEditor,
             copyContentsTo: this.issueDescription
         });
+
+        new Select2Component({
+            container: this.selectLists,
+            template: 'IconAndText'
+        });
     }
 
     #RegisterEvents = () => {       
@@ -105,21 +109,5 @@ class CreateIssueComponent {
 
     #HasChanges = () => {
         return !this.quill.IsEmpty() || this.issueSummary.val().length > 0;
-    }
-
-    #BuildSelectPickers = () => {
-        function templating(iconElement) {
-            if (!iconElement.id) {
-                return iconElement.text;
-            }
-            return $('<span><i class="' + iconElement.element.dataset.class +'"></i>' + iconElement.text + '</span>');
-        }
-        
-        this.selectLists.select2({
-            width: '100%',
-            theme: 'bootstrap4',
-            templateSelection: templating,
-            templateResult: templating
-        });
     }
 }
