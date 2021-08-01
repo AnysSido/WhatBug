@@ -6,59 +6,96 @@ class CreateIssueComponent {
     constructor() {
         $.get('/components/getcreateissuecomponent').done((modal) => {
             $('body').append(modal);
-            this.#PrepareModal();
+            this.#SetVars();
+            this.#RegisterEvents();
             this.#LoadComponents();
             this.#BuildSelectPickers();
             this.#CreateEditor();
-            $('#CreateIssueModal').modal('show');
+            this.createIssueModal.modal('show');
         });
     }
 
-    #PrepareModal = () => {       
-        $('#CreateIssueModal').on('hidden.bs.modal', () => {
-            this.#DestryModals();
-        });
+    #SetVars = () => {
+        this.createIssueComponent = $('#CreateIssueComponent');
 
-        $('.modal-cancel').click(() => {
-            if (this.#HasChanges()) {
-                $('body').append($('#ConfirmModal'));
-                $('#ConfirmModal').modal('show');
-            } else {
-                $('#CreateIssueModal').modal('hide');
-            }
-        });
+        // Main modal
+        this.createIssueModal = this.createIssueComponent.find('.createIssueModel');
+        this.cancelIssueButton = this.createIssueModal.find('.modal-cancel');
+        this.submitIssueButton = this.createIssueModal.find('.submit');
+        this.mainForm = this.createIssueModal.find('form');
+        this.issueSummary = this.createIssueModal.find('.issueSummary');
 
-        $('#CancelConfirm').on('click', () => {
-            $('#ConfirmModal').modal('hide');
-            $('#CreateIssueModal').modal('hide');
-        });
+        // Project selector
+        this.selectedProjectId = this.createIssueModal.find('.selectedProjectId');
 
-        $('#CancelGoBack').on('click', () => {
-            $('#ConfirmModal').modal('hide');
-        });
+        // Cancel confirm modal
+        this.confirmModal = this.createIssueComponent.find('.confirmCancelModel');
+        this.cancelConfirm = this.confirmModal.find('.cancelConfirm');
+        this.cancelGoBack = this.confirmModal.find('.cancelGoBack');
+
+        // Component containers
+        this.prioritySelectComponentContainer = this.createIssueModal.find('.issuePriorityComponentContainer');
+        this.assigneeComponentContainer = this.createIssueModal.find('.assigneeComponentContainer');
+        this.reporterComponentContainer = this.createIssueModal.find('.reporterComponentContainer')
+
+        // Select2
+        this.selectLists = this.createIssueModal.find('.select2');
+
+        // Project selector
+        this.projectSelector = this.createIssueModal.find('.projectselector');
     }
 
     #LoadComponents = () => {
         this.prioritySelectComponent = new IssuePrioritySelectComponent(
-            $('#IssuePrioritySelectComponent'), $('#CreateIssue-SelectedProjectId').val());
+            this.prioritySelectComponentContainer, this.selectedProjectId.val());
+
         this.assigneeUserSelector = new UserSelectorComponent(
-            $('#AssigneeUserSelectComponent'), {
+            this.assigneeComponentContainer, {
             prefix: "assignee",
-            projectId: $('#CreateIssue-SelectedProjectId').val()
+            projectId: this.selectedProjectId.val()
         });
+
         this.reporterUserSelector = new UserSelectorComponent(
-            $('#ReporterUserSelectComponent'), {
+            this.reporterComponentContainer, {
             prefix: "reporter"
         });
     }
 
-    #DestryModals = () => {
-        $('#CreateIssueModal').remove();
-        $('#ConfirmModal').remove();
+    #RegisterEvents = () => {       
+        this.createIssueModal.on('hidden.bs.modal', () => {
+            this.createIssueComponent.remove();
+        });
+
+        this.cancelIssueButton.click(() => {
+            if (this.#HasChanges()) {
+                $('body').append(this.confirmModal);
+                this.confirmModal.modal('show');
+            } else {
+                this.createIssueModal.modal('hide');
+            }
+        });
+
+        this.cancelConfirm.on('click', () => {
+            this.confirmModal.modal('hide');
+            this.createIssueModal.modal('hide');
+        });
+
+        this.cancelGoBack.on('click', () => {
+            this.confirmModal.modal('hide');
+        });
+
+        this.projectSelector.on('select2:select', (e) => {
+            this.prioritySelectComponent.Load(e.params.data.id);
+        });
+
+        this.submitIssueButton.click((e) => {
+            e.preventDefault();
+            $.post('/components/createissue', this.mainForm.serialize());
+        });
     }
 
     #HasChanges = () => {
-        return this.quill.getLength() > 1 || $('#CreateIssueSummary').val().length > 0;
+        return this.quill.getLength() > 1 || this.issueSummary.val().length > 0;
     }
 
     #BuildSelectPickers = () => {
@@ -69,16 +106,11 @@ class CreateIssueComponent {
             return $('<span><i class="' + iconElement.element.dataset.class +'"></i>' + iconElement.text + '</span>');
         }
         
-        $('#CreateIssueModal .select2').select2({
+        this.selectLists.select2({
             width: '100%',
             theme: 'bootstrap4',
-            dropdownParent: $('#CreateIssueModal .modal-body'),
             templateSelection: templating,
             templateResult: templating
-        });
-
-        $('#CreateIssueModal .projectselector').on('select2:select', (e) => {
-            this.prioritySelectComponent.Refresh(e.params.data.id);
         });
     }
 
@@ -112,6 +144,7 @@ class CreateIssueComponent {
             }
         });
 
+        // TODO: Remove
         if (quillContent.val() != '') {
             quill.setContents(JSON.parse(quillContent.val()));
         }

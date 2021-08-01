@@ -1,12 +1,12 @@
 ﻿class IssuePrioritySelectComponent {
-    constructor(parent, projectId) {
-        this.myParent = parent;
-        this.Refresh(projectId);
+    constructor(container, projectId) {
+        this.container = container;
+        this.Load(projectId);
     }
 
-    Refresh = (projectId) => {       
+    Load = (projectId) => {       
        $.get('/components/getissuepriorityselectcomponent', { projectId: projectId }).done((modal) => {
-            this.myParent.html(modal);
+            this.container.html(modal);
             this.#StyleSelect();
         });
     }
@@ -19,10 +19,9 @@
             return $('<span><i class="' + iconElement.element.dataset.class +'"></i>' + iconElement.text + '</span>');
         }
         
-        $('#CreateIssueModal .select2').select2({
+        this.container.find('.select2').select2({
             width: '100%',
             theme: 'bootstrap4',
-            dropdownParent: $('#CreateIssueModal .modal-body'),
             templateSelection: templating,
             templateResult: templating
         });

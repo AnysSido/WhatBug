@@ -15,11 +15,9 @@ namespace WhatBug.WebUI.ViewComponents
         [Required]
         public string Summary { get; set; }
         public string Description { get; set; }
-        public int ReporterId { get; set; }
 
-        [Display(Name = "Assignee")]
-        public int AssigneeId { get; set; }
-        public IList<UserViewModel> AllUsers { get; set; }
+        public UserSelectorComponentViewModel Assignee { get; set; }
+        public UserSelectorComponentViewModel Reporter { get; set; }
 
         [Display(Name = "Project")]
         public int SelectedProjectId { get; set; }
