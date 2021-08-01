@@ -10,7 +10,6 @@ class CreateIssueComponent {
             this.#RegisterEvents();
             this.#LoadComponents();
             this.#BuildSelectPickers();
-            this.#CreateEditor();
             this.createIssueModal.modal('show');
         });
     }
@@ -24,6 +23,7 @@ class CreateIssueComponent {
         this.submitIssueButton = this.createIssueModal.find('.submit');
         this.mainForm = this.createIssueModal.find('form');
         this.issueSummary = this.createIssueModal.find('.issueSummary');
+        this.issueDescription = this.createIssueModal.find('.issueDescription')
 
         // Project selector
         this.selectedProjectId = this.createIssueModal.find('.selectedProjectId');
@@ -43,6 +43,9 @@ class CreateIssueComponent {
 
         // Project selector
         this.projectSelector = this.createIssueModal.find('.projectselector');
+
+        // Quill Editor
+        this.quillEditor = this.createIssueModal.find('.quill-editor');
     }
 
     #LoadComponents = () => {
@@ -58,6 +61,11 @@ class CreateIssueComponent {
         this.reporterUserSelector = new UserSelectorComponent(
             this.reporterComponentContainer, {
             prefix: "reporter"
+        });
+
+        this.quill = new QuillEditorComponent({
+            container: this.quillEditor,
+            copyContentsTo: this.issueDescription
         });
     }
 
@@ -90,12 +98,13 @@ class CreateIssueComponent {
 
         this.submitIssueButton.click((e) => {
             e.preventDefault();
+            $('.quill-content').val(this.quill.ToJson());
             $.post('/components/createissue', this.mainForm.serialize());
         });
     }
 
     #HasChanges = () => {
-        return this.quill.getLength() > 1 || this.issueSummary.val().length > 0;
+        return !this.quill.IsEmpty() || this.issueSummary.val().length > 0;
     }
 
     #BuildSelectPickers = () => {
@@ -111,47 +120,6 @@ class CreateIssueComponent {
             theme: 'bootstrap4',
             templateSelection: templating,
             templateResult: templating
-        });
-    }
-
-    #CreateEditor = () => {
-        var quillForm = $('.quill-form');
-        var quillContent = $('.quill-content');
-
-        this.quill = new Quill('.quill-editor', {
-            theme: 'snow',
-            modules: {
-                syntax: true,
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block'],
-
-                    [{ 'header': 1 }, { 'header': 2 }],
-                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                    [{ 'script': 'sub' }, { 'script': 'super' }],
-                    [{ 'indent': '-1' }, { 'indent': '+1' }],
-                    [{ 'direction': 'rtl' }],
-
-                    [{ 'size': ['small', false, 'large', 'huge'] }],
-                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-                    [{ 'color': [] }, { 'background': [] }],
-                    [{ 'font': [] }],
-                    [{ 'align': [] }],
-
-                    ['clean']
-                ]
-            }
-        });
-
-        // TODO: Remove
-        if (quillContent.val() != '') {
-            quill.setContents(JSON.parse(quillContent.val()));
-        }
-
-        quillForm.on('submit', function () {
-            var text = JSON.stringify(quill.getContents());
-            quillContent.val(text);
         });
     }
 }

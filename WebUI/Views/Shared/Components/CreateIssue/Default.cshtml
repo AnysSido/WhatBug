@@ -8,7 +8,7 @@
                     <div class="modal-header">
                         <h6 class="card-title">Create Issue</h6>
                     </div>
-                    <form method="post" class="quill-form">
+                    <form method="post">
                         <div class="modal-body">
                             <!-- Projects -->
                             <div class="form-group col-sm-4">
@@ -52,7 +52,7 @@
                             <!-- Quill Editor -->
                             <div class="form-group col-12">
                                 <label asp-for="Description"></label>
-                                <input asp-for="Description" name="Description" type="hidden" class="form-control quill-content" />
+                                <input asp-for="Description" name="Description" type="hidden" class="form-control issueDescription" />
                                 <div class="quill-editor"></div>
                             </div>
                             <!-- Assignee -->
