@@ -9,3 +9,11 @@
 #CreateIssueComponent .form-control {
     background-color: #f4f5f7;
 }
+
+#CreateIssueComponent .modal-dialog{
+    overflow-y: initial;
+}
+#CreateIssueComponent .modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}

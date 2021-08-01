@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.WebUI.ViewComponents;
 
 namespace WhatBug.WebUI.Controllers
 {
@@ -18,6 +19,12 @@ namespace WhatBug.WebUI.Controllers
         public async Task<IActionResult> GetIssuePrioritySelectComponent(int projectId)
         {
             return ViewComponent("IssuePrioritySelect", new { projectId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserSelectorComponent(UserSelectorComponentOptions options)
+        {
+            return ViewComponent("UserSelector", options);
         }
     }
 }

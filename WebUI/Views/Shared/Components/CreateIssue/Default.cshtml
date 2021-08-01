@@ -17,7 +17,7 @@
                                     @for (int i = 0; i < Model.AllProjects.Count; i++)
                                     {
                                         var dataContent = Model.AllProjects[i].Name;
-                                    <option value="@Model.AllProjects[i].Id">@Model.AllProjects[i].Name</option>
+                                        <option value="@Model.AllProjects[i].Id">@Model.AllProjects[i].Name</option>
                                     }
                                 </select>
                             </div>
@@ -54,6 +54,19 @@
                                 <label asp-for="Description"></label>
                                 <input asp-for="Description" name="Description" type="hidden" class="form-control quill-content" />
                                 <div class="quill-editor"></div>
+                            </div>
+                            <!-- Assignee -->
+                            <div class="form-group col-9">
+                                <label asp-for="AssigneeId"></label>
+                                <div id="AssigneeUserSelectComponent"></div>
+                            </div>
+                            <!-- Reporter -->
+                            <div class="form-group col-9">
+                                <span>
+                                    <label asp-for="ReporterId"></label>
+                                    <i class="fas fa fa-arrow-up" data-toggle="tooltip" data-placement="right" title="Tooltip on right"></i>
+                                </span>
+                                <div id="ReporterUserSelectComponent"></div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-end">

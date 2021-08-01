@@ -1,8 +1,13 @@
-﻿class CreateIssueComponent {
+﻿function ShowCreateIssueComponent() {
+    new CreateIssueComponent();
+}
+
+class CreateIssueComponent {
     constructor() {
         $.get('/components/getcreateissuecomponent').done((modal) => {
             $('body').append(modal);
             this.#PrepareModal();
+            this.#LoadComponents();
             this.#BuildSelectPickers();
             this.#CreateEditor();
             $('#CreateIssueModal').modal('show');
@@ -31,8 +36,20 @@
         $('#CancelGoBack').on('click', () => {
             $('#ConfirmModal').modal('hide');
         });
+    }
 
-        this.prioritySelectComponent = new IssuePrioritySelectComponent($('#IssuePrioritySelectComponent'), $('#CreateIssue-SelectedProjectId').val());
+    #LoadComponents = () => {
+        this.prioritySelectComponent = new IssuePrioritySelectComponent(
+            $('#IssuePrioritySelectComponent'), $('#CreateIssue-SelectedProjectId').val());
+        this.assigneeUserSelector = new UserSelectorComponent(
+            $('#AssigneeUserSelectComponent'), {
+            prefix: "assignee",
+            projectId: $('#CreateIssue-SelectedProjectId').val()
+        });
+        this.reporterUserSelector = new UserSelectorComponent(
+            $('#ReporterUserSelectComponent'), {
+            prefix: "reporter"
+        });
     }
 
     #DestryModals = () => {
