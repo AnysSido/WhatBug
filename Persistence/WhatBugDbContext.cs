@@ -39,6 +39,7 @@ namespace WhatBug.Persistence
         public DbSet<IssueType> IssueTypes { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<ColorIcon> ColorIcons { get; set; }
+        public DbSet<IssueStatus> IssueStatuses { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -167,6 +168,9 @@ namespace WhatBug.Persistence
             modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());
             modelBuilder.Entity<ColorIcon>().HasData(Domain.Data.ColorIcons.Seed());
             modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme() { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
+
+            // TODO: Clean this up
+            modelBuilder.Entity<IssueStatus>().HasData(new IssueStatus { Id = 1, Name = "Backlog" }, new IssueStatus { Id = 2, Name = "ToDo" }, new IssueStatus { Id = 3, Name = "In Progress" }, new IssueStatus { Id = 4, Name = "Done" });
         }
     }
 }

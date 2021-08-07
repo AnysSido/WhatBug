@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.WebUI.ViewModels.Issues;
 
 namespace WhatBug.WebUI.ViewModels.Projects
 {
     public class BoardViewModel
     {
-        public List<string> Columns = new List<string>() { "Backlog", "ToDo", "In Progress", "Done" };
+        public IList<IssueStatusViewModel> IssueStatuses { get; set; }
     }
 }

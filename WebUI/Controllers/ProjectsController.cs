@@ -13,6 +13,7 @@ using WhatBug.Domain.Entities;
 using WhatBug.Persistence;
 using WhatBug.WebUI.Routing;
 using WhatBug.WebUI.ViewModels.Admin;
+using WhatBug.WebUI.ViewModels.Issues;
 using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Projects;
 using WhatBug.WebUI.ViewModels.User;
@@ -25,15 +26,17 @@ namespace WhatBug.WebUI.Controllers
         private readonly IPrioritySchemeService _prioritySchemeService;
         private readonly IUserService _userService;
         private readonly IAdminService _adminService;
+        private readonly IIssueService _issueService;
         private readonly IMapper _mapper;
 
-        public ProjectsController(IProjectService projectService, IPrioritySchemeService prioritySchemeService, IMapper mapper, IUserService userService, IAdminService adminService)
+        public ProjectsController(IProjectService projectService, IPrioritySchemeService prioritySchemeService, IMapper mapper, IUserService userService, IAdminService adminService, IIssueService issueService)
         {
             _projectService = projectService;
             _prioritySchemeService = prioritySchemeService;
             _mapper = mapper;
             _userService = userService;
             _adminService = adminService;
+            _issueService = issueService;
         }
 
         // GET: Projects
@@ -105,7 +108,7 @@ namespace WhatBug.WebUI.Controllers
         {
             var vm = new BoardViewModel
             {
-
+                IssueStatuses = _mapper.Map<List<IssueStatusViewModel>>(await _issueService.GetIssueStatusesAsync())
             };
 
             return View(vm);

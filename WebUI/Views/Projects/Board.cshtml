@@ -4,13 +4,13 @@
 
   <div class="row row-cols-4 container-fluid">
 
-      @foreach (var column in Model.Columns )
+      @foreach (var status in Model.IssueStatuses )
         {
           <div class="col">
               <div class="card card-secondary">
                   <div class="card-header">
                       <h3 class="card-title">
-                          @column
+                          @status.Name
                       </h3>
                   </div>
                   <div class="card-body">

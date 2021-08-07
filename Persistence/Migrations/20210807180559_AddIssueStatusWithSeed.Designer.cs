@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210807180559_AddIssueStatusWithSeed")]
+    partial class AddIssueStatusWithSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -603,9 +605,6 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IssueStatusId")
-                        .HasColumnType("int");
-
                     b.Property<int>("IssueTypeId")
                         .HasColumnType("int");
 
@@ -630,8 +629,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssigneeId");
-
-                    b.HasIndex("IssueStatusId");
 
                     b.HasIndex("IssueTypeId");
 
@@ -1067,12 +1064,6 @@ namespace Persistence.Migrations
                         .WithMany("AssignedIssues")
                         .HasForeignKey("AssigneeId");
 
-                    b.HasOne("WhatBug.Domain.Entities.IssueStatus", "IssueStatus")
-                        .WithMany()
-                        .HasForeignKey("IssueStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WhatBug.Domain.Entities.IssueType", "IssueType")
                         .WithMany()
                         .HasForeignKey("IssueTypeId")
@@ -1098,8 +1089,6 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Assignee");
-
-                    b.Navigation("IssueStatus");
 
                     b.Navigation("IssueType");
 

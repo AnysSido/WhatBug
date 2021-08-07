@@ -26,7 +26,11 @@ namespace WhatBug.Application.Services
         public async Task CreateIssueAsync(CreateIssueDTO dto)
         {
             // TODO: Check permissions
+
+            // TODO: Remove magic string
+            var issueStatus = await _context.IssueStatuses.Where(s => s.Name == "Backlog").FirstAsync();
             var issue = _mapper.Map<Issue>(dto);
+            issue.IssueStatus = issueStatus;
             await _context.Issues.AddAsync(issue);
             await _context.SaveChangesAsync();
         }
@@ -62,6 +66,12 @@ namespace WhatBug.Application.Services
                     .Include(i => i.ColorIcon.Color)
                     .Include(i => i.ColorIcon.Icon)
                     .ToListAsync());
+        }
+
+        public async Task<List<IssueStatusDTO>> GetIssueStatusesAsync()
+        {
+            // TODO: Check permissions
+            return _mapper.Map<List<IssueStatusDTO>>(await _context.IssueStatuses.ToListAsync());
         }
     }
 }

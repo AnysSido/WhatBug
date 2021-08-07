@@ -64,6 +64,7 @@ namespace WhatBug.Application.Common
 
             CreateMap<Issue, IssueDTO>();
             CreateMap<IssueType, IssueTypeDTO>();
+            CreateMap<IssueStatus, IssueStatusDTO>();
 
             // Users
             CreateMap<User, UserDTO>();

@@ -111,6 +111,7 @@ namespace WhatBug.WebUI.Common
 
             // Issues
             CreateMap<IssueDTO, IssueViewModel>();
+            CreateMap<IssueStatusDTO, IssueStatusViewModel>();
             CreateMap<CreateIssueDTO, CreateIssueViewModel>();
 
             CreateMap<CreateIssueViewModel, CreateIssueDTO>()

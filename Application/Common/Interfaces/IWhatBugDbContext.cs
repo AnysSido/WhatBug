@@ -25,6 +25,7 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<Color> Colors { get; set; }
         DbSet<IssueType> IssueTypes { get; set; }
         DbSet<ProjectRole> ProjectRoles { get; set; }
+        DbSet<IssueStatus> IssueStatuses { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
