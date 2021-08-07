@@ -22,10 +22,10 @@ namespace WhatBug.WebUI.ViewComponents
             _projectService = projectService;
         }
 
-        public virtual async Task<List<UserViewModel>> GetUsers(int? projectId)
+        public async Task<List<UserViewModel>> GetUsers(int? projectId)
         {
             if (projectId != null)
-                return _mapper.Map<List<UserViewModel>>(await _projectService.GetProjectUsersAsync(projectId ?? default(int)));            
+                return _mapper.Map<List<UserViewModel>>(await _projectService.GetProjectUsersAsync(projectId.GetValueOrDefault()));            
 
             return _mapper.Map<List<UserViewModel>>(await _userService.GetAllUsersAsync());
         }

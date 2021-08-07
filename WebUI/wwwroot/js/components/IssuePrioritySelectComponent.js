@@ -1,16 +1,30 @@
 ﻿class IssuePrioritySelectComponent {
-    constructor(container, projectId) {
+    constructor(container, options) {
         this.container = container;
-        this.Load(projectId);
+        this.prefix = options.prefix;
     }
 
-    Load = (projectId) => {       
-       $.get('/components/getissuepriorityselectcomponent', { projectId: projectId }).done((modal) => {
+    Load = (projectId, options) => {       
+       $.get('/components/getissuepriorityselectcomponent', {
+           prefix: this.prefix,
+           projectId: projectId
+       }).done((modal) => {
             this.container.html(modal);
+
+            var select = this.container.find('.select2');
+            var selectedValue = this.container.data('selectedvalue');
+            var ignoreSelectedValue = options && options.ignoreSelectedValue;
+
+            if (!ignoreSelectedValue && selectedValue) {
+                select.val(selectedValue);
+            }
+
             new Select2Component({
-                container: this.container.find('.select2'),
+                container: select,
                 template: 'IconAndText'
             });
         });
+
+        return this;
     }
 }

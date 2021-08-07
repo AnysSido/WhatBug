@@ -2,13 +2,26 @@
     constructor(container, options) {
         this.container = container;
         this.options = options;
-        this.#Load();
+        this.prefix = options.prefix;
     }
 
-    #Load = () => {
-        $.get('/components/getuserselectorcomponent', this.options).done((modal) => {
+    Load = (projectId, options) => {
+        $.get('/components/getuserselectorcomponent', {
+            prefix: this.prefix,
+            projectId: projectId
+        }).done((modal) => {
             this.container.html(modal);
-            new Select2Component({ container: this.container.find('.select2') });
+            var select = this.container.find('.select2');
+            var selectedValue = this.container.data('selectedvalue');
+            var ignoreSelectedValue = options && options.ignoreSelectedValue;
+
+            if (!ignoreSelectedValue && selectedValue) {
+                select.val(selectedValue);
+            }
+
+            new Select2Component({ container: select});
         });
+
+        return this;
     }
 }

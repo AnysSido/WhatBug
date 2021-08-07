@@ -4,18 +4,21 @@
 
 class CreateIssueComponent {
     constructor() {
+        this.createIssueComponent = $('<div id="CreateIssueComponent" class="modal fade"></div>')
         $.get('/components/getcreateissuecomponent').done((modal) => {
-            $('body').append(modal);
-            this.#SetVars();
-            this.#RegisterEvents();
-            this.#LoadComponents();
-            this.createIssueModal.modal('show');
+            this.#BuildComponent(modal);
         });
     }
 
-    #SetVars = () => {
-        this.createIssueComponent = $('#CreateIssueComponent');
+    #BuildComponent(modal) {
+        this.createIssueComponent.html(modal);
+        this.#SetVars();
+        this.#RegisterEvents();
+        this.#LoadComponents();
+        this.createIssueComponent.modal('show');
+    }
 
+    #SetVars = () => {
         // Main modal
         this.createIssueModal = this.createIssueComponent.find('.createIssueModel');
         this.cancelIssueButton = this.createIssueModal.find('.modal-cancel');
@@ -25,10 +28,11 @@ class CreateIssueComponent {
         this.issueDescription = this.createIssueModal.find('.issueDescription')
 
         // Project selector
+        this.projectSelector = this.createIssueModal.find('.projectselector');
         this.selectedProjectId = this.createIssueModal.find('.selectedProjectId');
 
         // Cancel confirm modal
-        this.confirmModal = this.createIssueComponent.find('.confirmCancelModel');
+        this.confirmModal = this.createIssueModal.find('.confirmCancelModel');
         this.cancelConfirm = this.confirmModal.find('.cancelConfirm');
         this.cancelGoBack = this.confirmModal.find('.cancelGoBack');
 
@@ -38,10 +42,7 @@ class CreateIssueComponent {
         this.reporterComponentContainer = this.createIssueModal.find('.reporterComponentContainer')
 
         // Select2
-        this.selectLists = this.createIssueModal.find('.select2');
-
-        // Project selector
-        this.projectSelector = this.createIssueModal.find('.projectselector');
+        this.selectLists = this.createIssueModal.find('.select2');        
 
         // Quill Editor
         this.quillEditor = this.createIssueModal.find('.quill-editor');
@@ -49,18 +50,19 @@ class CreateIssueComponent {
 
     #LoadComponents = () => {
         this.prioritySelectComponent = new IssuePrioritySelectComponent(
-            this.prioritySelectComponentContainer, this.selectedProjectId.val());
+            this.prioritySelectComponentContainer, {
+            prefix: "priority"
+        }).Load(this.selectedProjectId.val());
 
-        this.assigneeUserSelector = new UserSelectorComponent(
+        this.assigneeComponent = new UserSelectorComponent(
             this.assigneeComponentContainer, {
-            prefix: "assignee",
-            projectId: this.selectedProjectId.val()
-        });
+            prefix: "assignee"
+        }).Load(this.selectedProjectId.val());
 
-        this.reporterUserSelector = new UserSelectorComponent(
+        this.reporterComponent = new UserSelectorComponent(
             this.reporterComponentContainer, {
             prefix: "reporter"
-        });
+        }).Load(this.selectedProjectId.val());
 
         this.quill = new QuillEditorComponent({
             container: this.quillEditor,
@@ -74,7 +76,7 @@ class CreateIssueComponent {
     }
 
     #RegisterEvents = () => {       
-        this.createIssueModal.on('hidden.bs.modal', () => {
+        this.createIssueComponent.on('hidden.bs.modal', () => {
             this.createIssueComponent.remove();
         });
 
@@ -83,13 +85,13 @@ class CreateIssueComponent {
                 $('body').append(this.confirmModal);
                 this.confirmModal.modal('show');
             } else {
-                this.createIssueModal.modal('hide');
+                this.createIssueComponent.modal('hide');
             }
         });
 
         this.cancelConfirm.on('click', () => {
             this.confirmModal.modal('hide');
-            this.createIssueModal.modal('hide');
+            this.createIssueComponent.modal('hide');
         });
 
         this.cancelGoBack.on('click', () => {
@@ -97,13 +99,25 @@ class CreateIssueComponent {
         });
 
         this.projectSelector.on('select2:select', (e) => {
-            this.prioritySelectComponent.Load(e.params.data.id);
+            var projectId = e.params.data.id;
+            this.prioritySelectComponent.Load(projectId, { ignoreSelectedValue: true });
+            this.assigneeComponent.Load(projectId, { ignoreSelectedValue: true });
+            this.reporterComponent.Load(projectId, { ignoreSelectedValue: true });
         });
 
         this.submitIssueButton.click((e) => {
             e.preventDefault();
-            $('.quill-content').val(this.quill.ToJson());
-            $.post('/components/createissue', this.mainForm.serialize());
+            $.post('/components/createissue', this.mainForm.serialize())
+            .done((modal) => {
+                if (modal.success) {
+                    this.createIssueComponent.modal('hide');
+                } else {
+                    this.#BuildComponent(modal);
+                }
+            })
+            .fail(() => {
+                console.log("error");
+            });
         });
     }
 

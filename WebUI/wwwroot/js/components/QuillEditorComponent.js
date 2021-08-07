@@ -3,7 +3,6 @@
         this.container = options.container;
         this.copyContentsTo = options.copyContentsTo;
         this.readOnlyEditor = options.readOnlyEditor;
-
         this.editor = new Quill(this.container[0], this.readOnlyEditor ? this.#GetReadOnlyEditorOptions() : this.#GetEditorOptions() );
 
         // Fix to stop LastPass browser plugin throwing errors when using Quill editor.
@@ -17,10 +16,9 @@
             });
         }
 
-        // TODO: Deal with this
-        // if (quillContent.val() != '') {
-        //     quill.editor.setContents(JSON.parse(quillContent.val()));
-        // }
+        if (this.copyContentsTo.val() != '') {
+            this.editor.setContents(JSON.parse(this.copyContentsTo.val()));
+        }
     }
 
     IsEmpty = () => {

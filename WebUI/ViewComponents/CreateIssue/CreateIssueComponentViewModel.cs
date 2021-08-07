@@ -15,19 +15,25 @@ namespace WhatBug.WebUI.ViewComponents
         [Required]
         public string Summary { get; set; }
         public string Description { get; set; }
+        public bool CreateAnother { get; set; }
 
         public UserSelectorComponentViewModel Assignee { get; set; }
         public UserSelectorComponentViewModel Reporter { get; set; }
+
+        public IssuePrioritySelectComponentViewModel Priority { get; set; }
 
         [Display(Name = "Project")]
         public int SelectedProjectId { get; set; }
         public IList<ProjectViewModel> AllProjects { get; set; }
 
-        [Display(Name = "Priority")]
-        public int SelectedPriorityId { get; set; }
-
         [Display(Name = "Issue Type")]
         public int SelectedIssueType { get; set; }
         public IList<IssueTypeViewModel> AllIssueTypes { get; set; }
+
+        public void PrepareCreateAnother()
+        {
+            Summary = null;
+            Description = null;
+        }
     }
 }

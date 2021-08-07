@@ -20,14 +20,15 @@ namespace WhatBug.WebUI.ViewComponents
             _mapper = mapper;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int projectId)
+        public async Task<IViewComponentResult> InvokeAsync(IssuePrioritySelectComponentOptions options)
         {
-            var project = await _projectsService.GetProjectAsync(projectId);
+            var project = await _projectsService.GetProjectAsync(options.projectId);
             var vm = new IssuePrioritySelectComponentViewModel
             {
                 AllSchemePriorities = _mapper.Map<List<PriorityViewModel>>(project.PriorityScheme.Priorities)
             };
 
+            ViewData.TemplateInfo.HtmlFieldPrefix = options?.Prefix;
             return View(vm);
         }
     }
