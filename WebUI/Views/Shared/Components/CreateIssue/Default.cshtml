@@ -1,0 +1,104 @@
+﻿@model WhatBug.WebUI.ViewComponents.CreateIssueComponentViewModel
+
+@{
+    
+        <div class="createIssueModel" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="card-title">Create Issue</h6>
+                    </div>
+                    <form method="post">
+                        <div class="modal-body">
+                            <!-- Projects -->
+                            <div class="form-group col-sm-4">
+                                <label asp-for="SelectedProjectId"></label>
+                                <select asp-for="SelectedProjectId" class="select2 projectselector selectedProjectId">
+                                    @for (int i = 0; i < Model.AllProjects.Count; i++)
+                                    {
+                                        var dataContent = Model.AllProjects[i].Name;
+                                        <option value="@Model.AllProjects[i].Id">@Model.AllProjects[i].Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="row col-sm-12">
+                                <!-- Issue Type -->
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="SelectedIssueType"></label>
+                                    <select asp-for="SelectedIssueType" class="select2">
+                                        @for (int i = 0; i < Model.AllIssueTypes.Count; i++)
+                                        {
+                                            var iconClass = @Model.AllIssueTypes[i].ColorIcon.Icon.ClassName;
+                                            var iconColorClass = "wb-color-" + @Model.AllIssueTypes[i].ColorIcon.Color.LowerName;
+                                            <option value="@Model.AllIssueTypes[i].Id" data-class="@iconClass + @iconColorClass">@Model.AllIssueTypes[i].Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-sm-1"></div>
+                                <!-- Issue Priority -->
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="@Model.Priority"></label>
+                                    <!-- Container for component loaded via ajax -->
+                                    <div class="issuePriorityComponentContainer" data-selectedValue="@Model.Priority?.SelectedPriorityId"></div>
+                                </div>
+                            </div>
+                            <hr />
+                            <!-- Summary -->
+                            <div class="form-group col-12">
+                                <label asp-for="Summary"></label>
+                                <input asp-for="Summary" class="form-control issueSummary" />
+                                <span asp-validation-for="Summary" class="text-danger"></span>
+                            </div>
+                            <!-- Quill Editor -->
+                            <div class="form-group col-12">
+                                <label asp-for="Description"></label>
+                                <input asp-for="Description" name="Description" type="hidden" class="form-control issueDescription" />
+                                <div class="quill-editor"></div>
+                            </div>
+                            <!-- Assignee -->
+                            <div class="form-group col-9">
+                                <label asp-for="Assignee"></label>
+                                <!-- Container for component loaded via ajax -->
+                                <div class="assigneeComponentContainer" data-selectedValue="@Model.Assignee?.SelectedUserId"></div>
+                            </div>
+                            <!-- Reporter -->
+                            <div class="form-group col-9">
+                                <span>
+                                    <label asp-for="Reporter"></label>
+                                    <i class="fas fa fa-arrow-up" data-toggle="tooltip" data-placement="right" title="Tooltip on right"></i>
+                                </span>
+                                <!-- Container for component loaded via ajax -->
+                                <div class="reporterComponentContainer" data-selectedValue="@Model.Reporter?.SelectedUserId"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-end">
+                            <div class="form-check">
+                                <input class="form-check-input" asp-for="@Model.CreateAnother">
+                                <label class="form-check-label" asp-for="@Model.CreateAnother">Create another</label>
+                            </div>
+                            <button type="submit" class="submit btn btn-primary">Create</button>
+                            <a href="#" class="text-primary modal-cancel">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal fade confirmCancelModel" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-danger">
+                        <div class="modal-header">
+                            <h6 class="card-title">Are you sure?</h6>
+                        </div>
+                        <div class="modal-body">
+                            <p>You have unsaved changes that will be lost. Are you sure you want to cancel?</p>
+                        </div>
+                        <div class="modal-footer justify-content-end">
+                            <button type="submit" class="btn btn-outline-light cancelConfirm">Confirm</button>
+                            <a href="#" id="CancelGoBack" class="btn btn-outline-light cancelGoBack">Go back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    
+}

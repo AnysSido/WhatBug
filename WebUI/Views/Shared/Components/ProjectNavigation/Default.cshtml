@@ -1,0 +1,35 @@
+﻿@model WhatBug.WebUI.ViewComponents.ProjectNavigationComponentViewModel
+
+@{
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            <li>
+                <div class="info mb-3">
+                    <a asp-controller="Projects" asp-action="Index" class="d-block">
+                        <i class="fas fa-arrow-left nav-icon"></i>
+                        Back to projects
+                    </a>
+                </div>
+            </li>
+
+            <li class="nav-header">@Model.ProjectName</li>
+
+            <!-- Board -->
+            <li class="nav-item">
+                <a asp-controller="Projects" asp-action="Index" class="nav-link">
+                    <i class="fas fa-columns nav-icon"></i>
+                    <p>Board</p>
+                </a>
+            </li>
+
+            <!-- Create Issue -->
+            <li class="nav-item">
+                <a asp-controller="Issues" asp-action="Create" asp-route-projectId="@Model.ProjectId" class="nav-link">
+                    <i class="fas fa-plus nav-icon"></i>
+                    <p>Create Issue</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+}

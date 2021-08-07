@@ -2,3 +2,18 @@
 @import 'components';
 @import "plugins/sweetalert2";
 @import "plugins/bootstrapcolorpicker";
+@import "plugins/quill";
+@import "plugins/bootstrap-select.scss";
+@import "plugins/select2";
+
+#CreateIssueComponent .form-control {
+    background-color: #f4f5f7;
+}
+
+#CreateIssueComponent .modal-dialog{
+    overflow-y: initial;
+}
+#CreateIssueComponent .modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}

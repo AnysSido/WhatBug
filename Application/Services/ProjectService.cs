@@ -76,6 +76,15 @@ namespace WhatBug.Application.Services
             return _mapper.Map<ProjectDTO>(project);
         }
 
+        public async Task<List<ProjectDTO>> GetAllProjects()
+        {
+            // TODO: Check permissions
+            return _mapper.Map<List<ProjectDTO>>(await _context.Projects
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Color)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Icon)
+                .ToListAsync());
+        }
+
         public async Task<List<ProjectRoleWithUsersDTO>> GetProjectRolesWithUsersAsync(int projectId)
         {
             // TODO: Check permissions
@@ -121,6 +130,23 @@ namespace WhatBug.Application.Services
             }));
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<UserDTO>> GetProjectUsersAsync(int projectId)
+        {
+            // TODO: Check permission
+
+            var projectUsers = await _context.Projects
+                .Where(p => p.Id == projectId)
+                .Include(p => p.ProjectRoleUsers)
+                    .ThenInclude(p => p.User)
+                .SelectMany(p => p.ProjectRoleUsers.Select(p => p.User))
+                .ToListAsync();
+
+            projectUsers = projectUsers.GroupBy(u => u.Id).Select(u => u.First()).ToList();
+            var dtos = await _authenticationProvider.PopulatePrincipleUsersInfo(_mapper.Map<List<UserDTO>>(projectUsers));
+
+            return dtos.ToList();
         }
     }
 }
