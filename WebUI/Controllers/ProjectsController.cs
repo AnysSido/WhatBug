@@ -99,5 +99,16 @@ namespace WhatBug.WebUI.Controllers
             await _projectService.AddUsersToProjectRoleAsync(_mapper.Map<AddUsersToProjectRoleDTO>(vm));
             return RedirectToAction(nameof(UsersAndRoles), new { projectId = vm.ProjectId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Board(int projectId)
+        {
+            var vm = new BoardViewModel
+            {
+
+            };
+
+            return View(vm);
+        }
     }
 }
