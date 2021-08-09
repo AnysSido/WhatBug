@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using WhatBug.Application.Common;
 using WhatBug.Application.DTOs.Admin;
 using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.GlobalPermissions;
@@ -23,6 +25,7 @@ using WhatBug.WebUI.ViewModels.Priorities;
 using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Projects;
 using WhatBug.WebUI.ViewModels.User;
+using WhatBug.Common.Mapping;
 
 namespace WhatBug.WebUI.Common
 {
@@ -30,6 +33,8 @@ namespace WhatBug.WebUI.Common
     {
         public MappingProfile()
         {
+            this.ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+
             // Admin
             CreateMap<CreateProjectRoleViewModel, CreateProjectRoleDTO>();
             CreateMap<ProjectRoleDTO, ProjectRoleViewModel>();

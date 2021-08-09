@@ -14,6 +14,7 @@ using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.DTOs.Users;
+using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.Priorities;
 
@@ -23,7 +24,7 @@ namespace WhatBug.Application.Common
     {
         public MappingProfile()
         {
-            ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+            this.ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Admin
             CreateMap<CreateProjectRoleDTO, ProjectRole>();
@@ -83,27 +84,6 @@ namespace WhatBug.Application.Common
             CreateMap<Color, ColorDTO>();
             CreateMap<ColorIcon, ColorIconDTO>();
             CreateMap<Icon, IconDTO>();
-        }
-
-        private void ApplyMappingsFromAssembly(Assembly assembly)
-        {
-            var types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
-                .ToList();
-
-            foreach (var type in types)
-            {
-                var instance = Activator.CreateInstance(type);
-                var methodName = nameof(IMapFrom<Object>.Mapping);
-                var interfaceName = typeof(IMapFrom<>).GetGenericTypeDefinition().Name;
-
-                // type.GetMethod doesn't include default method body from the interface.
-                // If there is no method implementation in the class we instead use the default method body in the interface.
-                var methodInfo = type.GetMethod(methodName) ?? instance.GetType().GetInterface(interfaceName)?.GetMethod(methodName);
-
-                methodInfo?.Invoke(instance, new object[] { this });
-            }
         }
     }
 }

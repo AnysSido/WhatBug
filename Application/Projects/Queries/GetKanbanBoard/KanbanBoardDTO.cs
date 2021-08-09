@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WhatBug.Application.Common;
+using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Projects.Queries.GetKanbanBoard

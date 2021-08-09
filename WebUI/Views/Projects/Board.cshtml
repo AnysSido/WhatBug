@@ -1,10 +1,14 @@
-﻿@model WhatBug.Application.Projects.Queries.GetKanbanBoard.KanbanBoardDTO
+﻿@model WhatBug.WebUI.Projects.KanbanBoard.KanbanBoardViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/kanban.min.css" />
+} 
 
 @{
 
   <div class="row row-cols-4 container-fluid">
 
-      @foreach (var status in Model.IssueStatusGroups )
+      @foreach (var status in Model.IssueStatusGroups)
       {
           <div class="col">
               <div class="card card-secondary">
@@ -13,32 +17,48 @@
                           @status.Name
                       </h3>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body drag-container">
 
                       @foreach (var issue in status.Issues)
                       {
-                          <div class="card card-info card-outline">
-                              <div class="card-header">
-                                  <h5 class="card-title">@issue.Summary</h5>
-                                  <div class="card-tools">
-                                      <a href="#" class="btn btn-tool btn-link">#3</a>
-                                      <a href="#" class="btn btn-tool">
-                                          <i class="fas fa-pen"></i>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="card-body">
-                                  <div class="custom-control custom-checkbox">
-                                      <input class="custom-control-input" type="checkbox" id="customCheckbox1" disabled>
-                                      <label for="customCheckbox1" class="custom-control-label">Bug</label>
-                                  </div>
-                              </div>
-                          </div>
+                        <div class="issue-card card card-info card-outline">      
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col">
+                                        <!-- Issue type icon and Id -->
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <span>
+                                                    <i class="@issue.IssueTypeIconName wb-color-@issue.IssueTypeIconColor"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <a href="#">@issue.Id</a>
+                                            </div>
+                                        </div>
+                                        <!-- Issue priority icon and summary -->
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <span>
+                                                    <i class="@issue.PriorityIconName wb-color-@issue.PriorityIconColor"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                Col2
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                       }
                   </div>
               </div>
           </div>
-        }
+      }
 </div>
 
 
