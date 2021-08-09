@@ -12,7 +12,7 @@ using WhatBug.WebUI.ViewModels.Priorities;
 
 namespace WhatBug.WebUI.Controllers
 {
-    public class IssuesController : Controller
+    public class IssuesController : BaseController
     {
         private readonly IIssueService _issueService;
         private readonly IProjectService _projectService;

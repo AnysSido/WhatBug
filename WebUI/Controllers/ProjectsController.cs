@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Projects;
+using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
 using WhatBug.Persistence;
@@ -20,7 +22,7 @@ using WhatBug.WebUI.ViewModels.User;
 
 namespace WhatBug.WebUI.Controllers
 {
-    public class ProjectsController : Controller
+    public class ProjectsController : BaseController
     {
         private readonly IProjectService _projectService;
         private readonly IPrioritySchemeService _prioritySchemeService;
@@ -106,12 +108,9 @@ namespace WhatBug.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Board(int projectId)
         {
-            var vm = new BoardViewModel
-            {
-                IssueStatuses = _mapper.Map<List<IssueStatusViewModel>>(await _issueService.GetIssueStatusesAsync())
-            };
+            var dto = await Mediator.Send(new GetKanbanBoardQuery { ProjectId = projectId });
 
-            return View(vm);
+            return View(dto);
         }
     }
 }

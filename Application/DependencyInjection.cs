@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Behaviors;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Services;
 using WhatBug.Application.Services.Interfaces;
@@ -25,6 +27,8 @@ namespace WhatBug.Application
             services.AddScoped<IGlobalPermissionService, GlobalPermissionService>();
             services.AddScoped<IColorService, ColorService>();
             services.AddAutoMapper(typeof(DependencyInjection));
+            services.AddMediatR(typeof(DependencyInjection));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             return services;
         }
