@@ -48,30 +48,6 @@ namespace WhatBug.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            var vm = new CreateProjectViewModel()
-            {
-                PrioritySchemes = _mapper.Map<List<PrioritySchemeViewModel>>(await _prioritySchemeService.GetPrioritySchemesAsync())
-            };
-            return View(vm);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateProjectViewModel vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                vm.PrioritySchemes = _mapper.Map<List<PrioritySchemeViewModel>>(await _prioritySchemeService.GetPrioritySchemesAsync());
-                return View(vm);
-            }
-
-            await _projectService.CreateProject(_mapper.Map<CreateProjectDTO>(vm));
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet]
         [Route("/Project/{projectId}/UsersAndRoles")]
         [RouteCategory(RouteCategory.Project)]
         public async Task<IActionResult> UsersAndRoles(int projectId)

@@ -51,10 +51,6 @@ namespace WhatBug.WebUI.Common
 
             // Projects
             CreateMap<ProjectDTO, ProjectViewModel>();
-            CreateMap<CreateProjectViewModel, CreateProjectDTO>()
-                .ForMember(
-                    dest => dest.PrioritySchemeId,
-                    opt => opt.MapFrom(src => src.SelectedPriorityScheme));
             CreateMap<_AddUserToProjectRoleViewModel, AddUsersToProjectRoleDTO>()
                 .ForMember(
                     dest => dest.ProjectRoleId,

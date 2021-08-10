@@ -5,24 +5,24 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using WhatBug.WebUI.ViewModels.PrioritySchemes;
+using WhatBug.Application.Projects.Queries.GetCreateProject;
+using WhatBug.Common.Mapping;
 
-namespace WhatBug.WebUI.ViewModels.Projects
+namespace WhatBug.WebUI.Features.Projects
 {
-    public class CreateProjectViewModel
+    public class CreateViewModel : IMapFrom<CreateProjectDTO>
     {
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-
+        public int PrioritySchemeId { get; set; }
         [DisplayName("Priority Scheme")]
-        public int SelectedPriorityScheme { get; set; }
-        public List<PrioritySchemeViewModel> PrioritySchemes { get; set; } = new List<PrioritySchemeViewModel>();
+        public List<PrioritySchemeDTO> PrioritySchemes { get; set; } = new List<PrioritySchemeDTO>();
         public List<SelectListItem> PrioritySchemeListItems => PrioritySchemes
-            .Select(s => new SelectListItem() 
+            .Select(s => new SelectListItem()
             {
-                Value = s.Id.ToString(), 
-                Text = s.Name 
+                Value = s.Id.ToString(),
+                Text = s.Name
             }).ToList();
     }
 }
