@@ -12,7 +12,7 @@ namespace WhatBug.WebUI.Features.Projects.KanbanBoard
     public class KanbanController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> Board(int projectId)
+        public async Task<IActionResult> Index(int projectId)
         {
             var dto = await Mediator.Send(new GetKanbanBoardQuery { ProjectId = projectId });
             var vm = Mapper.Map<KanbanBoardViewModel>(dto);
