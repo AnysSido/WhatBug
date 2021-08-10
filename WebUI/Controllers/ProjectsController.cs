@@ -13,7 +13,6 @@ using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
 using WhatBug.Persistence;
-using WhatBug.WebUI.Projects.KanbanBoard;
 using WhatBug.WebUI.Routing;
 using WhatBug.WebUI.ViewModels.Admin;
 using WhatBug.WebUI.ViewModels.Issues;
@@ -104,15 +103,6 @@ namespace WhatBug.WebUI.Controllers
         {
             await _projectService.AddUsersToProjectRoleAsync(_mapper.Map<AddUsersToProjectRoleDTO>(vm));
             return RedirectToAction(nameof(UsersAndRoles), new { projectId = vm.ProjectId });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Board(int projectId)
-        {
-            var dto = await Mediator.Send(new GetKanbanBoardQuery { ProjectId = projectId });
-            var vm = _mapper.Map<KanbanBoardViewModel>(dto);
-
-            return View(vm);
         }
     }
 }

@@ -7,7 +7,7 @@ using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.Common.Mapping;
 using WhatBug.WebUI.Common;
 
-namespace WhatBug.WebUI.Projects.KanbanBoard
+namespace WhatBug.WebUI.Features.Projects.KanbanBoard
 {
     public class IssueOverviewViewModel : IMapFrom<IssueOverviewDTO>
     {

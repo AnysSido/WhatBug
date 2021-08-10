@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.Common.Mapping;
 
-namespace WhatBug.WebUI.Projects.KanbanBoard
+namespace WhatBug.WebUI.Features.Projects.KanbanBoard
 {
     public class KanbanBoardViewModel : IMapFrom<KanbanBoardDTO>
     {

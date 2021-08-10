@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.Common.Mapping;
+using WhatBug.WebUI.Features.Projects.KanbanBoard;
 
-namespace WhatBug.WebUI.Projects.KanbanBoard
+namespace WhatBug.WebUI.Features.Projects.KanbanBoard
 {
     public class IssueStatusGroupViewModel : IMapFrom<IssueStatusGroupDTO>
     {
