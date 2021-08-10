@@ -1,4 +1,4 @@
-﻿@model List<WhatBug.WebUI.ViewModels.Priorities.PriorityViewModel>
+﻿@model WhatBug.WebUI.Features.Priorities.PrioritiesViewModel
 
 @section Styles {
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css" />
@@ -30,43 +30,43 @@
                     </tr>
                 </thead>
                 <tbody id="priorityList">
-                    @for (int i = 0; i < Model.Count; i++)
+                    @for (int i = 0; i < Model.Priorities.Count; i++)
                     {
-                    <tr id="@Model[i].Id">
-                        <!-- Drag Handle -->
-                        <td>
-                            <span class="handle">
-                                <i class="fas fa-arrows-alt-v"></i>
-                            </span>
-                        </td>
-                        <!-- Actions -->
-                        <td>
-                            <div class="input-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    Action
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model[i].Id">Edit</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
+                        <tr id="@Model.Priorities[i].Id">
+                            <!-- Drag Handle -->
+                            <td>
+                                <span class="handle">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </span>
+                            </td>
+                            <!-- Actions -->
+                            <td>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        Action
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model.Priorities[i].Id">Edit</a>
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <!-- Icon & Name -->
-                        <td>
-                            <span>
-                                <i class="@Model[i].ColorIcon.Icon.ClassName wb-color-@Model[i].ColorIcon.Color.LowerName"></i>
-                                <label asp-for="@Model[i].Name">@Model[i].Name</label>
-                            </span>
-                        </td>
-                        <!-- Description -->
-                        <td>
-                            <div>
-                                @Model[i].Description
-                            </div>
-                        </td>
-                        <!-- Color -->
-                        <td class="wb-bg-color-@Model[i].ColorIcon.Color.LowerName"></td>
-                    </tr>
+                            </td>
+                            <!-- Icon & Name -->
+                            <td>
+                                <span>
+                                    <i class="@Model.Priorities[i].PriorityIconName wb-color-@Model.Priorities[i].PriorityIconColor"></i>
+                                    <label asp-for="@Model.Priorities[i].Name">@Model.Priorities[i].Name</label>
+                                </span>
+                            </td>
+                            <!-- Description -->
+                            <td>
+                                <div>
+                                    @Model.Priorities[i].Description
+                                </div>
+                            </td>
+                            <!-- Color -->
+                            <td class="wb-bg-color-@Model.Priorities[i].PriorityIconColor"></td>
+                        </tr>
                     }
                 </tbody>
             </table>

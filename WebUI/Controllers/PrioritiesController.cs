@@ -27,12 +27,6 @@ namespace WhatBug.WebUI.Controllers
             _colorService = colorService;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var vm = _mapper.Map<List<PriorityViewModel>>(await _priorityService.GetPrioritiesAsync());
-            return View(vm);
-        }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
