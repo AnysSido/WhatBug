@@ -27,17 +27,6 @@ namespace WhatBug.WebUI.Controllers
             _iconService = iconService;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var prioritySchemes = await _prioritySchemeService.GetPrioritySchemesAsync();
-            var vm = new PrioritySchemesIndexViewModel()
-            {
-                PrioritySchemes = _mapper.Map<List<PrioritySchemeViewModel>>(prioritySchemes)
-            };
-
-            return View(vm);
-        }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
