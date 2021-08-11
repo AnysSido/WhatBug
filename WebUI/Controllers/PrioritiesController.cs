@@ -28,33 +28,6 @@ namespace WhatBug.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            var vm = new CreatePriorityViewModel()
-            {
-                AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync()),
-                AllColors = _mapper.Map<List<ColorViewModel>>(await _colorService.GetAllAsync())
-            };
-            vm.SelectedColor = vm.AllColors.Single(c => c.Id == Colors.Rose.Id).Id;
-            return View(vm);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreatePriorityViewModel vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                vm.AllIcons = _mapper.Map<List<IconViewModel>>(await _priorityService.LoadIconsAsync());
-                vm.AllColors = _mapper.Map<List<ColorViewModel>>(await _colorService.GetAllAsync());
-                return View(vm);
-            }
-
-            await _priorityService.CreatePriorityAsync(_mapper.Map<CreatePriorityDTO>(vm));
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var vm = _mapper.Map<EditPriorityViewModel>(await _priorityService.GetPriorityAsync(id));

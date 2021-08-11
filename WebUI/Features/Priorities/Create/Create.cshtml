@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.ViewModels.Priorities.CreatePriorityViewModel
+﻿@model             WhatBug.WebUI.Features.Priorities.Create.CreatePriorityViewModel
 
 @section Styles {
     <!-- FontIconPicker -->
@@ -19,9 +19,9 @@
                 <div class="card-header">
                     <h6 class="card-title">Priority Details</h6>
                 </div>
-                <form asp-controller="Priorities" method="post">
-                    <input type="hidden" asp-for="SelectedColor" />
-                    <input type="hidden" asp-for="SelectedIcon" />
+                <form asp-controller="Priority" method="post">
+                    <input type="hidden" asp-for="ColorId" />
+                    <input type="hidden" asp-for="IconId" />
                     <div class="card-body">
                         <div class="form-group">
                             <label asp-for="@Model.Name"></label>
@@ -35,17 +35,17 @@
 
                         <!-- Color Selection -->
                         <div class="form-group">
-                            <label asp-for="AllColors"></label>
+                            <label asp-for="Colors"></label>
                             <select class="form-control selectpicker">
-                                @for (int i = 0; i < Model.AllColors.Count; i++)
+                                @for (int i = 0; i < Model.Colors.Count; i++)
                                 {
                                     var code =
                                          "<div class='row'>"
-                                        + "<div class='col-4 wb-bg-color-" + Model.AllColors[i].LowerName + "'></div>"
-                                        + "<div class='col-8'>" + Model.AllColors[i].Name + "</div>"
+                                        + "<div class='col-4 wb-bg-color-" + Model.Colors[i].LowerName + "'></div>"
+                                        + "<div class='col-8'>" + Model.Colors[i].Name + "</div>"
                                         + "</div>";
 
-                                    <option value="@Model.AllColors[i].Id" data-content="@code" data-color="@Model.AllColors[i].LowerName">@i</option>
+                                    <option value="@Model.Colors[i].Id" data-content="@code" data-color="@Model.Colors[i].LowerName">@i</option>
                                 }
                             </select>
                         </div>
@@ -55,9 +55,9 @@
                                 <label>Icon</label>
                                 <div class="form-group">
                                     <select id="IconPicker" name="IconPicker">
-                                        @for (int i = 0; i < Model.AllIcons.Count; i++)
+                                        @for (int i = 0; i < Model.Icons.Count; i++)
                                         {
-                                            <option data-iconid="@Model.AllIcons[i].Id">@Model.AllIcons[i].ClassName</option>
+                                            <option data-iconid="@Model.Icons[i].Id">@Model.Icons[i].Name</option>
                                         }
                                     </select>
                                 </div>
@@ -99,7 +99,7 @@
                     var newColor = $('.selectpicker option').eq(clickedIndex).data('color');
                     var oldColor = $('.selectpicker option').eq(previousValue - 1).data('color');
 
-                    $('#SelectedColor').val(clickedIndex + 1);
+                    $('#ColorId').val(clickedIndex + 1);
                     $('#iconPreview').removeClass('wb-color-' + oldColor);
                     $('#iconPreview').addClass('wb-color-' + newColor);
                 }
@@ -107,17 +107,17 @@
 
             // Update preview to match selection when SelectedColor changed programatically (e.g. controller)
             $('.selectpicker').on('loaded.bs.select', function (e) {
-                var selectedColorId = $('#SelectedColor').val();
+                var selectedColorId = $('#ColorId').val();
                 var selectedColor = $('.selectpicker option').eq(selectedColorId - 1).data('color');
 
-                $('.selectpicker').selectpicker('val', selectedColorId);                
+                $('.selectpicker').selectpicker('val', selectedColorId);
                 $('#iconPreview').addClass('wb-color-' + selectedColor);
             });
 
 
             // Update preview when icon to match icon selector.
             function updateIconPreview() {
-                $('#iconPreview .fas').attr('class', GetIconClassFromId($('#SelectedIcon').val()));
+                $('#iconPreview .fas').attr('class', GetIconClassFromId($('#IconId').val()));
             }
 
             // Init font icon picker
@@ -128,10 +128,10 @@
 
             // Set the icon to the previously selected icon on page reload (i.e. validation fail)
             // or set default icon value to 1
-            if ($('#SelectedIcon').val() != '0') {
-                iconPicker.setIcon(GetIconClassFromId($('#SelectedIcon').val()));
+            if ($('#IconId').val() != '0') {
+                iconPicker.setIcon(GetIconClassFromId($('#IconId').val()));
             } else {
-                $('#SelectedIcon').val(1);
+                $('#IconId').val(1);
             }
 
             // Update preview icon on page load
@@ -140,7 +140,7 @@
             iconPicker.on('change', function () {
                 var selectedClass = $('.selected-icon .fas').attr('class');
                 var selectedIconId = GetIconIdFromClass(selectedClass);
-                $('#SelectedIcon').val(selectedIconId);
+                $('#IconId').val(selectedIconId);
                 updateIconPreview();
             });
 

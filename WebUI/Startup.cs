@@ -54,6 +54,7 @@ namespace WebUI
 
             services.Configure<RazorViewEngineOptions>(o =>
             {
+                o.ViewLocationFormats.Add("\\{Feature}\\{0}\\{0}.cshtml");
                 o.ViewLocationFormats.Add("\\Views\\{1}\\{0}.cshtml");
                 o.ViewLocationFormats.Add("\\Shared\\{0}.cshtml");
             });

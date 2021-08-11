@@ -3,7 +3,7 @@ using WhatBug.Application.Priorities.Queries.GetPriorities;
 using WhatBug.Common.Mapping;
 using WhatBug.WebUI.Common;
 
-namespace WhatBug.WebUI.Features.Priorities
+namespace WhatBug.WebUI.Features.Priorities.Index
 {
     public class PriorityViewModel : IMapFrom<PriorityDTO>
     {

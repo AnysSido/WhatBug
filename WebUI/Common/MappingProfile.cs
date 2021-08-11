@@ -83,14 +83,6 @@ namespace WhatBug.WebUI.Common
                     dest => dest.SelectedIcon,
                     opt => opt.MapFrom(src => src.ColorIcon.Icon.Id));
 
-            CreateMap<CreatePriorityViewModel, CreatePriorityDTO>()
-                .ForMember(
-                    dest => dest.ColorId,
-                    opt => opt.MapFrom(src => src.SelectedColor))
-                .ForMember(
-                    dest => dest.IconId,
-                    opt => opt.MapFrom(src => src.SelectedIcon));
-
             CreateMap<EditPriorityViewModel, EditPriorityDTO>()
                 .ForMember(
                     dest => dest.ColorId,

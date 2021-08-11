@@ -40,13 +40,6 @@ namespace WhatBug.Application.Common
 
             // Priorities
             CreateMap<PriorityDTO, Priority>().ReverseMap();
-            CreateMap<CreatePriorityDTO, Priority>()
-                .ForPath(
-                    dest => dest.ColorIcon.ColorId,
-                    opt => opt.MapFrom(src => src.ColorId))
-                .ForPath(
-                    dest => dest.ColorIcon.IconId,
-                    opt => opt.MapFrom(src => src.IconId));
 
             CreateMap<EditPriorityDTO, Priority>()
                 .ForPath(

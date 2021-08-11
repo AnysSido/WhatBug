@@ -25,15 +25,6 @@ namespace WhatBug.Application.Services
             _mapper = mapper;
         }
 
-        public async Task CreatePriorityAsync(CreatePriorityDTO dto)
-        {
-            // TODO: Check permissions, validate color
-            var priority = _mapper.Map<Priority>(dto);
-            priority.Order = await _context.Priorities.MaxAsync(p => (int?)p.Order) + 1 ?? 1;
-            await _context.Priorities.AddAsync(priority);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task EditPriorityAsync(EditPriorityDTO dto)
         {
             // TODO: Check permissions, validate color

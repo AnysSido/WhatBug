@@ -1,13 +1,13 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WhatBug.Application.DTOs.Common;
 
-namespace WhatBug.Application.DTOs.Priorities
+namespace WhatBug.Application.Priorities.Commands.CreatePriority
 {
-    public class CreatePriorityDTO
+    public class CreatePriorityCommand : IRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }

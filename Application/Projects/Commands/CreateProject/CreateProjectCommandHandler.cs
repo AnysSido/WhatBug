@@ -9,12 +9,10 @@ namespace WhatBug.Application.Projects.Commands.CreateProject
     public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand>
     {
         private readonly IWhatBugDbContext _context;
-        private readonly IMediator _mediator;
 
-        public CreateProjectCommandHandler(IWhatBugDbContext context, IMediator mediator)
+        public CreateProjectCommandHandler(IWhatBugDbContext context)
         {
             _context = context;
-            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
