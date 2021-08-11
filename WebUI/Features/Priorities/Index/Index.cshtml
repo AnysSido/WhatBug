@@ -98,7 +98,7 @@
 
                 // Send the list of sorted IDs via ajax to be updated in DB.
                 $.ajax({
-                    url: '/Priority/UpdateOrder',
+                    url: '/Priorities/UpdateOrder',
                     data: JSON.stringify($('#priorityList').sortable('toArray')),
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",

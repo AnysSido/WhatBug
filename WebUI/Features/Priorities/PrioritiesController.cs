@@ -17,7 +17,7 @@ using WhatBug.WebUI.Features.Priorities.Index;
 
 namespace WhatBug.WebUI.Features.Priorities
 {
-    public class PriorityController : BaseController
+    public class PrioritiesController : BaseController
     {
         public async Task<IActionResult> Index()
         {
