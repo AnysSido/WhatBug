@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Projects;
-using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.Domain.Entities;
-using WhatBug.Persistence;
 using WhatBug.WebUI.Routing;
 using WhatBug.WebUI.ViewModels.Admin;
-using WhatBug.WebUI.ViewModels.Issues;
-using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Projects;
 using WhatBug.WebUI.ViewModels.User;
 
@@ -25,16 +14,14 @@ namespace WhatBug.WebUI.Controllers
     public class ProjectsController : BaseController
     {
         private readonly IProjectService _projectService;
-        private readonly IPrioritySchemeService _prioritySchemeService;
         private readonly IUserService _userService;
         private readonly IAdminService _adminService;
         private readonly IIssueService _issueService;
         private readonly IMapper _mapper;
 
-        public ProjectsController(IProjectService projectService, IPrioritySchemeService prioritySchemeService, IMapper mapper, IUserService userService, IAdminService adminService, IIssueService issueService)
+        public ProjectsController(IProjectService projectService, IMapper mapper, IUserService userService, IAdminService adminService, IIssueService issueService)
         {
             _projectService = projectService;
-            _prioritySchemeService = prioritySchemeService;
             _mapper = mapper;
             _userService = userService;
             _adminService = adminService;

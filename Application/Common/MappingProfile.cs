@@ -43,7 +43,6 @@ namespace WhatBug.Application.Common
 
             // Priority Schemes
             CreateMap<PrioritySchemeDTO, PriorityScheme>().ReverseMap();
-            CreateMap<EditPrioritySchemeDTO, PriorityScheme>();
 
             // Issues
             CreateMap<CreateIssueDTO, Issue>()

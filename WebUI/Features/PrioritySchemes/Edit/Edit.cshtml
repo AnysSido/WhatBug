@@ -1,0 +1,61 @@
+﻿@model WhatBug.WebUI.Features.PrioritySchemes.Edit.EditPrioritySchemeViewModel
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap4-duallistbox/bootstrap-duallistbox.min.css" />
+}
+
+@{
+    ViewData["Title"] = "Edit Priority Scheme";
+}
+
+@{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h6 class="card-title">Priority Scheme Details</h6>
+                </div>
+                <form method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="@Model.Name"></label>
+                            <input asp-for="@Model.Name" class="form-control" />
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Description"></label>
+                            <textarea asp-for="@Model.Description" class="form-control" rows="2"></textarea>
+                        </div>
+                        <!-- Duallistbox-->
+                        <div class="form-group">
+                            <select asp-for="@Model.PriorityIds" asp-items="@Model.PriorityListItems" class="duallistbox"></select>
+                        </div>
+                        <div class="alert alert-info alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <span>
+                                <i class="icon fas fa-info"></i>
+                                Included priorities will be available in projects assigned to this priority scheme.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary float-right">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+
+    <script type="text/javascript">
+        $(".duallistbox").bootstrapDualListbox({
+            showFilterInputs: false,
+            nonSelectedListLabel: 'Available Priorities',
+            selectedListLabel: 'Included Priorities',
+            infoText: '',
+        });
+    </script>
+}

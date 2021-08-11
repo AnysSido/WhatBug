@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using WhatBug.Application.Common;
 using WhatBug.Application.DTOs.Admin;
 using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.GlobalPermissions;
@@ -12,7 +7,6 @@ using WhatBug.Application.DTOs.Issues;
 using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.DTOs.PermissionSchemes;
 using WhatBug.Application.DTOs.Priorities;
-using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.DTOs.Projects;
 using WhatBug.Application.DTOs.Users;
 using WhatBug.WebUI.ViewModels.Admin;
@@ -22,7 +16,6 @@ using WhatBug.WebUI.ViewModels.Issues;
 using WhatBug.WebUI.ViewModels.Permissions;
 using WhatBug.WebUI.ViewModels.PermissionSchemes;
 using WhatBug.WebUI.ViewModels.Priorities;
-using WhatBug.WebUI.ViewModels.PrioritySchemes;
 using WhatBug.WebUI.ViewModels.Projects;
 using WhatBug.WebUI.ViewModels.User;
 using WhatBug.Common.Mapping;
@@ -74,13 +67,6 @@ namespace WhatBug.WebUI.Common
 
             // Priorities
             CreateMap<PriorityDTO, PriorityViewModel>();
-
-            // Priority Schemes
-            CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>();
-            CreateMap<EditPrioritySchemeViewModel, EditPrioritySchemeDTO>()
-                .ForMember(
-                    dest => dest.PriorityIds,
-                    opt => opt.MapFrom(src => src.SelectedPriorityIds));
 
             // Issues
             CreateMap<IssueStatusDTO, IssueStatusViewModel>();

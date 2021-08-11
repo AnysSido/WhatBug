@@ -24,7 +24,7 @@ namespace WhatBug.Application.Priorities.Queries.GetEditPriority
 
         public async Task<EditPriorityDTO> Handle(GetEditPriorityQuery request, CancellationToken cancellationToken)
         {
-            var dto = await _mapper.ProjectTo<EditPriorityDTO>(_context.Priorities).SingleOrDefaultAsync(p => p.Id == request.Id);
+            var dto = await _mapper.ProjectTo<EditPriorityDTO>(_context.Priorities).FirstOrDefaultAsync(p => p.Id == request.Id);
 
             if (dto == null)
             {

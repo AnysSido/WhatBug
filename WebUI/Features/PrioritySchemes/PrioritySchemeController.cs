@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.PrioritySchemes.Commands.CreatePriorityScheme;
+using WhatBug.Application.PrioritySchemes.Commands.EditPriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetCreatePriorityScheme;
+using WhatBug.Application.PrioritySchemes.Queries.GetEditPriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes;
 using WhatBug.WebUI.Controllers;
 using WhatBug.WebUI.Features.PrioritySchemes.Create;
+using WhatBug.WebUI.Features.PrioritySchemes.Edit;
 using WhatBug.WebUI.Features.PrioritySchemes.Index;
 
 namespace WhatBug.WebUI.Features.PrioritySchemes
@@ -29,6 +32,21 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
 
         [HttpPost]
         public async Task<IActionResult> Create(CreatePrioritySchemeCommand command)
+        {
+            await Mediator.Send(command);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var dto = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = id });
+            var vm = Mapper.Map<EditPrioritySchemeViewModel>(dto);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditPrioritySchemeCommand command)
         {
             await Mediator.Send(command);
             return RedirectToAction(nameof(Index));

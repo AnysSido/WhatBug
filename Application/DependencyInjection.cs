@@ -21,8 +21,6 @@ namespace WhatBug.Application
             services.AddScoped<IIssueService, IssueService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPermissionService, PermissionService>();
-            services.AddScoped<IPriorityService, PriorityService>();
-            services.AddScoped<IPrioritySchemeService, PrioritySchemeService>();
             services.AddScoped<IPermissionSchemeService, PermissionSchemeService>();
             services.AddScoped<IGlobalPermissionService, GlobalPermissionService>();
             services.AddScoped<IColorService, ColorService>();
