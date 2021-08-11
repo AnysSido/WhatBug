@@ -15,16 +15,12 @@ namespace WhatBug.WebUI.Controllers
     public class IssuesController : BaseController
     {
         private readonly IIssueService _issueService;
-        private readonly IProjectService _projectService;
-        private readonly IIconService _iconService;
         private readonly IMapper _mapper;
 
-        public IssuesController(IIssueService issueService, IMapper mapper, IProjectService projectService, IIconService iconService)
+        public IssuesController(IIssueService issueService, IMapper mapper)
         {
             _issueService = issueService;
             _mapper = mapper;
-            _projectService = projectService;
-            _iconService = iconService;
         }
 
         [HttpGet]
@@ -36,36 +32,6 @@ namespace WhatBug.WebUI.Controllers
                 Issues = _mapper.Map<List<IssueViewModel>>(await _issueService.GetAllIssuesAsync(projectId))
             };
             return View(vm);
-        }
-
-        [HttpGet]
-        [Route("Projects/{projectId}/CreateIssue")]
-        public async Task<IActionResult> Create(int projectId)
-        {
-            var project = await _projectService.GetProjectAsync(projectId);
-            var vm = new CreateIssueViewModel()
-            {
-                AllSchemePriorities = _mapper.Map<List<PriorityViewModel>>(project.PriorityScheme.Priorities),
-                AllIssueTypes = _mapper.Map<List<IssueTypeViewModel>>(await _issueService.GetIssueTypesAsync())
-            };
-
-            return View(vm);
-        }
-
-        [HttpPost]
-        [Route("Projects/{projectId}/CreateIssue")]
-        public async Task<IActionResult> Create(int projectId, CreateIssueViewModel vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(vm);
-            };
-
-            vm.ProjectId = projectId;
-            vm.ReporterId = 5; // TODO: Remove this
-            await _issueService.CreateIssueAsync(_mapper.Map<CreateIssueDTO>(vm));
-
-            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

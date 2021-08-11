@@ -23,7 +23,7 @@ namespace WhatBug.WebUI.Features.Projects
         public async Task<IActionResult> Create(CreateProjectCommand command)
         {
             await Mediator.Send(command);
-            return RedirectToAction("Index", "Projects");
+            return RedirectToAction("Index", "Projects"); // TODO: Remove magic string
         }
     }
 }
