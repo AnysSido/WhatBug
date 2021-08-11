@@ -51,19 +51,6 @@ namespace WhatBug.Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Project>> ListProjects()
-        {
-            if (await _permissionService.UserHasPermission(_currentUserService.UserId, Permissions.ViewAllProjects))
-                return await _context.Projects.ToListAsync();
-
-            return await _context.ProjectRoleUsers
-                .Include(r => r.Project)
-                .Include(r => r.User)
-                .Where(r => r.UserId == _currentUserService.UserId)
-                .Select(r => r.Project)
-                .ToListAsync();
-        }
-
         public async Task<ProjectDTO> GetProjectAsync(int id)
         {
             // TODO: Check permission

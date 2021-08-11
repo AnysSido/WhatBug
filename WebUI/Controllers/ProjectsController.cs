@@ -28,12 +28,6 @@ namespace WhatBug.WebUI.Controllers
             _issueService = issueService;
         }
 
-        // GET: Projects
-        public async Task<IActionResult> Index()
-        {
-            return View(await _projectService.ListProjects());
-        }
-
         [HttpGet]
         [Route("/Project/{projectId}/UsersAndRoles")]
         [RouteCategory(RouteCategory.Project)]

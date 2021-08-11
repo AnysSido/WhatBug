@@ -19,6 +19,5 @@ namespace WhatBug.Application.Services.Interfaces
         Task<ProjectDTO> GetProjectAsync(int id);
         Task<List<ProjectRoleWithUsersDTO>> GetProjectRolesWithUsersAsync(int projectId);
         Task<List<UserDTO>> GetProjectUsersAsync(int projectId);
-        Task<List<Project>> ListProjects();
     }
 }

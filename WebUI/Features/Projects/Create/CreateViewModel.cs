@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Projects.Queries.GetCreateProject;
 using WhatBug.Common.Mapping;
 
-namespace WhatBug.WebUI.Features.Projects
+namespace WhatBug.WebUI.Features.Projects.Create
 {
     public class CreateViewModel : IMapFrom<CreateProjectDTO>
     {
