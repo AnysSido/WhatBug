@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.Priorities.Commands.CreatePriority;
 using WhatBug.Application.Priorities.Commands.EditPriority;
+using WhatBug.Application.Priorities.Commands.ReorderPriorities;
 using WhatBug.Application.Priorities.Queries.GetCreatePriority;
 using WhatBug.Application.Priorities.Queries.GetEditPriority;
 using WhatBug.Application.Priorities.Queries.GetPriorities;
@@ -56,6 +57,14 @@ namespace WhatBug.WebUI.Features.Priorities
         {
             await Mediator.Send(command);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrder([FromBody] List<int> ids)
+        {
+            await Mediator.Send(new ReorderPrioritiesCommand { Ids = ids });
+            // TODO: Handle errors
+            return Json(new { success = true, text = "Success!" });
         }
     }
 }
