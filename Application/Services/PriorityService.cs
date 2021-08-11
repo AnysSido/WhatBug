@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.Common;
 using WhatBug.Application.DTOs.Priorities;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Services
 {
@@ -23,14 +19,6 @@ namespace WhatBug.Application.Services
         {
             _context = context;
             _mapper = mapper;
-        }
-
-        public async Task<PriorityDTO> GetPriorityAsync(int id)
-        {
-            return _mapper.Map<PriorityDTO>(await _context.Priorities
-                .Include(p => p.ColorIcon.Color)
-                .Include(p => p.ColorIcon.Icon)
-                .FirstOrDefaultAsync(p => p.Id == id));
         }
 
         public async Task<List<PriorityDTO>> GetPrioritiesAsync()
