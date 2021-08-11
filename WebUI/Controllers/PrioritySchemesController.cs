@@ -28,31 +28,6 @@ namespace WhatBug.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            var vm = new CreatePrioritySchemeViewModel()
-            {
-                AllPriorities = _mapper.Map<List<PriorityViewModel>>(await _priorityService.GetPrioritiesAsync())
-            };
-            
-            return View(vm);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreatePrioritySchemeViewModel vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                vm.AllPriorities = _mapper.Map<List<PriorityViewModel>>(await _priorityService.GetPrioritiesAsync());
-                return View(vm);
-            }
-
-            var dto = _mapper.Map<CreatePrioritySchemeDTO>(vm);
-            await _prioritySchemeService.CreatePrioritySchemeAsync(dto);
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             // TODO: Don't allow default to be edited

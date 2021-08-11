@@ -77,10 +77,6 @@ namespace WhatBug.WebUI.Common
 
             // Priority Schemes
             CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>();
-            CreateMap<CreatePrioritySchemeViewModel, CreatePrioritySchemeDTO>()
-                .ForMember(
-                    dest => dest.PriorityIds,
-                    opt => opt.MapFrom(src => src.SelectedPriorityIds));
             CreateMap<EditPrioritySchemeViewModel, EditPrioritySchemeDTO>()
                 .ForMember(
                     dest => dest.PriorityIds,

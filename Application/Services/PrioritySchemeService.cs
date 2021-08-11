@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.DTOs.PrioritySchemes;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Services
 {
@@ -34,16 +30,6 @@ namespace WhatBug.Application.Services
                 .FirstOrDefaultAsync(s => s.Id == id);
             priorityScheme.Priorities = priorityScheme.Priorities.OrderBy(p => p.Id).ToList();
             return _mapper.Map<PrioritySchemeDTO>(priorityScheme);
-        }
-
-        public async Task CreatePrioritySchemeAsync(CreatePrioritySchemeDTO dto)
-        {
-            // TODO: Check permission
-            var scheme = _mapper.Map<PriorityScheme>(dto);
-            scheme.Priorities = await _context.Priorities.Where(p => dto.PriorityIds.Contains(p.Id)).ToListAsync();
-
-            await _context.PrioritySchemes.AddAsync(scheme);
-            await _context.SaveChangesAsync();
         }
 
         public async Task EditPrioritySchemeAsync(EditPrioritySchemeDTO dto)
