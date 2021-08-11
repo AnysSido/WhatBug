@@ -24,17 +24,6 @@ namespace WhatBug.WebUI.Controllers
         }
 
         [HttpGet]
-        [Route("Projects/{projectId}/AllIssues")]
-        public async Task<IActionResult> Index(int projectId)
-        {
-            var vm = new AllIssuesViewModel()
-            {
-                Issues = _mapper.Map<List<IssueViewModel>>(await _issueService.GetAllIssuesAsync(projectId))
-            };
-            return View(vm);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
             var issue = await _issueService.GetIssue(id);

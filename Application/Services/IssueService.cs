@@ -35,17 +35,6 @@ namespace WhatBug.Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<IssueDTO>> GetAllIssuesAsync(int projectId)
-        {
-            // TODO: Check permissions
-            return _mapper.Map<List<IssueDTO>>(await _context.Issues
-                .Include(i => i.Assignee)
-                .Include(i => i.Reporter)
-                .Include(i => i.Priority.ColorIcon.Color)
-                .Include(i => i.Priority.ColorIcon.Icon)
-                .Where(i => i.ProjectId == projectId).ToListAsync());
-        }
-
         public async Task<IssueDTO> GetIssue(int issueId)
         {
             // TODO: Check permissions
