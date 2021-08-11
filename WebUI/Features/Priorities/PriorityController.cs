@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.Priorities.Commands.CreatePriority;
+using WhatBug.Application.Priorities.Commands.EditPriority;
 using WhatBug.Application.Priorities.Queries.GetCreatePriority;
+using WhatBug.Application.Priorities.Queries.GetEditPriority;
 using WhatBug.Application.Priorities.Queries.GetPriorities;
 using WhatBug.Domain.Data;
 using WhatBug.WebUI.Controllers;
 using WhatBug.WebUI.Features.Priorities.Create;
+using WhatBug.WebUI.Features.Priorities.Edit;
 using WhatBug.WebUI.Features.Priorities.Index;
 
 namespace WhatBug.WebUI.Features.Priorities
@@ -35,6 +38,21 @@ namespace WhatBug.WebUI.Features.Priorities
 
         [HttpPost]
         public async Task<IActionResult> Create(CreatePriorityCommand command)
+        {
+            await Mediator.Send(command);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var dto = await Mediator.Send(new GetEditPriorityQuery { Id = id });
+            var vm = Mapper.Map<EditPriorityViewModel>(dto);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditPriorityCommand command)
         {
             await Mediator.Send(command);
             return RedirectToAction(nameof(Index));

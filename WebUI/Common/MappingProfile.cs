@@ -75,22 +75,6 @@ namespace WhatBug.WebUI.Common
             // Priorities
             CreateMap<PriorityDTO, PriorityViewModel>();
 
-            CreateMap<PriorityDTO, EditPriorityViewModel>()
-                .ForMember(
-                    dest => dest.SelectedColor,
-                    opt => opt.MapFrom(src => src.ColorIcon.Color.Id))
-                .ForMember(
-                    dest => dest.SelectedIcon,
-                    opt => opt.MapFrom(src => src.ColorIcon.Icon.Id));
-
-            CreateMap<EditPriorityViewModel, EditPriorityDTO>()
-                .ForMember(
-                    dest => dest.ColorId,
-                    opt => opt.MapFrom(src => src.SelectedColor))
-                .ForMember(
-                    dest => dest.IconId,
-                    opt => opt.MapFrom(src => src.SelectedIcon));
-
             // Priority Schemes
             CreateMap<PrioritySchemeDTO, PrioritySchemeViewModel>();
             CreateMap<CreatePrioritySchemeViewModel, CreatePrioritySchemeDTO>()

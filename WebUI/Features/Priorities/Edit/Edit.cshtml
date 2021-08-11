@@ -1,0 +1,157 @@
+﻿@model WhatBug.WebUI.Features.Priorities.Edit.EditPriorityViewModel
+
+@section Styles {
+    <!-- FontIconPicker -->
+    <link rel="stylesheet" href="~/lib/fonticonpicker/css/base/jquery.fonticonpicker.min.css" />
+    <link rel="stylesheet" href="~/lib/fonticonpicker/css/themes/dark-grey-theme/jquery.fonticonpicker.darkgrey.min.css" />
+    <!-- Bootstrap Select-->
+    <link rel="stylesheet" href="~/lib/bootstrap-select/css/bootstrap-select.min.css" />
+}
+
+@{
+    ViewBag.Title = "Edit Priority";
+}
+@{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h6 class="card-title">Priority Details</h6>
+                </div>
+                <form asp-controller="Priority" method="post">
+                    <input type="hidden" asp-for="ColorId" />
+                    <input type="hidden" asp-for="IconId" />
+                    <input asp-for="@Model.Id" />
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="@Model.Name"></label>
+                            <input asp-for="@Model.Name" class="form-control" />
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Description"></label>
+                            <textarea asp-for="@Model.Description" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        <!-- Color Selection -->
+                        <div class="form-group">
+                            <label asp-for="Colors"></label>
+                            <select class="form-control selectpicker">
+                                @for (int i = 0; i < Model.Colors.Count; i++)
+                                {
+                                    var code =
+                                         "<div class='row'>"
+                                        + "<div class='col-4 wb-bg-color-" + Model.Colors[i].LowerName + "'></div>"
+                                        + "<div class='col-8'>" + Model.Colors[i].Name + "</div>"
+                                        + "</div>";
+
+                                    <option value="@Model.Colors[i].Id" data-content="@code" data-color="@Model.Colors[i].LowerName">@i</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="d-flex flex-row">
+                            <div class="mr-auto">
+                                <label>Icon</label>
+                                <div class="form-group">
+                                    <select id="IconPicker" name="IconPicker">
+                                        @for (int i = 0; i < Model.Icons.Count; i++)
+                                        {
+                                            <option data-iconid="@Model.Icons[i].Id">@Model.Icons[i].Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mr-auto">
+                                <label>Preview</label>
+                                <div class="input-group-append">
+                                    <span id="iconPreview" class="input-group-text"><i class="fas fa-square"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary float-right">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <!-- FontIconPicker -->
+    <script type="text/javascript" src="~/lib/fonticonpicker/js/jquery.fonticonpicker.min.js"></script>
+    <!-- Bootstrap Select -->
+    <script type="text/javascript" src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // Styling fix for bootstrap-select wrapping all options in a text span.
+            $('.selectpicker').on('show.bs.select', function () {
+                $('.dropdown-menu li .text').removeClass('text');
+            });
+
+            // Update preview to match selection when changed by user
+            $('.selectpicker').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                // clickedIndex is null when SelectedColor is set programatically
+                if (clickedIndex != null) {
+                    var newColor = $('.selectpicker option').eq(clickedIndex).data('color');
+                    var oldColor = $('.selectpicker option').eq(previousValue - 1).data('color');
+
+                    $('#ColorId').val(clickedIndex + 1);
+                    $('#iconPreview').removeClass('wb-color-' + oldColor);
+                    $('#iconPreview').addClass('wb-color-' + newColor);
+                }
+            });
+
+            // Update preview to match selection when SelectedColor changed programatically (e.g. controller)
+            $('.selectpicker').on('loaded.bs.select', function (e) {
+                var selectedColorId = $('#ColorId').val();
+                var selectedColor = $('.selectpicker option').eq(selectedColorId - 1).data('color');
+
+                $('.selectpicker').selectpicker('val', selectedColorId);
+                $('#iconPreview').addClass('wb-color-' + selectedColor);
+            });
+
+
+            // Update preview when icon to match icon selector.
+            function updateIconPreview() {
+                $('#iconPreview .fas').attr('class', GetIconClassFromId($('#IconId').val()));
+            }
+
+            // Init font icon picker
+            var iconPicker = $('#IconPicker').fontIconPicker({
+                theme: 'fip-darkgrey',
+                emptyIcon: false,
+            });
+
+            // Set the icon to the previously selected icon on page reload (i.e. validation fail)
+            // or set default icon value to 1
+            if ($('#IconId').val() != '0') {
+                iconPicker.setIcon(GetIconClassFromId($('#IconId').val()));
+            } else {
+                $('#IconId').val(1);
+            }
+
+            // Update preview icon on page load
+            updateIconPreview();
+
+            iconPicker.on('change', function () {
+                var selectedClass = $('.selected-icon .fas').attr('class');
+                var selectedIconId = GetIconIdFromClass(selectedClass);
+                $('#IconId').val(selectedIconId);
+                updateIconPreview();
+            });
+
+            function GetIconClassFromId(id) {
+                var option = $('#IconPicker option[data-iconid="' + id + '"]');
+                return option.val();
+            };
+
+            function GetIconIdFromClass(name) {
+                var option = $('#IconPicker option:contains("' + name + '")');
+                return option.data('iconid');
+            }
+        });
+    </script>
+}

@@ -25,14 +25,6 @@ namespace WhatBug.Application.Services
             _mapper = mapper;
         }
 
-        public async Task EditPriorityAsync(EditPriorityDTO dto)
-        {
-            // TODO: Check permissions, validate color
-            var priority = await _context.Priorities.Include(p => p.ColorIcon).FirstAsync(p => p.Id == dto.Id);
-            _mapper.Map(dto, priority);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<PriorityDTO> GetPriorityAsync(int id)
         {
             return _mapper.Map<PriorityDTO>(await _context.Priorities
