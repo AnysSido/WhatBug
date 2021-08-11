@@ -87,7 +87,6 @@ namespace WhatBug.WebUI.Common
                     opt => opt.MapFrom(src => src.SelectedPriorityIds));
 
             // Issues
-            CreateMap<IssueDTO, IssueViewModel>();
             CreateMap<IssueStatusDTO, IssueStatusViewModel>();
             CreateMap<CreateIssueDTO, CreateIssueViewModel>();
 
@@ -99,7 +98,6 @@ namespace WhatBug.WebUI.Common
                     dest => dest.IssueTypeId,
                     opt => opt.MapFrom(src => src.SelectedIssueType));
 
-            CreateMap<IssueDTO, IssueDetailViewModel>();
             CreateMap<IssueTypeDTO, IssueTypeViewModel>();
 
             // Common

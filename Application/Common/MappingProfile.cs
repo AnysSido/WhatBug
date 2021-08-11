@@ -47,11 +47,9 @@ namespace WhatBug.Application.Common
             CreateMap<EditPrioritySchemeDTO, PriorityScheme>();
 
             // Issues
-            CreateMap<IssueDTO, Issue>().ReverseMap();
             CreateMap<CreateIssueDTO, Issue>()
                 .AfterMap((src, dest) => dest.AssigneeId = dest.AssigneeId == 0 ? null : dest.AssigneeId);
 
-            CreateMap<Issue, IssueDTO>();
             CreateMap<IssueType, IssueTypeDTO>();
             CreateMap<IssueStatus, IssueStatusDTO>();
 

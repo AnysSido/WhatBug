@@ -10,7 +10,6 @@ namespace WhatBug.Application.Services.Interfaces
     public interface IIssueService
     {
         public Task CreateIssueAsync(CreateIssueDTO dto);
-        Task<IssueDTO> GetIssue(int issueId);
         Task<List<IssueStatusDTO>> GetIssueStatusesAsync();
         Task<List<IssueTypeDTO>> GetIssueTypesAsync();
     }

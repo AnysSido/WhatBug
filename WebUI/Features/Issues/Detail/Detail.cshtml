@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.ViewModels.Issues.IssueDetailViewModel
+﻿@model WhatBug.WebUI.Features.Issues.Detail.IssueDetailViewModel
 
 @{
     ViewData["Title"] = "Detail";
@@ -43,11 +43,13 @@
             </div>
             <div class="card-body">
                 <div class="form-group row mb-0">
-                    <label asp-for="IssueType" class="col-sm-2 col-form-label"></label>
+                    @*<label asp-for="IssueType" class="col-sm-2 col-form-label"></label>*@
+                    <label class="col-sm-2 col-form-label">Issue Type</label>
                 </div>
                 <div class="form-group row mb-0">
-                    <label asp-for="Priority" class="col-sm-2 col-form-label"></label>
-                    <p class="col-form-label"><i class="@Model.Priority.ColorIcon.Icon.ClassName wb-color-@Model.Priority.ColorIcon.Color.LowerName "></i>@Model.Priority.Name</p>
+                    @*<label asp-for="Priority" class="col-sm-2 col-form-label"></label>*@
+                    <label class="col-sm-2 col-form-label">Priority</label>
+                    <p class="col-form-label"><i class="@Model.PriorityIconClass wb-color-@Model.PriorityIconColor"></i>@Model.PriorityName</p>
                 </div>
             </div>
         </div>
