@@ -1,7 +1,7 @@
-﻿@model WhatBug.WebUI.ViewModels.GlobalPermissions._SetGlobalPermissionsViewModel
+﻿@model WhatBug.WebUI.Features.Permissions.GrantGlobalPermissions.GrantGlobalPermissionsViewModel
 
-@{    
-    <form method="post" asp-controller="GlobalPermissions" asp-action="SetGlobalPermissions">
+@{
+    <form method="post" asp-controller="Permissions" asp-action="GrantGlobalPermissions">
         <input asp-for="@Model.UserId" />
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -23,15 +23,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < Model.GrantablePermissions.Count; i++)
+                            @for (int i = 0; i < Model.Permissions.Count; i++)
                             {
                                 <tr>
                                     <td>
-                                        <input asp-for="@Model.GrantablePermissions[i].Id" type="hidden" />
-                                        <input asp-for="@Model.GrantablePermissions[i].IsGranted" />
+                                        <input asp-for="@Model.Permissions[i].Id" type="hidden" />
+                                        <input asp-for="@Model.Permissions[i].IsGranted" />
                                     </td>
-                                    <td>@Model.GrantablePermissions[i].Name</td>
-                                    <td>@Model.GrantablePermissions[i].Description</td>
+                                    <td>@Model.Permissions[i].Name</td>
+                                    <td>@Model.Permissions[i].Description</td>
                                 </tr>
                             }
                         </tbody>
@@ -43,5 +43,5 @@
                 </div>
             </div>
         </div>
-    </form>    
+    </form>
 }

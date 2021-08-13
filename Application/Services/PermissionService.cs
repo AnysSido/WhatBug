@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.Domain.Data;
+using Data = WhatBug.Domain.Data;
 
 namespace WhatBug.Application.Services
 {
@@ -19,7 +19,7 @@ namespace WhatBug.Application.Services
 
         public async Task<bool> UserHasPermission(int userId, string permission)
         {
-            var permissionEntity = Permissions.ToEntity(permission);
+            var permissionEntity = Data.Permissions.ToEntity(permission);
 
             var hasPermission = await _context.Users
                 .Where(u => u.Id == userId && u.UserPermissions.Select(p => p.Permission).Contains(permissionEntity))
