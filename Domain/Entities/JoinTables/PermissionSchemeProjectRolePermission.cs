@@ -11,8 +11,8 @@ namespace WhatBug.Domain.Entities.JoinTables
         public int PermissionSchemeId { get; set; }
         public PermissionScheme PermissionScheme { get; set; }
 
-        public int ProjectRoleId { get; set; }
-        public ProjectRole ProjectRole { get; set; }
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
 
         public int PermissionId { get; set; }
         public Permission Permission { get; set; }

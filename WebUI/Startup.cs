@@ -2,27 +2,17 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OdeToCode.AddFeatureFolders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WhatBug.Application;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure;
-using WhatBug.Infrastructure.Identity;
 using WhatBug.Persistence;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Services;
 using WhatBug.WebUI.Services.Interfaces;
+using WhatBug.WebUI.ViewLocators;
 
 namespace WebUI
 {
@@ -51,13 +41,6 @@ namespace WebUI
             services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IWhatBugDbContext>())
                 .AddFeatureFolders();
-
-            services.Configure<RazorViewEngineOptions>(o =>
-            {
-                o.ViewLocationFormats.Add("\\{Feature}\\{0}\\{0}.cshtml");
-                o.ViewLocationFormats.Add("\\Views\\{1}\\{0}.cshtml");
-                o.ViewLocationFormats.Add("\\Shared\\{0}.cshtml");
-            });
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         }

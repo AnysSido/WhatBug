@@ -1,17 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
-using WhatBug.Application.DTOs.Permissions;
 using WhatBug.Application.Services.Interfaces;
-using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Data;
-using WhatBug.Application.Common.Models;
-using AutoMapper;
-using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Services
 {

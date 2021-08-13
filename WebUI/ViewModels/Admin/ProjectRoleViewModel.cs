@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WhatBug.WebUI.ViewModels.Admin
+﻿namespace WhatBug.WebUI.ViewModels.Admin
 {
     public class ProjectRoleViewModel
     {

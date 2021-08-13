@@ -54,7 +54,7 @@ namespace WhatBug.Application.Services
         {
             // TODO: Check permissions
             var scheme = await _context.PermissionSchemes
-                .Include(s => s.ProjectRolePermissions.Where(o => o.ProjectRoleId == projectRoleId))
+                .Include(s => s.ProjectRolePermissions.Where(o => o.RoleId == projectRoleId))
                     .ThenInclude(s => s.Permission)
                 .FirstOrDefaultAsync(s => s.Id == schemeId);
 
@@ -65,17 +65,17 @@ namespace WhatBug.Application.Services
         {
             // TODO: Check permissions
             var scheme = await _context.PermissionSchemes.Include(s => s.ProjectRolePermissions).FirstAsync(s => s.Id == dto.SchemeId);
-            var projectRole = await _context.ProjectRoles.FirstAsync(r => r.Id == dto.ProjectRoleId);
+            var projectRole = await _context.Roles.FirstAsync(r => r.Id == dto.ProjectRoleId);
             var permissions = await _context.Permissions.Where(p => dto.GrantedPermissionIds.Contains(p.Id)).ToListAsync();
 
             var grantedRolePermissions = permissions.Select(p => new PermissionSchemeProjectRolePermission
             {
                 PermissionScheme = scheme,
-                ProjectRole = projectRole,
+                Role = projectRole,
                 Permission = p
             });
 
-            scheme.ProjectRolePermissions.RemoveAll(p => p.ProjectRoleId == dto.ProjectRoleId);
+            scheme.ProjectRolePermissions.RemoveAll(p => p.RoleId == dto.ProjectRoleId);
             scheme.ProjectRolePermissions.AddRange(grantedRolePermissions);
 
             await _context.SaveChangesAsync();

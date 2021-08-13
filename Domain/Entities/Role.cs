@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace WhatBug.WebUI.ViewModels.Admin
+namespace WhatBug.Domain.Entities
 {
-    public class CreateProjectRoleViewModel
+    public class Role
     {
-        [Required]
+        public int Id { get; set; }
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
+        public List<ProjectRoleUser> ProjectUsers { get; set; }
     }
 }

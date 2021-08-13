@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.ViewModels.Projects.ProjectUsersAndRolesViewModel
+﻿@model WhatBug.Application.Projects.Queries.GetUsersAndRoles.ProjectDTO
 
 @{
     ViewData["Title"] = "UsersAndRoles";
@@ -21,10 +21,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var role in Model.ProjectRolesWithUsers)
+            @foreach (var role in Model.Roles)
             {
                 <tr>
-                    <td>@role.RoleName</td>
+                    <td>@role.Name</td>
                     <td>
                         @foreach (var user in role.Users)
                         {
@@ -40,7 +40,7 @@
 
 <!-- Data for add user to role modal -->
 <form id="addUserToRoleModalData">
-    <input asp-for="@Model.ProjectId" />
+    <input type="hidden" asp-for="@Model.Id" />
 </form>
 
 <!-- Add user to role modal to be populated by partial view -->
@@ -50,7 +50,7 @@
     <script type="text/javascript">
         $(function () {
             $('.mdl').on('click', function () {
-                $.post('/projects/getaddusertoprojectrolepartial',
+                $.post('/project/getassignuserstorolepartial',
                     $('#addUserToRoleModalData').serialize()
                 ).done(function (response) {
                     $('#addUserToRoleModal').html(response);

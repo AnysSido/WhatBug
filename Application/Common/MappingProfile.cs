@@ -27,8 +27,8 @@ namespace WhatBug.Application.Common
             this.ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Admin
-            CreateMap<CreateProjectRoleDTO, ProjectRole>();
-            CreateMap<ProjectRole, ProjectRoleDTO>();
+            CreateMap<CreateProjectRoleDTO, Role>();
+            CreateMap<Role, ProjectRoleDTO>();
 
             // Projects
             CreateMap<ProjectDTO, Project>().ReverseMap();

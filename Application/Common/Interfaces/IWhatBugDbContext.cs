@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Common.Interfaces
@@ -17,14 +12,13 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<Issue> Issues { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Permission> Permissions { get; set; }
-        DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         DbSet<PermissionScheme> PermissionSchemes { get; set; }
         DbSet<Priority> Priorities { get; set; }
         DbSet<PriorityScheme> PrioritySchemes { get; set; }
         DbSet<Icon> Icons { get; set; }
         DbSet<Color> Colors { get; set; }
         DbSet<IssueType> IssueTypes { get; set; }
-        DbSet<ProjectRole> ProjectRoles { get; set; }
+        DbSet<Role> Roles { get; set; }
         DbSet<IssueStatus> IssueStatuses { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

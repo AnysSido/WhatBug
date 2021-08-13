@@ -25,14 +25,7 @@ namespace WhatBug.Application.Services
 
         public async Task<List<ProjectRoleDTO>> GetProjectRolesAsync()
         {
-            return _mapper.Map<List<ProjectRoleDTO>>(await _context.ProjectRoles.ToListAsync());
-        }
-
-        public async Task CreateProjectRole(CreateProjectRoleDTO dto)
-        {
-            // TODO: Check permission
-            await _context.ProjectRoles.AddAsync(_mapper.Map<ProjectRole>(dto));
-            await _context.SaveChangesAsync();
+            return _mapper.Map<List<ProjectRoleDTO>>(await _context.Roles.ToListAsync());
         }
     }
 }

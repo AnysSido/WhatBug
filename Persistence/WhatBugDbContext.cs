@@ -6,7 +6,6 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.JoinTables;
-using WhatBug.Domain.Entities.Permissions;
 using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Persistence
@@ -29,9 +28,8 @@ namespace WhatBug.Persistence
         public DbSet<Project> Projects { get; set; }
         public DbSet<Issue> Issues { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<ProjectRole> ProjectRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<PermissionScheme> PermissionSchemes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<PriorityScheme> PrioritySchemes { get; set; }
@@ -64,6 +62,10 @@ namespace WhatBug.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
+                .Entity<ProjectRoleUser>()
+                .HasKey(p => new { p.ProjectId, p.RoleId, p.UserId });
+
+            modelBuilder
                 .Entity<Permission>()
                 .Property(p => p.Type)
                 .HasConversion(
@@ -87,7 +89,7 @@ namespace WhatBug.Persistence
 
             modelBuilder
                 .Entity<PermissionSchemeProjectRolePermission>()
-                .HasKey(p => new { p.PermissionSchemeId, p.ProjectRoleId, p.PermissionId });
+                .HasKey(p => new { p.PermissionSchemeId, p.RoleId, p.PermissionId });
 
             modelBuilder
                 .Entity<PermissionSchemeProjectRolePermission>()
@@ -97,37 +99,15 @@ namespace WhatBug.Persistence
 
             modelBuilder
                 .Entity<PermissionSchemeProjectRolePermission>()
-                .HasOne(p => p.ProjectRole)
+                .HasOne(p => p.Role)
                 .WithMany()
-                .HasForeignKey(p => p.ProjectRoleId);
+                .HasForeignKey(p => p.RoleId);
 
             modelBuilder
                 .Entity<PermissionSchemeProjectRolePermission>()
                 .HasOne(p => p.Permission)
                 .WithMany()
                 .HasForeignKey(p => p.PermissionId);
-
-            modelBuilder
-                .Entity<ProjectUserProjectRole>()
-                .HasKey(p => new { p.ProjectId, p.UserId, p.ProjectRoleId });
-
-            modelBuilder
-                .Entity<ProjectUserProjectRole>()
-                .HasOne(p => p.Project)
-                .WithMany(p => p.ProjectRoleUsers)
-                .HasForeignKey(p => p.ProjectId);
-
-            modelBuilder
-                .Entity<ProjectUserProjectRole>()
-                .HasOne(p => p.User)
-                .WithMany()
-                .HasForeignKey(p => p.UserId);
-
-            modelBuilder
-                .Entity<ProjectUserProjectRole>()
-                .HasOne(p => p.ProjectRole)
-                .WithMany()
-                .HasForeignKey(p => p.ProjectRoleId);
 
             modelBuilder
                 .Entity<Issue>()

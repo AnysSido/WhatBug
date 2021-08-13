@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using WhatBug.Application.Projects.Commands.AssignsUsersToRole;
 using WhatBug.Application.Projects.Commands.CreateProject;
+using WhatBug.Application.Projects.Queries.GetAssignUsersToRole;
 using WhatBug.Application.Projects.Queries.GetCreateProject;
 using WhatBug.Application.Projects.Queries.GetProjects;
+using WhatBug.Application.Projects.Queries.GetUsersAndRoles;
 using WhatBug.WebUI.Controllers;
 using WhatBug.WebUI.Features.Projects.Create;
 using WhatBug.WebUI.Features.Projects.Index;
@@ -34,7 +34,28 @@ namespace WhatBug.WebUI.Features.Projects
         public async Task<IActionResult> Create(CreateProjectCommand command)
         {
             await Mediator.Send(command);
-            return RedirectToAction(nameof(Index)); // TODO: Remove magic string
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UsersAndRoles(int id)
+        {
+            var dto = await Mediator.Send(new GetUsersAndRolesQuery { ProjectId = id });
+            return View(dto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetAssignUsersToRolePartial(int id)
+        {
+            var dto = await Mediator.Send(new GetAssignUsersToRoleQuery { ProjectId = id });
+            return PartialView(dto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignUsersToRole(AssignUsersToRoleCommand command)
+        {
+            await Mediator.Send(command);
+            return RedirectToAction(nameof(UsersAndRoles), new { id = command.ProjectId });
         }
     }
 }

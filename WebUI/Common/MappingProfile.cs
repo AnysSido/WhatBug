@@ -29,7 +29,6 @@ namespace WhatBug.WebUI.Common
             this.ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Admin
-            CreateMap<CreateProjectRoleViewModel, CreateProjectRoleDTO>();
             CreateMap<ProjectRoleDTO, ProjectRoleViewModel>();
 
             // User
@@ -44,14 +43,6 @@ namespace WhatBug.WebUI.Common
 
             // Projects
             CreateMap<ProjectDTO, ProjectViewModel>();
-            CreateMap<_AddUserToProjectRoleViewModel, AddUsersToProjectRoleDTO>()
-                .ForMember(
-                    dest => dest.ProjectRoleId,
-                    opt => opt.MapFrom(src => src.SelectedRoleId))
-                .ForMember(
-                    dest => dest.UserIds,
-                    opt => opt.MapFrom(u => u.SelectedUserIds));
-            CreateMap<ProjectRoleWithUsersDTO, ProjectRoleWithUsersViewModel>();
 
             // Permissions
             CreateMap<PermissionDTO, PermissionViewModel>().ReverseMap();

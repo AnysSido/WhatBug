@@ -58,6 +58,12 @@ namespace WhatBug.Infrastructure.Identity
             return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
         }
 
+        public async Task<string> GetUsername(int userId)
+        {
+            var principalUser = await _userManager.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            return principalUser?.UserName;
+        }
+
         public async Task<UserDTO> PopulatePrincipleUserInfo(UserDTO userDTO)
         {
             var principalUser = await _userManager.Users.FirstOrDefaultAsync(u => u.UserId == userDTO.Id);
