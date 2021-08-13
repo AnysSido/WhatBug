@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetCreatePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes;
+using WhatBug.Application.PermissionSchemes.Queries.GetSchemeRoles;
 using WhatBug.WebUI.Controllers;
 
 namespace WhatBug.WebUI.Features.PermissionSchemes
@@ -27,6 +28,12 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
         {
             await Mediator.Send(command);
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Roles(int schemeId)
+        {
+            var dto = await Mediator.Send(new GetSchemeRolesQuery { SchemeId = schemeId });
+            return View(dto);
         }
     }
 }
