@@ -28,15 +28,6 @@ namespace WhatBug.WebUI.Controllers
             _permissionService = permissionService;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var vm = new PermissionSchemeIndexViewModel
-            {
-                PermissionSchemes = _mapper.Map<List<PermissionSchemeViewModel>>(await _permissionSchemeService.GetPermissionSchemesAsync())
-            };
-            return View(vm);
-        }
-
         [HttpGet]
         public IActionResult Create()
         {
@@ -54,7 +45,7 @@ namespace WhatBug.WebUI.Controllers
 
             var dto = _mapper.Map<CreatePermissionSchemeDTO>(vm);
             await _permissionSchemeService.CreatePermissionSchemeAsync(dto);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
