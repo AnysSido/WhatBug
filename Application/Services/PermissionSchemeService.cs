@@ -30,24 +30,10 @@ namespace WhatBug.Application.Services
             return _mapper.Map<List<PermissionDTO>>(Data.Permissions.GetAll(PermissionType.Project).ToList());
         }
 
-        public async Task CreatePermissionSchemeAsync(CreatePermissionSchemeDTO dto)
-        {
-            // TODO: Check permissions
-            var permissionScheme = _mapper.Map<PermissionScheme>(dto);
-            await _context.PermissionSchemes.AddAsync(permissionScheme);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<PermissionSchemeDTO> GetPermissionSchemeAsync(int id)
         {
             // TODO: Check permissions
             return _mapper.Map<PermissionSchemeDTO>(await _context.PermissionSchemes.FirstAsync(s => s.Id == id));
-        }
-
-        public async Task<List<PermissionSchemeDTO>> GetPermissionSchemesAsync()
-        {
-            // TODO: Check permissions
-            return _mapper.Map<List<PermissionSchemeDTO>>(await _context.PermissionSchemes.ToListAsync());
         }
 
         public async Task<List<PermissionDTO>> GetProjectRolePermissionsAsync(int schemeId, int projectRoleId)

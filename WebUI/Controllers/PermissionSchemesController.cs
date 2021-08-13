@@ -29,26 +29,6 @@ namespace WhatBug.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
-        {
-            var vm = new CreatePermissionSchemeViewModel();
-            return View(vm);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreatePermissionSchemeViewModel vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(vm);
-            };
-
-            var dto = _mapper.Map<CreatePermissionSchemeDTO>(vm);
-            await _permissionSchemeService.CreatePermissionSchemeAsync(dto);
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
         [Route("PermissionSchemes/{schemeId}/Permissions")]
         public async Task<IActionResult> Permissions(int schemeId)
         {

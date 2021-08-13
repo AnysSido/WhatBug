@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.ViewModels.PermissionSchemes.CreatePermissionSchemeViewModel
+﻿@model WhatBug.Application.PermissionSchemes.Queries.GetCreatePermissionScheme.CreatePermissionSchemeDTO
 
 @{
     ViewData["Title"] = "Create Permission Scheme";
@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <h6 class="card-title">New Issue</h6>
                 </div>
-                <form asp-controller="PermissionSchemes" asp-action="Create" method="post">
+                <form method="post">
                     <div class="card-body">
                         <div class="form-group">
                             <label asp-for="Name"></label>

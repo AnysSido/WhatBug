@@ -10,10 +10,8 @@ namespace WhatBug.Application.Services.Interfaces
 {
     public interface IPermissionSchemeService
     {
-        Task CreatePermissionSchemeAsync(CreatePermissionSchemeDTO dto);
         List<PermissionDTO> GetAvailableProjectRolePermissions();
         Task<PermissionSchemeDTO> GetPermissionSchemeAsync(int id);
-        Task<List<PermissionSchemeDTO>> GetPermissionSchemesAsync();
         Task<List<PermissionDTO>> GetProjectRolePermissionsAsync(int schemeId, int projectRoleId);
         Task SetProjectRolePermissionsAsync(SetProjectRolePermissionsDTO dto);
     }
