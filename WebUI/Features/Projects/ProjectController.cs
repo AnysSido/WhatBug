@@ -9,6 +9,7 @@ using WhatBug.Application.Projects.Queries.GetUsersAndRoles;
 using WhatBug.WebUI.Controllers;
 using WhatBug.WebUI.Features.Projects.Create;
 using WhatBug.WebUI.Features.Projects.Index;
+using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Projects
 {
@@ -38,16 +39,17 @@ namespace WhatBug.WebUI.Features.Projects
         }
 
         [HttpGet]
-        public async Task<IActionResult> UsersAndRoles(int id)
+        [RouteCategory(RouteCategory.Project)]
+        public async Task<IActionResult> UsersAndRoles(int projectId)
         {
-            var dto = await Mediator.Send(new GetUsersAndRolesQuery { ProjectId = id });
+            var dto = await Mediator.Send(new GetUsersAndRolesQuery { ProjectId = projectId });
             return View(dto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetAssignUsersToRolePartial(int id)
+        public async Task<IActionResult> GetAssignUsersToRolePartial(int projectId)
         {
-            var dto = await Mediator.Send(new GetAssignUsersToRoleQuery { ProjectId = id });
+            var dto = await Mediator.Send(new GetAssignUsersToRoleQuery { ProjectId = projectId });
             return PartialView(dto);
         }
 
@@ -55,7 +57,7 @@ namespace WhatBug.WebUI.Features.Projects
         public async Task<IActionResult> AssignUsersToRole(AssignUsersToRoleCommand command)
         {
             await Mediator.Send(command);
-            return RedirectToAction(nameof(UsersAndRoles), new { id = command.ProjectId });
+            return RedirectToAction(nameof(UsersAndRoles), new { projectId = command.ProjectId });
         }
     }
 }

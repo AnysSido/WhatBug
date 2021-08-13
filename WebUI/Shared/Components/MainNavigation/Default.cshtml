@@ -37,7 +37,7 @@
             {
                 @await Component.InvokeAsync("DefaultNavigation");
             }
-            else if (Url.GetRouteCategory() == RouteCategory.Project && Url.TryGetRouteInt("projectId", out int projectId))
+            else if (Url.GetRouteCategory() == RouteCategory.Project && Url.TryGetInt("projectId", out int projectId))
             {
                 @await Component.InvokeAsync("ProjectNavigation", projectId);
             }
