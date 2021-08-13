@@ -23,7 +23,6 @@ namespace WhatBug.Application
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPermissionSchemeService, PermissionSchemeService>();
             services.AddScoped<IGlobalPermissionService, GlobalPermissionService>();
-            services.AddScoped<IColorService, ColorService>();
             services.AddAutoMapper(typeof(DependencyInjection));
             services.AddMediatR(typeof(DependencyInjection));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));

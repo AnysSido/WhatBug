@@ -61,16 +61,6 @@ namespace WhatBug.WebUI.Common
 
             // Issues
             CreateMap<IssueStatusDTO, IssueStatusViewModel>();
-            CreateMap<CreateIssueDTO, CreateIssueViewModel>();
-
-            CreateMap<CreateIssueViewModel, CreateIssueDTO>()
-                .ForMember(
-                    dest => dest.PriorityId,
-                    opt => opt.MapFrom(src => src.SelectedPriorityId))
-                .ForMember(
-                    dest => dest.IssueTypeId,
-                    opt => opt.MapFrom(src => src.SelectedIssueType));
-
             CreateMap<IssueTypeDTO, IssueTypeViewModel>();
 
             // Common
