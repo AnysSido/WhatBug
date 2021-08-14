@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WhatBug.Domain.Entities.JoinTables
 {
-    public class PermissionSchemeProjectRolePermission
+    public class PermissionSchemeRolePermission
     {
         public int PermissionSchemeId { get; set; }
         public PermissionScheme PermissionScheme { get; set; }

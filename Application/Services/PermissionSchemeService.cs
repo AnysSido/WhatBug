@@ -54,7 +54,7 @@ namespace WhatBug.Application.Services
             var projectRole = await _context.Roles.FirstAsync(r => r.Id == dto.ProjectRoleId);
             var permissions = await _context.Permissions.Where(p => dto.GrantedPermissionIds.Contains(p.Id)).ToListAsync();
 
-            var grantedRolePermissions = permissions.Select(p => new PermissionSchemeProjectRolePermission
+            var grantedRolePermissions = permissions.Select(p => new PermissionSchemeRolePermission
             {
                 PermissionScheme = scheme,
                 Role = projectRole,

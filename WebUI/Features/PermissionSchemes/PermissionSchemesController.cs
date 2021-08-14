@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
+using WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetCreatePermissionScheme;
+using WhatBug.Application.PermissionSchemes.Queries.GetGrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes;
 using WhatBug.Application.PermissionSchemes.Queries.GetSchemeRoles;
 using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Features.PermissionSchemes.GrantRolePermissions;
 
 namespace WhatBug.WebUI.Features.PermissionSchemes
 {
@@ -34,6 +37,20 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
         {
             var dto = await Mediator.Send(new GetSchemeRolesQuery { SchemeId = schemeId });
             return View(dto);
+        }
+
+        public async Task<IActionResult> GetGrantRolePermissionsPartial(int schemeId, int roleId)
+        {
+            var dto = await Mediator.Send(new GetGrantRolePermissionsQuery { SchemeId = schemeId, RoleId = roleId });
+            var vm = Mapper.Map<GrantRolePermissionsViewModel>(dto);
+            return PartialView(vm);
+        }
+
+        public async Task<IActionResult> GrantRolePermissions(GrantRolePermissionsViewModel vm)
+        {
+            var command = new GrantRolePermissionsCommand { SchemeId = vm.Id, RoleId = vm.RoleId, PermissionIds = vm.GetPermissionIds() };
+            await Mediator.Send(command);
+            return RedirectToAction(nameof(Roles), new { schemeId = vm.Id });
         }
     }
 }

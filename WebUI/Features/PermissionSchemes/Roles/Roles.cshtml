@@ -50,8 +50,8 @@
 
 <!-- Data to bind to modal partial viewmodel -->
 <form id="projectRoleModalData">
-    <input asp-for="@Model.Id" type="hidden" />
-    <input asp-for="@Model.Name" type="hidden" />
+    <input name="schemeId" value="@Model.Id" type="hidden" />
+    <input id="roleId" name="roleId" type="hidden" />
     <input id="SelectedProjectRoleId" name="ProjectRoleId" type="hidden" />
     <input id="SelectedProjectRoleName" name="ProjectRoleName" type="hidden" />
 </form>
@@ -63,10 +63,10 @@
     <script type="text/javascript">
         $(function () {
             $('.mdl').on('click', function () {
-                $('#SelectedProjectRoleId').val($(this).data('id'));
+                $('#roleId').val($(this).data('id'));
                 $('#SelectedProjectRoleName').val($(this).data('name'));
 
-                $.post('/permissionschemes/getprojectrolepermissionspartial',
+                $.post('/permissionschemes/GetGrantRolePermissionsPartial',
                     $('#projectRoleModalData').serialize()
                 ).done(function (response) {
                     $('#projectRolePermissionsModal').html(response);
