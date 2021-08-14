@@ -29,7 +29,6 @@ namespace WhatBug.WebUI.ViewLocators
                 o.ViewLocationFormats.Add($"{_featureTag}\\{_partialDirTag}\\{_partialViewTag}" + RazorViewEngine.ViewExtension);
 
                 // Support default style
-                o.ViewLocationFormats.Add(@"\Views\{1}\{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add(@"\Shared\{0}" + RazorViewEngine.ViewExtension);
 
                 o.ViewLocationExpanders.Add(new FeatureViewLocationExpander(_featureTag));
