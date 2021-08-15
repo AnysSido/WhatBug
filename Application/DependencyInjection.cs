@@ -11,7 +11,6 @@ namespace WhatBug.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IProjectService, ProjectService>();
-            services.AddScoped<IIssueService, IssueService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGlobalPermissionService, GlobalPermissionService>();
             services.AddAutoMapper(typeof(DependencyInjection));
