@@ -1,8 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.WebUI.Controllers;
@@ -15,9 +11,8 @@ namespace WhatBug.WebUI.Features.Projects.KanbanBoard
         public async Task<IActionResult> Index(int projectId)
         {
             var dto = await Mediator.Send(new GetKanbanBoardQuery { ProjectId = projectId });
-            var vm = Mapper.Map<KanbanBoardViewModel>(dto);
 
-            return View(vm);
+            return View(dto);
         }
     }
 }
