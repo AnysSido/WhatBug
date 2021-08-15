@@ -28,8 +28,8 @@ namespace WhatBug.Application.Services
             // TODO: Check permission
 
             var project = await _context.Projects
-                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Color)
-                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Icon)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.Color)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.Icon)
                 .FirstOrDefaultAsync(p => p.Id == id);
             project.PriorityScheme.Priorities.Sort((a, b) => a.Order.CompareTo(b.Order));
             return _mapper.Map<ProjectDTO>(project);
@@ -39,8 +39,8 @@ namespace WhatBug.Application.Services
         {
             // TODO: Check permissions
             return _mapper.Map<List<ProjectDTO>>(await _context.Projects
-                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Color)
-                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.ColorIcon.Icon)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.Color)
+                .Include(p => p.PriorityScheme.Priorities).ThenInclude(p => p.Icon)
                 .ToListAsync());
         }
 

@@ -23,8 +23,8 @@ namespace WhatBug.Application.Priorities.Queries.GetEditPriority
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Priority, EditPriorityDTO>()
-                .ForMember(d => d.IconId, opt => opt.MapFrom(s => s.ColorIcon.Icon.Id))
-                .ForMember(d => d.ColorId, opt => opt.MapFrom(s => s.ColorIcon.Color.Id));
+                .ForMember(d => d.IconId, opt => opt.MapFrom(s => s.Icon.Id))
+                .ForMember(d => d.ColorId, opt => opt.MapFrom(s => s.Color.Id));
         }
     }
 }

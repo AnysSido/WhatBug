@@ -23,8 +23,8 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
         {
             profile.CreateMap<Issue, IssueDetailDTO>()
                 .ForMember(d => d.PriorityName, opt => opt.MapFrom(s => s.Priority.Name))
-                .ForMember(d => d.PriorityIconName, opt => opt.MapFrom(s => s.Priority.ColorIcon.Icon.Name))
-                .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.ColorIcon.Color.Name));
+                .ForMember(d => d.PriorityIconName, opt => opt.MapFrom(s => s.Priority.Icon.Name))
+                .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name));
         }
     }
 }

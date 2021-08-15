@@ -15,8 +15,8 @@ namespace WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Priority, PriorityDTO>()
-                .ForMember(d => d.IconName, opt => opt.MapFrom(s => s.ColorIcon.Icon.Name))
-                .ForMember(d => d.IconColor, opt => opt.MapFrom(s => s.ColorIcon.Color.Name));
+                .ForMember(d => d.IconName, opt => opt.MapFrom(s => s.Icon.Name))
+                .ForMember(d => d.IconColor, opt => opt.MapFrom(s => s.Color.Name));
         }
     }
 }

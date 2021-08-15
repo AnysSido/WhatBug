@@ -22,7 +22,7 @@ namespace WhatBug.Application.Priorities.Commands.EditPriority
         public async Task<Unit> Handle(EditPriorityCommand request, CancellationToken cancellationToken)
         {
             // TODO: Check permissions
-            var priority = await _context.Priorities.Include(p => p.ColorIcon).SingleOrDefaultAsync(p => p.Id == request.Id);
+            var priority = await _context.Priorities.Include(p => p.Color).Include(p => p.Icon).SingleOrDefaultAsync(p => p.Id == request.Id);
 
             if (priority == null)
             {
@@ -31,8 +31,8 @@ namespace WhatBug.Application.Priorities.Commands.EditPriority
 
             priority.Name = request.Name;
             priority.Description = request.Description;
-            priority.ColorIcon.Color = await _context.Colors.SingleAsync(c => c.Id == request.ColorId);
-            priority.ColorIcon.Icon = await _context.Icons.SingleAsync(i => i.Id == request.IconId);
+            priority.Color = await _context.Colors.SingleAsync(c => c.Id == request.ColorId);
+            priority.Icon = await _context.Icons.SingleAsync(i => i.Id == request.IconId);
 
             await _context.SaveChangesAsync();
 
