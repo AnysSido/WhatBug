@@ -11,13 +11,13 @@ using WhatBug.WebUI.ViewModels.Projects;
 
 namespace WhatBug.WebUI.ViewComponents
 {
-    public class CreateIssueViewComponent : ViewComponent
+    public class CreateIssueOldViewComponent : ViewComponent
     {
         private readonly IProjectService _projectService;
         private readonly IIssueService _issueService;
         private readonly IMapper _mapper;
 
-        public CreateIssueViewComponent(IProjectService projectService, IIssueService issueService, IMapper mapper)
+        public CreateIssueOldViewComponent(IProjectService projectService, IIssueService issueService, IMapper mapper)
         {
             _projectService = projectService;
             _issueService = issueService;

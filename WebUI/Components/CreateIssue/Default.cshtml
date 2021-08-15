@@ -1,0 +1,113 @@
+﻿@model WhatBug.WebUI.Components.CreateIssue.CreateIssueViewModel
+
+@{
+
+    <div class="createIssueModel" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="card-title">Create Issue</h6>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        <!-- Projects -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="ProjectId"></label>
+                            <select asp-for="ProjectId" class="select2 projectselector">
+                                @for (int i = 0; i < @Model.Projects.Count; i++)
+                                {
+                                    <option value="@Model.Projects[i].Id">@Model.Projects[i].Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row col-sm-12">
+                            <!-- Issue Type -->
+                            <div class="form-group col-sm-4">
+                                <label asp-for="IssueTypeId"></label>
+                                <select asp-for="IssueTypeId" class="select2">
+                                    @foreach (var issueType in Model.IssueTypes)
+                                    {
+                                        <select2-option icon="@issueType.IconName" icon-color="@issueType.ColorName" value="@issueType.Id">@issueType.Name</select2-option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-sm-1"></div>
+
+                            <!-- Priority -->
+                            <div class="form-group col-sm-4">
+                                <label asp-for="PriorityId"></label>
+                                <select asp-for="PriorityId" class="select2">
+                                    @foreach (var priority in Model.Project.Priorities)
+                                    {
+                                        <select2-option icon="@priority.IconName" icon-color="@priority.ColorName" value="@priority.Id">@priority.Name</select2-option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <hr />
+                        <!-- Summary -->
+                        <div class="form-group col-12">
+                            <label asp-for="Summary"></label>
+                            <input asp-for="Summary" class="form-control issueSummary" />
+                            <span asp-validation-for="Summary" class="text-danger"></span>
+                        </div>
+                        <!-- Quill Editor -->
+                        <div class="form-group col-12">
+                            <label asp-for="Description"></label>
+                            <input asp-for="Description" name="Description" type="hidden" class="form-control issueDescription" />
+                            <div class="quill-editor"></div>
+                        </div>
+                        <!-- Assignee -->
+                        <div class="form-group col-9">
+                            <label asp-for="AssigneeId"></label>
+                            <select asp-for="AssigneeId" class="select2">
+                                @for (int i = 0; i < @Model.AssignableUsers.Count; i++)
+                                {
+                                    <option value="@Model.AssignableUsers[i].Id">@Model.AssignableUsers[i].Username</option>
+                                }
+                            </select>
+                        </div>
+                        <!-- Reporter -->
+                        <div class="form-group col-9">
+                            <label asp-for="ReporterId"></label>
+                            <select asp-for="ReporterId" class="select2">
+                                @for (int i = 0; i < @Model.ReportingUsers.Count; i++)
+                                {
+                                    <option value="@Model.ReportingUsers[i].Id">@Model.ReportingUsers[i].Username</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <div class="form-check">
+                            <label class="form-check-label" asp-for="@Model.CreateAnother">
+                                <input class="form-check-input" asp-for="@Model.CreateAnother">
+                                Create another
+                            </label>
+                        </div>
+                        <button type="submit" class="submit btn btn-primary">Create</button>
+                        <a href="#" class="text-primary modal-cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade confirmCancelModel" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-danger">
+                    <div class="modal-header">
+                        <h6 class="card-title">Are you sure?</h6>
+                    </div>
+                    <div class="modal-body">
+                        <p>You have unsaved changes that will be lost. Are you sure you want to cancel?</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="submit" class="btn btn-outline-light cancelConfirm">Confirm</button>
+                        <a href="#" id="CancelGoBack" class="btn btn-outline-light cancelGoBack">Go back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

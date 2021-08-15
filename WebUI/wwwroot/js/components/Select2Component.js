@@ -1,34 +1,28 @@
 ﻿class Select2Component {
     constructor(options) {
         this.container = options.container;
-        this.template = options.template; // Provides both listTemplate and selectedTemplate
-        this.listTemplate = options.listTemplate;        
-        this.selectedTemplate = options.selectedTemplate;
 
-        this.container.select2({
+        $.extend(options, {
             width: '100%',
             theme: 'bootstrap4',
-            templateSelection: this.#GetTemplate(this.selectedTemplate ?? this.template),
-            templateResult: this.#GetTemplate(this.listTemplate ?? this.template)
+            templateSelection: this.Template,
+            templateResult: this.Template
         });
+
+        this.container.select2(options);
     }
 
-    #GetTemplate(name) {
-        if (name == 'IconAndText') {
-            return this.#IconAndTextTemplate;
-        } else {
-            return this.#TextTemplate;
-        }
-    }
-
-    #TextTemplate(item) {
-        return item.text;
-    }
-
-    #IconAndTextTemplate(item) {
-        if (!item.id) {
+    Template(item) {        
+        if (!item.id || !item.element.dataset) {
             return item.text;
         }
-        return $('<span><i class="' + item.element.dataset.class +'"></i>' + item.text + '</span>');
+
+        var data = item.element.dataset
+
+        if (data.icon) {
+            return $('<span><i class="' + data.icon + ' ' + data.iconColor +'"></i>' + item.text + '</span>');
+        }
+
+        return item.text;
     }
 }
