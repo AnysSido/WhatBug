@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
@@ -22,8 +17,6 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Issue, IssueDetailDTO>()
-                .ForMember(d => d.PriorityName, opt => opt.MapFrom(s => s.Priority.Name))
-                .ForMember(d => d.PriorityIconName, opt => opt.MapFrom(s => s.Priority.Icon.Name))
                 .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name));
         }
     }
