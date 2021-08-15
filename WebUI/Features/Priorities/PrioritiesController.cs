@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using WhatBug.Domain.Data;
 using WhatBug.WebUI.Controllers;
 using WhatBug.WebUI.Features.Priorities.Create;
 using WhatBug.WebUI.Features.Priorities.Edit;
-using WhatBug.WebUI.Features.Priorities.Index;
 
 namespace WhatBug.WebUI.Features.Priorities
 {
@@ -22,9 +20,8 @@ namespace WhatBug.WebUI.Features.Priorities
         public async Task<IActionResult> Index()
         {
             var dto = await Mediator.Send(new GetPrioritiesQuery());
-            var vm = Mapper.Map<PrioritiesViewModel>(dto);
 
-            return View(vm);
+            return View(dto);
         }
 
         [HttpGet]

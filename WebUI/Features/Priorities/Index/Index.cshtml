@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.Features.Priorities.Index.PrioritiesViewModel
+﻿@model WhatBug.Application.Priorities.Queries.GetPriorities.PrioritiesDTO
 
 @section Styles {
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css" />
@@ -54,7 +54,7 @@
                             <!-- Icon & Name -->
                             <td>
                                 <span>
-                                    <i class="@Model.Priorities[i].PriorityIconName wb-color-@Model.Priorities[i].PriorityIconColor"></i>
+                                    <icon icon="@Model.Priorities[i].PriorityIconName" color="@Model.Priorities[i].PriorityIconColor"/>
                                     <label asp-for="@Model.Priorities[i].Name">@Model.Priorities[i].Name</label>
                                 </span>
                             </td>
