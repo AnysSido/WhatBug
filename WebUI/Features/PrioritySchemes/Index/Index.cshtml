@@ -1,4 +1,4 @@
-﻿@model WhatBug.WebUI.Features.PrioritySchemes.Index.PrioritySchemesViewModel
+﻿@model WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes.PrioritySchemesDTO
 @{
     ViewData["Title"] = "Priority Schemes";
 }
@@ -43,7 +43,7 @@
                             <td>
                                 @foreach (var priority in Model.PrioritySchemes[i].Priorities)
                                 {
-                                    <i class="wb-color-@priority.IconColor @priority.IconName"></i>
+                                    <icon icon="@priority.IconName" color="@priority.IconColor"/>
                                     <span>@priority.Name</span><br />
                                 }
                             </td>

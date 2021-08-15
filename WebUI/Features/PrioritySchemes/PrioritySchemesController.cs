@@ -8,18 +8,16 @@ using WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes;
 using WhatBug.WebUI.Controllers;
 using WhatBug.WebUI.Features.PrioritySchemes.Create;
 using WhatBug.WebUI.Features.PrioritySchemes.Edit;
-using WhatBug.WebUI.Features.PrioritySchemes.Index;
 
 namespace WhatBug.WebUI.Features.PrioritySchemes
 {
-    public class PrioritySchemeController : BaseController
+    public class PrioritySchemesController : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var dto = await Mediator.Send(new GetPrioritySchemesQuery());
-            var vm = Mapper.Map<PrioritySchemesViewModel>(dto);
-            return View(vm);
+            return View(dto);
         }
 
         [HttpGet]
@@ -33,6 +31,7 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         [HttpPost]
         public async Task<IActionResult> Create(CreatePrioritySchemeCommand command)
         {
+            // TODO: Check modelstate
             await Mediator.Send(command);
             return RedirectToAction(nameof(Index));
         }
