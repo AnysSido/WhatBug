@@ -9,7 +9,7 @@ using WhatBug.Application.Priorities.Queries.GetCreatePriority;
 using WhatBug.Application.Priorities.Queries.GetEditPriority;
 using WhatBug.Application.Priorities.Queries.GetPriorities;
 using WhatBug.Domain.Data;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Priorities.Create;
 using WhatBug.WebUI.Features.Priorities.Edit;
 

@@ -6,7 +6,7 @@ using WhatBug.Application.PermissionSchemes.Queries.GetCreatePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetGrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes;
 using WhatBug.Application.PermissionSchemes.Queries.GetSchemeRoles;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.PermissionSchemes.GrantRolePermissions;
 
 namespace WhatBug.WebUI.Features.PermissionSchemes

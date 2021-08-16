@@ -6,7 +6,7 @@ using WhatBug.Application.Projects.Queries.GetAssignUsersToRole;
 using WhatBug.Application.Projects.Queries.GetCreateProject;
 using WhatBug.Application.Projects.Queries.GetProjects;
 using WhatBug.Application.Projects.Queries.GetUsersAndRoles;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Projects.Create;
 using WhatBug.WebUI.Features.Projects.Index;
 using WhatBug.WebUI.Routing;

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WhatBug.Application.Issues.Commands.CreateIssue;
 using WhatBug.Application.Issues.Queries.GetCreateIssue;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Common;
 
 namespace WhatBug.WebUI.Components.CreateIssue
 {

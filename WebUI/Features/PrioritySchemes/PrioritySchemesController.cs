@@ -5,7 +5,7 @@ using WhatBug.Application.PrioritySchemes.Commands.EditPriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetCreatePriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetEditPriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.PrioritySchemes.Create;
 using WhatBug.WebUI.Features.PrioritySchemes.Edit;
 

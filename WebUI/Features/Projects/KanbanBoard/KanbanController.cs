@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.Projects.Queries.GetKanbanBoard;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Common;
 
 namespace WhatBug.WebUI.Features.Projects.KanbanBoard
 {

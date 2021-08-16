@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Permissions.Commands.GrantGlobalPermissions;
 using WhatBug.Application.Permissions.Queries.GetGlobalPermissions;
 using WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions;
-using WhatBug.WebUI.Controllers;
+using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Permissions.GrantGlobalPermissions;
 
 namespace WhatBug.WebUI.Features.Permissions
