@@ -1,16 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WhatBug.Infrastructure.Identity;
-using WhatBug.WebUI.Routing;
-using WhatBug.WebUI.ViewModels;
 
 namespace WhatBug.WebUI.Features.Home
 {
@@ -24,12 +13,6 @@ namespace WhatBug.WebUI.Features.Home
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using WhatBug.Application.Common.Behaviors;
-using WhatBug.Application.Services;
-using WhatBug.Application.Services.Interfaces;
 
 namespace WhatBug.Application
 {
@@ -10,8 +8,6 @@ namespace WhatBug.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IProjectService, ProjectService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddAutoMapper(typeof(DependencyInjection));
             services.AddMediatR(typeof(DependencyInjection));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));

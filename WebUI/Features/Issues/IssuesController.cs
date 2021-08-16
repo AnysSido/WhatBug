@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.Issues.Queries.GetIssueDetail;
-using WhatBug.Application.Services.Interfaces;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Issues.Detail;
 
