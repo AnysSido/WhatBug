@@ -12,7 +12,6 @@ namespace WhatBug.Application
         {
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IGlobalPermissionService, GlobalPermissionService>();
             services.AddAutoMapper(typeof(DependencyInjection));
             services.AddMediatR(typeof(DependencyInjection));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));

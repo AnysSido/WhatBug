@@ -11,7 +11,5 @@ namespace WhatBug.Application.Services.Interfaces
     public interface IUserService
     {
         Task<Result> CreateUserAsync(string username, string password);
-        Task<List<UserDTO>> GetAllUsersAsync();
-        Task<List<UserWithPermissionsDTO>> GetAllUsersWithPermissions();
     }
 }

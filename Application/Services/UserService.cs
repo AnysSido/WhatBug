@@ -1,29 +1,19 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Models;
-using WhatBug.Application.DTOs.Users;
 using WhatBug.Application.Services.Interfaces;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Exceptions;
 
 namespace WhatBug.Application.Services
 {
     class UserService : IUserService
     {
         private readonly IWhatBugDbContext _context;
-        private readonly IMapper _mapper;
         private readonly IAuthenticationProvider _authenticationProvider;
 
-        public UserService(IWhatBugDbContext context, IMapper mapper, IAuthenticationProvider authenticationProvider)
+        public UserService(IWhatBugDbContext context, IAuthenticationProvider authenticationProvider)
         {
             _context = context;
-            _mapper = mapper;
             _authenticationProvider = authenticationProvider;
         }
 
@@ -47,32 +37,6 @@ namespace WhatBug.Application.Services
             result = await _authenticationProvider.SetUserId(username, user.Id);
 
             return result;
-        }
-
-        public async Task<List<UserDTO>> GetAllUsersAsync()
-        {
-            // TODO: Check permissions
-            var users = _mapper.Map<List<UserDTO>>(await _context.Users.ToListAsync());
-            await _authenticationProvider.PopulatePrincipleUsersInfo(users);
-            return users;
-        }
-
-        public async Task<List<UserWithPermissionsDTO>> GetAllUsersWithPermissions()
-        {
-            // TODO: Check permission
-
-            // Load users with permissions
-            var users = await _context.Users
-                .Include(u => u.UserPermissions)
-                    .ThenInclude(p => p.Permission)
-                .ToListAsync();
-
-            var dtos = _mapper.Map<List<UserWithPermissionsDTO>>(users);
-
-            // Populate the DTOs with principle user info
-            await _authenticationProvider.PopulatePrincipleUsersInfo(dtos.Select(r => r.User).ToList());
-
-            return dtos;
         }
     }
 }
