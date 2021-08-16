@@ -33,6 +33,7 @@ namespace WhatBug.WebUI.ViewLocators
 
                 o.ViewLocationExpanders.Add(new FeatureViewLocationExpander(_featureTag));
                 o.ViewLocationExpanders.Add(new PartialViewLocationExpander(_partialDirTag, _partialViewTag));
+                o.ViewLocationExpanders.Add(new ComponentViewLocationExpander());
             });
 
             return services;

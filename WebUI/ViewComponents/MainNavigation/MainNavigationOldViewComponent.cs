@@ -10,12 +10,12 @@ using WhatBug.WebUI.ViewModels.Projects;
 
 namespace WhatBug.WebUI.ViewComponents
 {
-    public class MainNavigationViewComponent : ViewComponent
+    public class MainNavigationOldViewComponent : ViewComponent
     {
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
 
-        public MainNavigationViewComponent(IProjectService projectService, IMapper mapper)
+        public MainNavigationOldViewComponent(IProjectService projectService, IMapper mapper)
         {
             _projectService = projectService;
             _mapper = mapper;
