@@ -17,6 +17,9 @@ var paths = {
 const libraries = [
     // AdminLTE
     { from: 'admin-lte/dist', to: 'admin-lte' },
+    // Animate.css
+    { from: 'animate.css', to: 'animate-css', glob: '/**/*.min.js' },
+    { from: 'animate.css', to: 'animate-css', glob: '/**/*.min.css' },
     // Bootstrap
     { from: 'bootstrap/dist', to: 'bootstrap' },
     { from: 'dragula/dist', to: 'dragula' },

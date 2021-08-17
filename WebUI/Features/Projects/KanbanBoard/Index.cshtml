@@ -18,10 +18,12 @@
                       </h3>
                   </div>
                   <div class="card-body drag-container">
+                      <input type="hidden" class="statusId" value="@status.Id" />
 
                       @foreach (var issue in status.Issues)
                       {
-                        <div class="issue-card card card-info card-outline">      
+                        <div class="issue-card card card-info card-outline"> 
+                            <input type="hidden" class="issueId" value="@issue.Id" />
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col">
