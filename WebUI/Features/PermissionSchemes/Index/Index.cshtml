@@ -1,0 +1,49 @@
+﻿@model WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes.PermissionSchemesDTO
+
+@{
+    ViewData["Title"] = "Permission Schemes";
+}
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="ion ion-clipboard mr-1"></i>
+            All Issues
+        </h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.PermissionSchemes.Count; i++)
+                {
+                    <tr>
+                        <!-- Actions -->
+                        <td>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Action
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model.PermissionSchemes[i].Id">Edit</a>
+                                    <a class="dropdown-item" href="#">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>@Model.PermissionSchemes[i].Name</td>
+                        <td>@Model.PermissionSchemes[i].Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer clearfix">
+        <a asp-action="Create" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Permission Scheme</a>
+    </div>
+</div>

@@ -26,6 +26,9 @@ namespace WhatBug.Domain.Entities
         public int IssueTypeId { get; set; }
         public IssueType IssueType { get; set; }
 
+        public int IssueStatusId { get; set; }
+        public IssueStatus IssueStatus { get; set; }
+
         public int PriorityId { get; set; }
         public Priority Priority { get; set; }
     }

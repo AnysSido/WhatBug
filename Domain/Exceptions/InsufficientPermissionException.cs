@@ -1,5 +1,4 @@
 ﻿using System;
-using WhatBug.Domain.Entities.Permissions;
 
 namespace WhatBug.Domain.Exceptions
 {

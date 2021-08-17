@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WhatBug.Domain.Common;
+﻿using System.Collections.Generic;
 using WhatBug.Domain.Entities.JoinTables;
-using WhatBug.Domain.Entities.Permissions;
 
 namespace WhatBug.Domain.Entities
 {

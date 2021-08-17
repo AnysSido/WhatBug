@@ -366,42 +366,6 @@ namespace Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.ColorIcon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IconId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("IconId");
-
-                    b.ToTable("ColorIcons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ColorId = 34,
-                            IconId = 29
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ColorId = 19,
-                            IconId = 27
-                        });
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Icon", b =>
                 {
                     b.Property<int>("Id")
@@ -603,6 +567,9 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IssueStatusId")
+                        .HasColumnType("int");
+
                     b.Property<int>("IssueTypeId")
                         .HasColumnType("int");
 
@@ -628,6 +595,8 @@ namespace Persistence.Migrations
 
                     b.HasIndex("AssigneeId");
 
+                    b.HasIndex("IssueStatusId");
+
                     b.HasIndex("IssueTypeId");
 
                     b.HasIndex("PriorityId");
@@ -639,6 +608,43 @@ namespace Persistence.Migrations
                     b.ToTable("Issues");
                 });
 
+            modelBuilder.Entity("WhatBug.Domain.Entities.IssueStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IssueStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Backlog"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "ToDo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "In Progress"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Done"
+                        });
+                });
+
             modelBuilder.Entity("WhatBug.Domain.Entities.IssueType", b =>
                 {
                     b.Property<int>("Id")
@@ -646,7 +652,10 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ColorIconId")
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IconId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -654,7 +663,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorIconId");
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("IconId");
 
                     b.ToTable("IssueTypes");
 
@@ -662,55 +673,37 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ColorIconId = 1,
+                            ColorId = 34,
+                            IconId = 29,
                             Name = "Task"
                         },
                         new
                         {
                             Id = 2,
-                            ColorIconId = 2,
+                            ColorId = 19,
+                            IconId = 27,
                             Name = "Bug"
                         });
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
+            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeRolePermission", b =>
                 {
                     b.Property<int>("PermissionSchemeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectRoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<int>("PermissionId")
                         .HasColumnType("int");
 
-                    b.HasKey("PermissionSchemeId", "ProjectRoleId", "PermissionId");
+                    b.HasKey("PermissionSchemeId", "RoleId", "PermissionId");
 
                     b.HasIndex("PermissionId");
 
-                    b.HasIndex("ProjectRoleId");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("PermissionSchemeProjectRolePermission");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.ProjectUserProjectRole", b =>
-                {
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectRoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProjectId", "UserId", "ProjectRoleId");
-
-                    b.HasIndex("ProjectRoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProjectUserProjectRole");
+                    b.ToTable("PermissionSchemeRolePermission");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
@@ -843,31 +836,6 @@ namespace Persistence.Migrations
                     b.ToTable("PermissionSchemes");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.ProjectRoleUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProjectRoleUsers");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Priorities.Priority", b =>
                 {
                     b.Property<int>("Id")
@@ -875,11 +843,14 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ColorIconId")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IconId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -889,7 +860,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorIconId");
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("IconId");
 
                     b.ToTable("Priorities");
                 });
@@ -955,7 +928,27 @@ namespace Persistence.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.ProjectRole", b =>
+            modelBuilder.Entity("WhatBug.Domain.Entities.ProjectRoleUser", b =>
+                {
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectId", "RoleId", "UserId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProjectRoleUser");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -970,7 +963,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectRoles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>
@@ -1000,30 +993,17 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.ColorIcon", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
-                        .WithMany()
-                        .HasForeignKey("IconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-
-                    b.Navigation("Icon");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Issue", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.User", "Assignee")
                         .WithMany("AssignedIssues")
                         .HasForeignKey("AssigneeId");
+
+                    b.HasOne("WhatBug.Domain.Entities.IssueStatus", "IssueStatus")
+                        .WithMany()
+                        .HasForeignKey("IssueStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WhatBug.Domain.Entities.IssueType", "IssueType")
                         .WithMany()
@@ -1051,6 +1031,8 @@ namespace Persistence.Migrations
 
                     b.Navigation("Assignee");
 
+                    b.Navigation("IssueStatus");
+
                     b.Navigation("IssueType");
 
                     b.Navigation("Priority");
@@ -1062,16 +1044,24 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("WhatBug.Domain.Entities.IssueType", b =>
                 {
-                    b.HasOne("WhatBug.Domain.Entities.ColorIcon", "ColorIcon")
+                    b.HasOne("WhatBug.Domain.Entities.Color", "Color")
                         .WithMany()
-                        .HasForeignKey("ColorIconId")
+                        .HasForeignKey("ColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ColorIcon");
+                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
+                        .WithMany()
+                        .HasForeignKey("IconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Icon");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
+            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeRolePermission", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.Permission", "Permission")
                         .WithMany()
@@ -1085,9 +1075,9 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WhatBug.Domain.Entities.ProjectRole", "ProjectRole")
+                    b.HasOne("WhatBug.Domain.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("ProjectRoleId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1095,34 +1085,7 @@ namespace Persistence.Migrations
 
                     b.Navigation("PermissionScheme");
 
-                    b.Navigation("ProjectRole");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.ProjectUserProjectRole", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.ProjectRole", "ProjectRole")
-                        .WithMany()
-                        .HasForeignKey("ProjectRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("ProjectRole");
-
-                    b.Navigation("User");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
@@ -1144,34 +1107,23 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.ProjectRoleUser", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Project", "Project")
-                        .WithMany("RoleUsers")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.User", "User")
-                        .WithMany("ProjectRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Priorities.Priority", b =>
                 {
-                    b.HasOne("WhatBug.Domain.Entities.ColorIcon", "ColorIcon")
+                    b.HasOne("WhatBug.Domain.Entities.Color", "Color")
                         .WithMany()
-                        .HasForeignKey("ColorIconId")
+                        .HasForeignKey("ColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ColorIcon");
+                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
+                        .WithMany()
+                        .HasForeignKey("IconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Icon");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Project", b =>
@@ -1183,6 +1135,33 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("PriorityScheme");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.ProjectRoleUser", b =>
+                {
+                    b.HasOne("WhatBug.Domain.Entities.Project", "Project")
+                        .WithMany("RoleUsers")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WhatBug.Domain.Entities.Role", "Role")
+                        .WithMany("ProjectUsers")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WhatBug.Domain.Entities.User", "User")
+                        .WithMany("ProjectRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.PermissionScheme", b =>
@@ -1200,6 +1179,11 @@ namespace Persistence.Migrations
                     b.Navigation("Issues");
 
                     b.Navigation("RoleUsers");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("ProjectUsers");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>

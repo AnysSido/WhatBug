@@ -1,0 +1,34 @@
+﻿@model WhatBug.Application.PermissionSchemes.Queries.GetCreatePermissionScheme.CreatePermissionSchemeDTO
+
+@{
+    ViewData["Title"] = "Create Permission Scheme";
+}
+
+@{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h6 class="card-title">New Issue</h6>
+                </div>
+                <form method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary float-right">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

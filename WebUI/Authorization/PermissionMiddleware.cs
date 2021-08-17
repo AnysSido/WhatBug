@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using WhatBug.Application.Services.Interfaces;
+using WhatBug.Application.Users.Queries.GetUserPermissions;
 
 namespace WhatBug.WebUI.Authorization
 {
@@ -26,7 +24,7 @@ namespace WhatBug.WebUI.Authorization
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IGlobalPermissionService globalPermissionService)
+        public async Task InvokeAsync(HttpContext context, IMediator mediator)
         {
             if (context.User.Identity == null || !context.User.Identity.IsAuthenticated)
             {
@@ -42,8 +40,8 @@ namespace WhatBug.WebUI.Authorization
             }
 
             // Load the users' permissions and convert them to claims
-            var userPermissions = await globalPermissionService.GetUserGlobalPermissionsAsync(userId);
-            var userPermissionClaims = userPermissions.Select(p => new Claim("Permissions", p.Name));
+            var user = await mediator.Send(new GetUserPermissionsQuery { UserId = id });
+            var userPermissionClaims = user.Permissions.Select(p => new Claim("Permissions", p.Name));
 
             // Build a new identity and add the claims, then attach the identity to the user principal.
             var permissionsIdentity = new ClaimsIdentity(nameof(PermissionMiddleware), "name", "role");

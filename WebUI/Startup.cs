@@ -1,25 +1,18 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WhatBug.Application;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure;
-using WhatBug.Infrastructure.Identity;
 using WhatBug.Persistence;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Services;
 using WhatBug.WebUI.Services.Interfaces;
+using WhatBug.WebUI.ViewLocators;
 
 namespace WebUI
 {
@@ -45,7 +38,9 @@ namespace WebUI
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IWhatBugDbContext>())
+                .AddFeatureFolders();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         }

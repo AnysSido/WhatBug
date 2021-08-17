@@ -4,9 +4,10 @@
 
 class CreateIssueComponent {
     constructor() {
-        this.createIssueComponent = $('<div id="CreateIssueComponent" class="modal fade"></div>')
-        $.get('/components/getcreateissuecomponent').done((modal) => {
+        $.get('/createissuecomponent/getcomponent').done((modal) => {
+            this.createIssueComponent = $('<div id="CreateIssueComponent" class="modal fade"></div>')
             this.#BuildComponent(modal);
+            this.createIssueComponent.modal('show');
         });
     }
 
@@ -14,8 +15,7 @@ class CreateIssueComponent {
         this.createIssueComponent.html(modal);
         this.#SetVars();
         this.#RegisterEvents();
-        this.#LoadComponents();
-        this.createIssueComponent.modal('show');
+        this.#LoadComponents();        
     }
 
     #SetVars = () => {
@@ -29,17 +29,11 @@ class CreateIssueComponent {
 
         // Project selector
         this.projectSelector = this.createIssueModal.find('.projectselector');
-        this.selectedProjectId = this.createIssueModal.find('.selectedProjectId');
 
         // Cancel confirm modal
         this.confirmModal = this.createIssueModal.find('.confirmCancelModel');
         this.cancelConfirm = this.confirmModal.find('.cancelConfirm');
         this.cancelGoBack = this.confirmModal.find('.cancelGoBack');
-
-        // Component containers
-        this.prioritySelectComponentContainer = this.createIssueModal.find('.issuePriorityComponentContainer');
-        this.assigneeComponentContainer = this.createIssueModal.find('.assigneeComponentContainer');
-        this.reporterComponentContainer = this.createIssueModal.find('.reporterComponentContainer')
 
         // Select2
         this.selectLists = this.createIssueModal.find('.select2');        
@@ -49,37 +43,17 @@ class CreateIssueComponent {
     }
 
     #LoadComponents = () => {
-        this.prioritySelectComponent = new IssuePrioritySelectComponent(
-            this.prioritySelectComponentContainer, {
-            prefix: "priority"
-        }).Load(this.selectedProjectId.val());
-
-        this.assigneeComponent = new UserSelectorComponent(
-            this.assigneeComponentContainer, {
-            prefix: "assignee"
-        }).Load(this.selectedProjectId.val());
-
-        this.reporterComponent = new UserSelectorComponent(
-            this.reporterComponentContainer, {
-            prefix: "reporter"
-        }).Load(this.selectedProjectId.val());
-
         this.quill = new QuillEditorComponent({
             container: this.quillEditor,
             copyContentsTo: this.issueDescription
         });
 
         new Select2Component({
-            container: this.selectLists,
-            template: 'IconAndText'
+            container: this.selectLists
         });
     }
 
     #RegisterEvents = () => {       
-        this.createIssueComponent.on('hidden.bs.modal', () => {
-            this.createIssueComponent.remove();
-        });
-
         this.cancelIssueButton.click(() => {
             if (this.#HasChanges()) {
                 $('body').append(this.confirmModal);
@@ -99,15 +73,15 @@ class CreateIssueComponent {
         });
 
         this.projectSelector.on('select2:select', (e) => {
-            var projectId = e.params.data.id;
-            this.prioritySelectComponent.Load(projectId, { ignoreSelectedValue: true });
-            this.assigneeComponent.Load(projectId, { ignoreSelectedValue: true });
-            this.reporterComponent.Load(projectId, { ignoreSelectedValue: true });
+            $.post('/createissuecomponent/refresh', this.mainForm.serialize())
+            .done((modal) => {
+                this.#BuildComponent(modal);
+            });
         });
 
         this.submitIssueButton.click((e) => {
             e.preventDefault();
-            $.post('/components/createissue', this.mainForm.serialize())
+            $.post('/createissuecomponent/createissue', this.mainForm.serialize())
             .done((modal) => {
                 if (modal.success) {
                     this.createIssueComponent.modal('hide');

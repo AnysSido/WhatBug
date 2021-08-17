@@ -18,7 +18,8 @@ const libraries = [
     // AdminLTE
     { from: 'admin-lte/dist', to: 'admin-lte' },
     // Bootstrap
-    { from: 'bootstrap/dist', to: 'bootstrap'},
+    { from: 'bootstrap/dist', to: 'bootstrap' },
+    { from: 'dragula/dist', to: 'dragula' },
     // FontAwesome
     { from: '@fortawesome/fontawesome-free/css', to: 'fontawesome-free/css' },
     { from: '@fortawesome/fontawesome-free/webfonts', to: 'fontawesome-free/webfonts' },
