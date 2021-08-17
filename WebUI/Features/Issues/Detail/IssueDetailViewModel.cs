@@ -5,7 +5,7 @@ namespace WhatBug.WebUI.Features.Issues.Detail
 {
     public class IssueDetailViewModel : IMapFrom<IssueDetailDTO>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
         public string PriorityName { get; set; }

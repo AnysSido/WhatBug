@@ -6,7 +6,7 @@ namespace WhatBug.Application.Projects.Queries.GetKanbanBoard
 {
     public class IssueOverviewDTO : IMapFrom<Issue>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
         public int IssueStatusId { get; set; }

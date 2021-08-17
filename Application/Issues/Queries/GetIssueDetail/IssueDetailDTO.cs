@@ -6,7 +6,7 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
 {
     public class IssueDetailDTO : IMapFrom<Issue>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
         

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WhatBug.Application.Projects.Queries.GetCreateProject
 {
@@ -10,6 +6,7 @@ namespace WhatBug.Application.Projects.Queries.GetCreateProject
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Key { get; set; }
         public IList<PrioritySchemeDTO> PrioritySchemes { get; set; }
     }
 }

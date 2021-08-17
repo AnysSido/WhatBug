@@ -19,6 +19,11 @@
                             <span asp-validation-for="@Model.Name" class="text-danger"></span>
                         </div>
                         <div class="form-group">
+                            <label asp-for="@Model.Key"></label>
+                            <input asp-for="@Model.Key" class="form-control" />
+                            <span asp-validation-for="@Model.Key" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="@Model.Description"></label>
                             <textarea asp-for="@Model.Description" class="form-control" rows="2"></textarea>
                         </div>

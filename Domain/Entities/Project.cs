@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using WhatBug.Domain.Common;
-using WhatBug.Domain.Entities.JoinTables;
 
 namespace WhatBug.Domain.Entities
 {
@@ -9,6 +8,8 @@ namespace WhatBug.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Key { get; set; }
+        public int IssueCounter { get; set; }
 
         public int PrioritySchemeId { get; set; }
         public PriorityScheme PriorityScheme { get; set; }

@@ -1,9 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WhatBug.Application.Projects.Commands.CreateProject
 {
@@ -13,6 +8,7 @@ namespace WhatBug.Application.Projects.Commands.CreateProject
         {
             RuleFor(v => v.Name).NotEmpty();
             RuleFor(v => v.PrioritySchemeId).NotEmpty();
+            RuleFor(v => v.Key).NotEmpty().Length(2, 10).Matches("^[A-Z]+$");
         }
     }
 }
