@@ -36,7 +36,6 @@ namespace WhatBug.Persistence
         public DbSet<Icon> Icons { get; set; }
         public DbSet<IssueType> IssueTypes { get; set; }
         public DbSet<Color> Colors { get; set; }
-        public DbSet<ColorIcon> ColorIcons { get; set; }
         public DbSet<IssueStatus> IssueStatuses { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -122,20 +121,6 @@ namespace WhatBug.Persistence
                 .HasForeignKey(i => i.ReporterId);
 
             modelBuilder
-                .Entity<ColorIcon>()
-                .HasOne(ci => ci.Color)
-                .WithMany()
-                .HasForeignKey(ci => ci.ColorId)
-                .IsRequired();
-
-            modelBuilder
-                .Entity<ColorIcon>()
-                .HasOne(ci => ci.Icon)
-                .WithMany()
-                .HasForeignKey(ci => ci.IconId)
-                .IsRequired();
-
-            modelBuilder
                 .Entity<Issue>()
                 .HasOne(i => i.IssueType)
                 .WithMany()
@@ -146,7 +131,6 @@ namespace WhatBug.Persistence
             modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.Seed());
             modelBuilder.Entity<IssueType>().HasData(Domain.Data.IssueTypes.Seed());
             modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());
-            modelBuilder.Entity<ColorIcon>().HasData(Domain.Data.ColorIcons.Seed());
             modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme() { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
 
             // TODO: Clean this up

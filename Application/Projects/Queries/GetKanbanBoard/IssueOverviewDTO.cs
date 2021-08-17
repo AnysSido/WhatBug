@@ -19,8 +19,8 @@ namespace WhatBug.Application.Projects.Queries.GetKanbanBoard
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Issue, IssueOverviewDTO>()
-                .ForMember(d => d.IssueTypeIconColor, opt => opt.MapFrom(s => s.IssueType.ColorIcon.Color.Name))
-                .ForMember(d => d.IssueTypeIconName, opt => opt.MapFrom(s => s.IssueType.ColorIcon.Icon.Name))
+                .ForMember(d => d.IssueTypeIconColor, opt => opt.MapFrom(s => s.IssueType.Color.Name))
+                .ForMember(d => d.IssueTypeIconName, opt => opt.MapFrom(s => s.IssueType.Icon.Name))
                 .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name))
                 .ForMember(d => d.PriorityIconName, opt => opt.MapFrom(s => s.Priority.Icon.Name));
         }
