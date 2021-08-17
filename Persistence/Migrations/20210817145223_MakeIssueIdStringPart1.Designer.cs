@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210817145223_MakeIssueIdStringPart1")]
+    partial class MakeIssueIdStringPart1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -550,7 +552,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Issue", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("IssueId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("AssigneeId")
@@ -589,7 +591,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IssueId");
 
                     b.HasIndex("AssigneeId");
 
@@ -905,13 +907,6 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IssueCounter")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModified")

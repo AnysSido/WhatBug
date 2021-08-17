@@ -18,9 +18,20 @@ namespace WhatBug.Application.Issues.Commands.CreateIssue
 
         public async Task<Unit> Handle(CreateIssueCommand request, CancellationToken cancellationToken)
         {
+            var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.ProjectId);
+
+            if (project == null)
+            {
+                // TODO: Throw not found exception
+            }
+
+            var issueCounter = project.IssueCounter + 1;
+
+
             // TODO: Check permissions
             var issue = new Issue
             {
+                Id = project.Key + '-' + issueCounter,
                 Summary = request.Summary,
                 Description = request.Description,
                 ProjectId = request.ProjectId,
@@ -31,7 +42,9 @@ namespace WhatBug.Application.Issues.Commands.CreateIssue
                 IssueStatus = await _context.IssueStatuses.FirstAsync(s => s.Name ==  "Backlog") // TODO: Remove magic string
             };
 
+            project.IssueCounter = issueCounter;
             _context.Issues.Add(issue);
+
             await _context.SaveChangesAsync();
 
             return Unit.Value;

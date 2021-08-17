@@ -60,6 +60,10 @@ namespace WhatBug.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Project>()
+                .Property(p => p.Key)
+                .IsRequired();
+
             modelBuilder
                 .Entity<ProjectRoleUser>()
                 .HasKey(p => new { p.ProjectId, p.RoleId, p.UserId });
