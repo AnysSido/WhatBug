@@ -50,7 +50,7 @@
     <script type="text/javascript">
         $(function () {
             $('.mdl').on('click', function () {
-                $.post('/project/getassignuserstorolepartial',
+                $.post('/projects/getassignuserstorolepartial',
                     $('#addUserToRoleModalData').serialize()
                 ).done(function (response) {
                     $('#addUserToRoleModal').html(response);

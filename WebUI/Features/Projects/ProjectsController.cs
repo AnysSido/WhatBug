@@ -13,7 +13,7 @@ using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Projects
 {
-    public class ProjectController : BaseController
+    public class ProjectsController : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Index()
