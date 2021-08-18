@@ -14,57 +14,34 @@ class IssueDetailComponent {
     #BuildComponent(modal) {
         this.issueDetailComponent.html(modal);
         this.#SetVars();
-        this.#RegisterEvents();
-        this.#LoadComponents();        
+        this.#LoadQuill();        
     }
 
     #SetVars = () => {
         // Main modal
         this.issueDetailModal = this.issueDetailComponent.find('.createIssueModel');
-        this.issueDescription = this.issueDetailComponent.find('.issueDescription')
-        this.issueId = this.issueDetailComponent.find('.issueId');
 
-        // Quill Editor
-        this.quillEditor = this.issueDetailModal.find('.quill-editor');
-        this.quillButtons = this.issueDetailModal.find('.quill-savecancel');
-        this.quillSaveButton = this.quillButtons.find('.quill-save');
+        // Data
+        this.issueId = this.issueDetailComponent.find('.issueId');
+        this.issueDescription = this.issueDetailComponent.find('.issueDescription')
     }
 
-    #LoadComponents = () => {
+    #LoadQuill = () => {
         this.quill = new QuillEditorComponent({
-            container: this.quillEditor,
-            readOnlyEditor: true,
+            container: this.issueDetailModal.find('.quill-editor'),
+            isDynamic: true,
             copyContentsTo: this.issueDescription
         });
 
-        this.quillEditor.on('click', () => {
-            if (this.quill.readOnlyEditor) {
-                this.quill.MakeEditable();
-                this.quillButtons.removeClass('d-none');
-            }            
-        });
-
-        this.quillSaveButton.on('click', () => {
-            this.#UpdateDescription();
+        $(this.quill).on('save', () => {
+            $.post('issuedetailcomponent/updatedescription', { 
+                issueId: this.issueId.val(),
+                description: this.issueDescription.val(), 
+            });
         });
 
         // new Select2Component({
         //     container: this.selectLists
         // });
-    }
-
-    #RegisterEvents = () => {       
-
-    }
-
-    #UpdateDescription = () => {
-        $.post('issuedetailcomponent/updatedescription', { 
-            issueId: this.issueId.val(),
-            description: this.issueDescription.val(), 
-        }).done((result) => {
-            if (result.success) {
-                this.quill.MakeReadOnly();
-            }
-        });
     }
 }
