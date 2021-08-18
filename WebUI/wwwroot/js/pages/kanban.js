@@ -25,11 +25,16 @@ drag.on('out', (el, container, source) => {
 });
 
 drag.on('drop', (el, target, source, sibling) => {
-    var issueId = $(el).find('.issueId').val();
-    var issueStatusId = $(target).find('.statusId').val();
+    const issueId = $(el).find('.issueId').val();
+    const issueStatusId = $(target).find('.statusId').val();
 
     $.post('/kanban/SetIssueStatus', { issueId: issueId, issueStatusId: issueStatusId })
     .done((result) => {
         $(el).addClass(animationClass);
     });
+});
+
+$('.issue-card').on('click', function() {
+    const issueId = $(this).find('.issueId').val();
+    ShowIssueDetailComponent(issueId);
 });

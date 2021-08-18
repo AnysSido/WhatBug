@@ -3,7 +3,12 @@
         this.container = options.container;
         this.copyContentsTo = options.copyContentsTo;
         this.readOnlyEditor = options.readOnlyEditor;
-        this.editor = new Quill(this.container[0], this.readOnlyEditor ? this.#GetReadOnlyEditorOptions() : this.#GetEditorOptions() );
+        this.editor = new Quill(this.container[0], this.#GetEditorOptions() );
+        this.toolbar = this.container.prev();
+
+        if (this.readOnlyEditor) {
+            this.MakeReadOnly();
+        }
 
         // Fix to stop LastPass browser plugin throwing errors when using Quill editor.
         this.container.on('keydown', (e) => {
@@ -16,10 +21,28 @@
             });
         }
 
-        if (this.copyContentsTo.val() != '') {
+        if (this.copyContentsTo && this.copyContentsTo.val() != '') {
             this.editor.setContents(JSON.parse(this.copyContentsTo.val()));
         }
     }
+
+    ToggleReadOnly = () => {
+        this.readOnlyEditor ? this.MakeEditable() : this.MakeReadOnly();
+    };
+
+    MakeReadOnly = () => {
+        this.readOnlyEditor = true;
+        this.editor.disable();
+        this.toolbar.addClass('ql-toolbar-readonly');
+        this.container.addClass('ql-container-readonly');
+    };
+
+    MakeEditable = () => {
+        this.readOnlyEditor = false;
+        this.editor.enable();
+        this.toolbar.removeClass('ql-toolbar-readonly');
+        this.container.removeClass('ql-container-readonly');
+    };
 
     IsEmpty = () => {
         return this.editor.getLength() == 1;
@@ -27,17 +50,6 @@
 
     ToJson = () => {
         return JSON.stringify(this.editor.getContents());
-    }
-
-    #GetReadOnlyEditorOptions() {
-        return {
-            theme: 'snow',
-            readOnly: true,
-            modules: {
-                toolbar: false,
-                syntax: true
-            }
-        }
     }
 
     #GetEditorOptions() {

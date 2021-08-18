@@ -12,3 +12,14 @@
     resize: vertical;
     min-height: 256px;
 }
+
+.ql-toolbar-readonly {
+    display: none;
+}
+
+.ql-container-readonly {
+    border: none !important;
+    & .ql-editor {
+        resize: none !important;
+    }
+}
