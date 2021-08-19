@@ -14,7 +14,17 @@ namespace WhatBug.Infrastructure
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("IdentityDatabase")));
 
-            services.AddDefaultIdentity<PrincipalUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<PrincipalUser>(options => 
+            { 
+                // TODO: Match these with application
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddClaimsPrincipalFactory<PrincipalUserClaimsPrincipalFactory>();
 
