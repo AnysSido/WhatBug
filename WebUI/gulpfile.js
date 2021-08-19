@@ -37,6 +37,8 @@ const libraries = [
     { from: 'bootstrap4-duallistbox/dist', to: 'bootstrap4-duallistbox' },
     // Highlight.js
     { from: 'highlight.js', to: 'highlight-js' },
+    // iCheck-Bootstrap
+    { from: 'icheck-bootstrap', to: 'icheck-bootstrap', glob: '/**/*.min.css'},
     // jQuery
     { from: 'jquery/dist', to: 'jQuery' },
     // JQuery-ui

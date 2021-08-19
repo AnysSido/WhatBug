@@ -16,16 +16,18 @@ namespace WhatBug.Infrastructure.Identity
             _userManager = userManager;
         }
 
-        public async Task<Result> CreateUserAsync(string username, string password)
+        public async Task<bool> CreateUserAsync(string username, string password, string email, int id)
         {
             var user = new PrincipalUser()
             {
                 UserName = username,
-                Email = username,
+                Email = email,
+                UserId = id
             };
 
             var result = await _userManager.CreateAsync(user, password);
-            return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
+
+            return true;
         }
 
         public async Task<Result> DeleteUserAsync(string username)
