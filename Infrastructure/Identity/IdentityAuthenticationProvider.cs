@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
-using WhatBug.Application.Common.Models;
 
 namespace WhatBug.Infrastructure.Identity
 {
