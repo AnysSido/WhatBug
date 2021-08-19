@@ -1,20 +1,27 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Infrastructure.Identity;
 
 namespace WhatBug.WebUI.Services
 {
     public class CurrentUserService : ICurrentUserService
     {
-        public int UserId { get; }
-        public int AuthenticationId { get; }
+        public int Id { get; }
+        public string Username { get; }
+        public string Email { get; }
+        public string FirstName { get; }
+        public string Surname { get; }
         public bool IsAuthenticated { get; }     
 
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            UserId = int.TryParse(httpContextAccessor.HttpContext?.User?.FindFirstValue("UserId"), out var id) ? id : 0;
-            AuthenticationId = int.TryParse(httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier), out var username) ? username : 0;
-            IsAuthenticated = AuthenticationId > 0;
+            Id = int.TryParse(httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Id.ToString()), out var id) ? id : 0;
+            Username = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Username.ToString());
+            Email = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Email.ToString());
+            FirstName = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.FirstName.ToString());
+            Surname = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Surname.ToString());
+            IsAuthenticated = Id > 0;
         }
     }
 }

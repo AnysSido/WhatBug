@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WhatBug.Application.Users.Queries.GetUserPermissions;
+using WhatBug.Infrastructure.Identity;
 
 namespace WhatBug.WebUI.Authorization
 {
@@ -32,7 +33,7 @@ namespace WhatBug.WebUI.Authorization
                 return;
             }
 
-            var userId = int.TryParse(context.User?.FindFirstValue("UserId"), out var id) ? id : -1;
+            var userId = int.TryParse(context.User?.FindFirstValue(UserInfoClaim.Id.ToString()), out var id) ? id : -1;
             if (userId == -1)
             {
                 // TODO: Handle this. Something went terribly wrong.
