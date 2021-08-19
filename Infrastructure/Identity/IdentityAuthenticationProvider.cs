@@ -10,10 +10,12 @@ namespace WhatBug.Infrastructure.Identity
     class IdentityAuthenticationProvider : IAuthenticationProvider
     {
         private readonly UserManager<PrincipalUser> _userManager;
+        private readonly SignInManager<PrincipalUser> _signInManager;
 
-        public IdentityAuthenticationProvider(UserManager<PrincipalUser> userManager)
+        public IdentityAuthenticationProvider(UserManager<PrincipalUser> userManager, SignInManager<PrincipalUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<bool> CreateUserAsync(string username, string password, string email, int id)
@@ -30,25 +32,18 @@ namespace WhatBug.Infrastructure.Identity
             return true;
         }
 
-        public async Task<Result> DeleteUserAsync(string username)
+        public async Task<bool> SignInAsync(string username, string password, bool rememberMe)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(username) ?? await _userManager.FindByEmailAsync(username);
+
             if (user == null)
-                return Result.Failure(new string[] { $"User {username} not found." });
+            {
+                return false;
+            }
 
-            var result = await _userManager.DeleteAsync(user);
-            return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
-        }
+            var result = await _signInManager.PasswordSignInAsync(user, password, rememberMe, false);
 
-        public async Task<Result> SetUserId(string username, int userId)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-            if (user == null)
-                return Result.Failure(new string[] { $"User {username} not found." });
-
-            user.UserId = userId;
-            var result = await _userManager.UpdateAsync(user);
-            return result.Succeeded ? Result.Success() : Result.Failure(result.Errors.Select(e => e.Description));
+            return result.Succeeded;
         }
 
         public async Task<string> GetUsername(int userId)
