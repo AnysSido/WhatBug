@@ -59,5 +59,12 @@ namespace WhatBug.WebUI.Features.Accounts
 
             return View(vm);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _authProvider.SignOutAsync();
+            return RedirectToAction(nameof(Login));
+        }
     }
 }

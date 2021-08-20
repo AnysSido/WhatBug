@@ -44,6 +44,11 @@ namespace WhatBug.Infrastructure.Identity
             return result.Succeeded;
         }
 
+        public async Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
         public async Task<string> GetUsername(int userId)
         {
             var principalUser = await _userManager.Users.FirstOrDefaultAsync(u => u.UserId == userId);

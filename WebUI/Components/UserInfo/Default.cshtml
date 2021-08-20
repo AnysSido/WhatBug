@@ -1,0 +1,11 @@
+﻿@model WhatBug.WebUI.Components.UserInfo.UserInfoViewModel
+
+<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+        @*<img src="@Model.AvatarUrl" class="img-circle elevation-2" alt="User Image">*@
+        <avatar email="@Model.Email" class="img-circle elevation-2"/>
+    </div>
+    <div class="info">
+        <a href="#" class="d-block">@Model.Username</a>
+    </div>
+</div>
