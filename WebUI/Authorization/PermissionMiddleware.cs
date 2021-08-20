@@ -37,6 +37,8 @@ namespace WhatBug.WebUI.Authorization
             if (userId == -1)
             {
                 // TODO: Handle this. Something went terribly wrong.
+                // For development purposes we will allow requests to continue
+                await _next(context);
                 return;
             }
 
