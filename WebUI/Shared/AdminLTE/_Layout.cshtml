@@ -9,7 +9,8 @@
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <partial name="AdminLTE/_TopNavigation" />       
+        <!-- Top Nav Bar -->
+        @await Component.InvokeAsync("TopNavigation")
 
         <!-- Main Sidebar Container -->
         <partial name="AdminLTE/_MainNavigation" />
