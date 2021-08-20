@@ -12,14 +12,12 @@ namespace WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions
     public class GetGrantGlobalPermissionsQueryHandler : IRequestHandler<GetGrantGlobalPermissionsQuery, GrantGlobalPermissionsDTO>
     {
         public IWhatBugDbContext _context;
-        private readonly IAuthenticationProvider _authProvider;
         public IMapper _mapper;
 
-        public GetGrantGlobalPermissionsQueryHandler(IWhatBugDbContext context, IMapper mapper, IAuthenticationProvider authProvider)
+        public GetGrantGlobalPermissionsQueryHandler(IWhatBugDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _authProvider = authProvider;
         }
 
         public async Task<GrantGlobalPermissionsDTO> Handle(GetGrantGlobalPermissionsQuery request, CancellationToken cancellationToken)
@@ -45,11 +43,6 @@ namespace WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions
                 Permissions = globalPermissions,
                 PermissionIds = grantedPermissionIds
             };
-
-            // TODO: Fix this. We should not be querying usernames one by one. This should be replaced with data
-            // from the User table but right now the User table is empty so we are using username from the
-            // authentication table.
-            dto.Username = await _authProvider.GetUsername(dto.UserId);
 
             return dto;
         }

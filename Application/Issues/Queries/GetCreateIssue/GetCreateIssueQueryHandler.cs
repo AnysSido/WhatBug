@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
@@ -14,14 +11,12 @@ namespace WhatBug.Application.Issues.Queries.GetCreateIssue
     public class GetCreateIssueQueryHandler : IRequestHandler<GetCreateIssueQuery, CreateIssueDTO>
     {
         private readonly IWhatBugDbContext _context;
-        private readonly IAuthenticationProvider _authProvider;
         private readonly IMapper _mapper;
 
-        public GetCreateIssueQueryHandler(IWhatBugDbContext context, IMapper mapper, IAuthenticationProvider authProvider)
+        public GetCreateIssueQueryHandler(IWhatBugDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _authProvider = authProvider;
         }
 
         public async Task<CreateIssueDTO> Handle(GetCreateIssueQuery request, CancellationToken cancellationToken)
@@ -35,14 +30,6 @@ namespace WhatBug.Application.Issues.Queries.GetCreateIssue
             var issueTypes = await _mapper.ProjectTo<IssueTypeDTO>(_context.IssueTypes).ToListAsync();
             var assignableUsers = await _mapper.ProjectTo<UserDTO>(_context.Users).ToListAsync();
             var reportingUsers = await _mapper.ProjectTo<UserDTO>(_context.Users).ToListAsync();
-
-            // TODO: Fix this. We should not be querying usernames one by one. This should be replaced with data
-            // from the User table but right now the User table is empty so we are using username from the
-            // authentication table.
-            foreach (var user in assignableUsers)
-                user.Username = await _authProvider.GetUsername(user.Id);
-            foreach (var user in reportingUsers)
-                user.Username = await _authProvider.GetUsername(user.Id);
 
             var dto = new CreateIssueDTO
             {

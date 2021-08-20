@@ -7,5 +7,8 @@ namespace WhatBug.Application.Issues.Queries.GetCreateIssue
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
     }
 }
