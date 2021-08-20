@@ -24,11 +24,14 @@ namespace WhatBug.Infrastructure.Identity
             var userInfo = await _mediator.Send(new GetUserInfoQuery { UserId = user.UserId });
             var identity = await base.GenerateClaimsAsync(user);
 
-            identity.AddClaim(new Claim(UserInfoClaim.Id.ToString(), userInfo.Id.ToString()));
-            identity.AddClaim(new Claim(UserInfoClaim.Username.ToString(), userInfo.Username));
-            identity.AddClaim(new Claim(UserInfoClaim.Email.ToString(), userInfo.Email));
-            identity.AddClaim(new Claim(UserInfoClaim.FirstName.ToString(), userInfo.FirstName));
-            identity.AddClaim(new Claim(UserInfoClaim.Surname.ToString(), userInfo.Surname));
+            if (userInfo != null)
+            {              
+                identity.AddClaim(new Claim(UserInfoClaim.Id.ToString(), userInfo.Id.ToString()));
+                identity.AddClaim(new Claim(UserInfoClaim.Username.ToString(), userInfo.Username));
+                identity.AddClaim(new Claim(UserInfoClaim.Email.ToString(), userInfo.Email));
+                identity.AddClaim(new Claim(UserInfoClaim.FirstName.ToString(), userInfo.FirstName));
+                identity.AddClaim(new Claim(UserInfoClaim.Surname.ToString(), userInfo.Surname));
+            }
 
             return identity;
         }

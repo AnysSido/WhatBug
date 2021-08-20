@@ -2,32 +2,29 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhatBug.Persistence;
 
-namespace Persistence.Migrations
+namespace WhatBug.Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    [Migration("20210727181123_AddProjectUserProjectRole")]
-    partial class AddProjectUserProjectRole
+    [Migration("20210820154734_InitialSchema")]
+    partial class InitialSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.9");
 
             modelBuilder.Entity("PriorityPriorityScheme", b =>
                 {
                     b.Property<int>("PrioritiesId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PrioritySchemesId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("PrioritiesId", "PrioritySchemesId");
 
@@ -40,11 +37,10 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -368,51 +364,14 @@ namespace Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.ColorIcon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IconId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("IconId");
-
-                    b.ToTable("ColorIcons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ColorId = 34,
-                            IconId = 29
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ColorId = 19,
-                            IconId = 27
-                        });
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Icon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -588,47 +547,50 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Issue", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("AssigneeId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IssueStatusId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("IssueTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("LastModifiedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PriorityId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ReporterId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AssigneeId");
+
+                    b.HasIndex("IssueStatusId");
 
                     b.HasIndex("IssueTypeId");
 
@@ -641,22 +603,62 @@ namespace Persistence.Migrations
                     b.ToTable("Issues");
                 });
 
+            modelBuilder.Entity("WhatBug.Domain.Entities.IssueStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IssueStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Backlog"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "ToDo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "In Progress"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Done"
+                        });
+                });
+
             modelBuilder.Entity("WhatBug.Domain.Entities.IssueType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("ColorIconId")
-                        .HasColumnType("int");
+                    b.Property<int>("ColorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IconId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorIconId");
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("IconId");
 
                     b.ToTable("IssueTypes");
 
@@ -664,76 +666,58 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ColorIconId = 1,
+                            ColorId = 34,
+                            IconId = 29,
                             Name = "Task"
                         },
                         new
                         {
                             Id = 2,
-                            ColorIconId = 2,
+                            ColorId = 19,
+                            IconId = 27,
                             Name = "Bug"
                         });
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
+            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeRolePermission", b =>
                 {
                     b.Property<int>("PermissionSchemeId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProjectRoleId")
-                        .HasColumnType("int");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PermissionId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    b.HasKey("PermissionSchemeId", "ProjectRoleId", "PermissionId");
+                    b.HasKey("PermissionSchemeId", "RoleId", "PermissionId");
 
                     b.HasIndex("PermissionId");
 
-                    b.HasIndex("ProjectRoleId");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("PermissionSchemeProjectRolePermission");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.ProjectUserProjectRole", b =>
-                {
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectRoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProjectId", "UserId", "ProjectRoleId");
-
-                    b.HasIndex("ProjectRoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProjectUserProjectRole");
+                    b.ToTable("PermissionSchemeRolePermission");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PermissionId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("LastModifiedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("UserId", "PermissionId");
 
@@ -746,18 +730,17 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -819,79 +802,57 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("LastModifiedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("PermissionSchemes");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.ProjectRoleUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProjectRoleUsers");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Priorities.Priority", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("ColorIconId")
-                        .HasColumnType("int");
+                    b.Property<int>("ColorId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IconId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Order")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorIconId");
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("IconId");
 
                     b.ToTable("Priorities");
                 });
@@ -900,14 +861,13 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -926,29 +886,35 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IssueCounter")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("LastModifiedBy")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PrioritySchemeId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -957,30 +923,72 @@ namespace Persistence.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.ProjectRole", b =>
+            modelBuilder.Entity("WhatBug.Domain.Entities.ProjectRoleUser", b =>
+                {
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProjectId", "RoleId", "UserId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProjectRoleUser");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectRoles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Department")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("JobTitle")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Organization")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -1002,30 +1010,17 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.ColorIcon", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
-                        .WithMany()
-                        .HasForeignKey("IconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-
-                    b.Navigation("Icon");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Issue", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.User", "Assignee")
                         .WithMany("AssignedIssues")
                         .HasForeignKey("AssigneeId");
+
+                    b.HasOne("WhatBug.Domain.Entities.IssueStatus", "IssueStatus")
+                        .WithMany()
+                        .HasForeignKey("IssueStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WhatBug.Domain.Entities.IssueType", "IssueType")
                         .WithMany()
@@ -1053,6 +1048,8 @@ namespace Persistence.Migrations
 
                     b.Navigation("Assignee");
 
+                    b.Navigation("IssueStatus");
+
                     b.Navigation("IssueType");
 
                     b.Navigation("Priority");
@@ -1064,16 +1061,24 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("WhatBug.Domain.Entities.IssueType", b =>
                 {
-                    b.HasOne("WhatBug.Domain.Entities.ColorIcon", "ColorIcon")
+                    b.HasOne("WhatBug.Domain.Entities.Color", "Color")
                         .WithMany()
-                        .HasForeignKey("ColorIconId")
+                        .HasForeignKey("ColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ColorIcon");
+                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
+                        .WithMany()
+                        .HasForeignKey("IconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Icon");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeProjectRolePermission", b =>
+            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.PermissionSchemeRolePermission", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.Permission", "Permission")
                         .WithMany()
@@ -1087,9 +1092,9 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WhatBug.Domain.Entities.ProjectRole", "ProjectRole")
+                    b.HasOne("WhatBug.Domain.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("ProjectRoleId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1097,34 +1102,7 @@ namespace Persistence.Migrations
 
                     b.Navigation("PermissionScheme");
 
-                    b.Navigation("ProjectRole");
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.ProjectUserProjectRole", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.ProjectRole", "ProjectRole")
-                        .WithMany()
-                        .HasForeignKey("ProjectRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("ProjectRole");
-
-                    b.Navigation("User");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.JoinTables.UserPermission", b =>
@@ -1146,34 +1124,23 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.Permissions.ProjectRoleUser", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Project", "Project")
-                        .WithMany("RoleUsers")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.User", "User")
-                        .WithMany("ProjectRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Priorities.Priority", b =>
                 {
-                    b.HasOne("WhatBug.Domain.Entities.ColorIcon", "ColorIcon")
+                    b.HasOne("WhatBug.Domain.Entities.Color", "Color")
                         .WithMany()
-                        .HasForeignKey("ColorIconId")
+                        .HasForeignKey("ColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ColorIcon");
+                    b.HasOne("WhatBug.Domain.Entities.Icon", "Icon")
+                        .WithMany()
+                        .HasForeignKey("IconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Icon");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Project", b =>
@@ -1185,6 +1152,33 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("PriorityScheme");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.ProjectRoleUser", b =>
+                {
+                    b.HasOne("WhatBug.Domain.Entities.Project", "Project")
+                        .WithMany("RoleUsers")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WhatBug.Domain.Entities.Role", "Role")
+                        .WithMany("ProjectUsers")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WhatBug.Domain.Entities.User", "User")
+                        .WithMany("ProjectRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.PermissionScheme", b =>
@@ -1202,6 +1196,11 @@ namespace Persistence.Migrations
                     b.Navigation("Issues");
 
                     b.Navigation("RoleUsers");
+                });
+
+            modelBuilder.Entity("WhatBug.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("ProjectUsers");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>
