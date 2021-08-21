@@ -1,5 +1,5 @@
 ﻿using WhatBug.Common.Mapping;
-using WhatBug.Domain.Entities.Priorities;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Issues.Queries.GetCreateIssue
 {

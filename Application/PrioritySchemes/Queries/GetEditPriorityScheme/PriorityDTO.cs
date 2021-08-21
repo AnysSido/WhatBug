@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhatBug.Common.Mapping;
-using WhatBug.Domain.Entities.Priorities;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.PrioritySchemes.Queries.GetEditPriorityScheme
 {

@@ -6,7 +6,6 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
 using WhatBug.Domain.Entities.JoinTables;
-using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Persistence
 {

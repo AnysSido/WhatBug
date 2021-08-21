@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using WhatBug.Common.Mapping;
-using WhatBug.Domain.Entities.Priorities;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Priorities.Queries.GetPriorities
 {
