@@ -35,7 +35,7 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.CreatePermiss
         }
 
         [Fact]
-        public async Task Handle_GivenValidPermissionScheme_CreatesPermissionScheme()
+        public async Task Handle_GivenValidRequest_CreatesPermissionScheme()
         {
             // Arrange
             var sut = new CreatePermissionSchemeCommandHandler(_context);
@@ -51,7 +51,7 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.CreatePermiss
         }
 
         [Fact]
-        public async Task Handle_GivenValidPermissionScheme_ReturnsSuccess()
+        public async Task Handle_GivenValidRequest_ReturnsSuccess()
         {
             // Arrange
             var sut = new CreatePermissionSchemeCommandHandler(_context);

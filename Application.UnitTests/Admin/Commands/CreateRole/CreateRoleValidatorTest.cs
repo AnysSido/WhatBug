@@ -1,23 +1,28 @@
 ﻿using FluentValidation.TestHelper;
-using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WhatBug.Application.Admin.Commands.CreateRole;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.CreatePermissionScheme
+namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
 {
-    public class CreatePermissionSchemeValidatorTests
+    public class CreateRoleValidatorTest
     {
-        private CreatePermissionSchemeCommandValidator _validator;
+        private CreateRoleCommandValidator _validator;
 
-        public CreatePermissionSchemeValidatorTests()
+        public CreateRoleValidatorTest()
         {
-            _validator = new CreatePermissionSchemeCommandValidator();
+            _validator = new CreateRoleCommandValidator();
         }
 
         [Fact]
         public void GivenEmptyName_ThrowsValidationException()
         {
             // Arrange
-            var command = new CreatePermissionSchemeCommand { Name = string.Empty };
+            var command = new CreateRoleCommand { Name = string.Empty };
 
             // Act
             var result = _validator.TestValidate(command);
@@ -30,7 +35,7 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.CreatePermiss
         public void GivenNullName_ThrowsValidationException()
         {
             // Arrange
-            var command = new CreatePermissionSchemeCommand ();
+            var command = new CreateRoleCommand ();
 
             // Act
             var result = _validator.TestValidate(command);
