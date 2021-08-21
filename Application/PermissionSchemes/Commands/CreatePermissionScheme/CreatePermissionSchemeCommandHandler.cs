@@ -1,17 +1,14 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.Common.Result;
 using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme
 {
-    public class CreatePermissionSchemeCommandHandler : IRequestHandler<CreatePermissionSchemeCommand>
+    public class CreatePermissionSchemeCommandHandler : IRequestHandler<CreatePermissionSchemeCommand, Result>
     {
         private readonly IWhatBugDbContext _context;
 
@@ -20,20 +17,18 @@ namespace WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreatePermissionSchemeCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreatePermissionSchemeCommand request, CancellationToken cancellationToken)
         {
             // TODO: Check permissions
-            var existingScheme = _context.PermissionSchemes.FirstOrDefaultAsync(s => s.Name == request.Name);
+            bool schemeNameExists = await _context.PermissionSchemes.AnyAsync(s => s.Name == request.Name);
 
-            if (existingScheme != null)
-            { 
-                // TODO: Throw exception
-            }
+            if (schemeNameExists)
+                return Result.Failure(Errors.PermissionScheme.NameIsTaken(request.Name));
 
             _context.PermissionSchemes.Add(new PermissionScheme { Name = request.Name, Description = request.Description });
             await _context.SaveChangesAsync();
 
-            return Unit.Value;
+            return Result.Success();
         }
     }
 }
