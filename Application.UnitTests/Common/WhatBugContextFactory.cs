@@ -20,11 +20,6 @@ namespace WhatBug.Application.UnitTests.Common
                 var mockUserService = new Mock<ICurrentUserService>();
                 mockUserService.SetupGet(x => x.Id).Returns(1);
                 _currentUserService = mockUserService.Object;
-
-                using (var context = new WhatBugDbContext(_options))
-                {
-                    context.Database.EnsureCreated();
-                }
             }
 
             return new WhatBugDbContext(_options, _currentUserService);
