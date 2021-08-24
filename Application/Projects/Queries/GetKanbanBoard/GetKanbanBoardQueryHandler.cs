@@ -37,7 +37,9 @@ namespace WhatBug.Application.Projects.Queries.GetKanbanBoard
 
             issues.GroupBy(issue => issue.IssueStatusId).ToList()
                 .ForEach(issueGroup => issueStatusGroups.First(status => status.Id == issueGroup.Key).Issues.AddRange(issueGroup));
-            
+
+            issueStatusGroups.Sort((a,b) => a.Id.CompareTo(b.Id));
+
             dto.IssueStatusGroups = issueStatusGroups;
 
             return dto;
