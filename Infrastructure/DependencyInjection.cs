@@ -12,7 +12,7 @@ namespace WhatBug.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlite(configuration.GetConnectionString("IdentityDatabase")));
+                options.UseNpgsql(configuration.GetConnectionString("IdentityDatabase")));
 
             services.AddDefaultIdentity<PrincipalUser>(options => 
             { 
