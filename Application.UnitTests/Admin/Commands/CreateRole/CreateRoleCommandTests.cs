@@ -17,7 +17,7 @@ namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
         public async Task Handle_GivenDuplicateRoleName_ReturnsNameIsTakenError()
         {
             // Arrange
-            using (var context = _factory.Create())
+            using (var context = CreateContext())
             {
                 context.Roles.Add(new Role { Id = 1, Name = "Admin" });
                 context.SaveChanges();

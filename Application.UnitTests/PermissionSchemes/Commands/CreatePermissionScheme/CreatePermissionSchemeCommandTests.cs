@@ -17,7 +17,7 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.CreatePermiss
         public async Task Handle_GivenDuplicateSchemeName_ReturnsNameIsTakenError()
         {
             // Arrange
-            using (var context = _factory.Create())
+            using (var context = CreateContext())
             {
                 context.PermissionSchemes.Add(new PermissionScheme { Id = 1, Name = "Software Development" });
                 context.SaveChanges();

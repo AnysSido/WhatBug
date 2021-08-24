@@ -7,19 +7,23 @@ namespace Application.UnitTests.Common
     public class CommandTestBase : IDisposable
     {
         protected readonly WhatBugDbContext _context;
-        protected readonly WhatBugContextFactory _factory;
+        private readonly WhatBugContextFactory _factory;
+        private string _dbName = Guid.NewGuid().ToString();
 
         public CommandTestBase()
         {
             _factory = new WhatBugContextFactory();
-            _context = _factory.Create();
+            _context = _factory.Create(_dbName);
+        }
+
+        public WhatBugDbContext CreateContext()
+        {
+            return _factory.Create(_dbName);
         }
 
         public void Dispose()
         {
-            _context.Database.EnsureDeleted();
-            _context.Dispose();
-            _factory.Dispose();
+            _factory.Dispose(_context);
         }
     }
 }

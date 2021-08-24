@@ -1,28 +1,21 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Data.Common;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Persistence;
 
 namespace WhatBug.Application.UnitTests.Common
 {
-    public class WhatBugContextFactory : IDisposable
+    public class WhatBugContextFactory
     {
-        private DbConnection _connection;
         private DbContextOptions<WhatBugDbContext> _options;
         private ICurrentUserService _currentUserService;
 
-        public WhatBugDbContext Create()
+        public WhatBugDbContext Create(string guid)
         {
-            if (_connection == null)
+            if (_options == null)
             {
-                _connection = new SqliteConnection("DataSource=:memory:");
-                _connection.Open();
-
                 _options = new DbContextOptionsBuilder<WhatBugDbContext>()
-                .UseSqlite(_connection).Options;
+                    .UseInMemoryDatabase(guid).Options;
 
                 var mockUserService = new Mock<ICurrentUserService>();
                 mockUserService.SetupGet(x => x.Id).Returns(1);
@@ -37,13 +30,10 @@ namespace WhatBug.Application.UnitTests.Common
             return new WhatBugDbContext(_options, _currentUserService);
         }
 
-        public void Dispose()
+        public void Dispose(WhatBugDbContext context)
         {
-            if (_connection != null)
-            {
-                _connection.Dispose();
-                _connection = null;
-            }
+            context.Database.EnsureDeleted();
+            context.Dispose();
         }
     }
 }
