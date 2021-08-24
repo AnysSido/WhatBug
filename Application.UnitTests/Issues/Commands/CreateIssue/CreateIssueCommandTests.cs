@@ -8,7 +8,7 @@ using WhatBug.Application.Issues.Commands.CreateIssue;
 using WhatBug.Domain.Entities;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.Issues.Commands
+namespace WhatBug.Application.UnitTests.Issues.Commands.CreateIssue
 {
     public class CreateIssueCommandTests : CommandTestBase
     {
@@ -49,7 +49,7 @@ namespace WhatBug.Application.UnitTests.Issues.Commands
             result.Succeeded.ShouldBe(true);
             _context.Issues.Count().ShouldBe(1);
         }
-        
+
         [Fact]
         public async void Handle_GivenValidRequest_AssignsCorrectIssueKey()
         {
@@ -77,7 +77,7 @@ namespace WhatBug.Application.UnitTests.Issues.Commands
                 newIssue.ShouldNotBeNull();
             }
         }
-        
+
         [Fact]
         public async void Handle_GivenValidRequest_IncrementsProjectIssueCounter()
         {

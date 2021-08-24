@@ -2,7 +2,7 @@
 using WhatBug.Application.Issues.Commands.CreateIssue;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.Issues.Commands
+namespace WhatBug.Application.UnitTests.Issues.Commands.CreateIssue
 {
     public class CreateIssueValidatorTests
     {
