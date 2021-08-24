@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Application.Common.Interfaces
 {

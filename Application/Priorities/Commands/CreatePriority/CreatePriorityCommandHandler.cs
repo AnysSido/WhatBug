@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
-using WhatBug.Domain.Entities.Priorities;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Priorities.Commands.CreatePriority
 {

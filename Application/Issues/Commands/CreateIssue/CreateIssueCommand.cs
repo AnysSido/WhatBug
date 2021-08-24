@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using WhatBug.Application.Common.Result;
 
 namespace WhatBug.Application.Issues.Commands.CreateIssue
 {
-    public class CreateIssueCommand : IRequest
+    public class CreateIssueCommand : IRequest<Result>
     {
         public int ProjectId { get; set; }
         public string Summary { get; set; }

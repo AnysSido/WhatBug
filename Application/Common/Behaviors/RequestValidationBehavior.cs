@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using ValidationException = WhatBug.Application.Common.Exceptions.ValidationException;
 
 namespace WhatBug.Application.Common.Behaviors
 {

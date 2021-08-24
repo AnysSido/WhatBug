@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.Common.Result;
 using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Issues.Commands.CreateIssue
 {
-    public class CreateIssueCommandHandler : IRequestHandler<CreateIssueCommand>
+    public class CreateIssueCommandHandler : IRequestHandler<CreateIssueCommand, Result>
     {
         private readonly IWhatBugDbContext _context;
 
@@ -16,17 +17,33 @@ namespace WhatBug.Application.Issues.Commands.CreateIssue
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateIssueCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateIssueCommand request, CancellationToken cancellationToken)
         {
             var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.ProjectId);
-
             if (project == null)
+                return Result.Failure(Errors.Issues.ProjectNotFound(request.ProjectId));
+
+            var priority = await _context.Priorities.FirstOrDefaultAsync(p => p.Id == request.PriorityId);
+            if (priority == null)
+                return Result.Failure(Errors.Issues.PriorityNotFound(request.PriorityId));
+
+            var issueType = await _context.IssueTypes.FirstOrDefaultAsync(i => i.Id == request.IssueTypeId);
+            if (issueType == null)
+                return Result.Failure(Errors.Issues.IssueTypeNotFound(request.IssueTypeId));
+
+            var reporter = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.ReporterId);
+            if (reporter == null)
+                return Result.Failure(Errors.Issues.ReporterNotFound(request.ReporterId));
+
+            User assignee = null;
+            if (request.AssigneeId != null)
             {
-                // TODO: Throw not found exception
+                assignee = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.AssigneeId);
+                if (assignee == null)
+                    return Result.Failure(Errors.Issues.AssigneeNotFound((int)request.AssigneeId));
             }
 
             var issueCounter = project.IssueCounter + 1;
-
 
             // TODO: Check permissions
             var issue = new Issue
@@ -34,11 +51,11 @@ namespace WhatBug.Application.Issues.Commands.CreateIssue
                 Id = project.Key + '-' + issueCounter,
                 Summary = request.Summary,
                 Description = request.Description,
-                ProjectId = request.ProjectId,
-                PriorityId = request.PriorityId,
-                IssueTypeId = request.IssueTypeId,
-                ReporterId = request.ReporterId,
-                AssigneeId = request.AssigneeId,
+                Project = project,
+                Priority = priority,
+                IssueType = issueType,
+                Reporter = reporter,
+                Assignee = assignee,
                 IssueStatus = await _context.IssueStatuses.FirstAsync(s => s.Name ==  "Backlog") // TODO: Remove magic string
             };
 
@@ -47,7 +64,7 @@ namespace WhatBug.Application.Issues.Commands.CreateIssue
 
             await _context.SaveChangesAsync();
 
-            return Unit.Value;
+            return Result.Success();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using WhatBug.Domain.Common;
-using WhatBug.Domain.Entities.Priorities;
 
 namespace WhatBug.Domain.Entities
 {
