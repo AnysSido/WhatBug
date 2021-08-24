@@ -12,7 +12,6 @@ namespace WhatBug.Application.Priorities.Commands.CreatePriority
         public CreatePriorityCommandValidator()
         {
             RuleFor(v => v.Name).NotEmpty();
-            RuleFor(v => v.Description).NotEmpty();
             RuleFor(v => v.ColorId).NotEmpty();
             RuleFor(v => v.IconId).NotEmpty();
         }
