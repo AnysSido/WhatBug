@@ -19,6 +19,14 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
         public string IssueTypeIconName { get; set; }
         public string IssueTypeIconColor { get; set; }
 
+        public string AssigneeFirstName { get; set; }
+        public string AssigneeSurname { get; set; }
+        public string AssigneeEmail { get; set; }
+
+        public string ReporterFirstName { get; set; }
+        public string ReporterSurname { get; set; }
+        public string ReporterEmail { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Issue, IssueDetailDTO>()

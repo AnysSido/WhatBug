@@ -17,5 +17,15 @@ namespace WhatBug.WebUI.Components.IssueDetail
         public string IssueTypeName { get; set; }
         public string IssueTypeIconName { get; set; }
         public string IssueTypeIconColor { get; set; }
+
+        public string AssigneeFirstName { get; set; }
+        public string AssigneeSurname { get; set; }
+        public string AssigneeEmail { get; set; }
+        public string AssigneeFullName => $"{AssigneeFirstName} {AssigneeSurname}";
+
+        public string ReporterFirstName { get; set; }
+        public string ReporterSurname { get; set; }
+        public string ReporterEmail { get; set; }
+        public string ReporterFullName => $"{ReporterFirstName} {ReporterSurname}";
     }
 }

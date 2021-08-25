@@ -74,7 +74,22 @@
 
                         <!-- People -->
                         <div class="col-md-4">
-                            <h6 class="card-title"><b>People</b></h6>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-3" col-sm-2>Reporter</label>
+                                <div class="col-sm-9 align-self-center">
+                                    <avatar email="@Model.ReporterEmail" class="user-image img-circle img-sm mr-2" />
+                                    @Model.ReporterFullName
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-3" col-sm-2>Assignee</label>
+                                <div class="col-sm-9 align-self-center">
+                                    <avatar email="@Model.AssigneeEmail" class="user-image img-circle img-sm mr-2" />
+                                    @Model.AssigneeFullName
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
