@@ -1,0 +1,30 @@
+﻿@model WhatBug.WebUI.Components.IssueDetail.CommentsViewModel
+@foreach (var comment in Model.Comments)
+{
+    if (comment.IsByCurrentUser)
+    {
+        <div class="direct-chat-msg right">
+            <div class="direct-chat-infos clearfix">
+                <span class="direct-chat-name float-right">@comment.Author.FirstName @comment.Author.Surname</span>
+                <span class="direct-chat-timestamp float-left">@comment.Timestamp.ToString("d MMM yy h:mm tt")</span>
+            </div>
+            <avatar class="direct-chat-img" email="@comment.Author.Email" alt="Comment User Image" />
+            <div class="direct-chat-text">
+                @comment.Content
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="direct-chat-msg">
+            <div class="direct-chat-infos clearfix">
+                <span class="direct-chat-name float-left">@comment.Author.FirstName @comment.Author.Surname</span>
+                <span class="direct-chat-timestamp float-right">@comment.Timestamp.ToString("d MMM yy h:mm tt")</span>
+            </div>
+            <avatar class="direct-chat-img" email="@comment.Author.Email" alt="Comment User Image" />
+            <div class="direct-chat-text">
+                @comment.Content
+            </div>
+        </div>
+    }
+}

@@ -1,22 +1,40 @@
-// #outer-dropzone {
-//     height: 140px;
-//   }
-  
-//   #inner-dropzone {
-//     height: 80px;
-//   }
-  
+.dropzone-border {
+  border: dashed 3px #aaa !important;
+}
 
+.dropzone-hover {
+  background-color: #bfe4ff;
+  transition: background-color 0.3s;
+}
 
-  .dropzone-border {
-    border: dashed 3px #aaa !important;
+.issue-card .card-body {
+  min-height: 30px !important;
+}
+
+// #IssueDetailComponent .quill-editor:hover {
+//   background-color: #495057;
+// }
+
+#IssueDetailComponent {
+  .ql-editor {
+    resize: none;
   }
 
-  .dropzone-hover {
-    background-color: #bfe4ff;
-    transition: background-color 0.3s;
-  }
+  .modal-dialog {
+    max-height: 90vh;
+    width: 70vw;
 
-  .issue-card .card-body {
-    min-height: 30px !important;
+    .modal-content {
+      height: 100%;
+    }
+
+    .issue-detail-body {
+      min-height: 0;
+
+      & > div {
+        height: 100%;
+        overflow-y: auto;
+      }
+    }
   }
+}
