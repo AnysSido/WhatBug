@@ -12,3 +12,20 @@
     resize: vertical;
     min-height: 256px;
 }
+
+.ql-toolbar-readonly {
+    display: none;
+}
+
+.ql-container-readonly {
+    border: none !important;
+    & .ql-editor {
+        resize: none !important;
+        min-height: 0;
+        height: auto !important;
+    }
+}
+
+.quill-savecancel {
+    margin-top: .5rem;
+}

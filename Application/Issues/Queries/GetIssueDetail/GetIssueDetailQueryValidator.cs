@@ -11,7 +11,7 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
     {
         public GetIssueDetailQueryValidator()
         {
-            RuleFor(v => v.Id).NotEmpty();
+            RuleFor(v => v.IssueId).NotEmpty();
         }
     }
 }

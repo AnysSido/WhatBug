@@ -19,7 +19,7 @@ namespace WhatBug.WebUI.Features.Issues
         [HttpGet]
         public async Task<IActionResult> Detail(string id)
         {
-            var dto = await Mediator.Send(new GetIssueDetailQuery { Id = id });
+            var dto = await Mediator.Send(new GetIssueDetailQuery { IssueId = id });
             var vm = _mapper.Map<IssueDetailViewModel>(dto);
             return View(vm);
         }

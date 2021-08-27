@@ -1,0 +1,125 @@
+﻿@model WhatBug.WebUI.Components.IssueDetail.IssueDetailViewModel
+
+    <div class="issueDetailModal modal-dialog-scrollable" >
+        <div class="modal-dialog modal-xl ">
+            <div class="modal-content" >
+                <div class="modal-body d-flex flex-column px-5 pt-5 pb-0">
+
+                    <div class="data">
+                        <input type="hidden" asp-for="@Model.Id" class="issueId" />
+                        <input type="hidden" asp-for="Description" class="issueDescription" />
+                    </div>
+
+                    <!-- Header Row -->
+                    <div class="row">
+                        <div class="col">
+                            <span><a asp-controller="Projects" asp-action="Index">@Model.ProjectName</a> / @Model.Id</span>
+                        </div>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="row flex-grow-1 issue-detail-body">
+
+                        <!-- Left Column -->
+                        <div class="col col-8">
+
+                            <!-- Title -->
+                            <div class="my-2">
+                                <h4>@Model.Summary</h4>
+                            </div>
+
+                            <!-- Buttons Row -->
+                            @*<div class="my-2">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default"><i class="fas fa-fw fa-edit mr-1"></i>Edit</button>
+                                    <button type="button" class="btn btn-default"><i class="far fa-fw fa-comment mr-1"></i>Comment</button>
+                                    <button type="button" class="btn btn-default"><i class="far fa-fw fa-user mr-1"></i>Assign</button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default">ToDo</button>
+                                    <button type="button" class="btn btn-default">In Progress</button>
+                                    <button type="button" class="btn btn-default">Done</button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default">Admin</button>
+                                </div>
+                            </div>*@
+
+                            <!-- Issue Info -->
+                            <div class="d-flex align-content-start">
+                                <!-- Labels -->
+                                <div class="mr-5">
+                                    <div class="m-2">
+                                        Issue Type
+                                    </div>
+                                    <div class="m-2">
+                                        Priority
+                                    </div>
+                                </div>
+                                <!-- Values -->
+                                <div class="ml-5">
+                                    <div class="m-2">
+                                        <span class="col-form-label"><icon icon="@Model.IssueTypeIconName" color="@Model.IssueTypeIconColor" /> @Model.IssueTypeName</span>
+                                    </div>
+                                    <div class="m-2">
+                                        <span class="col-form-label"><icon icon="@Model.PriorityIconName" color="@Model.PriorityIconColor" /> @Model.PriorityName</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quill Editor -->
+                            <div class="mt-3">
+                                <label asp-for="Description"></label>
+                                <div class="quill-editor"></div>
+                            </div>
+
+                            <!-- Comments -->
+                            <p class="mt-3"><b>Comments</b></p>
+                            <div class="col direct-chat direct-chat mb-5">
+                                <form method="post" class="commentForm mb-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Enter comment ..." class="form-control commentContent" />
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-secondary">Send</button>
+                                        </span>
+                                    </div>
+                                </form>
+
+                                <div class="issueComments">
+                                    <!-- Comments are loaded here via ajax -->
+                                </div>                              
+                            </div>
+                        </div>
+
+                        <!-- Right Column-->
+                        <div class="col col-4">
+                            <!-- People -->
+                            <p class="ml-3"><b>People</b></p>
+                            <div class="d-flex align-content-start ml-3">
+                                <!-- Labels -->
+                                <div class="mr-3">
+                                    <div class="my-3">
+                                        Assignee
+                                    </div>
+                                    <div class="my-3">
+                                        Reporter
+                                    </div>
+                                </div>
+                                <!-- Values -->
+                                <div class="ml-3">
+                                    <div class="my-3">
+                                        <avatar email="@Model.AssigneeEmail" class="user-image img-circle img-sm mr-2" />
+                                        @Model.AssigneeFullName
+                                    </div>
+                                    <div class="my-3">
+                                        <avatar email="@Model.ReporterEmail" class="user-image img-circle img-sm mr-2" />
+                                        @Model.ReporterFullName
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

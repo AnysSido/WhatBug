@@ -1,4 +1,5 @@
-﻿using WhatBug.Domain.Common;
+﻿using System.Collections.Generic;
+using WhatBug.Domain.Common;
 
 namespace WhatBug.Domain.Entities
 {
@@ -25,5 +26,7 @@ namespace WhatBug.Domain.Entities
 
         public int PriorityId { get; set; }
         public Priority Priority { get; set; }
+
+        public IList<IssueComment> Comments { get; set; }
     }
 }

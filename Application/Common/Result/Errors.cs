@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WhatBug.Application.Common.Result
+﻿namespace WhatBug.Application.Common.Result
 {
     public static class Errors
     {
@@ -24,6 +21,12 @@ namespace WhatBug.Application.Common.Result
 
             public static Error IssueTypeNotFound(int issueTypeId) =>
                 new Error("IssueTypeForIssueNotFound", $"Could not find issue type with id {issueTypeId}");
+
+            public static Error CommendAuthorNotFound(string issueId, int authorId) =>
+                new Error("AuthorForIssueCommentNotFound", $"Could not find user with id {authorId} " +
+                        $"for new comment on issue {issueId}");
+            public static Error IssueNotFound(string issueId) =>
+                new Error("IssueForCommentNotFound", $"Could not find issue with id {issueId}");
 
             public static Error ReporterNotFound(int reporterId) =>
                 new Error("ReporterForIssueNotFound", $"Could not find reporter user with id {reporterId}");

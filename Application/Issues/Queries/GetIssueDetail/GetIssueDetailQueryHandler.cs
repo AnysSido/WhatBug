@@ -25,7 +25,7 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
         public async Task<IssueDetailDTO> Handle(GetIssueDetailQuery request, CancellationToken cancellationToken)
         {
             // TODO: Check permissions
-            var dto = await _mapper.ProjectTo<IssueDetailDTO>(_context.Issues).FirstOrDefaultAsync(i => i.Id == request.Id);
+            var dto = await _mapper.ProjectTo<IssueDetailDTO>(_context.Issues).FirstOrDefaultAsync(i => i.Id == request.IssueId);
 
             if (dto == null)
             {

@@ -19,6 +19,7 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<IssueType> IssueTypes { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<IssueStatus> IssueStatuses { get; set; }
+        DbSet<IssueComment> IssueComments { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
