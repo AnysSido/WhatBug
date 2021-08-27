@@ -15,6 +15,10 @@
 //   background-color: #495057;
 // }
 
+.issue-card table td {
+  vertical-align: top;
+}
+
 #IssueDetailComponent {
   .ql-editor {
     resize: none;

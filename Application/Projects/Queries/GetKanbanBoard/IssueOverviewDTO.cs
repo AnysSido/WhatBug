@@ -15,14 +15,13 @@ namespace WhatBug.Application.Projects.Queries.GetKanbanBoard
         public string IssueTypeIconName { get; set; }
         public string PriorityIconColor { get; set; }
         public string PriorityIconName { get; set; }
+        public string AssigneeEmail { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Issue, IssueOverviewDTO>()
                 .ForMember(d => d.IssueTypeIconColor, opt => opt.MapFrom(s => s.IssueType.Color.Name))
-                .ForMember(d => d.IssueTypeIconName, opt => opt.MapFrom(s => s.IssueType.Icon.Name))
-                .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name))
-                .ForMember(d => d.PriorityIconName, opt => opt.MapFrom(s => s.Priority.Icon.Name));
+                .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name));
         }
     }
 }
