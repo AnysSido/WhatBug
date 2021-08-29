@@ -1793,6 +1793,11 @@ file-uri-to-path@1.0.0:
   resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
   integrity sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==
 
+filepond@^4.29.0:
+  version "4.29.0"
+  resolved "https://registry.yarnpkg.com/filepond/-/filepond-4.29.0.tgz#3429baa6edcf242f26f70f31396bba4ff164f087"
+  integrity sha512-RB62AVNTpV1G4pDNoRXPZYkEbYp0vrJyTNLDDitwJ3V5u4B22f1Ywai4SVwZ+vecNnW3tB68XVXaB0VlQvHT7A==
+
 fill-range@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-4.0.0.tgz#d544811d428f98eb06a63dc402d2403c328c38f7"
@@ -2590,6 +2595,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
+
+jquery-filepond@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jquery-filepond/-/jquery-filepond-1.0.0.tgz#06830fb94ec9c697470ebadf57c53291226f9c54"
+  integrity sha512-ONxFHUsDMfkHFhVn+GwE8XtEFE3WhSNun5+h3KxW1RiVs2pnnkO/3WvQ+IjnLP4ywVkzEgkNXJaguxPH4Wz3aw==
 
 jquery-knob-chif@^1.2.13:
   version "1.2.13"
