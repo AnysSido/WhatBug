@@ -24,6 +24,8 @@ const libraries = [
     { from: 'bootstrap/dist', to: 'bootstrap' },
     // Dragula
     { from: 'dragula/dist', to: 'dragula' },
+    // Dropzone
+    { from: 'dropzone/dist/min', to: 'dropzone'},
     // Filepond
     { from: "filepond/dist", to: "filepond" },
     { from: "jquery-filepond", to: "jquery-filepond" },

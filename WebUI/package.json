@@ -12,6 +12,7 @@
     "bootstrap-select": "^1.13.18",
     "bootstrap4-duallistbox": "^4.0.2",
     "dragula": "^3.7.3",
+    "dropzone": "^5.9.2",
     "filepond": "^4.29.0",
     "highlight.js": "^11.1.0",
     "icheck-bootstrap": "^3.0.1",
