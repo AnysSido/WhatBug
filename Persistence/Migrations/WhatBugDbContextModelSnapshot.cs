@@ -44,9 +44,6 @@ namespace WhatBug.Persistence.Migrations
                     b.Property<string>("ContentType")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("FileId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("FileName")
                         .HasColumnType("text");
 
@@ -54,6 +51,9 @@ namespace WhatBug.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("IssueId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OriginalFileName")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

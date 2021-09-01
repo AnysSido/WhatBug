@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WhatBug.Persistence.Migrations
@@ -14,8 +13,8 @@ namespace WhatBug.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FileId = table.Column<Guid>(type: "uuid", nullable: false),
                     FileName = table.Column<string>(type: "text", nullable: true),
+                    OriginalFileName = table.Column<string>(type: "text", nullable: true),
                     FileSize = table.Column<long>(type: "bigint", nullable: false),
                     ContentType = table.Column<string>(type: "text", nullable: true),
                     IssueId = table.Column<string>(type: "text", nullable: true)
