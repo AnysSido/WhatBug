@@ -27,6 +27,7 @@ namespace WhatBug.Domain.Entities
         public int PriorityId { get; set; }
         public Priority Priority { get; set; }
 
+        public IList<Attachment> Attachments { get; set; }
         public IList<IssueComment> Comments { get; set; }
     }
 }

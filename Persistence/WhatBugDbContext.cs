@@ -37,6 +37,7 @@ namespace WhatBug.Persistence
         public DbSet<Color> Colors { get; set; }
         public DbSet<IssueStatus> IssueStatuses { get; set; }
         public DbSet<IssueComment> IssueComments { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
