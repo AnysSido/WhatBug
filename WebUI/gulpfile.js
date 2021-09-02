@@ -26,9 +26,6 @@ const libraries = [
     { from: 'dragula/dist', to: 'dragula' },
     // Dropzone
     { from: 'dropzone/dist/min', to: 'dropzone'},
-    // Filepond
-    { from: "filepond/dist", to: "filepond" },
-    { from: "jquery-filepond", to: "jquery-filepond" },
     // FontAwesome
     { from: '@fortawesome/fontawesome-free/css', to: 'fontawesome-free/css' },
     { from: '@fortawesome/fontawesome-free/webfonts', to: 'fontawesome-free/webfonts' },

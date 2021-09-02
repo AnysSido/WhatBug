@@ -18,7 +18,6 @@ class IssueDetailComponent {
         this.#RegisterEvents();
         this.#LoadComments();
         this.#LoadQuill();
-        this.#LoadFilepond();
         this.#LoadDropzone();
     }
 
