@@ -12,6 +12,7 @@ using WhatBug.Persistence;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Services;
 using WhatBug.WebUI.Services.Interfaces;
+using WhatBug.WebUI.Settings;
 using WhatBug.WebUI.ViewLocators;
 
 namespace WebUI
@@ -28,6 +29,10 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            services.Configure<AttachmentSettings>(Configuration.GetSection("Attachments"));
+            services.AddSingleton(Configuration);
+
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication();
