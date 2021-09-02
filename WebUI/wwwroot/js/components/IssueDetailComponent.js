@@ -12,11 +12,14 @@ class IssueDetailComponent {
     }
 
     #BuildComponent(modal) {
+        $('body').append(this.issueDetailComponent);
         this.issueDetailComponent.html(modal);
         this.#SetVars();
         this.#RegisterEvents();
         this.#LoadComments();
         this.#LoadQuill();
+        this.#LoadFilepond();
+        this.#LoadDropzone();
     }
 
     #SetVars = () => {
@@ -54,6 +57,7 @@ class IssueDetailComponent {
     };
 
     #LoadQuill = () => {
+        this.issueDetailModal.find('.commentContent').on('click', () => { console.log("lol"); });
         this.quill = new QuillEditorComponent({
             container: this.issueDetailModal.find('.quill-editor'),
             isDynamic: true,
@@ -65,6 +69,38 @@ class IssueDetailComponent {
                 issueId: this.issueId.val(),
                 description: this.issueDescription.val(), 
             });
+        });
+    }
+
+    #LoadDropzone = () => {
+        var component = this;
+        var dropzone = new Dropzone('.dropzone', {
+            url: '/attachments/create',
+            addRemoveLinks: true,
+            init: (function() {
+
+                $.get('/attachments/getattachments', { issueId: component.issueId.val() })
+                .done((attachments) => {
+                    attachments = jQuery.parseJSON(attachments);
+
+                    $.each(attachments, (_, attachment) => {
+                        var mockFile = { 
+                            name: attachment.OriginalFileName,
+                            size: attachment.FileSize,
+                            dataURL: '/attachments/get/' + attachment.FileName
+                        };
+
+                        this.emit('addedfile', mockFile);
+                        this.createThumbnailFromUrl(mockFile,
+                            dropzone.options.thumbnailWidth,
+                            dropzone.options.thumbnailHeight,
+                            dropzone.options.thumbnailMethod, true, function(thumbnail) {
+                                dropzone.emit('thumbnail', mockFile, thumbnail)
+                            });
+                        this.emit('complete', mockFile);
+                    });                    
+                });
+            })
         });
     }
 }
