@@ -1468,7 +1468,7 @@ dragula@^3.7.3:
     contra "1.9.4"
     crossvent "1.5.5"
 
-dropzone@^5.8.1:
+dropzone@^5.8.1, dropzone@^5.9.2:
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.9.2.tgz#0a90ce3f6b011c3932484f368f4bf06223729450"
   integrity sha512-5t2z51DzIsWDbTpwcJIvUlwxBbvcwdCApz0yb9ecKJwG155Xm92KMEZmHW1B0MzoXOKvFwdd0nPu5cpeVcvPHQ==
@@ -2590,6 +2590,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
+
+jquery-filepond@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jquery-filepond/-/jquery-filepond-1.0.0.tgz#06830fb94ec9c697470ebadf57c53291226f9c54"
+  integrity sha512-ONxFHUsDMfkHFhVn+GwE8XtEFE3WhSNun5+h3KxW1RiVs2pnnkO/3WvQ+IjnLP4ywVkzEgkNXJaguxPH4Wz3aw==
 
 jquery-knob-chif@^1.2.13:
   version "1.2.13"

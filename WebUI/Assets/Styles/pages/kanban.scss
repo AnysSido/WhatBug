@@ -1,8 +1,8 @@
-.dropzone-border {
+.dragula-border {
   border: dashed 3px #aaa !important;
 }
 
-.dropzone-hover {
+.dragula-hover {
   background-color: #bfe4ff;
   transition: background-color 0.3s;
 }
@@ -14,6 +14,70 @@
 // #IssueDetailComponent .quill-editor:hover {
 //   background-color: #495057;
 // }
+
+// Attachments
+.attachment-thumbnail-container {
+  min-height: 100%;
+}
+
+.attachment-thumbnail-template {
+  border-radius: 5px;
+  overflow: hidden;
+  height: 125px; 
+  width: 156px;
+  box-shadow: rgba(9, 30, 66, 0.31) 0px 1px 1px,
+   rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+}
+
+.attachment-thumbnail-template:hover {
+  .attachment-button {
+    opacity: 0.9;
+  }
+}
+
+.attachment-buttons-container {
+  position: relative;
+  margin-top: 0.5em;
+  margin-right: 0.5rem;
+}
+
+.attachment-name {
+  font-size: 0.8em;
+}
+
+.attachment-button.attachment-button {
+  // position: absolute;
+  // top: 5;
+  margin: 0px;
+  padding: 1px;
+  min-width: 0px;
+  height: auto;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  opacity: 0;
+}
+
+.attachment-image {
+  height: 125px;
+  width: 156px;
+  position: absolute;
+  border-radius: 5px;
+}
+
+.attachment-name-container {
+  // position: relative; 
+  width: 100%; 
+  height: 2rem; 
+  background-color: white;
+  opacity: 0.8;
+  // top: 100%;
+  // transform: translateY(-100%);
+}
+
+.issue-detail-body-attaching {
+  border: dashed 3px rgb(31, 72, 126);
+  background-color: rgba(72, 113, 167, 0.5) !important;
+}
 
 .issue-card table td {
   vertical-align: top;

@@ -22,7 +22,10 @@ const libraries = [
     { from: 'animate.css', to: 'animate-css', glob: '/**/*.min.css' },
     // Bootstrap
     { from: 'bootstrap/dist', to: 'bootstrap' },
+    // Dragula
     { from: 'dragula/dist', to: 'dragula' },
+    // Dropzone
+    { from: 'dropzone/dist/min', to: 'dropzone'},
     // FontAwesome
     { from: '@fortawesome/fontawesome-free/css', to: 'fontawesome-free/css' },
     { from: '@fortawesome/fontawesome-free/webfonts', to: 'fontawesome-free/webfonts' },
