@@ -27,5 +27,7 @@ namespace WhatBug.WebUI.Components.IssueDetail
         public string ReporterSurname { get; set; }
         public string ReporterEmail { get; set; }
         public string ReporterFullName => $"{ReporterFirstName} {ReporterSurname}";
+
+        public int AttachmentCount { get; set; }
     }
 }

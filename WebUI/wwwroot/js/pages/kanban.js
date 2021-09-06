@@ -9,19 +9,19 @@ const animationClass = 'animate__animated animate__rubberBand animate__fast';
 
 drag.on('drag', (el, source) => {
     $(el).removeClass(animationClass);
-    $('.drag-container').not($(source)).addClass('dropzone-border');
+    $('.drag-container').not($(source)).addClass('dragula-border');
 });
 
 drag.on('dragend', (el) => {
-    $('.drag-container').removeClass('dropzone-border');
+    $('.drag-container').removeClass('dragula-border');
 })
 
 drag.on('over', (el, container, source) => {
-    $(container).addClass('dropzone-hover');
+    $(container).addClass('dragula-hover');
 })
 
 drag.on('out', (el, container, source) => {
-    $(container).removeClass('dropzone-hover');
+    $(container).removeClass('dragula-hover');
 });
 
 drag.on('drop', (el, target, source, sibling) => {

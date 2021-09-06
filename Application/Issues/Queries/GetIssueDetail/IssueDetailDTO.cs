@@ -27,11 +27,14 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
         public string ReporterSurname { get; set; }
         public string ReporterEmail { get; set; }
 
+        public int AttachmentCount { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Issue, IssueDetailDTO>()
                 .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name))
-                .ForMember(d => d.IssueTypeIconColor, opt => opt.MapFrom(s => s.IssueType.Color.Name));
+                .ForMember(d => d.IssueTypeIconColor, opt => opt.MapFrom(s => s.IssueType.Color.Name))
+                .ForMember(d => d.AttachmentCount, opt => opt.MapFrom(s => s.Attachments.Count));
         }
     }
 }
