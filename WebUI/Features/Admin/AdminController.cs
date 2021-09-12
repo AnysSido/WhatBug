@@ -17,8 +17,11 @@ namespace WhatBug.WebUI.Features.Admin
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleCommand command)
         {
-            await Mediator.Send(command);
-            return null;
+            if (!ModelState.IsValid)
+                return View(command);
+
+            var result = await Mediator.Send(command);
+            return null; // TODO: Return to index
         }
     }
 }

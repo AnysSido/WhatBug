@@ -42,7 +42,7 @@ namespace WhatBug.Application.Common.Behaviors
                     // T will be at runtime.
                     var flags = BindingFlags.NonPublic | BindingFlags.Instance;
                     var parameters = new object[] { false, failures, default };
-                    var response = Activator.CreateInstance(responseType, flags, null, parameters, null);
+                    var response = Activator.CreateInstance(responseType, flags, null, parameters, null); // TODO: Write tests for this
 
                     return response as TResponse;
                 }

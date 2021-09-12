@@ -1,14 +1,9 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WhatBug.Application.Common.Result;
+using WhatBug.Application.Common.Models;
 
 namespace WhatBug.Application.Admin.Commands.CreateRole
 {
-    public class CreateRoleCommand : IRequest<Result>
+    public class CreateRoleCommand : IRequest<Response>
     {
         public string Name { get; set; }
         public string Description { get; set; }

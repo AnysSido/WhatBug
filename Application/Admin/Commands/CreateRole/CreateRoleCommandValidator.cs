@@ -1,17 +1,28 @@
 ﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.Common.Result;
 
 namespace WhatBug.Application.Admin.Commands.CreateRole
 {
     public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
-        public CreateRoleCommandValidator()
+        private IWhatBugDbContext _context;
+
+        public CreateRoleCommandValidator(IWhatBugDbContext context)
         {
-            RuleFor(v => v.Name).NotEmpty();
+            _context = context;
+
+            RuleFor(v => v.Name).NotEmpty().WithMessage("Role name cannot be empty")
+                .MustAsync(HaveUniqueName).WithMessage(cmd => $"A role with the name {cmd.Name} already exists");
         }
+
+        public async Task<bool> HaveUniqueName(CreateRoleCommand command, string name, CancellationToken cancellationToken)
+        {
+            return !await _context.Roles.AnyAsync(r => r.Name == name);
+        }        
     }
 }

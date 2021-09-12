@@ -17,3 +17,15 @@
     height: 80vh;
     overflow-y: auto;
 }
+
+.simple-page {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 1rem;
+}
+
+.width-m {
+    max-width: 50rem;
+}

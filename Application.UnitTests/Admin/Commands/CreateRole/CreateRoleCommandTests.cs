@@ -14,27 +14,6 @@ namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
     public class CreateRoleCommandTests : CommandTestBase
     {
         [Fact]
-        public async Task Handle_GivenDuplicateRoleName_ReturnsNameIsTakenError()
-        {
-            // Arrange
-            using (var context = CreateContext())
-            {
-                context.Roles.Add(new Role { Id = 1, Name = "Admin" });
-                context.SaveChanges();
-            }
-
-            var sut = new CreateRoleCommandHandler(_context);
-            var command = new CreateRoleCommand { Name = "Admin" };
-
-            // Act
-            var result = await sut.Handle(command, CancellationToken.None);
-
-            // Assert
-            var expectedErrorCode = Errors.Admin.Roles.NameIsTaken(command.Name).Code;
-            result.Errors.Select(e => e.Code).ShouldContain(expectedErrorCode);
-        }
-
-        [Fact]
         public async Task Handle_GivenValidRequest_CreatesRole()
         {
             // Arrange
