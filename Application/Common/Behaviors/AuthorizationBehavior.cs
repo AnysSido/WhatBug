@@ -6,11 +6,11 @@ using System.Reflection;
 using WhatBug.Application.Common.Security;
 using WhatBug.Application.Common.Interfaces;
 using System;
-using Permissionn = WhatBug.Domain.Data.Permissions; // TODO: Fix
 using Microsoft.EntityFrameworkCore;
 using WhatBug.Domain.Entities;
 using WhatBug.Application.Common.Exceptions;
 using System.Collections.Generic;
+using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.Common.Behaviors
 {
@@ -45,7 +45,7 @@ namespace WhatBug.Application.Common.Behaviors
 
                 foreach (var authorizeAttribute in authorizeAttributes)
                 {
-                    var requiredPermissionIds = authorizeAttribute.Permissions.AsEnumerable().Select(p => Permissionn.ToEntity(p).Id).ToList();
+                    var requiredPermissionIds = authorizeAttribute.Permissions.AsEnumerable().Select(p => Permissions.ToEntity(p).Id).ToList();
 
                     if (authorizeAttribute.Operator == PermissionOperator.And)
                         authenticated = AuthorizeAll(grantedPermissionIds, requiredPermissionIds);
