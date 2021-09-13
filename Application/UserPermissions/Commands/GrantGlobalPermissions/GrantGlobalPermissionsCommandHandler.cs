@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Entities.JoinTables;
 
-namespace WhatBug.Application.Permissions.Commands.GrantGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions
 {
     public class GrantGlobalPermissionsCommandHandler : IRequestHandler<GrantGlobalPermissionsCommand>
     {

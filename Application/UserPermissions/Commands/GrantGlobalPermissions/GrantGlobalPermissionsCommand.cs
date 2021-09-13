@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Collections.Generic;
 
-namespace WhatBug.Application.Permissions.Commands.GrantGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions
 {
     public class GrantGlobalPermissionsCommand : IRequest
     {

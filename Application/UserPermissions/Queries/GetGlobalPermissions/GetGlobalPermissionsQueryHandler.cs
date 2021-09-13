@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 
-namespace WhatBug.Application.Permissions.Queries.GetGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Queries.GetGlobalPermissions
 {
     public class GetGlobalPermissionsQueryHandler : IRequestHandler<GetGlobalPermissionsQuery, GlobalPermissionsDTO>
     {
@@ -20,7 +20,7 @@ namespace WhatBug.Application.Permissions.Queries.GetGlobalPermissions
 
         public async Task<GlobalPermissionsDTO> Handle(GetGlobalPermissionsQuery request, CancellationToken cancellationToken)
         {
-            var dto = new GlobalPermissionsDTO 
+            var dto = new GlobalPermissionsDTO
             {
                 Users = await _mapper.ProjectTo<UserDTO>(_context.Users).ToListAsync()
             };

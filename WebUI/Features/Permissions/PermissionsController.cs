@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WhatBug.Application.Permissions.Commands.GrantGlobalPermissions;
-using WhatBug.Application.Permissions.Queries.GetGlobalPermissions;
-using WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions;
+using WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions;
+using WhatBug.Application.UserPermissions.Queries.GetGlobalPermissions;
+using WhatBug.Application.UserPermissions.Queries.GetGrantGlobalPermissions;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Permissions.GrantGlobalPermissions;
 

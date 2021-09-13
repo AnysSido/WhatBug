@@ -1,7 +1,7 @@
 ﻿using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
-namespace WhatBug.Application.Permissions.Queries.GetGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Queries.GetGlobalPermissions
 {
     public class PermissionDTO : IMapFrom<Permission>
     {

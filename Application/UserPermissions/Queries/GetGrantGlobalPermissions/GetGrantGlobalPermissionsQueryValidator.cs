@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Queries.GetGrantGlobalPermissions
 {
     public class GetGrantGlobalPermissionsQueryValidator : AbstractValidator<GetGrantGlobalPermissionsQuery>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions;
+using WhatBug.Application.UserPermissions.Queries.GetGrantGlobalPermissions;
 using WhatBug.Common.Mapping;
 
 namespace WhatBug.WebUI.Features.Permissions.GrantGlobalPermissions

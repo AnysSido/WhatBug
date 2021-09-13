@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace WhatBug.Application.Permissions.Commands.GrantGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions
 {
     public class GrantGlobalPermissionsCommandValidator : AbstractValidator<GrantGlobalPermissionsCommand>
     {

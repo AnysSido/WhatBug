@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Entities;
 
-namespace WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Queries.GetGrantGlobalPermissions
 {
     public class GetGrantGlobalPermissionsQueryHandler : IRequestHandler<GetGrantGlobalPermissionsQuery, GrantGlobalPermissionsDTO>
     {

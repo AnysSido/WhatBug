@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WhatBug.Application.Permissions.Queries.GetGrantGlobalPermissions
+namespace WhatBug.Application.UserPermissions.Queries.GetGrantGlobalPermissions
 {
     public class GrantGlobalPermissionsDTO
     {
