@@ -13,6 +13,7 @@ namespace WhatBug.Application
         {
             services.AddAutoMapper(typeof(DependencyInjection));
             services.AddMediatR(typeof(DependencyInjection));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services.AddOptions<WhatBugSettings>()

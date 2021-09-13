@@ -13,6 +13,10 @@ namespace WhatBug.Domain.Entities
 
         public int PrioritySchemeId { get; set; }
         public PriorityScheme PriorityScheme { get; set; }
+
+        public int? PermissionSchemeId { get; set; }
+        public PermissionScheme PermissionScheme { get; set; }
+
         public List<ProjectRoleUser> RoleUsers { get; set; }
         public List<Issue> Issues { get; set; } = new List<Issue>();
     }
