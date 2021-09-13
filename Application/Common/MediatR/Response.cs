@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using WhatBug.Application.Common.Models;
 
-namespace WhatBug.Application.Common.Models
+namespace WhatBug.Application.Common.MediatR
 {
     public class Response<T> : Response
     {

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using WhatBug.Application.Common.MediatR;
 using WhatBug.Application.Common.Models;
 
 namespace WhatBug.Application.Common.Behaviors

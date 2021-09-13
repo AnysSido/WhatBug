@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using WhatBug.Application.Common.Models;
 
 namespace WhatBug.Application.Common.MediatR
 {
