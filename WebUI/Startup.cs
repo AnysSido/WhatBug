@@ -10,6 +10,7 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure;
 using WhatBug.Persistence;
 using WhatBug.WebUI.Authorization;
+using WhatBug.WebUI.Routing.Breadcrumbs;
 using WhatBug.WebUI.Services;
 using WhatBug.WebUI.Services.Interfaces;
 using WhatBug.WebUI.ViewLocators;
@@ -43,6 +44,7 @@ namespace WebUI
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IWhatBugDbContext>())
                 .AddFeatureFolders();
 
+            services.AddSingleton<IBreadcrumbManager, BreadcrumbManager>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         }
 
@@ -69,12 +71,14 @@ namespace WebUI
             app.UseMiddleware<PermissionMiddleware>();
             app.UseAuthorization();
 
+            app.UseMiddleware<BreadcrumbMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                //endpoints.MapRazorPages();
             });
         }
     }
