@@ -1,7 +1,7 @@
 ﻿using WhatBug.Application.UserPermissions.Queries.GetGrantGlobalPermissions;
 using WhatBug.Common.Mapping;
 
-namespace WhatBug.WebUI.Features.Permissions.GrantGlobalPermissions
+namespace WhatBug.WebUI.Features.UserPermissions.GrantGlobalPermissions
 {
     public class PermissionViewModel : IMapFrom<PermissionDTO>
     {

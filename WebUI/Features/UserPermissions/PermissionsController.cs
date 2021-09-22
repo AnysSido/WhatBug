@@ -4,9 +4,9 @@ using WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions;
 using WhatBug.Application.UserPermissions.Queries.GetGlobalPermissions;
 using WhatBug.Application.UserPermissions.Queries.GetGrantGlobalPermissions;
 using WhatBug.WebUI.Common;
-using WhatBug.WebUI.Features.Permissions.GrantGlobalPermissions;
+using WhatBug.WebUI.Features.UserPermissions.GrantGlobalPermissions;
 
-namespace WhatBug.WebUI.Features.Permissions
+namespace WhatBug.WebUI.Features.UserPermissions
 {
     public class PermissionsController : BaseController
     {
