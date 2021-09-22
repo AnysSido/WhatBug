@@ -27,21 +27,7 @@ namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
         }
 
         [Fact]
-        public async Task Handle_GivenValidRequest_ReturnsId()
-        {
-            // Arrange
-            var sut = new CreateRoleCommandHandler(_context);
-            var command = new CreateRoleCommand { Name = "Role Name" };
-
-            // Act
-            var result = await sut.Handle(command, CancellationToken.None);
-
-            // Assert
-            result.Result.ShouldBe(1);
-        }
-
-        [Fact]
-        public async Task Handle_GivenValidRequest_ReturnsSuccess()
+        public async Task Handle_GivenValidRequest_ReturnsSuccessWithId()
         {
             // Arrange
             var sut = new CreateRoleCommandHandler(_context);
@@ -52,6 +38,7 @@ namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
 
             // Assert
             result.Succeeded.ShouldBe(true);
+            result.Result.ShouldBe(1);
         }
     }
 }
