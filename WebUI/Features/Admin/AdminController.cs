@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.Admin.Commands.CreateRole;
+using WhatBug.Domain.Data;
+using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
 
 namespace WhatBug.WebUI.Features.Admin
 {
     public class AdminController : BaseController
     {
+        [RequirePermission(Permissions.ManageProjectRoles)]
         [HttpGet]
         public IActionResult CreateRole()
         {
