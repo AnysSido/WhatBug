@@ -16,7 +16,7 @@ namespace WhatBug.WebUI.Authorization
             if (user == null)
                 return false;
 
-            return user?.Claims.Any(c => c.Value == permission) != null;
+            return user?.Claims.Any(c => c.Value == permission) ?? default;
         }
 
         public static bool HasPermissions(this ClaimsPrincipal user, params string[] permissions)
