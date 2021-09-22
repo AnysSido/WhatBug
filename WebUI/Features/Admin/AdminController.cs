@@ -9,8 +9,8 @@ namespace WhatBug.WebUI.Features.Admin
 {
     public class AdminController : BaseController
     {
-        [RequirePermission(Permissions.ManageProjectRoles)]
         [HttpGet]
+        [RequirePermission(Permissions.ManageProjectRoles)]
         public IActionResult CreateRole()
         {
             var command = new CreateRoleCommand();
@@ -18,6 +18,7 @@ namespace WhatBug.WebUI.Features.Admin
         }
 
         [HttpPost]
+        [RequirePermission(Permissions.ManageProjectRoles)]
         public async Task<IActionResult> CreateRole(CreateRoleCommand command)
         {
             if (!ModelState.IsValid)
