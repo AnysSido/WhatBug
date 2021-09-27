@@ -1,0 +1,13 @@
+﻿.form {
+    &__group {
+        @extend .form-group; // Bootstrap form-group
+    }
+
+    &__input {
+        @extend .form-control; // Bootstrap form-control
+    }
+
+    &__validation {
+        @extend .text--danger;
+    }
+}

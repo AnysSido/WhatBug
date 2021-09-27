@@ -1,0 +1,21 @@
+﻿.table {
+    @extend .table; // Bootstrap table
+
+    &__header {
+
+        // Shrink the column to the header width by defaulty
+        &--shrink {
+            width: 1%;
+            white-space: nowrap;
+        }
+    }
+
+    &__cell {
+        
+        &--icons {
+            @extend .l-flex;
+            @extend .l-flex--justify-content-start;
+            gap: 0.5rem;
+        }
+    }
+}

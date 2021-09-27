@@ -1,0 +1,8 @@
+﻿// text--primary, text--secondary etc
+@each $color, $value in $theme-colors {
+    .text {
+        &--#{$color} {
+            color: $value;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+﻿.l-flex {
+    @extend .d-flex;
+    gap: 1rem;
+
+    &--column {
+        @extend .flex-column;
+    }
+
+    &--justify-content-start {
+        @extend .justify-content-start;
+    }
+
+    &--justify-content-end {
+        @extend .justify-content-end;
+    }
+}

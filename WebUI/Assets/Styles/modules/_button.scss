@@ -1,0 +1,20 @@
+﻿// button--primary, button--secondary etc
+@each $color, $value in $theme-colors {
+    .button {
+        &--#{$color} {
+            @extend .btn-#{$color};
+        }
+    }
+}
+
+.button {
+    @extend .btn; // Bootstrap buttom
+
+    &__text {
+
+    }
+
+    &__icon {
+        
+    }
+}

@@ -1,0 +1,20 @@
+﻿// alert--primary, alert--secondary etc
+@each $color, $value in $theme-colors {
+    .alert {
+        &--#{$color} {
+            @extend .alert-default-#{$color}; // Default bootstrap alerts in AdminLTE
+        }
+    }
+}
+
+.alert {
+    @extend .alert; // Bootstrap alert
+
+    &--dismissible {
+        @extend .alert-dismissible;
+    }
+
+    &__dismiss {
+        @extend .close;
+    }
+}
