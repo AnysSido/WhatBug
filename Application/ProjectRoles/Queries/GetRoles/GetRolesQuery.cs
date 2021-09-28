@@ -11,10 +11,10 @@ using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
 {
+    [Authorize(Permissions.ManageProjectRoles)]
     public record GetRolesQuery : IQuery<Response<GetRolesQueryResult>> { }
 
-    [Authorize(Permissions.ManageProjectRoles)]
-    public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, Response<GetRolesQueryResult>>, IRequireAuthorization
+    public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, Response<GetRolesQueryResult>>
     {
         private readonly IWhatBugDbContext _context;
         private readonly IMapper _mapper;
