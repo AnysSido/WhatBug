@@ -4,7 +4,7 @@ using WhatBug.Application.ProjectRoles.Commands.CreateRole;
 using WhatBug.Domain.Entities;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
+namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.CreateRole
 {
     public class CreateRoleValidatorTest : CommandTestBase
     {
@@ -34,7 +34,7 @@ namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
         public void GivenNullName_HasValidationError()
         {
             // Arrange
-            var command = new CreateRoleCommand ();
+            var command = new CreateRoleCommand();
             var expectedErrorMessage = "Role name cannot be empty";
 
             // Act

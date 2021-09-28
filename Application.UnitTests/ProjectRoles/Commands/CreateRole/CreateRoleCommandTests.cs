@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.ProjectRoles.Commands.CreateRole;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.Admin.Commands.CreateRole
+namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.CreateRole
 {
     public class CreateRoleCommandTests : CommandTestBase
     {
