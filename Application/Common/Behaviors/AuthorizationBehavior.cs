@@ -15,7 +15,6 @@ using WhatBug.Domain.Data;
 namespace WhatBug.Application.Common.Behaviors
 {
     public class AuthorizationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequireAuthorization
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IWhatBugDbContext _context;
