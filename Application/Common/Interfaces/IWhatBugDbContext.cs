@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Domain.Entities;
@@ -22,6 +23,7 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<IssueComment> IssueComments { get; set; }
         DbSet<Attachment> Attachments { get; set; }
 
+        ChangeTracker ChangeTracker { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
