@@ -64,10 +64,16 @@ namespace WhatBug.WebUI.Routing.Breadcrumbs
                     {
                         var part = segment as RoutePatternLiteralPart;
 
-                        if (controllers.TryGetValue($"{part.Content}Controller".ToLowerInvariant(), out var controller))
+                        if (controllers.TryGetValue($"{part.Content.Replace("-", string.Empty)}Controller".ToLowerInvariant(), out var controller))
                         {
                             if (controller.GetMethod("Index") != null)
-                                breadcrumbs.Add(new Breadcrumb(part.Content, part.Content, "Index"));
+                            {
+                                var routeAttribute = controller.GetCustomAttributes(typeof(RouteAttribute), true).FirstOrDefault() as RouteAttribute;
+                                if (routeAttribute != null && routeAttribute.Name != default)
+                                    breadcrumbs.Add(new Breadcrumb(part.Content, routeAttribute.Name));
+                                else
+                                    breadcrumbs.Add(new Breadcrumb(part.Content, part.Content, "Index"));
+                            }
                         }
                         else
                         {

@@ -7,7 +7,9 @@ namespace WhatBug.WebUI.Routing.Breadcrumbs
         public string Display { get; }
         public string Controller { get; }
         public string Action { get; }
+        public string RouteName { get; set; }
         public bool IsReadOnly { get; private set; }
+        public bool IsNamedRoute { get; }
 
         public Breadcrumb(string display)
         {
@@ -20,6 +22,13 @@ namespace WhatBug.WebUI.Routing.Breadcrumbs
             Display = GetDisplayString(display);
             Controller = controller;
             Action = action;
+        }
+
+        public Breadcrumb(string display, string routeName)
+        {
+            Display = GetDisplayString(display);
+            RouteName = routeName;
+            IsNamedRoute = true;
         }
 
         public void MakeReadOnly()

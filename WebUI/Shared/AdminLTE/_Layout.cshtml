@@ -39,8 +39,15 @@
                                         else
                                         {
                                             <li class="breadcrumb-item">
-                                                <a asp-controller="@breadcrumb.Controller"
-                                                   asp-action="@breadcrumb.Action">@breadcrumb.Display</a>
+                                                @if (breadcrumb.IsNamedRoute)
+                                                {
+                                                    <a asp-route="@breadcrumb.RouteName">@breadcrumb.Display</a>
+                                                }
+                                                else
+                                                { 
+                                                    <a asp-controller="@breadcrumb.Controller"
+                                                       asp-action="@breadcrumb.Action">@breadcrumb.Display</a>
+                                                }
                                             </li>
                                         }
                                     }
