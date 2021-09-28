@@ -1,0 +1,55 @@
+﻿@model WhatBug.Application.Admin.Queries.GetRoles.GetRolesQueryResult
+
+@{
+    ViewData["Title"] = "Project Roles";
+}
+
+@{ 
+    <div class="page-container">
+
+        <div class="text-block">
+            <p>
+                Project roles are used in conjunction with users and permission schemes.
+                Each permission scheme can have different permissions for each role.
+            </p>
+            <p>
+                Users can be assigned a role within a project. Users will be granted permissions
+                based what is available for their role within the current permission scheme.
+            </p>
+        </div>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table__header">Role Name</th>
+                    <th class="table__header">Role Description</th>
+                    <th class="table__header table__header--shrink">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model.Roles)
+                { 
+                    <tr>
+                        <td class="table__cell">@role.Name</td>
+                        <td class="table__cell">@role.Description</td>
+                        <td class="table__cell table__cell--icons">
+                            <a asp-route="EditRole" asp-route-roleId="@role.Id">
+                                <i class="icon--secondary fas fa-fw fa-pen"></i>
+                            </a>
+                            <span>
+                                <i class="icon--danger fas fa-fw fa-trash"></i>
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+        <div class="l-flex l-flex--justify-content-end">
+            <a class="button button--primary" asp-route="CreateRole">
+                <i class="button__icon fas fa-fw fa-plus"></i>
+                New Role
+            </a>
+        </div>
+    </div>
+}

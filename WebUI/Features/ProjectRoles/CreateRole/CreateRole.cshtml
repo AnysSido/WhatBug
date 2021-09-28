@@ -1,0 +1,58 @@
+﻿@model WhatBug.Application.Admin.Commands.CreateRole.CreateRoleCommand
+
+@{
+    ViewData["Title"] = "Create Project Role";
+}
+
+@{
+    <div class="page-container">
+
+        <div class="text-block">
+            <p>
+                Create a new project role to be used with projects in WhatBug.
+            </p>
+            <p>
+                Project roles are used in conjunction with users and permission schemes.
+                Each permission scheme can have different permissions for each role.
+            </p>
+            <p>
+                Users can be assigned a role within a project. Users will be granted permissions
+                based what is available for their role within the current permission scheme.
+            </p>
+        </div>
+
+        <div class="page-container__item--medium-width">
+            <form class="form" method="post">
+                <div class="form__group">
+                    <label class="form__label" asp-for="Name">Role Name</label>
+                    <input class="form__input" asp-for="Name" />
+                    <span class="form__validation" asp-validation-for="Name"></span>
+                </div>
+                <div class="form__group">
+                    <label class="form__label" asp-for="Description"></label>
+                    <input class="form__input" asp-for="Description" />
+                    <span class="form__validation" asp-validation-for="Description"></span>
+                </div>
+                <button class="button button--primary float-right" type="submit">
+                    <i class="button__icon fas fa-fw fa-plus"></i>
+                    Create Role
+                </button>
+            </form>
+        </div>
+
+        <div class="page-container__item--medium-width">
+            <div class="alert alert--info alert--dismissible">
+                <button class="alert__dismiss" type="button" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-info"></i> Example</h5>
+                <ol>
+                    <li>Create permission scheme <b>"Software Development"</b>.</li>
+                    <li>Create project role <b>"Developer"</b>.</li>
+                    <li>Grant the <b>Developer</b> role a permission under the <b>Software Development</b> scheme.</li>
+                    <li>Assign the new permission scheme to a project.</li>
+                    <li>Assign a user to the <b>Developer</b> role for that project.</li>
+                    <li>The user now has the project permissions you granted to the <b>Developer</b> role.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+}
