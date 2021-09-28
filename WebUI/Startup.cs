@@ -40,6 +40,9 @@ namespace WebUI
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddRouting(options => options.LowercaseUrls = true);
+
             services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IWhatBugDbContext>())
                 .AddFeatureFolders();
