@@ -7,7 +7,7 @@ using WhatBug.Application.Common.Security;
 using WhatBug.Domain.Data;
 using WhatBug.Domain.Entities;
 
-namespace WhatBug.Application.Admin.Commands.CreateRole
+namespace WhatBug.Application.ProjectRoles.Commands.CreateRole
 {
     [Authorize(Permissions.ManageProjectRoles)]
     public record CreateRoleCommand : ICommand<Response<int>>, IRequireAuthorization

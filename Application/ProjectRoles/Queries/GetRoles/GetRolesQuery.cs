@@ -9,7 +9,7 @@ using WhatBug.Application.Common.MediatR;
 using WhatBug.Application.Common.Security;
 using WhatBug.Domain.Data;
 
-namespace WhatBug.Application.Admin.Queries.GetRoles
+namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
 {
     public record GetRolesQuery : IQuery<Response<GetRolesQueryResult>> { }
 

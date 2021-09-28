@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WhatBug.Application.Admin.Commands.CreateRole;
-using WhatBug.Application.Admin.Queries.GetRoles;
+using WhatBug.Application.ProjectRoles.Commands.CreateRole;
+using WhatBug.Application.ProjectRoles.Queries.GetRoles;
 using WhatBug.Domain.Data;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;

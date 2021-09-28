@@ -1,6 +1,6 @@
 ﻿using Application.UnitTests.Common;
 using FluentValidation.TestHelper;
-using WhatBug.Application.Admin.Commands.CreateRole;
+using WhatBug.Application.ProjectRoles.Commands.CreateRole;
 using WhatBug.Domain.Entities;
 using Xunit;
 

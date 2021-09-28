@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WhatBug.Application.Admin.Queries.GetRoles
+namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
 {
     public class GetRolesQueryResult
     {

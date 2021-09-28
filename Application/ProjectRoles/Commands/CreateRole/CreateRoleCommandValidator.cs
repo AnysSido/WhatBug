@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Result;
 
-namespace WhatBug.Application.Admin.Commands.CreateRole
+namespace WhatBug.Application.ProjectRoles.Commands.CreateRole
 {
     public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
@@ -23,6 +23,6 @@ namespace WhatBug.Application.Admin.Commands.CreateRole
         public async Task<bool> HaveUniqueName(CreateRoleCommand command, string name, CancellationToken cancellationToken)
         {
             return !await _context.Roles.AnyAsync(r => r.Name == name);
-        }        
+        }
     }
 }

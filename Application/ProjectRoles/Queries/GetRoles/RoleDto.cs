@@ -1,7 +1,7 @@
 ﻿using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
-namespace WhatBug.Application.Admin.Queries.GetRoles
+namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
 {
     public class RoleDto : IMapFrom<Role>
     {
