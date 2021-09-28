@@ -4,7 +4,7 @@ using WhatBug.Common.Mapping;
 
 namespace WhatBug.Application.Common
 {
-    class MappingProfile : Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {

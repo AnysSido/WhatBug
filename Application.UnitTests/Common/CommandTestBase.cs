@@ -23,7 +23,7 @@ namespace Application.UnitTests.Common
 
         public void Dispose()
         {
-            _factory.Dispose(_context);
+            WhatBugContextFactory.Dispose(_context);
         }
     }
 }

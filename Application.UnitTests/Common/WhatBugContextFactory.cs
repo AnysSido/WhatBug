@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Domain.Entities;
 using WhatBug.Persistence;
 
 namespace WhatBug.Application.UnitTests.Common
@@ -25,7 +26,22 @@ namespace WhatBug.Application.UnitTests.Common
             return new WhatBugDbContext(_options, _currentUserService);
         }
 
-        public void Dispose(WhatBugDbContext context)
+        public WhatBugDbContext CreateWithSeed(string guid)
+        {
+            var context = Create(guid);
+
+            context.Roles.AddRange(new[] 
+            {
+                new Role { Id = 1, Name = "Admin", Description = "Admin Role"},
+                new Role { Id = 2, Name = "Developer", Description = "Developer Role"},
+                new Role { Id = 3, Name = "QA", Description = "QA Role"},
+            });
+
+            context.SaveChanges();
+            return context;
+        }
+
+        public static void Dispose(WhatBugDbContext context)
         {
             context.Database.EnsureDeleted();
             context.Dispose();
