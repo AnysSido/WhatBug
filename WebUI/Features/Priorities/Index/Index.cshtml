@@ -30,9 +30,9 @@
                     </tr>
                 </thead>
                 <tbody id="priorityList">
-                    @for (int i = 0; i < Model.Priorities.Count; i++)
+                    @foreach (var priority in Model.Priorities)
                     {
-                        <tr id="@Model.Priorities[i].Id">
+                        <tr id="@priority.Id">
                             <!-- Drag Handle -->
                             <td>
                                 <span class="handle">
@@ -46,7 +46,7 @@
                                         Action
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model.Priorities[i].Id">Edit</a>
+                                        <a class="dropdown-item" asp-action="Edit" asp-route-id="@priority.Id">Edit</a>
                                         <a class="dropdown-item" href="#">Delete</a>
                                     </div>
                                 </div>
@@ -54,18 +54,18 @@
                             <!-- Icon & Name -->
                             <td>
                                 <span>
-                                    <icon icon="@Model.Priorities[i].PriorityIconName" color="@Model.Priorities[i].PriorityIconColor"/>
-                                    <label asp-for="@Model.Priorities[i].Name">@Model.Priorities[i].Name</label>
+                                    <icon icon="@priority.PriorityIconWebName" color="@priority.PriorityIconColor" />
+                                    <label asp-for="@priority.Name">@priority.Name</label>
                                 </span>
                             </td>
                             <!-- Description -->
                             <td>
                                 <div>
-                                    @Model.Priorities[i].Description
+                                    @priority.Description
                                 </div>
                             </td>
                             <!-- Color -->
-                            <td class="wb-bg-color-@Model.Priorities[i].PriorityIconColor"></td>
+                            <td class="wb-bg-color-@priority.PriorityIconColor"></td>
                         </tr>
                     }
                 </tbody>

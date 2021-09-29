@@ -35,6 +35,7 @@ namespace WhatBug.WebUI.Features.Issues.Attachments
         [HttpPost]
         public async Task<IActionResult> Create(string issueId, IFormFile file)
         {
+            // TODO:
             // Validate the file
             // Verify the file
 

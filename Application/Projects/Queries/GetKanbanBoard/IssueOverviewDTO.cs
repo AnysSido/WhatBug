@@ -13,8 +13,10 @@ namespace WhatBug.Application.Projects.Queries.GetKanbanBoard
         public string IssueStatusName { get; set; }
         public string IssueTypeIconColor { get; set; }
         public string IssueTypeIconName { get; set; }
+        public string IssueTypeIconWebName { get; set; }
         public string PriorityIconColor { get; set; }
         public string PriorityIconName { get; set; }
+        public string PriorityIconWebName { get; set; }
         public string AssigneeEmail { get; set; }
 
         public void Mapping(Profile profile)

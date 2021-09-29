@@ -13,10 +13,12 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
 
         public string PriorityName { get; set; }
         public string PriorityIconName { get; set; }
+        public string PriorityIconWebName { get; set; }
         public string PriorityIconColor { get; set; }
 
         public string IssueTypeName { get; set; }
         public string IssueTypeIconName { get; set; }
+        public string IssueTypeIconWebName { get; set; }
         public string IssueTypeIconColor { get; set; }
 
         public string AssigneeFirstName { get; set; }

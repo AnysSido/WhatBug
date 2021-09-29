@@ -6,3 +6,60 @@
         }
     }
 }
+
+// Map WhatBug icon names to FontAwesome icons
+$icons: (
+    "arrow-up": $fa-var-arrow-up,
+    "arrow-down": $fa-var-arrow-down,
+    "arrow-left": $fa-var-arrow-left,
+    "arrow-right": $fa-var-arrow-right,
+    "arrow-circle-up": $fa-var-arrow-circle-up,
+    "arrow-circle-down": $fa-var-arrow-circle-down,
+    "arrow-circle-left": $fa-var-arrow-circle-left,
+    "arrow-circle-right": $fa-var-arrow-circle-right,
+    "chevron-up": $fa-var-chevron-up,
+    "chevron-down": $fa-var-chevron-down,
+    "chevron-left": $fa-var-chevron-left,
+    "chevron-right": $fa-var-chevron-right,
+    "angle-up": $fa-var-angle-up,
+    "angle-down": $fa-var-angle-down,
+    "angle-left": $fa-var-angle-left,
+    "angle-right": $fa-var-angle-right,
+    "angles-up": $fa-var-angle-double-up,
+    "angles-down": $fa-var-angle-double-down,
+    "angles-left": $fa-var-angle-double-left,
+    "angles-right": $fa-var-angle-double-right,
+    "exclamation": $fa-var-exclamation,
+    "circle-exclamation": $fa-var-exclamation-circle,
+    "triangle-exclamation": $fa-var-exclamation-triangle,
+    "xmark": $fa-var-times,
+    "ban": $fa-var-ban,
+    "equals": $fa-var-equals,
+    "bug": $fa-var-bug,
+    "plus-square": $fa-var-plus-square,
+    "check-square": $fa-var-check-square,
+    "caret-square-up": $fa-var-caret-square-up,
+    "caret-square-down": $fa-var-caret-square-down,
+    "caret-square-left": $fa-var-caret-square-left,
+    "caret-square-right": $fa-var-caret-square-right,
+    "pen": $fa-var-pen,
+    "information": $fa-var-info,
+    "plus": $fa-var-plus,
+
+    // Icons not in whatbug
+    "comments": $fa-var-comments,
+    "clock": $fa-var-user-clock,
+    "bell": $fa-var-bell,
+    "envelope": $fa-var-envelope,
+    "users": $fa-var-users,
+    "file": $fa-var-file
+);
+
+@each $iconName, $fa in $icons {
+    .icon--#{$iconName} {
+        @extend %fa-icon, .fas, .fa-fw;
+        &:before {
+            content: fa-content($fa)
+        }
+    }
+}

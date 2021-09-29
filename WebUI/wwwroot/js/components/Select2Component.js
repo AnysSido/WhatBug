@@ -20,7 +20,7 @@
         var data = item.element.dataset
 
         if (data.icon) {
-            return $('<span><i class="' + data.icon + ' ' + data.iconColor +'"></i>' + item.text + '</span>');
+            return $('<span><i class="icon icon--' + data.icon + ' wb-color-' + data.iconColor +'"></i>' + item.text + '</span>');
         }
 
         return item.text;

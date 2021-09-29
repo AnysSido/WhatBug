@@ -12,12 +12,14 @@ namespace WhatBug.Application.Priorities.Queries.GetPriorities
         public int Order { get; set; }
         public string PriorityIconColor { get; set; }
         public string PriorityIconName { get; set; }
+        public string PriorityIconWebName { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Priority, PriorityDTO>()
                 .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Color.Name))
-                .ForMember(d => d.PriorityIconName, opt => opt.MapFrom(s => s.Icon.Name));
+                .ForMember(d => d.PriorityIconName, opt => opt.MapFrom(s => s.Icon.Name))
+                .ForMember(d => d.PriorityIconWebName, opt => opt.MapFrom(s => s.Icon.WebName));
         }
     }
 }

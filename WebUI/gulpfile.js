@@ -11,6 +11,7 @@ var paths = {
     styles: './Assets/Styles/**/*.scss',
     css: './wwwroot/css',
     libs: './wwwroot/lib',
+    webfonts: './wwwroot/webfonts',
     nodeModules: './node_modules'
 };
 
@@ -27,8 +28,8 @@ const libraries = [
     // Dropzone
     { from: 'dropzone/dist/min', to: 'dropzone'},
     // FontAwesome
-    { from: '@fortawesome/fontawesome-free/css', to: 'fontawesome-free/css' },
-    { from: '@fortawesome/fontawesome-free/webfonts', to: 'fontawesome-free/webfonts' },
+    //{ from: '@fortawesome/fontawesome-free/css', to: 'fontawesome-free/css' },
+    { from: '@fortawesome/fontawesome-free/webfonts', to: '', path: paths.webfonts },
     // FontIconPicker
     { from: '@fonticonpicker/fonticonpicker/dist', to: 'fonticonpicker' },
     // Select2
@@ -57,9 +58,10 @@ gulp.task('moveLibs', function () {
     var tasks = [];
     for (const library of libraries) {
         var glob = library.glob ?? '/**/*';
+        var path = library.path ?? paths.libs;
         tasks.push(
             gulp.src(paths.nodeModules + '/' + library.from + glob)
-                .pipe(gulp.dest(paths.libs + '/' + library.to))
+                .pipe(gulp.dest(path + '/' + library.to))
         );
     };
     return mergestream(tasks);

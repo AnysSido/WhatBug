@@ -27,7 +27,9 @@
                                 <select asp-for="IssueTypeId" class="select2">
                                     @foreach (var issueType in Model.IssueTypes)
                                     {
-                                        <select2-option icon="@issueType.IconName" icon-color="@issueType.ColorName" value="@issueType.Id">@issueType.Name</select2-option>
+                                        <option data-icon="@issueType.IconWebName" 
+                                                data-icon-color="@issueType.ColorName.ToLower()" 
+                                                value="@issueType.Id">@issueType.Name</option>
                                     }
                                 </select>
                             </div>
@@ -39,7 +41,9 @@
                                 <select asp-for="PriorityId" class="select2">
                                     @foreach (var priority in Model.Project.Priorities)
                                     {
-                                        <select2-option icon="@priority.IconName" icon-color="@priority.ColorName" value="@priority.Id">@priority.Name</select2-option>
+                                        <option data-icon="@priority.IconWebName"
+                                                data-icon-color="@priority.ColorName.ToLower()"
+                                                value="@priority.Id">@priority.Name</option>
                                     }
                                 </select>
                             </div>

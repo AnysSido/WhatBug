@@ -9,5 +9,6 @@ namespace WhatBug.Application.Issues.Queries.GetCreateIssue
         public string Name { get; set; }
         public string ColorName { get; set; }
         public string IconName { get; set; }
+        public string IconWebName { get; set; }
     }
 }
