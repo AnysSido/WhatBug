@@ -22,11 +22,25 @@ namespace WhatBug.Application.Common.Behaviors
             _validators = validators;
         }
 
+        /*
+         *  Validation rules can either contain an exception (for exceptional issues e.g. invalid ID) 
+         *  or an error message e.g. 'Name cannot be empty', typically used to inform the user on the screen.
+         *  This behavior handles both.
+         */
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var context = new ValidationContext<TRequest>(request);
 
             var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+
+            var ex = validationResults.SelectMany(r => r.Errors)
+                .Where(e => e.CustomState is Exception)
+                .Select(e => e.CustomState as Exception)
+                .FirstOrDefault();
+
+            if (ex != null)
+                throw ex;
+
             var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null)
                 .Select(f => new ValidationError(f.ErrorMessage, f.PropertyName, f.AttemptedValue)).ToList();
 
@@ -35,7 +49,7 @@ namespace WhatBug.Application.Common.Behaviors
                 var responseType = typeof(TResponse);
                 if (responseType.IsGenericType)
                 {
-                    // If the generic Response<T> is used for this command then we need to
+                    // If the generic Response<T> is used for this command/query then we need to
                     // use reflection to build the response object as we don't know what type
                     // T will be at runtime.
                     var flags = BindingFlags.NonPublic | BindingFlags.Instance;
