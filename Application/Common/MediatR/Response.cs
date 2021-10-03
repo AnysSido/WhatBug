@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WhatBug.Application.Common.Models;
 
 namespace WhatBug.Application.Common.MediatR
@@ -32,12 +33,14 @@ namespace WhatBug.Application.Common.MediatR
     public class Response
     {
         public bool Succeeded { get; }
+        public bool HasValidationErrors { get; }
         public IEnumerable<ValidationError> ValidationErrors { get; }
 
         internal Response(bool succeeded, IEnumerable<ValidationError> errors)
         {
             Succeeded = succeeded;
             ValidationErrors = errors;
+            HasValidationErrors = errors != null && errors.Any();
         }
         public static Response Success()
         {
