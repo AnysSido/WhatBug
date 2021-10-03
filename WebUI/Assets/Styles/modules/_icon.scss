@@ -52,7 +52,9 @@ $icons: (
     "bell": $fa-var-bell,
     "envelope": $fa-var-envelope,
     "users": $fa-var-users,
-    "file": $fa-var-file
+    "file": $fa-var-file,
+    "trash": $fa-var-trash,
+    "save": $fa-var-save
 );
 
 @each $iconName, $fa in $icons {
