@@ -24,10 +24,13 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetRoles
         [Fact]
         public async Task Handle_GivenValidRequest_ReturnsRoles()
         {
+            // Arrange
             var sut = new GetRolesQueryHandler(_context, _mapper);
 
+            // Act
             var result = await sut.Handle(new GetRolesQuery(), CancellationToken.None);
 
+            // Assert
             result.Succeeded.ShouldBe(true);
             result.Result.Roles.ShouldNotBeNull();
             result.Result.Roles.Count.ShouldBe(3);
