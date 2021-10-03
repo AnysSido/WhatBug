@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+using WhatBug.Application.Common.MediatR;
 
 namespace WhatBug.WebUI.Common
 {
@@ -12,5 +13,13 @@ namespace WhatBug.WebUI.Common
 
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
         protected IMapper Mapper => _mapper ??= HttpContext.RequestServices.GetService<IMapper>();
+
+        public ViewResult ViewWithErrors(object model, Response result)
+        {
+            foreach (var error in result.ValidationErrors)
+                ModelState.AddModelError(error.PropertyName, error.Message);
+
+            return View(model);
+        }
     }
 }
