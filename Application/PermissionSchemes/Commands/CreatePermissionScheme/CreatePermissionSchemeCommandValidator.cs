@@ -6,7 +6,7 @@ namespace WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme
     {
         public CreatePermissionSchemeCommandValidator()
         {
-            RuleFor(v => v.Name).NotEmpty();
+            RuleFor(v => v.Name).NotEmpty().WithMessage("Scheme name cannot be empty");
         }
     }
 }

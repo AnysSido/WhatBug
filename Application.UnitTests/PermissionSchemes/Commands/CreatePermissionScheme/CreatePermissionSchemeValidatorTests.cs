@@ -13,30 +13,20 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.CreatePermiss
             _validator = new CreatePermissionSchemeCommandValidator();
         }
 
-        [Fact]
-        public void GivenEmptyName_ThrowsValidationException()
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void GivenNullOrEmptyName_HasValidationError(string name)
         {
             // Arrange
-            var command = new CreatePermissionSchemeCommand { Name = string.Empty };
+            var command = new CreatePermissionSchemeCommand { Name = name };
 
             // Act
             var result = _validator.TestValidate(command);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(command => command.Name);
-        }
-
-        [Fact]
-        public void GivenNullName_ThrowsValidationException()
-        {
-            // Arrange
-            var command = new CreatePermissionSchemeCommand ();
-
-            // Act
-            var result = _validator.TestValidate(command);
-
-            // Assert
-            result.ShouldHaveValidationErrorFor(command => command.Name);
+            result.ShouldHaveValidationErrorFor(command => command.Name)
+                .WithErrorMessage("Scheme name cannot be empty");
         }
     }
 }

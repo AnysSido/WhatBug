@@ -1,0 +1,29 @@
+﻿@model WhatBug.Application.ProjectRoles.Queries.GetEditRole.GetEditRoleQueryResult
+
+@{
+    ViewData["Title"] = "Edit Role";
+}
+
+@{
+    <div class="page-container">
+        <div class="page-container__item--medium-width">
+            <form class="form" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+                <div class="form__group">
+                    <label class="form__label" asp-for="Name">Role Name</label>
+                    <input class="form__input" asp-for="Name" />
+                    <span class="form__validation" asp-validation-for="Name"></span>
+                </div>
+                <div class="form__group">
+                    <label class="form__label" asp-for="Description"></label>
+                    <input class="form__input" asp-for="Description" />
+                    <span class="form__validation" asp-validation-for="Description"></span>
+                </div>
+                <button class="button button--primary float-right" type="submit">
+                    <i class="button__icon icon icon--save"></i>
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+}
