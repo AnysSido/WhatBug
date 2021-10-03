@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
-using WhatBug.Application.Common.Result;
 
 namespace WhatBug.Application.ProjectRoles.Commands.CreateRole
 {

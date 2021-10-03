@@ -10,7 +10,7 @@ using WhatBug.Domain.Entities;
 namespace WhatBug.Application.ProjectRoles.Commands.CreateRole
 {
     [Authorize(Permissions.ManageProjectRoles)]
-    public record CreateRoleCommand : ICommand<Response<int>>, IRequireAuthorization
+    public record CreateRoleCommand : ICommand<Response<int>>
     {
         public string Name { get; init; }
         public string Description { get; init; }
