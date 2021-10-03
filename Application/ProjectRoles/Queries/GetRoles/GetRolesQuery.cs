@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
@@ -28,7 +29,10 @@ namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
         public async Task<Response<GetRolesQueryResult>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
         {
             var roles = await _context.Roles.ProjectTo<RoleDto>(_mapper.ConfigurationProvider).ToListAsync();
-            var result = new GetRolesQueryResult { Roles = roles };
+            var result = new GetRolesQueryResult 
+            { 
+                Roles = roles.OrderBy(r => r.Name).ToList() 
+            };
 
             return Response<GetRolesQueryResult>.Success(result);
         }
