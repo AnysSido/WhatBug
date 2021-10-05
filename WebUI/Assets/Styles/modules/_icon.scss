@@ -65,3 +65,11 @@ $icons: (
         }
     }
 }
+
+.icon--edit {
+    @extend .icon--pen, .icon--secondary;
+}
+
+.icon--delete {
+    @extend .icon--trash, .icon--danger;
+}

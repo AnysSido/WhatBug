@@ -15,7 +15,12 @@
         &--icons {
             @extend .l-flex;
             @extend .l-flex--justify-content-start;
+            @extend .align-items-center;
             gap: 0.5rem;
         }
     }
+
+    // &__cell-icon {
+        
+    // }
 }
