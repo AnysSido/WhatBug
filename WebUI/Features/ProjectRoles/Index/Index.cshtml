@@ -1,10 +1,10 @@
-﻿@model WhatBug.Application.ProjectRoles.Queries.GetRoles.GetRolesQueryResult 
+﻿@model WhatBug.Application.ProjectRoles.Queries.GetRoles.GetRolesQueryResult
 
 @{
     ViewData["Title"] = "Project Roles";
 }
 
-@{ 
+@{
     <div class="page-container">
 
         <div class="text-block">
@@ -17,7 +17,7 @@
                 based what is available for their role within the current permission scheme.
             </p>
         </div>
-        
+
         <table class="table">
             <thead>
                 <tr>
@@ -28,23 +28,21 @@
             </thead>
             <tbody>
                 @foreach (var role in Model.Roles)
-                { 
+                {
                     <tr>
                         <td class="table__cell">@role.Name</td>
                         <td class="table__cell">@role.Description</td>
                         <td class="table__cell table__cell--icons">
-                            <a asp-route="EditRole" asp-route-roleId="@role.Id">
-                                <i class="icon--secondary icon--pen"></i>
-                            </a>
-                            <span>
-                                <i class="icon--danger icon--trash"></i>
-                            </span>
+                            <a class="table__cell-icon" asp-route="EditRole" asp-route-roleId="@role.Id">
+                                <i class="icon icon--edit"></i>
+                            </a>                            
+                            <i class="table__cell-icon icon icon--delete js__delete-role" data-roleid="@role.Id"></i>                            
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        
+
         <div class="l-flex l-flex--justify-content-end">
             <a class="button button--primary" asp-route="CreateRole">
                 <i class="button__icon icon icon--plus"></i>
@@ -52,4 +50,8 @@
             </a>
         </div>
     </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/pages/projectroles.js"></script>
 }

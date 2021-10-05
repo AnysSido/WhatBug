@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.ProjectRoles.Commands.CreateRole;
+using WhatBug.Application.ProjectRoles.Commands.DeleteRole;
 using WhatBug.Application.ProjectRoles.Commands.EditRole;
+using WhatBug.Application.ProjectRoles.Queries.GetDeleteRoleConfirm;
 using WhatBug.Application.ProjectRoles.Queries.GetEditRole;
 using WhatBug.Application.ProjectRoles.Queries.GetRoles;
 using WhatBug.Domain.Data;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
+using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.ProjectRoles
 {
@@ -65,6 +67,31 @@ namespace WhatBug.WebUI.Features.ProjectRoles
                 return ViewWithErrors(vm, result);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost("delete", Name = "DeleteRole")]
+        [RequirePermission(Permissions.ManageProjectRoles)]
+        public async Task<IActionResult> DeleteRole(int roleId)
+        {
+            var result = await Mediator.Send(new DeleteRoleCommand
+            {
+                RoleId = roleId
+            });
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [AjaxOnly]
+        [HttpGet("getdeleteroleconfirmpartial")]
+        [RequirePermission(Permissions.ManageProjectRoles)]
+        public async Task<IActionResult> GetDeleteRoleConfirmPartial(int roleId)
+        {
+            var result = await Mediator.Send(new GetDeleteRoleConfirmQuery
+            {
+                RoleId = roleId
+            });
+
+            return PartialView(result.Result);
         }
     }
 }
