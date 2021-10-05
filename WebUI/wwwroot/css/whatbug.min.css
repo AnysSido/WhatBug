@@ -72599,6 +72599,9 @@ ol {
 .table__cell--icons {
   gap: 0.5rem;
 }
+.table__cell-icon {
+  cursor: pointer;
+}
 
 .text-block {
   gap: 0.7rem;
