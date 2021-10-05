@@ -1,24 +1,31 @@
 ﻿// AdminLTE & Bootstrap
 // ---------------------------------------------------
-@import '../../node_modules/bootstrap/scss/functions';
-@import '../../node_modules/admin-lte/build/scss/bootstrap-variables';
-@import '../../node_modules/bootstrap/scss/bootstrap';
+ @import '../../node_modules/bootstrap/dist/css/bootstrap';
+ @import '../../node_modules/admin-lte/dist/css/adminlte';
+//  @import '../../node_modules/bootstrap/scss/variables';
+// @import '../../node_modules/bootstrap/scss/functions';
+// @import '../../node_modules/admin-lte/build/scss/bootstrap-variables';
+// @import '../../node_modules/bootstrap/scss/bootstrap';
 
-@import '../../node_modules/admin-lte/build/scss/variables';
-@import '../../node_modules/admin-lte/build/scss/variables-alt';
-@import '../../node_modules/admin-lte/build/scss/mixins';
+// @import '../../node_modules/admin-lte/build/scss/variables';
+// @import '../../node_modules/admin-lte/build/scss/variables-alt';
+// @import '../../node_modules/admin-lte/build/scss/mixins';
 
-@import '../../node_modules/admin-lte/build/scss/parts/core';
-@import '../../node_modules/admin-lte/build/scss/parts/components';
-@import '../../node_modules/admin-lte/build/scss/parts/extra-components';
-@import '../../node_modules/admin-lte/build/scss/parts/plugins';
-@import '../../node_modules/admin-lte/build/scss/parts/miscellaneous';
+// @import '../../node_modules/admin-lte/build/scss/parts/core';
+// @import '../../node_modules/admin-lte/build/scss/parts/components';
+// @import '../../node_modules/admin-lte/build/scss/parts/extra-components';
+// @import '../../node_modules/admin-lte/build/scss/parts/plugins';
+// @import '../../node_modules/admin-lte/build/scss/parts/miscellaneous';
 
 // FontAwesome
 // ---------------------------------------------------
 @import '../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss';
 @import '../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss';
+// @import '../../node_modules/@fortawesome/fontawesome-free/css/all';
+// @import '../../node_modules/@fortawesome/fontawesome-free/scss/variables';
+// @import '../../node_modules/@fortawesome/fontawesome-free/scss/mixins';
+// @import '../../node_modules/@fortawesome/fontawesome-free/scss/core';
 
 // Original WhatBug CSS
 // ---------------------------------------------------
@@ -43,6 +50,7 @@
 @import "modules/form";
 @import "modules/alert";
 @import "modules/text-block";
+@import "modules/modal";
 
 #CreateIssueComponent .form-control {
     background-color: #f4f5f7;
