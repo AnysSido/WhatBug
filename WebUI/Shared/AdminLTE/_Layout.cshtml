@@ -44,7 +44,7 @@
                                                     <a asp-route="@breadcrumb.RouteName">@breadcrumb.Display</a>
                                                 }
                                                 else
-                                                { 
+                                                {
                                                     <a asp-controller="@breadcrumb.Controller"
                                                        asp-action="@breadcrumb.Action">@breadcrumb.Display</a>
                                                 }
@@ -71,6 +71,7 @@
         </aside>
         <partial name="AdminLTE/_Footer" />
     </div>
+    @Html.AntiForgeryToken()
     <partial name="AdminLTE/_Scripts" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
