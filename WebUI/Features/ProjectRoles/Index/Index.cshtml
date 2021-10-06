@@ -23,6 +23,7 @@
                 <tr>
                     <th class="table__header">Role Name</th>
                     <th class="table__header">Role Description</th>
+                    <th class="table__header">Role Usage</th>
                     <th class="table__header table__header--shrink">Actions</th>
                 </tr>
             </thead>
@@ -32,6 +33,16 @@
                     <tr>
                         <td class="table__cell">@role.Name</td>
                         <td class="table__cell">@role.Description</td>
+
+                        
+
+                        <td class="table__cell">
+                            <span>
+                                Assigned <b>@role.Projects.SelectMany(p => p.Users).Count()</b> time(s) across
+                                <b>@role.Projects.Count()</b> project(s)
+                            </span>
+                        </td>
+
                         <td class="table__cell table__cell--icons">
                             <a class="table__cell-icon" asp-route="EditRole" asp-route-roleId="@role.Id">
                                 <i class="icon icon--edit"></i>

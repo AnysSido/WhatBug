@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Shouldly;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.ProjectRoles.Queries.GetRoles;
@@ -17,7 +18,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetRoles
 
         public GetRolesQueryTests(QueryTestFixture fixture)
         {
-            _context = fixture.Context;
+            _context = fixture.CreateContext();
             _mapper = fixture.Mapper;
         }
 
@@ -34,10 +35,46 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetRoles
             result.Succeeded.ShouldBe(true);
             result.Result.Roles.ShouldNotBeNull();
             result.Result.Roles.Count.ShouldBe(3);
-            result.Result.Roles[0].Name.ShouldBe("Admin");
-            result.Result.Roles[0].Description.ShouldBe("Admin Role");
-            result.Result.Roles[1].Name.ShouldBe("Developer");
-            result.Result.Roles[2].Name.ShouldBe("QA");
+
+            var role = result.Result.Roles.SingleOrDefault(r => r.Name == "Admin");
+            role.ShouldNotBeNull();
+            role.Projects.Count.ShouldBe(2);
+
+            var project = role.Projects.SingleOrDefault(p => p.Name == "Test Project 1");
+            project.ShouldNotBeNull();
+            project.Users.ShouldNotBeNull();
+            project.Users.Count.ShouldBe(3);
+            project.Users.Select(u => u.Username).ShouldContain("TestUser1");
+            project.Users.Select(u => u.Username).ShouldContain("TestUser2");
+            project.Users.Select(u => u.Username).ShouldContain("TestUser3");
+
+            project = role.Projects.SingleOrDefault(p => p.Name == "Test Project 3");
+            project.ShouldNotBeNull();
+            project.Users.ShouldNotBeNull();
+            project.Users.Count.ShouldBe(2);
+            project.Users.Select(u => u.Username).ShouldContain("TestUser1");
+            project.Users.Select(u => u.Username).ShouldContain("TestUser2");
+
+            role = result.Result.Roles.SingleOrDefault(r => r.Name == "Developer");
+            role.ShouldNotBeNull();
+            role.Projects.Count.ShouldBe(0);
+
+            role = result.Result.Roles.SingleOrDefault(r => r.Name == "QA");
+            role.ShouldNotBeNull();
+            role.Projects.Count.ShouldBe(2);
+
+            project = role.Projects.SingleOrDefault(p => p.Name == "Test Project 1");
+            project.ShouldNotBeNull();
+            project.Users.ShouldNotBeNull();
+            project.Users.Count.ShouldBe(1);
+            project.Users.Select(u => u.Username).ShouldContain("TestUser3");
+
+            project = role.Projects.SingleOrDefault(p => p.Name == "Test Project 3");
+            project.ShouldNotBeNull();
+            project.Users.ShouldNotBeNull();
+            project.Users.Count.ShouldBe(2);
+            project.Users.Select(u => u.Username).ShouldContain("TestUser2");
+            project.Users.Select(u => u.Username).ShouldContain("TestUser3");
         }
     }
 }

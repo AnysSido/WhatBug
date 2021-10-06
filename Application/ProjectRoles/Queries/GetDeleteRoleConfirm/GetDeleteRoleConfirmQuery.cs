@@ -35,7 +35,7 @@ namespace WhatBug.Application.ProjectRoles.Queries.GetDeleteRoleConfirm
                 .Include(r => r.ProjectUsers)
                     .ThenInclude(p => p.Project)
                 .Include(r => r.ProjectUsers)
-                    .ThenInclude(p => p.User)
+                    .ThenInclude(u => u.User)
                 .Where(r => r.Id == request.RoleId)
                 .FirstAsync();
 

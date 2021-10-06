@@ -17,7 +17,7 @@ namespace WhatBug.Application.ProjectRoles.Queries.GetDeleteRole
         {
             profile.CreateMap<Role, GetDeleteRoleConfirmQueryResult>()
                 .ForMember(d => d.RoleId, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.ProjectsUsingRole, opt => opt.MapFrom(s => s.ProjectUsers.Select(p => p.Project)));
+                .ForMember(d => d.ProjectsUsingRole, opt => opt.MapFrom(s =>s.ProjectUsers.Select(p => p.Project)));
         }
     }
 

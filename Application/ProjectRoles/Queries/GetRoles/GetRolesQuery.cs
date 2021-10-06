@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -28,13 +27,36 @@ namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
 
         public async Task<Response<GetRolesQueryResult>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
         {
-            var roles = await _context.Roles.ProjectTo<RoleDto>(_mapper.ConfigurationProvider).ToListAsync();
-            var result = new GetRolesQueryResult 
-            { 
-                Roles = roles.OrderBy(r => r.Name).ToList() 
+            var roles = await _context.Roles
+                .Include(r => r.ProjectUsers)
+                    .ThenInclude(p => p.Project)
+                .Include(r => r.ProjectUsers)
+                    .ThenInclude(u => u.User)
+                .ToListAsync();
+
+            // Roles, projects and users are linked by the 3-way join entity ProjectRoleUsers.
+            // This query removes duplicate entities and structures the data in a role > projects > users hierarchy.
+            var dto = new GetRolesQueryResult
+            {
+                Roles = roles.Select(role => new RoleDto
+                {
+                    Id = role.Id,
+                    Name = role.Name,
+                    Description = role.Description,
+                    Projects = role.ProjectUsers.GroupBy(p => p.ProjectId).Select(grouping => new ProjectDto
+                    {
+                        Name = grouping.First().Project.Name,
+                        Users = grouping.Select(g => g.User).GroupBy(u => u.Id).Select(u => u.First()).ToList().Select(user => new UserDto
+                        {
+                            FirstName = user.FirstName,
+                            Surname = user.Surname,
+                            Username = user.Username
+                        }).ToList()
+                    }).ToList()
+                }).ToList()
             };
 
-            return Response<GetRolesQueryResult>.Success(result);
+            return Response<GetRolesQueryResult>.Success(dto);
         }
     }
 }
