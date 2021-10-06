@@ -14,7 +14,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetEditRole
 
         public GetEditRoleQueryValidatorTests(ValidatorTestFixture fixture)
         {
-            _sut = new GetEditRoleQueryValidator(fixture.Context);
+            _sut = new GetEditRoleQueryValidator(fixture.CreateContext());
         }
 
         [Theory]

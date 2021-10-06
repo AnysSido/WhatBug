@@ -6,18 +6,17 @@ using Xunit;
 
 namespace WhatBug.Application.UnitTests.Common
 {
-    public class QueryTestFixture : IDisposable
+    public class QueryTestFixture
     {
-        public WhatBugDbContext Context;
         public IMapper Mapper;
+        private Guid _guid;
+        private WhatBugContextFactory _factory;
 
         public QueryTestFixture()
         {
             var guid = Guid.NewGuid().ToString();
-            var factory = new WhatBugContextFactory();
-
-            factory.CreateWithSeed(guid);
-            Context = factory.Create(guid);
+            _factory = new WhatBugContextFactory();
+            _factory.CreateWithSeed(guid);
 
             var configurationProvider = new MapperConfiguration(cfg =>
             {
@@ -27,9 +26,9 @@ namespace WhatBug.Application.UnitTests.Common
             Mapper = configurationProvider.CreateMapper();
         }
 
-        public void Dispose()
+        public WhatBugDbContext CreateContext()
         {
-            WhatBugContextFactory.Dispose(Context);
+            return _factory.Create(_guid.ToString());
         }
     }
 

@@ -4,22 +4,22 @@ using Xunit;
 
 namespace WhatBug.Application.UnitTests.Common
 {
-    public class ValidatorTestFixture : IDisposable
+    public class ValidatorTestFixture
     {
-        public WhatBugDbContext Context;
+        private readonly WhatBugContextFactory _factory;
+        private readonly string _guid;
 
         public ValidatorTestFixture()
         {
-            var guid = Guid.NewGuid().ToString();
-            var factory = new WhatBugContextFactory();
+            _guid = Guid.NewGuid().ToString();
+            _factory = new WhatBugContextFactory();
 
-            factory.CreateWithSeed(guid);
-            Context = factory.Create(guid);
+            _factory.CreateWithSeed(_guid);
         }
 
-        public void Dispose()
+        public WhatBugDbContext CreateContext()
         {
-            WhatBugContextFactory.Dispose(Context);
+            return _factory.Create(_guid);
         }
     }
 

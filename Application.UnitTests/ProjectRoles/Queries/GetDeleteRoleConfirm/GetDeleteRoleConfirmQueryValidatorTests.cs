@@ -14,7 +14,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetDeleteRoleConfir
 
         public GetDeleteRoleConfirmQueryValidatorTests(ValidatorTestFixture fixture)
         {
-            _sut = new GetDeleteRoleConfirmQueryValidator(fixture.Context);
+            _sut = new GetDeleteRoleConfirmQueryValidator(fixture.CreateContext());
         }
 
         [Theory]

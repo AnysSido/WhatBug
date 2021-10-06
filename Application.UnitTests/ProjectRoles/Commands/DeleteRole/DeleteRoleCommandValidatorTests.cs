@@ -14,7 +14,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.DeleteRole
 
         public DeleteRoleCommandValidatorTests(ValidatorTestFixture fixture)
         {
-            _sut = new DeleteRoleCommandValidator(fixture.Context);
+            _sut = new DeleteRoleCommandValidator(fixture.CreateContext());
         }
 
         [Theory]

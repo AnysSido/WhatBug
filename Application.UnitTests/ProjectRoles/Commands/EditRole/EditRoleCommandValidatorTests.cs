@@ -16,7 +16,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.EditRole
 
         public EditRoleCommandValidatorTests(ValidatorTestFixture fixture)
         {
-            _sut = new EditRoleCommandValidator(fixture.Context);
+            _sut = new EditRoleCommandValidator(fixture.CreateContext());
         }
 
         [Theory]

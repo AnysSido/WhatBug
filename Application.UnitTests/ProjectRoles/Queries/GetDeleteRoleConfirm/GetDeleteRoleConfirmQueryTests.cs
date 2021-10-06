@@ -18,7 +18,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetDeleteRoleConfir
 
         public GetDeleteRoleConfirmQueryTests(QueryTestFixture fixture)
         {
-            _context = fixture.Context;
+            _context = fixture.CreateContext();
             _mapper = fixture.Mapper;
         }
 

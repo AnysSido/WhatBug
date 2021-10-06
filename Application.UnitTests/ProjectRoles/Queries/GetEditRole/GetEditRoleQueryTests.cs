@@ -17,7 +17,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetEditRole
 
         public GetEditRoleQueryTests(QueryTestFixture fixture)
         {
-            _context = fixture.Context;
+            _context = fixture.CreateContext();
             _mapper = fixture.Mapper;
         }
 
