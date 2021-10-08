@@ -3,9 +3,9 @@ using Shouldly;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.ProjectRoles.Queries.GetDeleteRoleConfirm;
 using WhatBug.Application.UnitTests.Common;
-using WhatBug.Persistence;
 using Xunit;
 
 namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetDeleteRoleConfirm
@@ -13,7 +13,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetDeleteRoleConfir
     [Collection("QueryCollection")]
     public class GetDeleteRoleConfirmQueryTests
     {
-        private readonly WhatBugDbContext _context;
+        private readonly IWhatBugDbContext _context;
         private readonly IMapper _mapper;
 
         public GetDeleteRoleConfirmQueryTests(QueryTestFixture fixture)

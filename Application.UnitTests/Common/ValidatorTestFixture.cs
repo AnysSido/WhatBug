@@ -1,5 +1,5 @@
 ﻿using System;
-using WhatBug.Persistence;
+using WhatBug.Application.Common.Interfaces;
 using Xunit;
 
 namespace WhatBug.Application.UnitTests.Common
@@ -17,7 +17,7 @@ namespace WhatBug.Application.UnitTests.Common
             _factory.CreateWithSeed(_guid);
         }
 
-        public WhatBugDbContext CreateContext()
+        public IWhatBugDbContext CreateContext()
         {
             return _factory.Create(_guid);
         }

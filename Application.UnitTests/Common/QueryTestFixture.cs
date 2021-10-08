@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using WhatBug.Application.Common;
-using WhatBug.Persistence;
+using WhatBug.Application.Common.Interfaces;
 using Xunit;
 
 namespace WhatBug.Application.UnitTests.Common
@@ -26,7 +26,7 @@ namespace WhatBug.Application.UnitTests.Common
             Mapper = configurationProvider.CreateMapper();
         }
 
-        public WhatBugDbContext CreateContext()
+        public IWhatBugDbContext CreateContext()
         {
             return _factory.Create(_guid.ToString());
         }

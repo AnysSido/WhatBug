@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.UserPermissions.Commands.GrantUserPermissions;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.JoinTables;
 using Xunit;
 
 namespace WhatBug.Application.UnitTests.UserPermissions.Commands.GrantUserPermissions

@@ -1,12 +1,12 @@
 ﻿using System;
+using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.UnitTests.Common;
-using WhatBug.Persistence;
 
 namespace Application.UnitTests.Common
 {
     public class CommandTestBase : IDisposable
     {
-        protected readonly WhatBugDbContext _context;
+        protected readonly IWhatBugDbContext _context;
         private readonly WhatBugContextFactory _factory;
         private string _dbName = Guid.NewGuid().ToString();
 
@@ -16,7 +16,7 @@ namespace Application.UnitTests.Common
             _context = _factory.Create(_dbName);
         }
 
-        public WhatBugDbContext CreateContext()
+        public IWhatBugDbContext CreateContext()
         {
             return _factory.Create(_dbName);
         }

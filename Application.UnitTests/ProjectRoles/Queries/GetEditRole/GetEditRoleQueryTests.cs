@@ -2,9 +2,9 @@
 using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.ProjectRoles.Queries.GetEditRole;
 using WhatBug.Application.UnitTests.Common;
-using WhatBug.Persistence;
 using Xunit;
 
 namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetEditRole
@@ -12,7 +12,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetEditRole
     [Collection("QueryCollection")]
     public class GetEditRoleQueryTests
     {
-        private readonly WhatBugDbContext _context;
+        private readonly IWhatBugDbContext _context;
         private readonly IMapper _mapper;
 
         public GetEditRoleQueryTests(QueryTestFixture fixture)

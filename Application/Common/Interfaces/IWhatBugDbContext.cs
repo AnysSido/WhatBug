@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Common.Interfaces
 {
-    public interface IWhatBugDbContext
+    public interface IWhatBugDbContext : IDisposable
     {
         DbSet<Project> Projects { get; set; }
         DbSet<Issue> Issues { get; set; }
@@ -25,6 +27,9 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<UserPermission> UserPermissions { get; set; }
 
         ChangeTracker ChangeTracker { get; }
+        DatabaseFacade Database { get; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        int SaveChanges();
     }
 }

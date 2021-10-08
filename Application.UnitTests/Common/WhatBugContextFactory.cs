@@ -13,7 +13,7 @@ namespace WhatBug.Application.UnitTests.Common
         private DbContextOptions<WhatBugDbContext> _options;
         private ICurrentUserService _currentUserService;
 
-        public WhatBugDbContext Create(string guid)
+        public IWhatBugDbContext Create(string guid)
         {
             if (_options == null)
             {
@@ -28,7 +28,7 @@ namespace WhatBug.Application.UnitTests.Common
             return new WhatBugDbContext(_options, _currentUserService);
         }
 
-        public WhatBugDbContext CreateWithSeed(string guid)
+        public IWhatBugDbContext CreateWithSeed(string guid)
         {
             var context = Create(guid);
 
@@ -91,7 +91,7 @@ namespace WhatBug.Application.UnitTests.Common
             return context;
         }
 
-        public static void Dispose(WhatBugDbContext context)
+        public static void Dispose(IWhatBugDbContext context)
         {
             context.Database.EnsureDeleted();
             context.Dispose();
