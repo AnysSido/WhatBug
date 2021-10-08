@@ -1,0 +1,43 @@
+﻿@model WhatBug.Application.UserPermissions.Queries.GetUsersAndPermissions.GetUsersAndPermissionsQueryResult
+
+@{
+    ViewData["Title"] = "User Permissions";
+}
+
+@{
+    <div class="page-container">
+        <div class="text-block">
+            <p>
+                Grant or remove permissions from users. These permissions are global and will apply site-wide.
+            </p>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table__header">Username</th>
+                    <th class="table__header">Granted Permissions</th>
+                    <th class="table__header table__header--shrink">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td class="table__cell">@user.Username</td>
+                        <td class="table__cell">@string.Join(" | ", user.Permissions.Select(p => p.Name))</td>
+
+                        <td class="table__cell table__cell--icons">
+                            <i class="table__cell-icon icon icon--edit js__grant-user-permission" data-userId="@user.Id"></i>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/pages/UserPermissions.js"></script>
+}

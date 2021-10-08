@@ -13,4 +13,8 @@
     &--justify-content-end {
         @extend .justify-content-end;
     }
+
+    &--justify-content-center {
+        @extend .justify-content-center;
+    }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Entities;
+using WhatBug.Domain.Entities.JoinTables;
 using WhatBug.Persistence;
 
 namespace WhatBug.Application.UnitTests.Common
@@ -32,7 +33,7 @@ namespace WhatBug.Application.UnitTests.Common
         {
             var context = Create(guid);
 
-            context.Roles.AddRange(new[] 
+            context.Roles.AddRange(new[]
             {
                 new Role { Id = 1, Name = "Admin", Description = "Admin Role"},
                 new Role { Id = 2, Name = "Developer", Description = "Developer Role"},
@@ -53,6 +54,13 @@ namespace WhatBug.Application.UnitTests.Common
                 new User {Id = 3, Username = "TestUser3", FirstName = "FirstName3", Surname = "Surname3", Email = "Test_User3@whatbug.com" },
             });
 
+            context.Permissions.AddRange(new[]
+            {
+                new Permission { Id = 1, Name = "Permission1", Description = "Permission1", Type = PermissionType.Global  },
+                new Permission { Id = 2, Name = "Permission2", Description = "Permission2", Type = PermissionType.Global  },
+                new Permission { Id = 3, Name = "Permission3", Description = "Permission3", Type = PermissionType.Project  },
+            });
+
             context.SaveChanges();
 
             context.Projects.First().RoleUsers = new List<ProjectRoleUser>
@@ -69,6 +77,13 @@ namespace WhatBug.Application.UnitTests.Common
                 new ProjectRoleUser { ProjectId = 3, RoleId = 1, UserId = 2 },
                 new ProjectRoleUser { ProjectId = 3, RoleId = 3, UserId = 2 },
                 new ProjectRoleUser { ProjectId = 3, RoleId = 3, UserId = 3 },
+            };
+
+            context.Users.First().UserPermissions = new List<UserPermission>
+            {
+                new UserPermission { UserId = 1, PermissionId = 1 },
+                new UserPermission { UserId = 1, PermissionId = 2 },
+                new UserPermission { UserId = 1, PermissionId = 3 }
             };
 
             context.SaveChanges();

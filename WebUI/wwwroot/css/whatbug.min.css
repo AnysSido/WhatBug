@@ -7554,7 +7554,7 @@ button.bg-dark:focus {
   flex-shrink: 1 !important;
 }
 
-.justify-content-start, .l-flex--justify-content-start, .table__cell--icons {
+.justify-content-start, .l-flex--justify-content-start {
   -ms-flex-pack: start !important;
   justify-content: flex-start !important;
 }
@@ -7564,7 +7564,7 @@ button.bg-dark:focus {
   justify-content: flex-end !important;
 }
 
-.justify-content-center {
+.justify-content-center, .l-flex--justify-content-center, .table__cell--icons {
   -ms-flex-pack: center !important;
   justify-content: center !important;
 }
@@ -19048,7 +19048,7 @@ button.bg-dark:focus {
   flex-shrink: 1 !important;
 }
 
-.justify-content-start, .l-flex--justify-content-start, .table__cell--icons {
+.justify-content-start, .l-flex--justify-content-start {
   -webkit-justify-content: flex-start !important;
   -ms-flex-pack: start !important;
   justify-content: flex-start !important;
@@ -19060,7 +19060,7 @@ button.bg-dark:focus {
   justify-content: flex-end !important;
 }
 
-.justify-content-center {
+.justify-content-center, .l-flex--justify-content-center, .table__cell--icons {
   -webkit-justify-content: center !important;
   -ms-flex-pack: center !important;
   justify-content: center !important;

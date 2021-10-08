@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WhatBug.Domain.Common;
+﻿using WhatBug.Domain.Common;
 
 namespace WhatBug.Domain.Entities.JoinTables
 {

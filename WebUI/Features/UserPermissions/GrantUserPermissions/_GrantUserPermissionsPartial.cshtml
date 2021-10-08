@@ -1,8 +1,8 @@
-﻿@model WhatBug.WebUI.Features.UserPermissions.GrantGlobalPermissions.GrantGlobalPermissionsViewModel
+﻿@model WhatBug.Application.UserPermissions.Queries.GetGrantUserPermissions.GetGrantUserPermissionsQueryResult
 
 @{
-    <form method="post" asp-controller="Permissions" asp-action="GrantGlobalPermissions">
-        <input asp-for="@Model.UserId" />
+    <form method="post" asp-route="GrantUserPermissions">
+        <input asp-for="@Model.Id" />
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">

@@ -14,7 +14,7 @@
         
         &--icons {
             @extend .l-flex;
-            @extend .l-flex--justify-content-start;
+            @extend .l-flex--justify-content-center;
             @extend .align-items-center;
             gap: 0.5rem;
         }
