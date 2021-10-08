@@ -38,6 +38,7 @@ namespace WhatBug.Persistence
         public DbSet<IssueStatus> IssueStatuses { get; set; }
         public DbSet<IssueComment> IssueComments { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<UserPermission> UserPermissions { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

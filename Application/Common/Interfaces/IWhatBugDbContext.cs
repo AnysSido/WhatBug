@@ -22,6 +22,7 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<IssueStatus> IssueStatuses { get; set; }
         DbSet<IssueComment> IssueComments { get; set; }
         DbSet<Attachment> Attachments { get; set; }
+        DbSet<UserPermission> UserPermissions { get; set; }
 
         ChangeTracker ChangeTracker { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
