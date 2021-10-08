@@ -60,6 +60,14 @@ namespace WhatBug.Application.UnitTests.Common
                 new Permission { Id = 3, Name = "Permission3", Description = "Permission3", Type = PermissionType.Project  },
             });
 
+            context.UserPermissions.AddRange(new[]
+            {
+                new UserPermission { UserId = 1, PermissionId = 1 },
+                new UserPermission { UserId = 1, PermissionId = 2 },
+                new UserPermission { UserId = 1, PermissionId = 3 },
+                new UserPermission { UserId = 3, PermissionId = 2 },
+            });
+
             context.SaveChanges();
 
             context.Projects.First().RoleUsers = new List<ProjectRoleUser>
@@ -76,13 +84,6 @@ namespace WhatBug.Application.UnitTests.Common
                 new ProjectRoleUser { ProjectId = 3, RoleId = 1, UserId = 2 },
                 new ProjectRoleUser { ProjectId = 3, RoleId = 3, UserId = 2 },
                 new ProjectRoleUser { ProjectId = 3, RoleId = 3, UserId = 3 },
-            };
-
-            context.Users.First().UserPermissions = new List<UserPermission>
-            {
-                new UserPermission { UserId = 1, PermissionId = 1 },
-                new UserPermission { UserId = 1, PermissionId = 2 },
-                new UserPermission { UserId = 1, PermissionId = 3 }
             };
 
             context.SaveChanges();

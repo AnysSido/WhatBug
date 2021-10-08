@@ -43,7 +43,7 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Queries.GetUserPermissio
             user2.Permissions.Count.ShouldBe(0);
 
             var user3 = result.Result.Users.Single(u => u.Id == 3);
-            user3.Permissions.Count.ShouldBe(0);
+            user3.Permissions.Count.ShouldBe(1);
         }
     }
 }
