@@ -1,6 +1,6 @@
 ﻿using WhatBug.Domain.Common;
 
-namespace WhatBug.Domain.Entities.JoinTables
+namespace WhatBug.Domain.Entities
 {
     public class UserPermission : AuditableEntity
     {

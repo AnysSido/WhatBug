@@ -8,7 +8,7 @@ using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.MediatR;
 using WhatBug.Application.Common.Security;
 using WhatBug.Domain.Data;
-using WhatBug.Domain.Entities.JoinTables;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.UserPermissions.Commands.GrantUserPermissions
 {

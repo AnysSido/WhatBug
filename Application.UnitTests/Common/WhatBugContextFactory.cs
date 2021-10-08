@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.JoinTables;
 using WhatBug.Persistence;
 
 namespace WhatBug.Application.UnitTests.Common

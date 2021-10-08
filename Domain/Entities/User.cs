@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WhatBug.Domain.Entities.JoinTables;
 
 namespace WhatBug.Domain.Entities
 {
