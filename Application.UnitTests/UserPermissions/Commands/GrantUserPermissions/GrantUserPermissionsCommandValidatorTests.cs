@@ -18,6 +18,19 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Commands.GrantUserPermis
             _sut = new GrantUserPermissionsCommandValidator(fixture.CreateContext());
         }
 
+        [Fact]
+        public void Given_ValidRequest_PassesValidation()
+        {
+            // Arrange
+            var command = new GrantUserPermissionsCommand { UserId = 1, PermissionIds = new[] { 1, 2 } };
+
+            // Act
+            var result = _sut.TestValidate(command);
+
+            // Assert
+            result.ShouldNotHaveAnyValidationErrors();
+        }
+
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
@@ -61,7 +74,7 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Commands.GrantUserPermis
 
         [Theory]
         [InlineData(1, 2, 9)]
-        [InlineData(4, 5, 6)]
+        [InlineData(4, 5, 7)]
         public void Given_AnyInvalidPermissionId_HasRecordNotFoundException(int permissionId1, int permissionId2, int permissionId3)
         {
             // Arrange
@@ -75,6 +88,23 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Commands.GrantUserPermis
 
             // Assert
             result.ShouldHaveExceptionFor(command => command.PermissionIds, typeof(RecordNotFoundException));
+        }
+
+        [Fact]
+        public void Given_PermissionOfWrongType_HasArgumentException()
+        {
+            // Arrange
+            var command = new GrantUserPermissionsCommand
+            {
+                UserId = 1,
+                PermissionIds = new int[] { 4 }
+            };
+
+            // Act
+            var result = _sut.TestValidate(command);
+
+            // Assert
+            result.ShouldHaveExceptionFor(command => command.PermissionIds, typeof(ArgumentException));
         }
     }
 }

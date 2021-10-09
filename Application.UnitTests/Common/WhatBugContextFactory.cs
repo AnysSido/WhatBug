@@ -55,16 +55,18 @@ namespace WhatBug.Application.UnitTests.Common
 
             context.Permissions.AddRange(new[]
             {
-                new Permission { Id = 1, Name = "Permission1", Description = "Permission1", Type = PermissionType.Global  },
-                new Permission { Id = 2, Name = "Permission2", Description = "Permission2", Type = PermissionType.Global  },
-                new Permission { Id = 3, Name = "Permission3", Description = "Permission3", Type = PermissionType.Project  },
+                new Permission { Id = 1, Name = "Permission1", Description = "PermissionDesc1", Type = PermissionType.Global },
+                new Permission { Id = 2, Name = "Permission2", Description = "PermissionDesc2", Type = PermissionType.Global },
+                new Permission { Id = 3, Name = "Permission3", Description = "PermissionDesc3", Type = PermissionType.Global },
+                new Permission { Id = 4, Name = "Permission4", Description = "PermissionDesc4", Type = PermissionType.Project },
+                new Permission { Id = 5, Name = "Permission5", Description = "PermissionDesc5", Type = PermissionType.Project },
+                new Permission { Id = 6, Name = "Permission6", Description = "PermissionDesc6", Type = PermissionType.Project },
             });
 
             context.UserPermissions.AddRange(new[]
             {
                 new UserPermission { UserId = 1, PermissionId = 1 },
                 new UserPermission { UserId = 1, PermissionId = 2 },
-                new UserPermission { UserId = 1, PermissionId = 3 },
                 new UserPermission { UserId = 3, PermissionId = 2 },
             });
 

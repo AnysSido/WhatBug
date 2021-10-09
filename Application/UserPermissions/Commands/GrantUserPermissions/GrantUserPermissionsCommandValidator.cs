@@ -9,6 +9,7 @@ using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.Common.Extensions;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.UserPermissions.Commands.GrantUserPermissions;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions
 {
@@ -28,7 +29,8 @@ namespace WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions
             RuleFor(v => v.PermissionIds)
                 .Cascade(CascadeMode.Stop)
                 .NotNull().WithException(cmd => new ArgumentException(nameof(cmd.PermissionIds)))
-                .MustAsync(AllExist).WithException(cmd => new RecordNotFoundException());
+                .MustAsync(AllExist).WithException(cmd => new RecordNotFoundException())
+                .MustAsync(BeCorrectPermissionType).WithException(cmd => new ArgumentException(nameof(cmd.PermissionIds)));
         }
 
         public async Task<bool> Exist(GrantUserPermissionsCommand command, int userId, CancellationToken cancellationToken)
@@ -40,6 +42,12 @@ namespace WhatBug.Application.UserPermissions.Commands.GrantGlobalPermissions
         {
             var permissions = await _context.Permissions.Where(p => command.PermissionIds.Contains(p.Id)).ToListAsync();
             return permissions.Count == command.PermissionIds.Count();
+        }
+
+        public async Task<bool> BeCorrectPermissionType(GrantUserPermissionsCommand command, IEnumerable<int> permissionIds, CancellationToken cancellationToken)
+        {
+            var permissions = await _context.Permissions.Where(p => command.PermissionIds.Contains(p.Id)).ToListAsync();
+            return !permissions.Where(p => p.Type != PermissionType.Global).Any();
         }
     }
 }
