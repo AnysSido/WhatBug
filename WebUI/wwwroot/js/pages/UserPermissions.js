@@ -6,6 +6,11 @@ $(function() {
             this.modal = $('<div id="GrantUserPermissionsModal" class="modal fade"></div>')
             this.modal.html(modal);
             $('body').append(this.modal);
+
+            this.modal.on('hidden.bs.modal', () => {
+                this.modal.remove();
+            });
+
             this.modal.modal('show');
         });
     });

@@ -41,6 +41,8 @@ namespace WhatBug.Application.UserPermissions.Queries.GetGrantUserPermissions
             {
                 Id = user.Id,
                 Username = user.Username,
+                FirstName = user.FirstName,
+                Surname = user.Surname,
                 Permissions = allGlobalPermissions.Select(globalPermission => new PermissionDTO
                 {
                     Id = globalPermission.Id,

@@ -8,7 +8,7 @@ using WhatBug.Application.UnitTests.Common;
 using WhatBug.Application.UserPermissions.Queries.GetUsersAndPermissions;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.UserPermissions.Queries.GetUserPermissions
+namespace WhatBug.Application.UnitTests.UserPermissions.Queries.GetUsersAndPermissions
 {
     [Collection("QueryCollection")]
     public class GetUsersAndPermissionsQueryTests
@@ -37,12 +37,17 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Queries.GetUserPermissio
             result.Result.Users.Count.ShouldBe(3);
 
             var user1 = result.Result.Users.Single(u => u.Id == 1);
+            user1.Username.ShouldBe("TestUser1");
+            user1.FirstName.ShouldBe("FirstName1");
+            user1.Surname.ShouldBe("Surname1");
             user1.Permissions.Count.ShouldBe(2);
 
             var user2 = result.Result.Users.Single(u => u.Id == 2);
+            user2.Username.ShouldBe("TestUser2");
             user2.Permissions.Count.ShouldBe(0);
 
             var user3 = result.Result.Users.Single(u => u.Id == 3);
+            user3.Username.ShouldBe("TestUser3");
             user3.Permissions.Count.ShouldBe(1);
         }
     }

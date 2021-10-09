@@ -8,14 +8,14 @@
     <div class="page-container">
         <div class="text-block">
             <p>
-                Grant or remove permissions from users. These permissions are global and will apply site-wide.
+                Grant or deny user permissions.
             </p>
         </div>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th class="table__header">Username</th>
+                    <th class="table__header">User Full Name</th>
                     <th class="table__header">Granted Permissions</th>
                     <th class="table__header table__header--shrink">Actions</th>
                 </tr>
@@ -25,7 +25,7 @@
                 @foreach (var user in Model.Users)
                 {
                     <tr>
-                        <td class="table__cell">@user.Username</td>
+                        <td class="table__cell">@user.FirstName @user.Surname</td>
                         <td class="table__cell">@string.Join(" | ", user.Permissions.Select(p => p.Name))</td>
 
                         <td class="table__cell table__cell--icons">
@@ -35,6 +35,13 @@
                 }
             </tbody>
         </table>
+    </div>
+
+    <div class="page-container__item--medium-width">
+        <div class="alert alert--info alert--dismissible">
+            <button class="alert__dismiss" type="button" data-dismiss="alert" aria-hidden="true">×</button>
+            <p><i class="icon icon--information"></i>Unlike project permissions, user permissions are granted globally.</p>
+        </div>
     </div>
 }
 

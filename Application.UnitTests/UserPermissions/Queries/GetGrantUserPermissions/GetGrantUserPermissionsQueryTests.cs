@@ -66,6 +66,8 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Queries.GetGrantUserPerm
             result.Succeeded.ShouldBe(true);
             result.Result.Id.ShouldBe(1);
             result.Result.Username.ShouldBe("TestUser1");
+            result.Result.FirstName.ShouldBe("FirstName1");
+            result.Result.Surname.ShouldBe("Surname1");
 
             result.Result.Permissions[0].Id.ShouldBe(1);
             result.Result.Permissions[0].Name.ShouldBe("Permission1");

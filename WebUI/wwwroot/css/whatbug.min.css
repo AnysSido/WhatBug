@@ -7246,7 +7246,7 @@ button.bg-dark:focus {
   display: table-cell !important;
 }
 
-.d-flex, .l-flex, .text-block, .table__cell--icons, .page-container {
+.d-flex, .l-flex, .text-block, .table__cell--checkbox, .table__cell--icons, .page-container {
   display: -ms-flexbox !important;
   display: flex !important;
 }
@@ -7564,7 +7564,7 @@ button.bg-dark:focus {
   justify-content: flex-end !important;
 }
 
-.justify-content-center, .l-flex--justify-content-center, .table__cell--icons {
+.justify-content-center, .l-flex--justify-content-center, .table__cell--checkbox, .table__cell--icons {
   -ms-flex-pack: center !important;
   justify-content: center !important;
 }
@@ -7589,7 +7589,7 @@ button.bg-dark:focus {
   align-items: flex-end !important;
 }
 
-.align-items-center, .table__cell--icons {
+.align-items-center, .table__cell--checkbox, .table__cell--icons {
   -ms-flex-align: center !important;
   align-items: center !important;
 }
@@ -18716,7 +18716,7 @@ button.bg-dark:focus {
   display: table-cell !important;
 }
 
-.d-flex, .l-flex, .text-block, .table__cell--icons, .page-container {
+.d-flex, .l-flex, .text-block, .table__cell--checkbox, .table__cell--icons, .page-container {
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
   display: flex !important;
@@ -19060,7 +19060,7 @@ button.bg-dark:focus {
   justify-content: flex-end !important;
 }
 
-.justify-content-center, .l-flex--justify-content-center, .table__cell--icons {
+.justify-content-center, .l-flex--justify-content-center, .table__cell--checkbox, .table__cell--icons {
   -webkit-justify-content: center !important;
   -ms-flex-pack: center !important;
   justify-content: center !important;
@@ -19090,7 +19090,7 @@ button.bg-dark:focus {
   align-items: flex-end !important;
 }
 
-.align-items-center, .table__cell--icons {
+.align-items-center, .table__cell--checkbox, .table__cell--icons {
   -webkit-align-items: center !important;
   -ms-flex-align: center !important;
   align-items: center !important;
@@ -72338,7 +72338,7 @@ ol {
   margin-inline: 0;
 }
 
-.l-flex, .text-block, .table__cell--icons, .page-container {
+.l-flex, .text-block, .table__cell--checkbox, .table__cell--icons, .page-container {
   gap: 1rem;
 }
 .text--primary {

@@ -10,13 +10,18 @@
         }
     }
 
-    &__cell {
-        
+    &__cell {        
         &--icons {
             @extend .l-flex;
             @extend .l-flex--justify-content-center;
             @extend .align-items-center;
             gap: 0.5rem;
+        }
+
+        &--checkbox {
+            @extend .l-flex;
+            @extend .l-flex--justify-content-center;
+            @extend .align-items-center;
         }
     }
 

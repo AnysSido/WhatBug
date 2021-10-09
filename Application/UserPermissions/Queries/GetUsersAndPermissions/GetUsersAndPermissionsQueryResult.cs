@@ -15,6 +15,8 @@ namespace WhatBug.Application.UserPermissions.Queries.GetUsersAndPermissions
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
         public IList<PermissionDTO> Permissions { get; set; }
 
         public void Mapping(Profile profile)
