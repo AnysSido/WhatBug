@@ -27,10 +27,9 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
 
         [HttpGet("create", Name = "CreatePermissionScheme")]
         [RequirePermission(Permissions.ManagePermissionSchemes)]
-        public async Task<IActionResult> Create()
+        public Task<IActionResult> Create()
         {
-            var dto = await Mediator.Send(new GetCreatePermissionSchemeQuery());
-            return View(dto);
+            return View();
         }
 
         [HttpPost("create", Name = "CreatePermissionScheme")]
