@@ -82,17 +82,6 @@ namespace WhatBug.Persistence
                 .HasKey(p => new { p.UserId, p.PermissionId });
 
             modelBuilder
-                .Entity<UserPermission>()
-                .HasOne(p => p.User)
-                .WithMany(u => u.UserPermissions);
-
-            modelBuilder
-                .Entity<UserPermission>()
-                .HasOne(p => p.Permission)
-                .WithMany()
-                .HasForeignKey(p => p.PermissionId);
-
-            modelBuilder
                 .Entity<PermissionSchemeRolePermission>()
                 .HasKey(p => new { p.PermissionSchemeId, p.RoleId, p.PermissionId });
 
