@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions;
+using WhatBug.Application.PermissionSchemes.Queries.GetEditPermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetGrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes;
 using WhatBug.Application.PermissionSchemes.Queries.GetSchemeRoles;
@@ -41,6 +42,15 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
                 return ViewWithErrors(command, result);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("{schemeId}/edit", Name = "EditPermissionScheme")]
+        [RequirePermission(Permissions.ManagePermissionSchemes)]
+        public async Task<IActionResult> Edit(int schemeId)
+        {
+            var result = await Mediator.Send(new GetEditPermissionSchemeQuery { SchemeId = schemeId });
+
+            return View(result.Result);
         }
 
         [HttpGet("roles")]

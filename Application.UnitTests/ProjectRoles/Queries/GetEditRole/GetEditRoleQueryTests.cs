@@ -26,14 +26,13 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Queries.GetEditRole
         {
             // Arrange
             var sut = new GetEditRoleQueryHandler(_context, _mapper);
-            var roleId = 1;
 
             // Act
-            var result = await sut.Handle(new GetEditRoleQuery { RoleId = roleId }, CancellationToken.None);
+            var result = await sut.Handle(new GetEditRoleQuery { RoleId = 1 }, CancellationToken.None);
 
             // Assert
             result.Succeeded.ShouldBe(true);
-            result.Result.Id.ShouldBe(roleId);
+            result.Result.Id.ShouldBe(1);
             result.Result.Name.ShouldBe("Admin");
             result.Result.Description.ShouldBe("Admin Role");
         }
