@@ -1,68 +1,63 @@
 ﻿using Application.UnitTests.Common;
 using FluentValidation.TestHelper;
 using WhatBug.Application.ProjectRoles.Commands.CreateRole;
+using WhatBug.Application.UnitTests.Common;
 using WhatBug.Domain.Entities;
 using Xunit;
 
 namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.CreateRole
 {
-    public class CreateRoleValidatorTest : CommandTestBase
+    [Collection("ValidatorCollection")]
+    public class CreateRoleValidatorTest
     {
-        private CreateRoleCommandValidator _validator;
+        private CreateRoleCommandValidator _sut;
 
-        public CreateRoleValidatorTest()
+        public CreateRoleValidatorTest(ValidatorTestFixture fixture)
         {
-            _validator = new CreateRoleCommandValidator(_context);
+            _sut = new CreateRoleCommandValidator(fixture.CreateContext());
         }
 
         [Fact]
-        public void GivenEmptyName_HasValidationError()
+        public void Given_ValidRequest_HasNoValidationErrors()
         {
             // Arrange
-            var command = new CreateRoleCommand { Name = string.Empty };
-            var expectedErrorMessage = "Role name cannot be empty";
+            var command = new CreateRoleCommand { Name = "New Role Name", Description = "New Role Desc" };
 
             // Act
-            var result = _validator.TestValidate(command);
+            var result = _sut.TestValidate(command);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(command => command.Name)
-                .WithErrorMessage(expectedErrorMessage);
+            result.ShouldNotHaveAnyValidationErrors();
         }
 
-        [Fact]
-        public void GivenNullName_HasValidationError()
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Given_NullOrEmptyName_HasValidationError(string name)
         {
             // Arrange
-            var command = new CreateRoleCommand();
-            var expectedErrorMessage = "Role name cannot be empty";
+            var command = new CreateRoleCommand { Name = name };
 
             // Act
-            var result = _validator.TestValidate(command);
+            var result = _sut.TestValidate(command);
 
             // Assert
             result.ShouldHaveValidationErrorFor(command => command.Name)
-                .WithErrorMessage(expectedErrorMessage);
+                .WithErrorMessage("Role name cannot be empty");
         }
 
         [Fact]
         public void Given_DuplicateName_HasValidationError()
         {
             // Arrange
-            using (var context = CreateContext())
-            {
-                context.Roles.Add(new Role { Id = 1, Name = "Developer" });
-                context.SaveChanges();
-            }
             var command = new CreateRoleCommand { Name = "Developer" };
-            var expectedErrorMessage = "A role with the name Developer already exists";
 
             // Act
-            var result = _validator.TestValidate(command);
+            var result = _sut.TestValidate(command);
 
             // Assert
             result.ShouldHaveValidationErrorFor(command => command.Name)
-                .WithErrorMessage(expectedErrorMessage);
+                .WithErrorMessage("A role with the name Developer already exists");
         }
     }
 }
