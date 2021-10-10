@@ -18,10 +18,12 @@ namespace WhatBug.Application.ProjectRoles.Commands.EditRole
             _context = context;
 
             RuleFor(v => v.RoleId)
+                .Cascade(CascadeMode.Stop)
                 .GreaterThan(0).WithException(cmd => new ArgumentException(nameof(cmd.RoleId)))
                 .MustAsync(Exist).WithException(cmd => new RecordNotFoundException());
 
             RuleFor(v => v.Name)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Role name cannot be empty")
                 .MustAsync(BeUnique).WithMessage(cmd => $"A role with the name {cmd.Name} already exists");
         }

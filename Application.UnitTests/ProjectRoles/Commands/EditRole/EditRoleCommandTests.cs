@@ -25,7 +25,7 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.EditRole
         }
 
         [Fact]
-        public async Task Handle_GivenValidRequest_ReturnsSuccess()
+        public async Task Handle_GivenValidRequest_UpdatesRole()
         {
             // Arrange
             var sut = new EditRoleCommandHandler(_context);
@@ -37,37 +37,8 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.EditRole
 
             // Assert
             result.Succeeded.ShouldBe(true);
-        }
-
-        [Fact]
-        public async Task Handle_GivenNewName_UpdatesName()
-        {
-            // Arrange
-            var sut = new EditRoleCommandHandler(_context);
-            var command = new EditRoleCommand { RoleId = 1, Name = "Admin" };
-
-            // Act
-            var result = await sut.Handle(command, CancellationToken.None);
-            var role = _context.Roles.SingleOrDefault(r => r.Id == 1);
-
-            // Assert
-            result.Succeeded.ShouldBe(true);
-            role.Name.ShouldBe("Admin");
-        }
-
-        [Fact]
-        public async Task Handle_GivenNewDescription_UpdatesDescription()
-        {
-            // Arrange
-            var sut = new EditRoleCommandHandler(_context);
-            var command = new EditRoleCommand { RoleId = 1, Description = "New Description" };
-
-            // Act
-            var result = await sut.Handle(command, CancellationToken.None);
-            var role = _context.Roles.SingleOrDefault(r => r.Id == 1);
-
-            // Assert
-            result.Succeeded.ShouldBe(true);
+            role.ShouldNotBeNull();
+            role.Name.ShouldBe("New Name");
             role.Description.ShouldBe("New Description");
         }
 

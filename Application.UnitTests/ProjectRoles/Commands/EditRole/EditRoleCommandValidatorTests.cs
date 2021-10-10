@@ -1,10 +1,8 @@
-﻿using Application.UnitTests.Common;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using System;
 using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.ProjectRoles.Commands.EditRole;
 using WhatBug.Application.UnitTests.Common;
-using WhatBug.Domain.Entities;
 using Xunit;
 
 namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.EditRole
@@ -26,14 +24,13 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.EditRole
         {
             // Arrange
             var command = new EditRoleCommand { Name = name };
-            var expectedErrorMessage = "Role name cannot be empty";
 
             // Act
             var result = _sut.TestValidate(command);
 
             // Assert
             result.ShouldHaveValidationErrorFor(command => command.Name)
-                .WithErrorMessage(expectedErrorMessage);
+                .WithErrorMessage("Role name cannot be empty");
         }
 
         [Fact]
@@ -41,14 +38,13 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.EditRole
         {
             // Arrange
             var command = new EditRoleCommand { RoleId = 4, Name = "Developer" };
-            var expectedErrorMessage = "A role with the name Developer already exists";
 
             // Act
             var result = _sut.TestValidate(command);
 
             // Assert
             result.ShouldHaveValidationErrorFor(command => command.Name)
-                .WithErrorMessage(expectedErrorMessage);
+                .WithErrorMessage("A role with the name Developer already exists");
         }
 
         [Theory]
