@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions;
-using WhatBug.Application.PermissionSchemes.Queries.GetCreatePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetGrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes;
 using WhatBug.Application.PermissionSchemes.Queries.GetSchemeRoles;
@@ -27,7 +26,7 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
 
         [HttpGet("create", Name = "CreatePermissionScheme")]
         [RequirePermission(Permissions.ManagePermissionSchemes)]
-        public Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -36,7 +35,11 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
         [RequirePermission(Permissions.ManagePermissionSchemes)]
         public async Task<IActionResult> Create(CreatePermissionSchemeCommand command)
         {
-            await Mediator.Send(command);
+            var result = await Mediator.Send(command);
+
+            if (result.HasValidationErrors)
+                return ViewWithErrors(command, result);
+
             return RedirectToAction(nameof(Index));
         }
 

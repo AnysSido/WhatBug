@@ -1,33 +1,56 @@
-﻿@model WhatBug.Application.PermissionSchemes.Queries.GetCreatePermissionScheme.CreatePermissionSchemeDTO
+﻿@model WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme.CreatePermissionSchemeCommand
 
 @{
     ViewData["Title"] = "Create Permission Scheme";
 }
 
 @{
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h6 class="card-title">New Issue</h6>
+    <div class="page-container">
+
+        <div class="text-block">
+            <p>
+                Create a new permission scheme to be used with projects in WhatBug.
+            </p>
+            <p>
+                Every project in WhatBug is assigned a permission scheme (default if not assigned manually).
+                Each scheme can have a unique combination of permissions assigned to project roles.
+            </p>
+            <p>
+                A project will use the role permissions from the scheme that it has been assigned.
+            </p>
+        </div>
+
+        <div class="page-container__item--medium-width">
+            <form class="form" method="post">
+                <div class="form__group">
+                    <label class="form__label" asp-for="Name">Scheme Name</label>
+                    <input class="form__input" asp-for="Name" />
+                    <span class="form__validation" asp-validation-for="Name"></span>
                 </div>
-                <form method="post">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label asp-for="Name"></label>
-                            <input asp-for="Name" class="form-control" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Description"></label>
-                            <input asp-for="Description" class="form-control" />
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary float-right">Create</button>
-                    </div>
-                </form>
+                <div class="form__group">
+                    <label class="form__label" asp-for="Description">Scheme Description</label>
+                    <input class="form__input" asp-for="Description" />
+                    <span class="form__validation" asp-validation-for="Description"></span>
+                </div>
+                <button class="button button--primary float-right" type="submit">
+                    <i class="button__icon icon icon--plus"></i>
+                    Create Scheme
+                </button>
+            </form>
+        </div>
+
+        <div class="page-container__item--medium-width">
+            <div class="alert alert--info alert--dismissible">
+                <button class="alert__dismiss" type="button" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon icon--information"></i> Example</h5>
+                <ol>
+                    <li>Create permission scheme <b>"Software Development"</b>.</li>
+                    <li>Create project role <b>"Developer"</b>.</li>
+                    <li>Grant the <b>Developer</b> role a permission under the <b>Software Development</b> scheme.</li>
+                    <li>Assign the new permission scheme to a project.</li>
+                    <li>Assign a user to the <b>Developer</b> role for that project.</li>
+                    <li>The user now has the project permissions you granted to the <b>Developer</b> role.</li>
+                </ol>
             </div>
         </div>
     </div>
