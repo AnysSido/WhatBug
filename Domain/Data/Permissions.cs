@@ -12,9 +12,10 @@ namespace WhatBug.Domain.Data
         // Global
         public const string CreateProject = "Create Project";
         public const string DeleteProject = "Delete Project";
-        public const string EditUserPermissions = "Edit User Permissions";
+        public const string ManageUserPermissions = "Manage User Permissions";
         public const string ViewAllProjects = "View All Projects";
         public const string ManageProjectRoles = "Manage Project Roles";
+        public const string ManagePermissionSchemes = "Manage Permission Schemes";
 
         // Project
         public const string CreateIssue = "Create Issue";
@@ -25,9 +26,10 @@ namespace WhatBug.Domain.Data
         {
             CreatePermission(1, CreateProject, "Create new projects.", PermissionType.Global);
             CreatePermission(2, DeleteProject, "Delete existing projects.", PermissionType.Global);
-            CreatePermission(3, EditUserPermissions, "Edit global permissions assigned to users.", PermissionType.Global);
+            CreatePermission(3, ManageUserPermissions, "Grant and/or deny user-level permissions.", PermissionType.Global);
             CreatePermission(4, ViewAllProjects, "View all projects in WhatBug. Users without this permission must be a member of a project to view it.", PermissionType.Global);
             CreatePermission(5, ManageProjectRoles, "Create, edit and delete project roles used by permission schemes.", PermissionType.Global);
+            CreatePermission(9, ManagePermissionSchemes, "Create, edit and delete permission schemes.", PermissionType.Global);
 
             CreatePermission(6, CreateIssue, "Create new issues within a project.", PermissionType.Project);
             CreatePermission(7, EditIssue, "Edit existing issues within a project.", PermissionType.Project);
