@@ -70,6 +70,13 @@ namespace WhatBug.Application.UnitTests.Common
                 new UserPermission { UserId = 3, PermissionId = 2 },
             });
 
+            context.PermissionSchemes.AddRange(new[]
+            {
+                new PermissionScheme { Id = 1, Name = "PermissionScheme1", Description = "PermissionSchemeDesc1" },
+                new PermissionScheme { Id = 2, Name = "PermissionScheme2", Description = "PermissionSchemeDesc2" },
+                new PermissionScheme { Id = 3, Name = "PermissionScheme3", Description = "PermissionSchemeDesc3" },
+            });
+
             context.SaveChanges();
 
             context.Projects.First().RoleUsers = new List<ProjectRoleUser>
