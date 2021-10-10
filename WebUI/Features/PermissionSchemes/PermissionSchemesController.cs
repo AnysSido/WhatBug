@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
+using WhatBug.Application.PermissionSchemes.Commands.EditPermissionScheme;
 using WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetEditPermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetGrantRolePermissions;
@@ -51,6 +52,23 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
             var result = await Mediator.Send(new GetEditPermissionSchemeQuery { SchemeId = schemeId });
 
             return View(result.Result);
+        }
+
+        [HttpPost("{schemeId}/edit", Name = "EditPermissionScheme")]
+        [RequirePermission(Permissions.ManagePermissionSchemes)]
+        public async Task<IActionResult> Edit(GetEditPermissionSchemeQueryResult vm)
+        {
+            var result = await Mediator.Send(new EditPermissionSchemeCommand
+            {
+                SchemeId = vm.Id,
+                Name = vm.Name,
+                Description = vm.Description
+            });
+
+            if (result.HasValidationErrors)
+                return ViewWithErrors(vm, result);
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet("roles")]
