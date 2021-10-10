@@ -10,7 +10,7 @@ using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.UserPermissions.Queries.GetUsersAndPermissions
 {
-    [Authorize(Permissions.EditUserPermissions)]
+    [Authorize(Permissions.ManageUserPermissions)]
     public record GetUsersAndPermissionsQuery : IQuery<Response<GetUsersAndPermissionsQueryResult>> { }
 
     public class GetUsersAndPermissionsQueryHandler : IRequestHandler<GetUsersAndPermissionsQuery, Response<GetUsersAndPermissionsQueryResult>>

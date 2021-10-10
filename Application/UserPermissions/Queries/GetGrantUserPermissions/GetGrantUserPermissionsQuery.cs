@@ -11,7 +11,7 @@ using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.UserPermissions.Queries.GetGrantUserPermissions
 {
-    [Authorize(Permissions.EditUserPermissions)]
+    [Authorize(Permissions.ManageUserPermissions)]
     public record GetGrantUserPermissionsQuery : IQuery<Response<GetGrantUserPermissionsQueryResult>>
     {
         public int UserId { get; set; }

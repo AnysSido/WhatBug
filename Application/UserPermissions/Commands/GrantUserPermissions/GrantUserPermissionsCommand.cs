@@ -12,7 +12,7 @@ using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.UserPermissions.Commands.GrantUserPermissions
 {
-    [Authorize(Permissions.EditUserPermissions)]
+    [Authorize(Permissions.ManageUserPermissions)]
     public record GrantUserPermissionsCommand : ICommand<Response>
     {
         public int UserId { get; set; }
