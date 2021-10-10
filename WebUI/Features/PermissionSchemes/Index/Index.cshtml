@@ -1,49 +1,54 @@
-﻿@model WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes.PermissionSchemesDTO
+﻿@model WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes.GetPermissionSchemesQueryResult
 
 @{
     ViewData["Title"] = "Permission Schemes";
 }
 
-<div class="card card-primary">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="ion ion-clipboard mr-1"></i>
-            All Issues
-        </h3>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered">
+@{ 
+    <div class="page-container">
+        <div class="text-block">
+            <p>
+                Project roles are used in conjunction with users and permission schemes.
+                Each permission scheme can have different permissions for each role.
+            </p>
+            <p>
+                Users can be assigned a role within a project. Users will be granted permissions
+                based what is available for their role within the current permission scheme.
+            </p>
+        </div>
+
+        <table class="table">
             <thead>
                 <tr>
-                    <th>Actions</th>
-                    <th>Name</th>
-                    <th>Description</th>
+                    <th class="table__header">Scheme Name</th>
+                    <th class="table__header">Scheme Description</th>
+                    <th class="table__header table__header--shrink">Actions</th>
                 </tr>
             </thead>
+
             <tbody>
-                @for (int i = 0; i < Model.PermissionSchemes.Count; i++)
+                @foreach (var scheme in Model.PermissionSchemes)
                 {
                     <tr>
-                        <!-- Actions -->
-                        <td>
-                            <div class="input-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    Action
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model.PermissionSchemes[i].Id">Edit</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
-                                </div>
-                            </div>
+                        <td class="table__cell">@scheme.Name</td>
+                        <td class="table__cell">@scheme.Description</td>
+
+                        <td class="table__cell table__cell--icons">
+                            <a class="table__cell-icon" asp-route="EditPermissionScheme" asp-route-schemeId="@scheme.Id">
+                                <i class="icon icon--edit"></i>
+                            </a>
+                            <i class="table__cell-icon icon icon--delete js__delete-role" data-roleid="@scheme.Id"></i>
                         </td>
-                        <td>@Model.PermissionSchemes[i].Name</td>
-                        <td>@Model.PermissionSchemes[i].Description</td>
                     </tr>
                 }
             </tbody>
         </table>
+
+        <div class="l-flex l-flex--justify-content-end">
+            <a class="button button--primary" asp-route="DeletePermissionScheme">
+                <i class="button__icon icon icon--plus"></i>
+                New Role
+            </a>
+        </div>
     </div>
-    <div class="card-footer clearfix">
-        <a asp-action="Create" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Permission Scheme</a>
-    </div>
-</div>
+}
