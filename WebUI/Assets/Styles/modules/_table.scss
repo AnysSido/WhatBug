@@ -27,5 +27,10 @@
 
     &__cell-icon {
         cursor: pointer;
+
+        &--disabled {
+            @extend .icon--disabled;
+            cursor: default;
+        }
     }
 }

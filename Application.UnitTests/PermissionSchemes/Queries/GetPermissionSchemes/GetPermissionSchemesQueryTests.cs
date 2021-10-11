@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Shouldly;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
@@ -40,6 +37,7 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Queries.GetPermissionS
 
             var scheme = result.Result.PermissionSchemes.SingleOrDefault(p => p.Id == 1);
             scheme.ShouldNotBeNull();
+            scheme.IsDefault.ShouldBe(true);
             scheme.Name.ShouldBe("PermissionScheme1");
             scheme.Description.ShouldBe("PermissionSchemeDesc1");
 

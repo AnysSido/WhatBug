@@ -73,3 +73,11 @@ $icons: (
 .icon--delete {
     @extend .icon--trash, .icon--danger;
 }
+
+.icon--danger {
+    @extend .icon--triangle-exclamation, .icon--danger;
+}
+
+.icon--disabled {
+    opacity: 0.5;
+}

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
+using WhatBug.Application.PermissionSchemes.Commands.DeletePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Commands.EditPermissionScheme;
 using WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions;
+using WhatBug.Application.PermissionSchemes.Queries.GetDeleteConfirm;
 using WhatBug.Application.PermissionSchemes.Queries.GetEditPermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetGrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes;
@@ -79,6 +81,15 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
             return View(dto);
         }
 
+        [HttpPost("grant", Name = "GrantRolePermissions")]
+        [RequirePermission(Permissions.ManagePermissionSchemes)]
+        public async Task<IActionResult> GrantRolePermissions(GrantRolePermissionsViewModel vm)
+        {
+            var command = new GrantRolePermissionsCommand { SchemeId = vm.Id, RoleId = vm.RoleId, PermissionIds = vm.GetPermissionIds() };
+            await Mediator.Send(command);
+            return RedirectToAction(nameof(Roles), new { schemeId = vm.Id });
+        }
+
         [AjaxOnly]
         [HttpGet("getgrantrolepermissionspartial")]
         [RequirePermission(Permissions.ManagePermissionSchemes)]
@@ -89,13 +100,29 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
             return PartialView(vm);
         }
 
-        [HttpPost("grant", Name = "GrantRolePermissions")]
+        [HttpPost("delete", Name = "DeletePermissionScheme")]
         [RequirePermission(Permissions.ManagePermissionSchemes)]
-        public async Task<IActionResult> GrantRolePermissions(GrantRolePermissionsViewModel vm)
+        public async Task<IActionResult> Delete(int schemeId)
         {
-            var command = new GrantRolePermissionsCommand { SchemeId = vm.Id, RoleId = vm.RoleId, PermissionIds = vm.GetPermissionIds() };
-            await Mediator.Send(command);
-            return RedirectToAction(nameof(Roles), new { schemeId = vm.Id });
+            var result = await Mediator.Send(new DeletePermissionSchemeCommand
+            {
+                SchemeId = schemeId
+            });
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [AjaxOnly]
+        [HttpGet("getdeleteconfirmpartial")]
+        [RequirePermission(Permissions.ManageProjectRoles)]
+        public async Task<IActionResult> GetDeleteConfirmPartial(int schemeId)
+        {
+            var result = await Mediator.Send(new GetDeleteConfirmQuery
+            {
+                SchemeId = schemeId
+            });
+
+            return PartialView(result.Result);
         }
     }
 }

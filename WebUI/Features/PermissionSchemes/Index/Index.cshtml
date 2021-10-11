@@ -4,7 +4,7 @@
     ViewData["Title"] = "Permission Schemes";
 }
 
-@{ 
+@{
     <div class="page-container">
         <div class="text-block">
             <p>
@@ -34,10 +34,19 @@
                         <td class="table__cell">@scheme.Description</td>
 
                         <td class="table__cell table__cell--icons">
-                            <a class="table__cell-icon" asp-route="EditPermissionScheme" asp-route-schemeId="@scheme.Id">
-                                <i class="icon icon--edit"></i>
-                            </a>
-                            <i class="table__cell-icon icon icon--delete js__delete-role" data-roleid="@scheme.Id"></i>
+                            @if (scheme.IsDefault)
+                            {
+                                <i class="table__cell-icon table__cell-icon--disabled icon icon--edit" data-schemeid="@scheme.Id"></i>
+                                <i class="table__cell-icon table__cell-icon--disabled icon icon--delete" data-schemeid="@scheme.Id"></i>
+                            }
+                            else
+                            {
+                                <a class="table__cell-icon" asp-route="EditPermissionScheme" asp-route-schemeId="@scheme.Id">
+                                    <i class="icon icon--edit"></i>
+                                </a>
+
+                                <i class="table__cell-icon icon icon--delete js__delete-permission" data-schemeid="@scheme.Id"></i>
+                            }
                         </td>
                     </tr>
                 }
@@ -51,4 +60,8 @@
             </a>
         </div>
     </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/pages/permissionschemes.js"></script>
 }

@@ -70,7 +70,7 @@ namespace WhatBug.WebUI.Features.ProjectRoles
         }
 
         [HttpPost("delete", Name = "DeleteRole")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
+        [RequirePermission(Permissions.ManageProjectRoles)] 
         public async Task<IActionResult> DeleteRole(int roleId)
         {
             var result = await Mediator.Send(new DeleteRoleCommand

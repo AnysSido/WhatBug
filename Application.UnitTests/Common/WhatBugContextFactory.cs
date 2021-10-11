@@ -72,7 +72,7 @@ namespace WhatBug.Application.UnitTests.Common
 
             context.PermissionSchemes.AddRange(new[]
             {
-                new PermissionScheme { Id = 1, Name = "PermissionScheme1", Description = "PermissionSchemeDesc1" },
+                new PermissionScheme { Id = 1, Name = "PermissionScheme1", Description = "PermissionSchemeDesc1", IsDefault = true },
                 new PermissionScheme { Id = 2, Name = "PermissionScheme2", Description = "PermissionSchemeDesc2" },
                 new PermissionScheme { Id = 3, Name = "PermissionScheme3", Description = "PermissionSchemeDesc3" },
             });
