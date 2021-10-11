@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
@@ -33,9 +34,8 @@ namespace WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes
 
             var dto = new GetPermissionSchemesQueryResult
             {
-                PermissionSchemes = permissionSchemes
+                PermissionSchemes = permissionSchemes.OrderBy(s => !s.IsDefault).ThenBy(s => s.Name).ToList()
             };
-
             return Response<GetPermissionSchemesQueryResult>.Success(dto);
         }
     }
