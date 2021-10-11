@@ -18,9 +18,12 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.DeletePermiss
             {
                 context.PermissionSchemes.AddRange(new[]
                 {
-                    new PermissionScheme { Id = 1, Name = "Scheme1", Description = "SchemeDesc1" },
-                    new PermissionScheme { Id = 2, Name = "Scheme2", Description = "SchemeDesc2" }
+                    new PermissionScheme { Id = 1, IsDefault = true },
+                    new PermissionScheme { Id = 2 }
                 });
+
+                context.Projects.Add(new Project { Id = 1, PermissionSchemeId = 2 });
+
                 context.SaveChanges();
             }
         }
@@ -30,7 +33,7 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.DeletePermiss
         {
             // Arrange
             var sut = new DeletePermissionSchemeCommandHandler(_context);
-            var command = new DeletePermissionSchemeCommand { SchemeId = 1 };
+            var command = new DeletePermissionSchemeCommand { SchemeId = 2 };
 
             // Act
             var result = await sut.Handle(command, CancellationToken.None);
@@ -39,7 +42,22 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.DeletePermiss
             // Assert
             result.Succeeded.ShouldBe(true);
             schemes.Count.ShouldBe(1);
-            schemes.First().Id.ShouldBe(2);
+            schemes.First().Id.ShouldBe(1);
+        }
+
+        [Fact]
+        public async Task Handle_GivenValidRequest_ReassignsProjectsToDefaultScheme()
+        {
+            // Arrange
+            var sut = new DeletePermissionSchemeCommandHandler(_context);
+            var command = new DeletePermissionSchemeCommand { SchemeId = 2 };
+
+            // Act
+            var result = await sut.Handle(command, CancellationToken.None);
+            var project = _context.Projects.First(p => p.Id == 1);
+
+            // Assert
+            project.PermissionSchemeId.ShouldBe(1);
         }
     }
 }
