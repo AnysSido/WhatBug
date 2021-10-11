@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhatBug.Persistence;
@@ -9,9 +10,10 @@ using WhatBug.Persistence;
 namespace WhatBug.Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211010220332_AddDefaultPermissionScheme")]
+    partial class AddDefaultPermissionScheme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -918,9 +920,6 @@ namespace WhatBug.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
@@ -941,7 +940,6 @@ namespace WhatBug.Persistence.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0,
                             Description = "The default permission scheme used by all projects without any other scheme assigned.",
-                            IsDefault = true,
                             LastModifiedBy = 0,
                             Name = "Default"
                         });

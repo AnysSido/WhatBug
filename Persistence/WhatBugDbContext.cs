@@ -126,7 +126,9 @@ namespace WhatBug.Persistence
             modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.Seed());
             modelBuilder.Entity<IssueType>().HasData(Domain.Data.IssueTypes.Seed());
             modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());
-            modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme() { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
+            modelBuilder.Entity<PriorityScheme>().HasData(new PriorityScheme { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
+            modelBuilder.Entity<PermissionScheme>().HasData(new PermissionScheme { Id = 1, IsDefault = true, Name = "Default", Description = "The default permission scheme used by all projects without any other scheme assigned." });
+
 
             // TODO: Clean this up
             modelBuilder.Entity<IssueStatus>().HasData(new IssueStatus { Id = 1, Name = "Backlog" }, new IssueStatus { Id = 2, Name = "ToDo" }, new IssueStatus { Id = 3, Name = "In Progress" }, new IssueStatus { Id = 4, Name = "Done" });
