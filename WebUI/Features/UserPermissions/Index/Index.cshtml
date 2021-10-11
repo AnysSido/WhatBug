@@ -29,7 +29,7 @@
                         <td class="table__cell">@string.Join(" | ", user.Permissions.Select(p => p.Name))</td>
 
                         <td class="table__cell table__cell--icons">
-                            <i class="table__cell-icon icon icon--edit js__grant-user-permission" data-userId="@user.Id"></i>
+                            <i class="table__cell-icon icon icon--assign js__grant-user-permission" data-userId="@user.Id"></i>
                         </td>
                     </tr>
                 }

@@ -54,7 +54,9 @@ $icons: (
     "users": $fa-var-users,
     "file": $fa-var-file,
     "trash": $fa-var-trash,
-    "save": $fa-var-save
+    "save": $fa-var-save,
+    "tasks": $fa-var-tasks,
+    "scroll": $fa-var-scroll
 );
 
 @each $iconName, $fa in $icons {
@@ -72,6 +74,10 @@ $icons: (
 
 .icon--delete {
     @extend .icon--trash, .icon--danger;
+}
+
+.icon--assign {
+    @extend .icon--scroll, .icon--info;
 }
 
 .icon--danger {
