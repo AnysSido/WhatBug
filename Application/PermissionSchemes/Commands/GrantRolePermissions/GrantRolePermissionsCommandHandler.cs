@@ -1,14 +1,11 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
-using WhatBug.Domain.Entities.JoinTables;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions
 {

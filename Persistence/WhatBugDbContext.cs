@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Domain.Common;
 using WhatBug.Domain.Entities;
-using WhatBug.Domain.Entities.JoinTables;
 
 namespace WhatBug.Persistence
 {
@@ -39,6 +38,7 @@ namespace WhatBug.Persistence
         public DbSet<IssueComment> IssueComments { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<PermissionSchemeRolePermission> PermissionSchemeRolePermissions { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -84,24 +84,6 @@ namespace WhatBug.Persistence
             modelBuilder
                 .Entity<PermissionSchemeRolePermission>()
                 .HasKey(p => new { p.PermissionSchemeId, p.RoleId, p.PermissionId });
-
-            modelBuilder
-                .Entity<PermissionSchemeRolePermission>()
-                .HasOne(p => p.PermissionScheme)
-                .WithMany(s => s.ProjectRolePermissions)
-                .HasForeignKey(p => p.PermissionSchemeId);
-
-            modelBuilder
-                .Entity<PermissionSchemeRolePermission>()
-                .HasOne(p => p.Role)
-                .WithMany()
-                .HasForeignKey(p => p.RoleId);
-
-            modelBuilder
-                .Entity<PermissionSchemeRolePermission>()
-                .HasOne(p => p.Permission)
-                .WithMany()
-                .HasForeignKey(p => p.PermissionId);
 
             modelBuilder
                 .Entity<Issue>()

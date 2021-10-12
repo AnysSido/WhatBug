@@ -28,6 +28,7 @@ namespace WhatBug.Application.Common.Interfaces
 
         ChangeTracker ChangeTracker { get; }
         DatabaseFacade Database { get; }
+        DbSet<PermissionSchemeRolePermission> PermissionSchemeRolePermissions { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         int SaveChanges();
