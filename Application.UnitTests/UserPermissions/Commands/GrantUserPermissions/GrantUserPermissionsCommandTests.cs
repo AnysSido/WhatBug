@@ -61,8 +61,7 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Commands.GrantUserPermis
             // Arrange
             using (var context = CreateContext())
             {
-                context.Users.Include(u => u.UserPermissions)
-                    .Single(u => u.Id == 1).UserPermissions.Add(new UserPermission { UserId = 1, PermissionId = 1 });
+                context.UserPermissions.Add(new UserPermission { UserId = 1, PermissionId = 1 });
                 context.SaveChanges();
             }
 
@@ -84,8 +83,7 @@ namespace WhatBug.Application.UnitTests.UserPermissions.Commands.GrantUserPermis
             // Arrange
             using (var context = CreateContext())
             {
-                context.Users.Include(u => u.UserPermissions)
-                    .Single(u => u.Id == 1).UserPermissions.Add(new UserPermission { UserId = 1, PermissionId = 1 });
+                context.UserPermissions.Add(new UserPermission { UserId = 1, PermissionId = 1 });
                 context.SaveChanges();
             }
 
