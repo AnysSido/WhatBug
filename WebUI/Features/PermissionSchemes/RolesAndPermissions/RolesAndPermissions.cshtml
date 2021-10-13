@@ -1,0 +1,68 @@
+﻿@model WhatBug.Application.PermissionSchemes.Queries.GetRolesAndPermissions.GetRolesAndPermissionsQueryResult
+
+@{
+    ViewData["Title"] = "Permission Scheme: " + Model.Name;
+}
+
+@{
+    <div class="page-container">
+        <div class="text-block">
+            <p>
+                Project roles are used in conjunction with users and permission schemes.
+                Each permission scheme can have different permissions for each role.
+            </p>
+            <p>
+                Users can be assigned a role within a project. Users will be granted permissions
+                based what is available for their role within the current permission scheme.
+            </p>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table__header">Role</th>
+                    <th class="table__header">Granted Permissions</th>
+                    <th class="table__header table__header--shrink">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var role in Model.Roles)
+                {
+                    <tr>
+                        <td class="table__cell">
+                            <p><b>@role.Name</b></p>
+                            <p>@role.Description</p>
+                        </td>
+
+                        @if (!role.Permissions.Any())
+                        {
+                            <td class="table__cell">
+                                <p>No permissions granted.</p>
+                            </td>
+                        }
+                        else
+                        { 
+                            <td class="table__cell">
+                                        <ul>
+                                @foreach (var permission in role.Permissions)
+                                { 
+                                    <li>@permission.Name</li>
+                                }
+                                        </ul>
+                            </td>
+                        }
+
+                        <td class="table__cell table__cell--icons">
+                            <i class="table__cell-icon icon icon--scroll icon--info js__GrantRolePermissions" data-schemeid="@Model.SchemeId" , data-roleId="@role.Id"></i>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/pages/RolesAndPermissions.js"></script>
+}

@@ -1,4 +1,4 @@
-﻿namespace WhatBug.Domain.Entities
+namespace WhatBug.Domain.Entities
 {
     public class PermissionSchemeRolePermission
     {

@@ -77,6 +77,15 @@ namespace WhatBug.Application.UnitTests.Common
                 new PermissionScheme { Id = 3, Name = "PermissionScheme3", Description = "PermissionSchemeDesc3" },
             });
 
+            context.PermissionSchemeRolePermissions.AddRange(new[]
+            {
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 4 },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 5, },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 6, },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 2, PermissionId = 4, },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 2, PermissionId = 5, },
+            });
+
             context.SaveChanges();
 
             context.Projects.First().RoleUsers = new List<ProjectRoleUser>
