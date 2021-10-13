@@ -10,6 +10,6 @@ namespace WhatBug.Domain.Entities
         public string Description { get; set; }
         public bool IsDefault { get; set; }
 
-        public List<PermissionSchemeRolePermission> ProjectRolePermissions = new List<PermissionSchemeRolePermission>();
+        public List<PermissionSchemeRolePermission> RolePermissions = new List<PermissionSchemeRolePermission>();
     }
 }

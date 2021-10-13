@@ -34,19 +34,19 @@
                         <td class="table__cell">@scheme.Description</td>
 
                         <td class="table__cell table__cell--icons">
+                            <a class="table__cell-icon" asp-route="RolesAndPermissions" asp-route-schemeId="@scheme.Id">
+                                <i class="icon icon--primary icon--assign"></i>
+                            </a>
                             @if (scheme.IsDefault)
                             {
-                                <i class="table__cell-icon table__cell-icon--disabled icon icon--assign" data-schemeid="@scheme.Id"></i>
                                 <i class="table__cell-icon table__cell-icon--disabled icon icon--edit" data-schemeid="@scheme.Id"></i>
                                 <i class="table__cell-icon table__cell-icon--disabled icon icon--delete" data-schemeid="@scheme.Id"></i>
                             }
                             else
                             {
-                                <i class="table__cell-icon icon icon--primary icon--assign" data-schemeid="@scheme.Id"></i>
                                 <a class="table__cell-icon" asp-route="EditPermissionScheme" asp-route-schemeId="@scheme.Id">
                                     <i class="icon icon--edit"></i>
                                 </a>
-
                                 <i class="table__cell-icon icon icon--delete js__delete-permission" data-schemeid="@scheme.Id"></i>
                             }
                         </td>
