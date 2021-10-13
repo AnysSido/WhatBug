@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme;
 using WhatBug.Application.PermissionSchemes.Commands.DeletePermissionScheme;
@@ -8,11 +9,10 @@ using WhatBug.Application.PermissionSchemes.Queries.GetDeleteConfirm;
 using WhatBug.Application.PermissionSchemes.Queries.GetEditPermissionScheme;
 using WhatBug.Application.PermissionSchemes.Queries.GetGrantRolePermissions;
 using WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes;
-using WhatBug.Application.PermissionSchemes.Queries.GetSchemeRoles;
+using WhatBug.Application.PermissionSchemes.Queries.GetRolesAndPermissions;
 using WhatBug.Domain.Data;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
-using WhatBug.WebUI.Features.PermissionSchemes.GrantRolePermissions;
 using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.PermissionSchemes
@@ -73,21 +73,13 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("roles")]
+        [HttpGet("{schemeId}/roles-and-permissions", Name = "RolesAndPermissions")]
         [RequirePermission(Permissions.ManagePermissionSchemes)]
-        public async Task<IActionResult> Roles(int schemeId)
+        public async Task<IActionResult> RolesAndPermissions(int schemeId)
         {
-            var dto = await Mediator.Send(new GetSchemeRolesQuery { SchemeId = schemeId });
-            return View(dto);
-        }
+            var result = await Mediator.Send(new GetRolesAndPermissionsQuery { SchemeId = schemeId });
 
-        [HttpPost("grant", Name = "GrantRolePermissions")]
-        [RequirePermission(Permissions.ManagePermissionSchemes)]
-        public async Task<IActionResult> GrantRolePermissions(GrantRolePermissionsViewModel vm)
-        {
-            var command = new GrantRolePermissionsCommand { SchemeId = vm.Id, RoleId = vm.RoleId, PermissionIds = vm.GetPermissionIds() };
-            await Mediator.Send(command);
-            return RedirectToAction(nameof(Roles), new { schemeId = vm.Id });
+            return View(result.Result);
         }
 
         [AjaxOnly]
@@ -95,21 +87,23 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
         [RequirePermission(Permissions.ManagePermissionSchemes)]
         public async Task<IActionResult> GetGrantRolePermissionsPartial(int schemeId, int roleId)
         {
-            var dto = await Mediator.Send(new GetGrantRolePermissionsQuery { SchemeId = schemeId, RoleId = roleId });
-            var vm = Mapper.Map<GrantRolePermissionsViewModel>(dto);
-            return PartialView(vm);
+            var result = await Mediator.Send(new GetGrantRolePermissionsQuery { SchemeId = schemeId, RoleId = roleId });
+            return PartialView(result.Result);
         }
 
-        [HttpPost("delete", Name = "DeletePermissionScheme")]
+        [HttpPost("grant", Name = "GrantRolePermissions")]
         [RequirePermission(Permissions.ManagePermissionSchemes)]
-        public async Task<IActionResult> Delete(int schemeId)
+        public async Task<IActionResult> GrantRolePermissions(GetGrantRolePermissionsQueryResult vm)
         {
-            var result = await Mediator.Send(new DeletePermissionSchemeCommand
+            var command = new GrantRolePermissionsCommand
             {
-                SchemeId = schemeId
-            });
+                SchemeId = vm.Id,
+                RoleId = vm.RoleId,
+                PermissionIds = vm.Permissions.Where(p => p.IsGranted).Select(p => p.Id).ToList()
+            };
 
-            return RedirectToAction(nameof(Index));
+            await Mediator.Send(command);
+            return RedirectToAction(nameof(RolesAndPermissions), new { schemeId = vm.Id });
         }
 
         [AjaxOnly]
@@ -123,6 +117,18 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
             });
 
             return PartialView(result.Result);
+        }
+
+        [HttpPost("delete", Name = "DeletePermissionScheme")]
+        [RequirePermission(Permissions.ManagePermissionSchemes)]
+        public async Task<IActionResult> Delete(int schemeId)
+        {
+            var result = await Mediator.Send(new DeletePermissionSchemeCommand
+            {
+                SchemeId = schemeId
+            });
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
