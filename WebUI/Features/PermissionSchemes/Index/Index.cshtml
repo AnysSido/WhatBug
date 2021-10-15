@@ -8,12 +8,23 @@
     <div class="page-container">
         <div class="text-block">
             <p>
-                Project roles are used in conjunction with users and permission schemes.
-                Each permission scheme can have different permissions for each role.
+                Permission schemes allow you to have different sets of role permissions on different projects.
+                Each <a asp-route="ProjectRoles">project role</a> can be assigned certain permissions within a permission scheme.
             </p>
             <p>
-                Users can be assigned a role within a project. Users will be granted permissions
-                based what is available for their role within the current permission scheme.
+                A project can then be assigned a permission scheme and will inherit all of the permissions from that scheme.
+            </p>
+        </div>
+
+        <div class="text-block">
+            <p>
+                Click <i class="icon icon--assign"></i> to manage role permissions for a scheme.
+            </p>
+            <p>
+                Click <i class="icon icon--edit"></i> to manage edit a scheme's details.
+            </p>
+            <p>
+                Click <i class="icon icon--delete"></i> to delete a scheme.
             </p>
         </div>
 
@@ -35,7 +46,7 @@
 
                         <td class="table__cell table__cell--icons">
                             <a class="table__cell-icon" asp-route="RolesAndPermissions" asp-route-schemeId="@scheme.Id">
-                                <i class="icon icon--primary icon--assign"></i>
+                                <i class="icon icon--assign"></i>
                             </a>
                             @if (scheme.IsDefault)
                             {

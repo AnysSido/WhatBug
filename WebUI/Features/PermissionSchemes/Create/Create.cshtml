@@ -9,14 +9,11 @@
 
         <div class="text-block">
             <p>
-                Create a new permission scheme to be used with projects in WhatBug.
+                Permission schemes allow you to have different sets of role permissions on different projects.
+                Each <a asp-route="ProjectRoles">project role</a> can be assigned certain permissions within a permission scheme.
             </p>
             <p>
-                Every project in WhatBug is assigned a permission scheme (default if not assigned manually).
-                Each scheme can have a unique combination of permissions assigned to project roles.
-            </p>
-            <p>
-                A project will use the role permissions from the scheme that it has been assigned.
+                A project can then be assigned a permission scheme and will inherit all of the permissions from that scheme.
             </p>
         </div>
 

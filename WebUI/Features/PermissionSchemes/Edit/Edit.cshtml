@@ -6,6 +6,16 @@
 
 @{
     <div class="page-container">
+        <div class="text-block">
+            <p>
+                Permission schemes allow you to have different sets of role permissions on different projects.
+                Each <a asp-route="ProjectRoles">project role</a> can be assigned certain permissions within a permission scheme.
+            </p>
+            <p>
+                A project can then be assigned a permission scheme and will inherit all of the permissions from that scheme.
+            </p>
+        </div>
+
         <div class="page-container__item--medium-width">
             <form class="form" method="post">
                 <input type="hidden" asp-for="@Model.Id" />

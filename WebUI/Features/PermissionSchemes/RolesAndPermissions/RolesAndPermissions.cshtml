@@ -8,12 +8,17 @@
     <div class="page-container">
         <div class="text-block">
             <p>
-                Project roles are used in conjunction with users and permission schemes.
-                Each permission scheme can have different permissions for each role.
+                Permission schemes allow you to have different sets of role permissions on different projects.
+                Each <a asp-route="ProjectRoles">project role</a> can be assigned certain permissions within a permission scheme.
             </p>
             <p>
-                Users can be assigned a role within a project. Users will be granted permissions
-                based what is available for their role within the current permission scheme.
+                A project can then be assigned a permission scheme and will inherit all of the permissions from that scheme.
+            </p>            
+        </div>
+
+        <div class="text-block">
+            <p>
+                Click <i class="icon icon--assign"></i> to grant permissions for a role in the @Model.Name scheme.
             </p>
         </div>
 
