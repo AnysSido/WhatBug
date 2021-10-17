@@ -10,7 +10,7 @@
         }
     }
 
-    &__cell {        
+    &__cell {     
         &--icons {
             @extend .l-flex;
             @extend .l-flex--justify-content-center;
@@ -23,6 +23,13 @@
             @extend .l-flex--justify-content-center;
             @extend .align-items-center;
         }
+    }
+
+    &__cell-icons {
+        @extend .l-flex;
+        @extend .l-flex--justify-content-center;
+        @extend .align-items-center;
+        gap: 0.5rem;
     }
 
     &__cell-icon {

@@ -1,4 +1,4 @@
-﻿@model WhatBug.Application.Priorities.Queries.GetPriorities.PrioritiesDTO
+﻿@model WhatBug.Application.Priorities.Queries.GetPriorities.GetPrioritiesQueryResult
 
 @section Styles {
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css" />
@@ -9,138 +9,65 @@
     ViewData["Title"] = "Priorities";
 }
 
-<form>
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="ion ion-clipboard mr-1"></i>
-                Priorities
-            </h3>
-        </div>
-        <div class="card-body">
-            <a asp-action="Create" class="btn btn-primary float-right"><i class="fas fa-plus"></i>New Priority</a>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th style="width: 10px">Order</th>
-                        <th style="width: 40px">Actions</th>
-                        <th>Icon &amp; Name</th>
-                        <th>Description</th>
-                        <th style="width: 30px">Color</th>
-                    </tr>
-                </thead>
-                <tbody id="priorityList">
-                    @foreach (var priority in Model.Priorities)
-                    {
-                        <tr id="@priority.Id">
-                            <!-- Drag Handle -->
-                            <td>
-                                <span class="handle">
-                                    <i class="fas fa-arrows-alt-v"></i>
-                                </span>
-                            </td>
-                            <!-- Actions -->
-                            <td>
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        Action
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-action="Edit" asp-route-id="@priority.Id">Edit</a>
-                                        <a class="dropdown-item" href="#">Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <!-- Icon & Name -->
-                            <td>
-                                <span>
-                                    <icon icon="@priority.PriorityIconWebName" color="@priority.PriorityIconColor" />
-                                    <label asp-for="@priority.Name">@priority.Name</label>
-                                </span>
-                            </td>
-                            <!-- Description -->
-                            <td>
-                                <div>
-                                    @priority.Description
-                                </div>
-                            </td>
-                            <!-- Color -->
-                            <td class="wb-bg-color-@priority.PriorityIconColor"></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer clearfix">
-            <button id="submit-order" type="button" class="btn btn-primary float-right"><i class="fas fa-save"></i> Save Priority Order</button>
-        </div>
+<div class="page-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table__header table__header--shrink">Order</th>
+                <th class="table__header">Icon &amp; Name</th>
+                <th class="table__header">Description</th>
+                <th class="table__header">Color</th>
+                <th class="table__header table__header--shrink">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="priorityList">
+            @foreach (var priority in Model.Priorities)
+            {
+                <tr key="@priority.Id">
+                    <td class="table__cell js-handle">
+                        <div class="table__cell-icons">
+                            <i class="fas fa-arrows-alt-v"></i>
+                        </div>
+                    </td>
+
+                    <td class="table__cell">
+                        <span>
+                            <icon icon="@priority.PriorityIconWebName" color="@priority.Color" />
+                            <label asp-for="@priority.Name">@priority.Name</label>
+                        </span>
+                    </td>
+
+                    <td class="table__cell">
+                        @priority.Description
+                    </td>
+
+                    <td class="table__cell">
+                        @{ var color = priority.Color.ToLowerInvariant();}
+                        <div class="wb-bg-color-@color" style="width: 35px; height: 35px; border-radius: 50%;"></div>
+                    </td>
+
+                    <td class="table__cell">
+                        <div class="table__cell-icons">
+                            <a class="table__cell-icon" asp-route="EditPriority" asp-route-priorityId="@priority.Id">
+                                <i class="icon icon--edit"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="l-flex l-flex--justify-content-end">
+        <a class="button button--primary" asp-route="CreatePriority">
+            <i class="button__icon icon icon--plus"></i>
+            New Priority
+        </a>
     </div>
-</form>
-<!-- /.card -->
+</div>
 
 @section Scripts {
     <script type="text/javascript" src="~/lib/jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
-
-    <script type="text/javascript">
-        $(function ($) {
-            // Make the priority list sortable using JQuery-UI Sortable
-            $('#priorityList').sortable({
-                placeholder: 'sort-highlight',
-                handle: '.handle',
-                forcePlaceholderSize: true,
-                zIndex: 999999,
-            })
-
-            $('#submit-order').click(function () {
-                // Disable submit button when clicked
-                $('#submit-order').prop('disabled', true);
-
-                // Send the list of sorted IDs via ajax to be updated in DB.
-                $.ajax({
-                    url: '/Priorities/UpdateOrder',
-                    data: JSON.stringify($('#priorityList').sortable('toArray')),
-                    dataType: 'json',
-                    contentType: "application/json; charset=utf-8",
-                    type: 'post',
-                    success: function (response) {
-                        // Re-enable the submit button
-                        $('#submit-order').prop('disabled', false);
-                        if (response.success) {
-                            showSuccessToast('Priority order updated successfully.');
-                        } else {
-                            showErrorToast(response.text);
-                        }
-                    }
-                });
-            });
-        });
-
-        // SweetAlert2 toast config
-        var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            iconColor: 'white',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            customClass: {
-                popup: 'colored-toast'
-            },
-        })
-
-        function showSuccessToast(msg) {
-            Toast.fire({
-                icon: 'success',
-                title: msg
-            });
-        };
-
-        function showErrorToast(msg) {
-            Toast.fire({
-                icon: 'error',
-                title: msg
-            });
-        }
-    </script>
+    <script type="text/javascript" src="~/js/pages/EditCreatePriority.js"></script>
 }

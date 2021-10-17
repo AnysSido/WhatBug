@@ -12,19 +12,22 @@ using WhatBug.Domain.Data;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Priorities.Create;
 using WhatBug.WebUI.Features.Priorities.Edit;
+using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Priorities
 {
+    [Route("admin/priorities", Name = "Priorities")]
     public class PrioritiesController : BaseController
     {
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var dto = await Mediator.Send(new GetPrioritiesQuery());
 
-            return View(dto);
+            return View(dto.Result);
         }
 
-        [HttpGet]
+        [HttpGet("create", Name = "CreatePriority")]
         public async Task<IActionResult> Create()
         {
             var dto = await Mediator.Send(new GetCreatePriorityQuery());
@@ -34,32 +37,33 @@ namespace WhatBug.WebUI.Features.Priorities
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpPost("create", Name = "CreatePriority")]
         public async Task<IActionResult> Create(CreatePriorityCommand command)
         {
             await Mediator.Send(command);
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        [HttpGet("{priorityId}/edit", Name = "EditPriority")]
+        public async Task<IActionResult> Edit(int priorityId)
         {
-            var dto = await Mediator.Send(new GetEditPriorityQuery { Id = id });
+            var dto = await Mediator.Send(new GetEditPriorityQuery { Id = priorityId });
             var vm = Mapper.Map<EditPriorityViewModel>(dto);
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpPost("{priorityId}/edit", Name = "EditPriority")]
         public async Task<IActionResult> Edit(EditPriorityCommand command)
         {
             await Mediator.Send(command);
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateOrder([FromBody] List<int> ids)
+        [AjaxOnly]
+        [HttpPost("updatepriorityorder")]
+        public async Task<IActionResult> UpdateOrder([FromBody] List<int> priorityIds)
         {
-            await Mediator.Send(new ReorderPrioritiesCommand { Ids = ids });
+            await Mediator.Send(new ReorderPrioritiesCommand { Ids = priorityIds });
             // TODO: Handle errors
             return Json(new { success = true, text = "Success!" });
         }
