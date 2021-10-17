@@ -11,6 +11,7 @@ using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.Priorities.Queries.GetPriorities
 {
+    [Authorize(Permissions.ManagePriorities)]
     public record GetPrioritiesQuery : IQuery<Response<GetPrioritiesQueryResult>>
     {
     }
