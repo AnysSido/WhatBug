@@ -80,10 +80,32 @@ namespace WhatBug.Application.UnitTests.Common
             context.PermissionSchemeRolePermissions.AddRange(new[]
             {
                 new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 4 },
-                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 5, },
-                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 6, },
-                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 2, PermissionId = 4, },
-                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 2, PermissionId = 5, },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 5 },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 1, PermissionId = 6 },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 2, PermissionId = 4 },
+                new PermissionSchemeRolePermission { PermissionSchemeId = 1, RoleId = 2, PermissionId = 5 },
+            });
+
+            context.Colors.AddRange(new[]
+            {
+                new Color { Id = 1, Name = "Color1" },
+                new Color { Id = 2, Name = "Color2" },
+                new Color { Id = 3, Name = "Color3" },
+            });
+
+            context.Icons.AddRange(new[]
+            {
+                new Icon { Id = 1, Name = "Icon1", WebName = "icon1"},
+                new Icon { Id = 2, Name = "Icon2", WebName = "icon2"},
+                new Icon { Id = 3, Name = "Icon3", WebName = "icon3"},
+            });
+
+            context.Priorities.AddRange(new[]
+            {
+                new Priority { Id = 1, Name = "Priority1", Description = "PriorityDesc1", Order = 4, ColorId = 1, IconId = 1 },
+                new Priority { Id = 2, Name = "Priority2", Description = "PriorityDesc2", Order = 3, ColorId = 1, IconId = 1 },
+                new Priority { Id = 3, Name = "Priority3", Description = "PriorityDesc3", Order = 2, ColorId = 2, IconId = 2 },
+                new Priority { Id = 4, Name = "Priority4", Description = "PriorityDesc4", Order = 1, ColorId = 3, IconId = 3 },
             });
 
             context.SaveChanges();
