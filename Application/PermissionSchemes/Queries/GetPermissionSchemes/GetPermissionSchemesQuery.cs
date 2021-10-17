@@ -30,7 +30,9 @@ namespace WhatBug.Application.PermissionSchemes.Queries.GetPermissionSchemes
 
         public async Task<Response<GetPermissionSchemesQueryResult>> Handle(GetPermissionSchemesQuery request, CancellationToken cancellationToken)
         {
-            var permissionSchemes = await _context.PermissionSchemes.ProjectTo<PermissionSchemeDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            var permissionSchemes = await _context.PermissionSchemes
+                .ProjectTo<PermissionSchemeDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
             var dto = new GetPermissionSchemesQueryResult
             {

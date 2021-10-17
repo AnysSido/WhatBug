@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -29,8 +30,17 @@ namespace WhatBug.Application.Priorities.Queries.GetPriorities
 
         public async Task<Response<GetPrioritiesQueryResult>> Handle(GetPrioritiesQuery request, CancellationToken cancellationToken)
         {
-            var priorities = await _mapper.ProjectTo<PriorityDTO>(_context.Priorities).OrderBy(p => p.Order).ToListAsync();
-            return Response<GetPrioritiesQueryResult>.Success(new GetPrioritiesQueryResult { Priorities = priorities });
+            var priorities = await _context.Priorities
+                .OrderBy(p => p.Order)
+                .ProjectTo<PriorityDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            var dto = new GetPrioritiesQueryResult
+            {
+                Priorities = priorities
+            };
+
+            return Response<GetPrioritiesQueryResult>.Success(dto);
         }
     }
 }
