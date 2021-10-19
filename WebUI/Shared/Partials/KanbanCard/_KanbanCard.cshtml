@@ -1,0 +1,34 @@
+﻿@model WhatBug.WebUI.Shared.Partials.KanbanCard.KanbanCardVm
+
+@{
+    <div class="kanban-card card card-outline">
+        <input type="hidden" class="issueId" value="@Model.Id" />
+
+        <div class="d-flex">
+            <div class="flex-grow-1 m-2">
+
+                <table>
+                    <tr>
+                        <td>
+                            <icon style="min-width: 1.5rem;" icon="@Model.IssueTypeIconWebName" color="@Model.IssueTypeIconColor" />
+                        </td>
+                        <td>
+                            <span>@Model.Id</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <icon class="js-priority-icon" style="min-width: 1.5rem;" icon="@Model.PriorityIconWebName" color="@Model.PriorityIconColor" />
+                        </td>
+                        <td>
+                            <span>@Model.Summary</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <avatar email="@Model.AssigneeEmail" class=" user-image img-circle img-sm m-2" tooltip="hello" />
+            </div>
+        </div>
+    </div>
+}

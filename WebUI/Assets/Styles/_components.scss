@@ -11,3 +11,10 @@
         background-color: $color;
     }
 }
+
+// Generate WhatBug card colors
+@each $name, $color in $colors {
+    .card-#{$name} {
+        border-top: 3px solid $color;
+    }
+}

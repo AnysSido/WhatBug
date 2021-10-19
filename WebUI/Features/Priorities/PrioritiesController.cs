@@ -48,8 +48,7 @@ namespace WhatBug.WebUI.Features.Priorities
         public async Task<IActionResult> Edit(int priorityId)
         {
             var dto = await Mediator.Send(new GetEditPriorityQuery { Id = priorityId });
-            var vm = Mapper.Map<EditPriorityViewModel>(dto);
-            return View(vm);
+            return View(dto.Result);
         }
 
         [HttpPost("{priorityId}/edit", Name = "EditPriority")]

@@ -30,18 +30,18 @@ $icons: (
     "angles-left": $fa-var-angle-double-left,
     "angles-right": $fa-var-angle-double-right,
     "exclamation": $fa-var-exclamation,
-    "circle-exclamation": $fa-var-exclamation-circle,
-    "triangle-exclamation": $fa-var-exclamation-triangle,
-    "xmark": $fa-var-times,
+    "exclamation-circle": $fa-var-exclamation-circle,
+    "exclamation-triangle": $fa-var-exclamation-triangle,
+    "x-mark": $fa-var-times,
     "ban": $fa-var-ban,
     "equals": $fa-var-equals,
     "bug": $fa-var-bug,
     "plus-square": $fa-var-plus-square,
     "check-square": $fa-var-check-square,
-    "caret-square-up": $fa-var-caret-square-up,
-    "caret-square-down": $fa-var-caret-square-down,
-    "caret-square-left": $fa-var-caret-square-left,
-    "caret-square-right": $fa-var-caret-square-right,
+    "caret-up-square": $fa-var-caret-square-up,
+    "caret-down-square": $fa-var-caret-square-down,
+    "caret-left-square": $fa-var-caret-square-left,
+    "caret-right-square": $fa-var-caret-square-right,
     "pen": $fa-var-pen,
     "information": $fa-var-info,
     "plus": $fa-var-plus,
@@ -81,7 +81,7 @@ $icons: (
 }
 
 .icon--danger {
-    @extend .icon--triangle-exclamation, .icon--danger;
+    @extend .icon--exclamation-triangle, .icon--danger;
 }
 
 .icon--disabled {

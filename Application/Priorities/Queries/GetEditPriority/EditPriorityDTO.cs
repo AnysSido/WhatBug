@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
@@ -19,12 +14,5 @@ namespace WhatBug.Application.Priorities.Queries.GetEditPriority
         public int ColorId { get; set; }
         public IList<IconDTO> Icons { get; set; }
         public IList<ColorDTO> Colors { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Priority, EditPriorityDTO>()
-                .ForMember(d => d.IconId, opt => opt.MapFrom(s => s.Icon.Id))
-                .ForMember(d => d.ColorId, opt => opt.MapFrom(s => s.Color.Id));
-        }
     }
 }
