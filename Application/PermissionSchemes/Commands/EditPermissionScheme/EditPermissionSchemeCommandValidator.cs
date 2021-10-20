@@ -18,10 +18,12 @@ namespace WhatBug.Application.PermissionSchemes.Commands.EditPermissionScheme
             _context = context;
 
             RuleFor(v => v.SchemeId)
+                .Cascade(CascadeMode.Stop)
                 .GreaterThan(0).WithException(cmd => new ArgumentException(nameof(cmd.SchemeId)))
                 .MustAsync(Exist).WithException(cmd => new RecordNotFoundException());
 
             RuleFor(v => v.Name)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Scheme name cannot be empty")
                 .MustAsync(BeUnique).WithMessage(cmd => $"A scheme with the name {cmd.Name} already exists");
         }
