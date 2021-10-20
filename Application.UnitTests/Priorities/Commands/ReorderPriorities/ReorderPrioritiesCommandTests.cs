@@ -7,7 +7,7 @@ using WhatBug.Application.Priorities.Commands.ReorderPriorities;
 using WhatBug.Domain.Entities;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.Priorities.Commands
+namespace WhatBug.Application.UnitTests.Priorities.Commands.ReorderPriorities
 {
     public class ReorderPrioritiesCommandTests : CommandTestBase
     {

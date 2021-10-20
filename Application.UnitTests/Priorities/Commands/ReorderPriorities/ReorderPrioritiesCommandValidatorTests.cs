@@ -5,7 +5,7 @@ using WhatBug.Application.Priorities.Commands.ReorderPriorities;
 using WhatBug.Application.UnitTests.Common;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.Priorities.Commands
+namespace WhatBug.Application.UnitTests.Priorities.Commands.ReorderPriorities
 {
     [Collection("ValidatorCollection")]
     public class ReorderPrioritiesCommandValidatorTests
