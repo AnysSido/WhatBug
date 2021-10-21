@@ -11,7 +11,6 @@ using WhatBug.Application.Priorities.Queries.GetPriorities;
 using WhatBug.Domain.Data;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
-using WhatBug.WebUI.Features.Priorities.Create;
 using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Priorities
@@ -29,19 +28,34 @@ namespace WhatBug.WebUI.Features.Priorities
         }
 
         [HttpGet("create", Name = "CreatePriority")]
+        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Create()
         {
-            var dto = await Mediator.Send(new GetCreatePriorityQuery());
-            var vm = Mapper.Map<CreatePriorityViewModel>(dto);
-            vm.ColorId = vm.Colors.Single(c => c.Id == Colors.Rose.Id).Id;
+            var result = await Mediator.Send(new GetCreatePriorityQuery());
 
-            return View(vm);
+            result.Result.ColorId = result.Result.Colors.Single(c => c.Id == Colors.Rose.Id).Id;
+            result.Result.IconId = result.Result.Icons.Single(i => i.Id == Icons.Exclaimation.Id).Id;
+            return View(result.Result);
         }
 
         [HttpPost("create", Name = "CreatePriority")]
-        public async Task<IActionResult> Create(CreatePriorityCommand command)
+        [RequirePermission(Permissions.ManagePriorities)]
+        public async Task<IActionResult> Create(GetCreatePriorityQueryResult vm)
         {
-            await Mediator.Send(command);
+            var result = await Mediator.Send(new CreatePriorityCommand 
+            {
+                Name = vm.Name,
+                Description = vm.Description,
+                ColorId = vm.ColorId,
+                IconId = vm.IconId
+            });
+
+            if (result.HasValidationErrors)
+            {
+                var dto = await Mediator.Send(new GetCreatePriorityQuery());
+                return ViewWithErrors(dto.Result, result);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -57,8 +71,8 @@ namespace WhatBug.WebUI.Features.Priorities
         [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Edit(GetEditPriorityQueryResult vm)
         {
-            var result = await Mediator.Send(new EditPriorityCommand 
-            { 
+            var result = await Mediator.Send(new EditPriorityCommand
+            {
                 Id = vm.Id,
                 Name = vm.Name,
                 Description = vm.Description,
