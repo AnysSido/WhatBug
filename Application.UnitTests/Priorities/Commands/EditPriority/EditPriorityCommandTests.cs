@@ -7,7 +7,7 @@ using WhatBug.Application.Priorities.Commands.EditPriority;
 using WhatBug.Domain.Entities;
 using Xunit;
 
-namespace WhatBug.Application.UnitTests.Priorities.Commands.EditPriorities
+namespace WhatBug.Application.UnitTests.Priorities.Commands.EditPriority
 {
     public class EditPriorityCommandTests : CommandTestBase
     {
