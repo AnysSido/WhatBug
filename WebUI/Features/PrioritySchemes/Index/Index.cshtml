@@ -1,59 +1,64 @@
-﻿@model WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes.PrioritySchemesDTO
+﻿@model WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes.GetPrioritySchemesQueryResult
 @{
     ViewData["Title"] = "Priority Schemes";
 }
 
 @{
 
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="ion ion-clipboard mr-1"></i>
-                Priority Scheme Details
-            </h3>
+    <div class="page-container">
+        <div class="text-block">
+            <p>
+                Priority schemes allow you to group different priorities together.
+                Each <a asp-route="Projects">project</a> can be assigned a priority scheme.
+            </p>
+            <p>
+                Issues within a project can be assigned a priority from those available within the selected scheme.
+            </p>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table__header">Scheme Name</th>
+                    <th class="table__header">Scheme Description</th>
+                    <th class="table__header">Priorities</th>
+                    <th class="table__header table__header--shrink">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var scheme in Model.PrioritySchemes)
+                {
                     <tr>
-                        <th>Actions</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Priorities</th>
+                        <td class="table__cell">@scheme.Name</td>
+                        <td class="table__cell">@scheme.Description</td>
+
+                        <td>
+                            @foreach (var priority in scheme.Priorities)
+                            {
+                            <div>
+                                <icon icon="@priority.IconWebName" color="@priority.ColorName" />
+                                <b>@priority.Name</b>
+                            </div>
+                            }
+                        </td>
+
+                        <td class="table__cell table__cell--icons">
+                            <a class="table__cell-icon" asp-route="EditPriorityScheme" asp-route-schemeId="@scheme.Id">
+                                <i class="icon icon--edit"></i>
+                            </a>
+                            <i class="table__cell-icon icon icon--delete js__delete-priorityscheme" data-schemeid="@scheme.Id"></i>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.PrioritySchemes.Count; i++)
-                    {
-                        <tr>
-                            <!-- Actions -->
-                            <td>
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        Action
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model.PrioritySchemes[i].Id">Edit</a>
-                                        <a class="dropdown-item" href="#">Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>@Model.PrioritySchemes[i].Name</td>
-                            <td>@Model.PrioritySchemes[i].Description</td>
-                            <td>
-                                @foreach (var priority in Model.PrioritySchemes[i].Priorities)
-                                {
-                                    <icon icon="@priority.IconName" color="@priority.IconColor"/>
-                                    <span>@priority.Name</span><br />
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer clearfix">
-            <a asp-action="Create" class="btn btn-primary float-right"><i class="fas fa-plus"></i> New Priority Scheme</a>
+                }
+            </tbody>
+        </table>
+
+        <div class="l-flex l-flex--justify-content-end">
+            <a class="button button--primary" asp-route="CreatePriorityScheme">
+                <i class="button__icon icon icon--plus"></i>
+                New Scheme
+            </a>
         </div>
     </div>
 }
