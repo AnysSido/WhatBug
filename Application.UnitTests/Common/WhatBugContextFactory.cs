@@ -108,6 +108,22 @@ namespace WhatBug.Application.UnitTests.Common
                 new Priority { Id = 4, Name = "Priority4", Description = "PriorityDesc4", Order = 1, ColorId = 3, IconId = 3, IsDefault = true },
             });
 
+            context.PrioritySchemes.AddRange(new[]
+            {
+                new PriorityScheme { Id = 1, Name = "PriorityScheme1", Description = "PrioritySchemeDesc1" },
+                new PriorityScheme { Id = 2, Name = "PriorityScheme2", Description = "PrioritySchemeDesc2" },
+                new PriorityScheme { Id = 3, Name = "PriorityScheme3", Description = "PrioritySchemeDesc3", IsDefault = true },
+            });
+
+            context.PrioritySchemePriorities.AddRange(new[]
+            {
+                new PrioritySchemePriority { PrioritySchemeId = 1, PriorityId = 1 },
+                new PrioritySchemePriority { PrioritySchemeId = 1, PriorityId = 2 },
+                new PrioritySchemePriority { PrioritySchemeId = 1, PriorityId = 4 },
+                new PrioritySchemePriority { PrioritySchemeId = 2, PriorityId = 1 },
+                new PrioritySchemePriority { PrioritySchemeId = 2, PriorityId = 2 },
+            });
+
             context.SaveChanges();
 
             context.Projects.First().RoleUsers = new List<ProjectRoleUser>
