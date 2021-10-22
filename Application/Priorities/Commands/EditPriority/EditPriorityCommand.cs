@@ -35,7 +35,9 @@ namespace WhatBug.Application.Priorities.Commands.EditPriority
                 .Include(p => p.Icon)
                 .FirstAsync(p => p.Id == request.Id);
 
-            priority.Name = request.Name;
+            if (!priority.IsDefault)
+                priority.Name = request.Name;
+
             priority.Description = !string.IsNullOrEmpty(request.Description) ? request.Description : null;
             priority.Color = await _context.Colors.FirstAsync(c => c.Id == request.ColorId);
             priority.Icon = await _context.Icons.FirstAsync(i => i.Id == request.IconId);

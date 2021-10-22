@@ -31,7 +31,10 @@ namespace WhatBug.Application.Priorities.Queries.GetEditPriority
 
         public async Task<Response<GetEditPriorityQueryResult>> Handle(GetEditPriorityQuery request, CancellationToken cancellationToken)
         {
-            var dto = await _context.Priorities.Where(p => p.Id == request.Id).ProjectTo<GetEditPriorityQueryResult>(_mapper.ConfigurationProvider).FirstAsync();
+            var dto = await _context.Priorities
+                .Where(p => p.Id == request.Id)
+                .ProjectTo<GetEditPriorityQueryResult>(_mapper.ConfigurationProvider)
+                .FirstAsync();
 
             dto.Colors = await _context.Colors.OrderBy(c => c.Id).ProjectTo<ColorDTO>(_mapper.ConfigurationProvider).ToListAsync();
             dto.Icons = await _mapper.ProjectTo<IconDTO>(_context.Icons).ToListAsync();

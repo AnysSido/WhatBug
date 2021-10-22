@@ -18,7 +18,7 @@ namespace WhatBug.Application.UnitTests.Priorities.Commands.EditPriority
                 context.Priorities.AddRange(new[]
                 {
                     new Priority { Id = 1, Name = "Name1", Description = "Desc1", Order = 1, ColorId = 1, IconId = 1 },
-                    new Priority { Id = 2, Name = "Name2", Description = "Desc2", Order = 2, ColorId = 2, IconId = 1 },
+                    new Priority { Id = 2, Name = "Name2", Description = "Desc2", Order = 2, ColorId = 2, IconId = 1, IsDefault = true },
                 });
                 context.Colors.AddRange(new[]
                 {
@@ -68,6 +68,24 @@ namespace WhatBug.Application.UnitTests.Priorities.Commands.EditPriority
             // Assert
             result.Succeeded.ShouldBe(true);
             priority.Description.ShouldBe(null);
+        }
+
+        [Fact]
+        public async Task Handle_GivenDefaultPriority_DoesNotChangeName()
+        {
+            // Arrange
+            var sut = new EditPriorityCommandHandler(_context);
+            var command = new EditPriorityCommand { Id = 2, Name = "NewName", Description = "NewDesc", IconId = 1, ColorId = 1 };
+
+            // Act
+            var result = await sut.Handle(command, CancellationToken.None);
+            var priority = _context.Priorities.SingleOrDefault(p => p.Id == command.Id);
+
+            // Assert
+            result.Succeeded.ShouldBe(true);
+            priority.ShouldNotBeNull();
+            priority.Name.ShouldBe("Name2");
+            priority.Description.ShouldBe("NewDesc");
         }
     }
 }

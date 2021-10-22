@@ -105,7 +105,7 @@ namespace WhatBug.Application.UnitTests.Common
                 new Priority { Id = 1, Name = "Priority1", Description = "PriorityDesc1", Order = 4, ColorId = 1, IconId = 1 },
                 new Priority { Id = 2, Name = "Priority2", Description = "PriorityDesc2", Order = 3, ColorId = 1, IconId = 1 },
                 new Priority { Id = 3, Name = "Priority3", Description = "PriorityDesc3", Order = 2, ColorId = 2, IconId = 2 },
-                new Priority { Id = 4, Name = "Priority4", Description = "PriorityDesc4", Order = 1, ColorId = 3, IconId = 3 },
+                new Priority { Id = 4, Name = "Priority4", Description = "PriorityDesc4", Order = 1, ColorId = 3, IconId = 3, IsDefault = true },
             });
 
             context.SaveChanges();

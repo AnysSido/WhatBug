@@ -30,7 +30,16 @@
                 <input type="hidden" asp-for="IconId" />
                 <div class="form__group">
                     <label class="form__label" asp-for="Name">Priority Name</label>
-                    <input class="form__input" asp-for="Name" />
+
+                    @if (Model.IsDefault)
+                    {
+                        <input class="form__input" asp-for="Name" readonly />
+                    }
+                    else
+                    {
+                        <input class="form__input" asp-for="Name"/>
+                    }
+
                     <span class="form__validation" asp-validation-for="Name"></span>
                 </div>
                 <div class="form__group">
