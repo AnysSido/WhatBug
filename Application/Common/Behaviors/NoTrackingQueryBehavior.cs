@@ -1,9 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
@@ -14,18 +10,18 @@ namespace WhatBug.Application.Common.Behaviors
     /*
      *  EF Core change tracking is not needed for queries as they never persist data back to the db.
      *  This behavior will disable change tracking for all CQRS queries (does nothing for commands).
-     *  
+     *
      *  Identity Resolution is still enabled to ensure that related entities are only materialized once.
      *  e.g. if 10 projects use the same permission scheme that scheme will only be returned once.
-     *  
+     *
      *  See: https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.querytrackingbehavior?view=efcore-5.0
-     *  
-     *  As most queries currently use AutoMapper's ProjectTo they will not be tracked anyway but this
-     *  behavior ensures the same happens for queries run directly through EF.
+     *
+     *  This behavior should run after validation behaviors so that they can still use tracking.
      */
+
     public class NoTrackingQueryBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IQuery<TResponse>
-        where TResponse: Response
+        where TResponse : Response
     {
         private readonly IWhatBugDbContext _context;
 
