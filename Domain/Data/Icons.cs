@@ -49,6 +49,8 @@ namespace WhatBug.Domain.Data
         public static readonly Icon Pen = CreateIcon(34, "Pen", "pen");
         public static readonly Icon Plus = CreateIcon(35, "Plus", "plus");
         public static readonly Icon Information = CreateIcon(36, "Information", "information");
+        public static readonly Icon Circle = CreateIcon(37, "Circle", "circle");
+        public static readonly Icon WaveSquare = CreateIcon(38, "Wave Square", "wave-square");
 
         private static Icon CreateIcon(int id, string name, string webName)
         {

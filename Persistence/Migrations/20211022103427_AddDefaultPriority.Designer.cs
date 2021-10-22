@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhatBug.Persistence;
@@ -9,9 +10,10 @@ using WhatBug.Persistence;
 namespace WhatBug.Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211022103427_AddDefaultPriority")]
+    partial class AddDefaultPriority
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -982,9 +984,6 @@ namespace WhatBug.Persistence.Migrations
                     b.Property<int>("IconId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -1006,7 +1005,6 @@ namespace WhatBug.Persistence.Migrations
                             ColorId = 63,
                             Description = "The default priority used by all issues without any other priority assigned.",
                             IconId = 38,
-                            IsDefault = true,
                             Name = "Default",
                             Order = 0
                         });
