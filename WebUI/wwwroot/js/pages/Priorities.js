@@ -10,7 +10,7 @@ $(function ($) {
         customClass: {
             popup: 'colored-toast'
         },
-    })
+    });
 
     // Make the priority list sortable using JQuery-UI Sortable
     $('#priorityList').sortable({
@@ -38,5 +38,22 @@ $(function ($) {
                 }
             });
         }
-    })
+    });
+
+    // Delete priority functionality
+    $('.js__delete-priority').click(function() {
+        const priorityId = $(this).data('priorityid');
+
+        $.get('/admin/priorities/getdeleteconfirmpartial', {priorityId: priorityId}).done((modal) => {
+            this.modal = $('<div id="DeletePriorityModal" class="modal fade"></div>')
+            this.modal.html(modal);
+            $('body').append(this.modal);
+
+            this.modal.on('hidden.bs.modal', () => {
+                this.modal.remove();
+            });
+
+            this.modal.modal('show');
+        });
+    });
 });

@@ -15,6 +15,7 @@ namespace WhatBug.Application.Priorities.Queries.GetPriorities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool IsDefault { get; set; }
         public int Order { get; set; }
         public string Color { get; set; }
         public string Icon { get; set; }

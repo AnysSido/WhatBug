@@ -6,6 +6,7 @@ using WhatBug.Application.Priorities.Commands.CreatePriority;
 using WhatBug.Application.Priorities.Commands.EditPriority;
 using WhatBug.Application.Priorities.Commands.ReorderPriorities;
 using WhatBug.Application.Priorities.Queries.GetCreatePriority;
+using WhatBug.Application.Priorities.Queries.GetDeleteConfirm;
 using WhatBug.Application.Priorities.Queries.GetEditPriority;
 using WhatBug.Application.Priorities.Queries.GetPriorities;
 using WhatBug.Domain.Data;
@@ -87,6 +88,19 @@ namespace WhatBug.WebUI.Features.Priorities
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [AjaxOnly]
+        [HttpGet("getdeleteconfirmpartial")]
+        [RequirePermission(Permissions.ManagePriorities)]
+        public async Task<IActionResult> GetDeleteConfirmPartial(int priorityId)
+        {
+            var result = await Mediator.Send(new GetDeleteConfirmQuery
+            {
+                PriorityId = priorityId
+            });
+
+            return PartialView(result.Result);
         }
 
         [AjaxOnly]

@@ -15,7 +15,7 @@ namespace WhatBug.Application.Priorities.Queries.GetEditPriority
     [Authorize(Permissions.ManagePriorities)]
     public record GetEditPriorityQuery : IQuery<Response<GetEditPriorityQueryResult>>
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
     }
 
     public class GetEditPriorityQueryHandler : IRequestHandler<GetEditPriorityQuery, Response<GetEditPriorityQueryResult>>

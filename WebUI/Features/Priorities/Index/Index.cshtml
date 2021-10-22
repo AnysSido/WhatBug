@@ -51,6 +51,15 @@
                             <a class="table__cell-icon" asp-route="EditPriority" asp-route-priorityId="@priority.Id">
                                 <i class="icon icon--edit"></i>
                             </a>
+
+                            @if (priority.IsDefault)
+                            {
+                                <i class="table__cell-icon table__cell-icon--disabled icon icon--delete" data-priorityid="@priority.Id"></i>
+                            }
+                            else
+                            {
+                                <i class="table__cell-icon icon icon--delete js__delete-priority" data-priorityid="@priority.Id"></i>
+                            }
                         </div>
                     </td>
                 </tr>
