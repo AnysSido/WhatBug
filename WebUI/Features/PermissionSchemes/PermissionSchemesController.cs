@@ -108,7 +108,7 @@ namespace WhatBug.WebUI.Features.PermissionSchemes
 
         [AjaxOnly]
         [HttpGet("getdeleteconfirmpartial")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
+        [RequirePermission(Permissions.ManagePermissionSchemes)]
         public async Task<IActionResult> GetDeleteConfirmPartial(int schemeId)
         {
             var result = await Mediator.Send(new GetDeleteConfirmQuery
