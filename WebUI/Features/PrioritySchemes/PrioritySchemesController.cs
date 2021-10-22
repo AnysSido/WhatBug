@@ -5,22 +5,27 @@ using WhatBug.Application.PrioritySchemes.Commands.EditPriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetCreatePriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetEditPriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes;
+using WhatBug.Domain.Data;
+using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.PrioritySchemes.Create;
 using WhatBug.WebUI.Features.PrioritySchemes.Edit;
 
 namespace WhatBug.WebUI.Features.PrioritySchemes
 {
+    [Route("admin/priority-schemes", Name = "PrioritySchemes")]
     public class PrioritySchemesController : BaseController
     {
-        [HttpGet]
+        [HttpGet("")]
+        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Index()
         {
-            var dto = await Mediator.Send(new GetPrioritySchemesQuery());
-            return View(dto);
+            var result = await Mediator.Send(new GetPrioritySchemesQuery());
+            return View(result.Result);
         }
 
-        [HttpGet]
+        [HttpGet("create", Name = "CreatePriorityScheme")]
+        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Create()
         {
             var dto = await Mediator.Send(new GetCreatePrioritySchemeQuery());
@@ -28,7 +33,8 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpPost("create", Name = "CreatePriorityScheme")]
+        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Create(CreatePrioritySchemeCommand command)
         {
             // TODO: Check modelstate
@@ -36,15 +42,17 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        [HttpGet("{schemeId}/edit", Name = "EditPriorityScheme")]
+        [RequirePermission(Permissions.ManagePrioritySchemes)]
+        public async Task<IActionResult> Edit(int schemeId)
         {
-            var dto = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = id });
+            var dto = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = schemeId });
             var vm = Mapper.Map<EditPrioritySchemeViewModel>(dto);
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpPost("{schemeId}/edit", Name = "EditPriorityScheme")]
+        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Edit(EditPrioritySchemeCommand command)
         {
             await Mediator.Send(command);

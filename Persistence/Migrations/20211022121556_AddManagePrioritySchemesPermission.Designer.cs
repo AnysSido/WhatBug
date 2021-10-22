@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhatBug.Persistence;
@@ -9,15 +10,31 @@ using WhatBug.Persistence;
 namespace WhatBug.Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211022121556_AddManagePrioritySchemesPermission")]
+    partial class AddManagePrioritySchemesPermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("PriorityPriorityScheme", b =>
+                {
+                    b.Property<int>("PrioritiesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PrioritySchemesId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PrioritiesId", "PrioritySchemesId");
+
+                    b.HasIndex("PrioritySchemesId");
+
+                    b.ToTable("PriorityPriorityScheme");
+                });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Attachment", b =>
                 {
@@ -1014,9 +1031,6 @@ namespace WhatBug.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -1029,24 +1043,8 @@ namespace WhatBug.Persistence.Migrations
                         {
                             Id = 1,
                             Description = "The default priority scheme used by all projects without any other scheme assigned.",
-                            IsDefault = true,
                             Name = "Default"
                         });
-                });
-
-            modelBuilder.Entity("WhatBug.Domain.Entities.PrioritySchemePriority", b =>
-                {
-                    b.Property<int>("PrioritySchemeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PriorityId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PrioritySchemeId", "PriorityId");
-
-                    b.HasIndex("PriorityId");
-
-                    b.ToTable("PrioritySchemePriorities");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Project", b =>
@@ -1197,6 +1195,21 @@ namespace WhatBug.Persistence.Migrations
                     b.ToTable("UserPermissions");
                 });
 
+            modelBuilder.Entity("PriorityPriorityScheme", b =>
+                {
+                    b.HasOne("WhatBug.Domain.Entities.Priority", null)
+                        .WithMany()
+                        .HasForeignKey("PrioritiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WhatBug.Domain.Entities.PriorityScheme", null)
+                        .WithMany()
+                        .HasForeignKey("PrioritySchemesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WhatBug.Domain.Entities.Attachment", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.Issue", "Issue")
@@ -1337,25 +1350,6 @@ namespace WhatBug.Persistence.Migrations
                     b.Navigation("Icon");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.PrioritySchemePriority", b =>
-                {
-                    b.HasOne("WhatBug.Domain.Entities.Priority", "Priority")
-                        .WithMany("PrioritySchemes")
-                        .HasForeignKey("PriorityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WhatBug.Domain.Entities.PriorityScheme", "PriorityScheme")
-                        .WithMany("Priorities")
-                        .HasForeignKey("PrioritySchemeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Priority");
-
-                    b.Navigation("PriorityScheme");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.Project", b =>
                 {
                     b.HasOne("WhatBug.Domain.Entities.PermissionScheme", "PermissionScheme")
@@ -1431,15 +1425,8 @@ namespace WhatBug.Persistence.Migrations
                     b.Navigation("RolePermissions");
                 });
 
-            modelBuilder.Entity("WhatBug.Domain.Entities.Priority", b =>
-                {
-                    b.Navigation("PrioritySchemes");
-                });
-
             modelBuilder.Entity("WhatBug.Domain.Entities.PriorityScheme", b =>
                 {
-                    b.Navigation("Priorities");
-
                     b.Navigation("Projects");
                 });
 

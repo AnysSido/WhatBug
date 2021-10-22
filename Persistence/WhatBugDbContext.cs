@@ -30,6 +30,7 @@ namespace WhatBug.Persistence
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<PermissionScheme> PermissionSchemes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
+        public DbSet<PrioritySchemePriority> PrioritySchemePriorities { get; set; }
         public DbSet<PriorityScheme> PrioritySchemes { get; set; }
         public DbSet<Icon> Icons { get; set; }
         public DbSet<IssueType> IssueTypes { get; set; }
@@ -50,6 +51,7 @@ namespace WhatBug.Persistence
                         entry.Entity.CreatedBy = _currentUserService.Id;
                         entry.Entity.Created = DateTime.Now;
                         break;
+
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = _currentUserService.Id;
                         entry.Entity.LastModified = DateTime.Now;
@@ -104,6 +106,10 @@ namespace WhatBug.Persistence
             //    .HasForeignKey(p => p.PermissionId);
 
             modelBuilder
+                .Entity<PrioritySchemePriority>()
+                .HasKey(s => new { s.PrioritySchemeId, s.PriorityId });
+
+            modelBuilder
                 .Entity<Issue>()
                 .HasOne(i => i.Assignee)
                 .WithMany(u => u.AssignedIssues)
@@ -121,7 +127,6 @@ namespace WhatBug.Persistence
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             modelBuilder.Entity<Permission>().HasData(Domain.Data.Permissions.Seed());
             modelBuilder.Entity<Icon>().HasData(Domain.Data.Icons.Seed());
             modelBuilder.Entity<IssueType>().HasData(Domain.Data.IssueTypes.Seed());
@@ -138,10 +143,24 @@ namespace WhatBug.Persistence
                     IconId = Domain.Data.Icons.WaveSquare.Id,
                     ColorId = Domain.Data.Colors.Black.Id
                 });
+
             modelBuilder.Entity<PriorityScheme>()
-                .HasData(new PriorityScheme { Id = 1, Name = "Default", Description = "The default priority scheme used by all projects without any other scheme assigned." });
+                .HasData(new PriorityScheme
+                {
+                    Id = 1,
+                    Name = "Default",
+                    Description = "The default priority scheme used by all projects without any other scheme assigned.",
+                    IsDefault = true
+                });
+
             modelBuilder.Entity<PermissionScheme>()
-                .HasData(new PermissionScheme { Id = 1, IsDefault = true, Name = "Default", Description = "The default permission scheme used by all projects without any other scheme assigned." });
+                .HasData(new PermissionScheme
+                {
+                    Id = 1,
+                    IsDefault = true,
+                    Name = "Default",
+                    Description = "The default permission scheme used by all projects without any other scheme assigned."
+                });
 
             // TODO: Clean this up
             modelBuilder.Entity<IssueStatus>().HasData(new IssueStatus { Id = 1, Name = "Backlog" }, new IssueStatus { Id = 2, Name = "ToDo" }, new IssueStatus { Id = 3, Name = "In Progress" }, new IssueStatus { Id = 4, Name = "Done" });

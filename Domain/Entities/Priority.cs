@@ -16,6 +16,6 @@ namespace WhatBug.Domain.Entities
         public int IconId { get; set; }
         public Icon Icon { get; set; }
 
-        public List<PriorityScheme> PrioritySchemes { get; set; }
+        public List<PrioritySchemePriority> PrioritySchemes { get; set; }
     }
 }

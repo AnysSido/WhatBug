@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhatBug.Persistence;
@@ -9,9 +10,10 @@ using WhatBug.Persistence;
 namespace WhatBug.Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211022132843_RefactorPrioritySchemePriority")]
+    partial class RefactorPrioritySchemePriority
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1014,9 +1016,6 @@ namespace WhatBug.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -1029,7 +1028,6 @@ namespace WhatBug.Persistence.Migrations
                         {
                             Id = 1,
                             Description = "The default priority scheme used by all projects without any other scheme assigned.",
-                            IsDefault = true,
                             Name = "Default"
                         });
                 });
