@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.Priorities.Commands.CreatePriority;
+using WhatBug.Application.Priorities.Commands.DeletePriority;
 using WhatBug.Application.Priorities.Commands.EditPriority;
 using WhatBug.Application.Priorities.Commands.ReorderPriorities;
 using WhatBug.Application.Priorities.Queries.GetCreatePriority;
@@ -101,6 +102,18 @@ namespace WhatBug.WebUI.Features.Priorities
             });
 
             return PartialView(result.Result);
+        }
+
+        [HttpPost("delete", Name = "DeletePriority")]
+        [RequirePermission(Permissions.ManagePriorities)]
+        public async Task<IActionResult> Delete(int priorityId)
+        {
+            var result = await Mediator.Send(new DeletePriorityCommand
+            {
+                PriorityId = priorityId
+            });
+
+            return RedirectToAction(nameof(Index));
         }
 
         [AjaxOnly]
