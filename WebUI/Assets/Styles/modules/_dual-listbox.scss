@@ -1,0 +1,18 @@
+﻿.dual-listbox {
+    display: flex;
+    gap: 5rem;
+    
+    &__col {
+        min-height: 100px;
+        min-width: 300px;
+    }
+
+    &__col-table {
+        @extend .table, .table-bordered, .table-hover;
+        min-height: 100px;
+        & td {
+            
+            background-color: white;
+        }
+    }
+}

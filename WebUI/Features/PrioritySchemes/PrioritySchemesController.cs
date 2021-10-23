@@ -9,7 +9,6 @@ using WhatBug.Domain.Data;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.PrioritySchemes.Create;
-using WhatBug.WebUI.Features.PrioritySchemes.Edit;
 
 namespace WhatBug.WebUI.Features.PrioritySchemes
 {
@@ -46,16 +45,30 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Edit(int schemeId)
         {
-            var dto = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = schemeId });
-            var vm = Mapper.Map<EditPrioritySchemeViewModel>(dto);
-            return View(vm);
+            var result = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = schemeId });
+            return View(result.Result);
         }
 
         [HttpPost("{schemeId}/edit", Name = "EditPriorityScheme")]
         [RequirePermission(Permissions.ManagePrioritySchemes)]
-        public async Task<IActionResult> Edit(EditPrioritySchemeCommand command)
+        public async Task<IActionResult> Edit(GetEditPrioritySchemeQueryResult vm)
         {
-            await Mediator.Send(command);
+            var command = new EditPrioritySchemeCommand
+            {
+                Id = vm.Id,
+                Name = vm.Name,
+                Description = vm.Description,
+                PriorityIds = vm.PriorityIds
+            };
+
+            var result = await Mediator.Send(command);
+
+            if (result.HasValidationErrors)
+            {
+                var dto = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = vm.Id });
+                return ViewWithErrors(dto, result);
+            }
+
             return RedirectToAction(nameof(Index));
         }
     }
