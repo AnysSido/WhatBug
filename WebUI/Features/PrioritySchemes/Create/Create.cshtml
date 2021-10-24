@@ -1,61 +1,95 @@
-﻿@model WhatBug.WebUI.Features.PrioritySchemes.Create.CreatePrioritySchemeViewModel
-
-@section Styles {
-<link rel="stylesheet" type="text/css" href="~/lib/bootstrap4-duallistbox/bootstrap-duallistbox.min.css" />
-}
+﻿@model WhatBug.Application.PrioritySchemes.Queries.GetCreatePriorityScheme.CreatePrioritySchemeDTO
 
 @{
     ViewData["Title"] = "Create Priority Scheme";
 }
 
 @{
-<div class="row">
-    <div class="col-md-6">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h6 class="card-title">Priority Scheme Details</h6>
-            </div>
-            <form method="post">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label asp-for="@Model.Name"></label>
-                        <input asp-for="@Model.Name" class="form-control" />
-                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+
+    <div class="page-container">
+        <div class="text-block">
+            <p>
+                Priorities created here can be assigned to <a asp-route="PrioritySchemes">priority schemes</a>.
+            </p>
+            <p>
+                When a <a asp-route="Projects">project</a> is assigned a priority scheme, priorities within
+                that scheme become available to issues in that project.
+            </p>
+        </div>
+
+        <div class="page-container__item--medium-width">
+            <form class="form js-priorityschemeform" method="post">
+
+                <div class="form__group">
+                    <label class="form__label" asp-for="Name">Scheme Name</label>
+                    <input class="form__input" asp-for="Name" />
+                    <span class="form__validation" asp-validation-for="Name"></span>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" asp-for="Description">Scheme Description</label>
+                    <input class="form__input" asp-for="Description" />
+                    <span class="form__validation" asp-validation-for="Description"></span>
+                </div>
+
+                <label class="form__label">Priorities</label>
+
+                <div class="dual-listbox">
+                    <div class="dual-listbox__col">
+                        <table class="dual-listbox__col-table">
+                            <thead>
+                                <tr>
+                                    <th class="table__header table__header--shrink">Available</th>
+                                </tr>
+                            </thead>
+                            <tbody id="availablePriorityList" class="js-sortablelist">
+                                @foreach (var priority in Model.Priorities.ToList())
+                                {
+                                    <tr key="@priority.Id">
+                                        <td>
+                                            <div>
+                                                <icon icon="@priority.IconWebName" color="@priority.ColorName" />
+                                                @priority.Name
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.Description"></label>
-                        <textarea asp-for="@Model.Description" class="form-control" rows="2"></textarea>
-                    </div>
-                    <!-- Duallistbox-->
-                    <div class="form-group">
-                        <select asp-for="@Model.PriorityIds" asp-items="@Model.PriorityListItems" class="duallistbox"></select>
-                    </div>
-                    <div class="alert alert-info alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <span>
-                            <i class="icon fas fa-info"></i>
-                            Included priorities will be available in projects assigned to this priority scheme.
-                        </span>
+
+                    <div class="dual-listbox__col">
+                        <table class="dual-listbox__col-table">
+                            <thead>
+                                <tr>
+                                    <th class="table__header table__header--shrink">Selected</th>
+                                </tr>
+                            </thead>
+                            <tbody id="selectedPriorityList" class="js-sortablelist">
+                                
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary float-right">Create</button>
+
+                <div class="page-container__item--medium-width">
+                    <div class="alert alert--info alert--dismissible">
+                        <button class="alert__dismiss" type="button" data-dismiss="alert" aria-hidden="true">×</button>
+                        <p><i class="icon icon--information"></i>If no priorities are selected then the default priority will be used.</p>
+                    </div>
                 </div>
+
+                <button class="button button--primary float-right" type="submit">
+                    <i class="button__icon icon icon--save"></i>
+                    Update
+                </button>
             </form>
         </div>
     </div>
-</div>
 }
 
 @section Scripts {
-<script type="text/javascript" src="~/lib/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-
-<script type="text/javascript">
-        $(".duallistbox").bootstrapDualListbox({
-            showFilterInputs: false,
-            nonSelectedListLabel: 'Available Priorities',
-            selectedListLabel: 'Included Priorities',
-            infoText: '',
-        });
-</script>
+    @*<script type="text/javascript" src="~/lib/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>*@
+    <script type="text/javascript" src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/js/pages/EditPriorityScheme.js"></script>
 }
