@@ -31,7 +31,6 @@ namespace WhatBug.Application.PrioritySchemes.Commands.EditPriorityScheme
 
             RuleFor(v => v.PriorityIds)
                 .Cascade(CascadeMode.Stop)
-                .NotNull().WithException(cmd => new ArgumentException(nameof(cmd.PriorityIds)))
                 .MustAsync(AllExist).WithException(cmd => new RecordNotFoundException());
         }
 
@@ -47,6 +46,9 @@ namespace WhatBug.Application.PrioritySchemes.Commands.EditPriorityScheme
 
         public async Task<bool> AllExist(EditPrioritySchemeCommand command, IEnumerable<int> priorityIds, CancellationToken cancellationToken)
         {
+            if (command.PriorityIds == null || !command.PriorityIds.Any())
+                return true;
+
             var priorities = await _context.Priorities.Where(p => command.PriorityIds.Contains(p.Id)).ToListAsync();
             return priorities.Count == command.PriorityIds.Count();
         }

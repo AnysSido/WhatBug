@@ -1,9 +1,5 @@
 ﻿using FluentValidation.TestHelper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.PrioritySchemes.Commands.EditPriorityScheme;
 using WhatBug.Application.UnitTests.Common;
@@ -90,19 +86,6 @@ namespace WhatBug.Application.UnitTests.PrioritySchemes.Commands.EditPrioritySch
             // Assert
             result.ShouldHaveValidationErrorFor(command => command.Name)
                 .WithErrorMessage("A priority scheme with the name PriorityScheme1 already exists");
-        }
-
-        [Fact]
-        public void Given_NullPriorityIds_HasArgumentException()
-        {
-            // Arrange
-            var command = new EditPrioritySchemeCommand { Id = 3 };
-
-            // Act
-            var result = _sut.TestValidate(command);
-
-            // Assert
-            result.ShouldHaveExceptionFor(command => command.PriorityIds, typeof(ArgumentException));
         }
 
         [Theory]
