@@ -51,22 +51,14 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
 
         [HttpPost("{schemeId}/edit", Name = "EditPriorityScheme")]
         [RequirePermission(Permissions.ManagePrioritySchemes)]
-        public async Task<IActionResult> Edit(GetEditPrioritySchemeQueryResult vm)
+        public async Task<IActionResult> Edit(EditPrioritySchemeCommand command)
         {
-            var command = new EditPrioritySchemeCommand
-            {
-                Id = vm.Id,
-                Name = vm.Name,
-                Description = vm.Description,
-                PriorityIds = vm.PriorityIds
-            };
-
             var result = await Mediator.Send(command);
 
             if (result.HasValidationErrors)
             {
-                var dto = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = vm.Id });
-                return ViewWithErrors(dto, result);
+                var dto = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = command.Id });
+                return ViewWithErrors(dto.Result, result);
             }
 
             return RedirectToAction(nameof(Index));
