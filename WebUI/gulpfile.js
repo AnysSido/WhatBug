@@ -37,8 +37,6 @@ const libraries = [
     { from: '@ttskch/select2-bootstrap4-theme/dist/', to: 'select2-bootstrap4-theme' },
     // Bootstrap Select
     { from: 'bootstrap-select/dist', to: 'bootstrap-select' },
-    // Bootstrap4-duallistbox
-    { from: 'bootstrap4-duallistbox/dist', to: 'bootstrap4-duallistbox' },
     // Highlight.js
     { from: 'highlight.js', to: 'highlight-js' },
     // iCheck-Bootstrap
