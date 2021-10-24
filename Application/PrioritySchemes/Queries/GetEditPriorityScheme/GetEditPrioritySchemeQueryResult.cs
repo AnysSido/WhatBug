@@ -11,6 +11,7 @@ namespace WhatBug.Application.PrioritySchemes.Queries.GetEditPriorityScheme
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool IsDefault { get; set; }
         public IList<int> PriorityIds { get; set; }
         public IList<PriorityDTO> Priorities { get; set; }
 
