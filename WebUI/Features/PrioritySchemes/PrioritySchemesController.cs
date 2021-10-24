@@ -8,7 +8,6 @@ using WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes;
 using WhatBug.Domain.Data;
 using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
-using WhatBug.WebUI.Features.PrioritySchemes.Create;
 
 namespace WhatBug.WebUI.Features.PrioritySchemes
 {
@@ -27,17 +26,22 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Create()
         {
-            var dto = await Mediator.Send(new GetCreatePrioritySchemeQuery());
-            var vm = Mapper.Map<CreatePrioritySchemeViewModel>(dto);
-            return View(vm);
+            var result = await Mediator.Send(new GetCreatePrioritySchemeQuery());
+            return View(result.Result);
         }
 
         [HttpPost("create", Name = "CreatePriorityScheme")]
         [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Create(CreatePrioritySchemeCommand command)
         {
-            // TODO: Check modelstate
-            await Mediator.Send(command);
+            var result = await Mediator.Send(command);
+
+            if (result.HasValidationErrors)
+            {
+                var dto = await Mediator.Send(new GetCreatePrioritySchemeQuery());
+                return ViewWithErrors(dto.Result, result);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
