@@ -36,10 +36,10 @@
                         <td>
                             @foreach (var priority in scheme.Priorities)
                             {
-                            <div>
-                                <icon icon="@priority.IconWebName" color="@priority.ColorName" />
-                                <b>@priority.Name</b>
-                            </div>
+                                <div>
+                                    <icon icon="@priority.IconWebName" color="@priority.ColorName" />
+                                    <b>@priority.Name</b>
+                                </div>
                             }
                         </td>
 
@@ -47,7 +47,14 @@
                             <a class="table__cell-icon" asp-route="EditPriorityScheme" asp-route-schemeId="@scheme.Id">
                                 <i class="icon icon--edit"></i>
                             </a>
-                            <i class="table__cell-icon icon icon--delete js__delete-priorityscheme" data-schemeid="@scheme.Id"></i>
+                            @if (scheme.IsDefault)
+                            {
+                                <i class="table__cell-icon table__cell-icon--disabled icon icon--delete" data-schemeid="@scheme.Id"></i>
+                            }
+                            else
+                            {
+                                <i class="table__cell-icon icon icon--delete js__delete-priorityscheme" data-schemeid="@scheme.Id"></i>
+                            }
                         </td>
                     </tr>
                 }
@@ -61,4 +68,8 @@
             </a>
         </div>
     </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/pages/PrioritySchemes.js"></script>
 }
