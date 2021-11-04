@@ -6,8 +6,6 @@ using WhatBug.Application.ProjectRoles.Commands.EditRole;
 using WhatBug.Application.ProjectRoles.Queries.GetDeleteRoleConfirm;
 using WhatBug.Application.ProjectRoles.Queries.GetEditRole;
 using WhatBug.Application.ProjectRoles.Queries.GetRoles;
-using WhatBug.Domain.Data;
-using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Routing;
 
@@ -17,7 +15,6 @@ namespace WhatBug.WebUI.Features.ProjectRoles
     public class ProjectRolesController : BaseController
     {
         [HttpGet("")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
         public async Task<IActionResult> Index()
         {
             var queryResult = await Mediator.Send(new GetRolesQuery());
@@ -25,14 +22,12 @@ namespace WhatBug.WebUI.Features.ProjectRoles
         }
 
         [HttpGet("create", Name = "CreateRole")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost("create", Name = "CreateRole")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
         public async Task<IActionResult> CreateRole(CreateRoleCommand command)
         {
             var result = await Mediator.Send(command);
@@ -44,7 +39,6 @@ namespace WhatBug.WebUI.Features.ProjectRoles
         }
 
         [HttpGet("{roleId}/edit", Name = "EditRole")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
         public async Task<IActionResult> EditRole(int roleId)
         {
             var result = await Mediator.Send(new GetEditRoleQuery { RoleId = roleId });
@@ -53,7 +47,6 @@ namespace WhatBug.WebUI.Features.ProjectRoles
         }
 
         [HttpPost("{roleId}/edit", Name = "EditRole")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
         public async Task<IActionResult> EditRole(GetEditRoleQueryResult vm)
         {
             var result = await Mediator.Send(new EditRoleCommand
@@ -70,7 +63,6 @@ namespace WhatBug.WebUI.Features.ProjectRoles
         }
 
         [HttpPost("delete", Name = "DeleteRole")]
-        [RequirePermission(Permissions.ManageProjectRoles)] 
         public async Task<IActionResult> DeleteRole(int roleId)
         {
             var result = await Mediator.Send(new DeleteRoleCommand
@@ -83,7 +75,6 @@ namespace WhatBug.WebUI.Features.ProjectRoles
 
         [AjaxOnly]
         [HttpGet("getdeleteroleconfirmpartial")]
-        [RequirePermission(Permissions.ManageProjectRoles)]
         public async Task<IActionResult> GetDeleteRoleConfirmPartial(int roleId)
         {
             var result = await Mediator.Send(new GetDeleteRoleConfirmQuery
