@@ -11,7 +11,6 @@ using WhatBug.Application.Priorities.Queries.GetDeleteConfirm;
 using WhatBug.Application.Priorities.Queries.GetEditPriority;
 using WhatBug.Application.Priorities.Queries.GetPriorities;
 using WhatBug.Domain.Data;
-using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Routing;
 
@@ -21,7 +20,6 @@ namespace WhatBug.WebUI.Features.Priorities
     public class PrioritiesController : BaseController
     {
         [HttpGet("")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Index()
         {
             var dto = await Mediator.Send(new GetPrioritiesQuery());
@@ -30,7 +28,6 @@ namespace WhatBug.WebUI.Features.Priorities
         }
 
         [HttpGet("create", Name = "CreatePriority")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Create()
         {
             var result = await Mediator.Send(new GetCreatePriorityQuery());
@@ -41,10 +38,9 @@ namespace WhatBug.WebUI.Features.Priorities
         }
 
         [HttpPost("create", Name = "CreatePriority")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Create(GetCreatePriorityQueryResult vm)
         {
-            var result = await Mediator.Send(new CreatePriorityCommand 
+            var result = await Mediator.Send(new CreatePriorityCommand
             {
                 Name = vm.Name,
                 Description = vm.Description,
@@ -62,7 +58,6 @@ namespace WhatBug.WebUI.Features.Priorities
         }
 
         [HttpGet("{priorityId}/edit", Name = "EditPriority")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Edit(int priorityId)
         {
             var dto = await Mediator.Send(new GetEditPriorityQuery { Id = priorityId });
@@ -70,7 +65,6 @@ namespace WhatBug.WebUI.Features.Priorities
         }
 
         [HttpPost("{priorityId}/edit", Name = "EditPriority")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Edit(GetEditPriorityQueryResult vm)
         {
             var result = await Mediator.Send(new EditPriorityCommand
@@ -93,7 +87,6 @@ namespace WhatBug.WebUI.Features.Priorities
 
         [AjaxOnly]
         [HttpGet("getdeleteconfirmpartial")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> GetDeleteConfirmPartial(int priorityId)
         {
             var result = await Mediator.Send(new GetDeleteConfirmQuery
@@ -105,7 +98,6 @@ namespace WhatBug.WebUI.Features.Priorities
         }
 
         [HttpPost("delete", Name = "DeletePriority")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> Delete(int priorityId)
         {
             var result = await Mediator.Send(new DeletePriorityCommand
@@ -118,7 +110,6 @@ namespace WhatBug.WebUI.Features.Priorities
 
         [AjaxOnly]
         [HttpPost("updatepriorityorder")]
-        [RequirePermission(Permissions.ManagePriorities)]
         public async Task<IActionResult> UpdateOrder([FromBody] List<int> priorityIds)
         {
             var result = await Mediator.Send(new ReorderPrioritiesCommand { Ids = priorityIds });

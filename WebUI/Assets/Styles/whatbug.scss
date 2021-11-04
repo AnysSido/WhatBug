@@ -63,3 +63,11 @@
     height: 80vh;
     overflow-y: auto;
 }
+
+.error-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}

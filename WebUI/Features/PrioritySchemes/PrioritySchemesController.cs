@@ -7,8 +7,6 @@ using WhatBug.Application.PrioritySchemes.Queries.GetCreatePriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetDeleteConfirm;
 using WhatBug.Application.PrioritySchemes.Queries.GetEditPriorityScheme;
 using WhatBug.Application.PrioritySchemes.Queries.GetPrioritySchemes;
-using WhatBug.Domain.Data;
-using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Routing;
 
@@ -18,7 +16,6 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
     public class PrioritySchemesController : BaseController
     {
         [HttpGet("")]
-        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Index()
         {
             var result = await Mediator.Send(new GetPrioritySchemesQuery());
@@ -26,7 +23,6 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         }
 
         [HttpGet("create", Name = "CreatePriorityScheme")]
-        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Create()
         {
             var result = await Mediator.Send(new GetCreatePrioritySchemeQuery());
@@ -34,7 +30,6 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         }
 
         [HttpPost("create", Name = "CreatePriorityScheme")]
-        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Create(CreatePrioritySchemeCommand command)
         {
             var result = await Mediator.Send(command);
@@ -49,7 +44,6 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         }
 
         [HttpGet("{schemeId}/edit", Name = "EditPriorityScheme")]
-        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Edit(int schemeId)
         {
             var result = await Mediator.Send(new GetEditPrioritySchemeQuery { Id = schemeId });
@@ -57,7 +51,6 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         }
 
         [HttpPost("{schemeId}/edit", Name = "EditPriorityScheme")]
-        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Edit(EditPrioritySchemeCommand command)
         {
             var result = await Mediator.Send(command);
@@ -73,7 +66,6 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
 
         [AjaxOnly]
         [HttpGet("getdeleteconfirmpartial")]
-        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> GetDeleteConfirmPartial(int schemeId)
         {
             var result = await Mediator.Send(new GetDeleteConfirmQuery
@@ -85,7 +77,6 @@ namespace WhatBug.WebUI.Features.PrioritySchemes
         }
 
         [HttpPost("delete", Name = "DeletePriorityScheme")]
-        [RequirePermission(Permissions.ManagePrioritySchemes)]
         public async Task<IActionResult> Delete(int schemeId)
         {
             var result = await Mediator.Send(new DeletePrioritySchemeCommand

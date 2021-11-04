@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using WhatBug.Application.UserPermissions.Commands.GrantUserPermissions;
 using WhatBug.Application.UserPermissions.Queries.GetGrantUserPermissions;
 using WhatBug.Application.UserPermissions.Queries.GetUsersAndPermissions;
-using WhatBug.Domain.Data;
-using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Routing;
 
@@ -15,7 +13,6 @@ namespace WhatBug.WebUI.Features.UserPermissions
     public class UserPermissionsController : BaseController
     {
         [HttpGet("")]
-        [RequirePermission(Permissions.ManageUserPermissions)]
         public async Task<IActionResult> Index()
         {
             var result = await Mediator.Send(new GetUsersAndPermissionsQuery());
@@ -23,7 +20,6 @@ namespace WhatBug.WebUI.Features.UserPermissions
         }
 
         [HttpPost("grant", Name = "GrantUserPermissions")]
-        [RequirePermission(Permissions.ManageUserPermissions)]
         public async Task<IActionResult> GrantUserPermissions(GetGrantUserPermissionsQueryResult vm)
         {
             var result = await Mediator.Send(new GrantUserPermissionsCommand
@@ -37,7 +33,6 @@ namespace WhatBug.WebUI.Features.UserPermissions
 
         [AjaxOnly]
         [HttpGet("getgrantuserpermissionspartial")]
-        [RequirePermission(Permissions.ManageUserPermissions)]
         public async Task<IActionResult> GetGrantUserPermissionsPartial(int userId)
         {
             var result = await Mediator.Send(new GetGrantUserPermissionsQuery

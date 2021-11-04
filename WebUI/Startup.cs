@@ -1,5 +1,4 @@
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +9,8 @@ using WhatBug.Application;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure;
 using WhatBug.Persistence;
-using WhatBug.WebUI.Authorization;
 using WhatBug.WebUI.Routing.Breadcrumbs;
 using WhatBug.WebUI.Services;
-using WhatBug.WebUI.Services.Interfaces;
 using WhatBug.WebUI.ViewLocators;
 
 namespace WebUI
@@ -43,7 +40,7 @@ namespace WebUI
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
-            services.AddControllersWithViews(options => 
+            services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).AddFeatureFolders();
@@ -51,7 +48,6 @@ namespace WebUI
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IWhatBugDbContext>());
 
             services.AddSingleton<IBreadcrumbManager, BreadcrumbManager>();
-            services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,17 +60,19 @@ namespace WebUI
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseMiddleware<PermissionMiddleware>();
             app.UseAuthorization();
 
             app.UseMiddleware<BreadcrumbMiddleware>();

@@ -25,11 +25,12 @@ namespace WhatBug.Application.Common.Interfaces
         DbSet<IssueComment> IssueComments { get; set; }
         DbSet<Attachment> Attachments { get; set; }
         DbSet<UserPermission> UserPermissions { get; set; }
+        DbSet<PermissionSchemeRolePermission> PermissionSchemeRolePermissions { get; set; }
+        DbSet<PrioritySchemePriority> PrioritySchemePriorities { get; set; }
+        DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
 
         ChangeTracker ChangeTracker { get; }
         DatabaseFacade Database { get; }
-        DbSet<PermissionSchemeRolePermission> PermissionSchemeRolePermissions { get; set; }
-        DbSet<PrioritySchemePriority> PrioritySchemePriorities { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         int SaveChanges();

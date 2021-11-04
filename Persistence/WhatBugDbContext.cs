@@ -27,6 +27,7 @@ namespace WhatBug.Persistence
         public DbSet<Issue> Issues { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<ProjectRoleUser> ProjectRoleUsers { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<PermissionScheme> PermissionSchemes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
