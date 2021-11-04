@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using WhatBug.Application.Common.Behaviors;
 using WhatBug.Application.Common.Settings;
 using System;
+using WhatBug.Application.Authorization;
 
 namespace WhatBug.Application
 {
@@ -11,6 +12,8 @@ namespace WhatBug.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<IAuthorizationManager, AuthorizationManager>();
+
             services.AddAutoMapper(typeof(DependencyInjection));
             services.AddMediatR(typeof(DependencyInjection));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
