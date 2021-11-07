@@ -32,6 +32,12 @@ namespace WebUI
             services.AddPersistence(Configuration);
             services.AddApplication();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/accounts/login";
+                options.LogoutPath = "/accounts/logout";
+            });
+
             services.AddTransient<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IFileStorageService, FileSystemFileStorageService>();
 
@@ -45,6 +51,13 @@ namespace WebUI
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).AddFeatureFolders();
+
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
 
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IWhatBugDbContext>());
 
