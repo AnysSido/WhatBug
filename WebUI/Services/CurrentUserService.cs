@@ -12,7 +12,8 @@ namespace WhatBug.WebUI.Services
         public string Email { get; }
         public string FirstName { get; }
         public string Surname { get; }
-        public bool IsAuthenticated { get; }     
+        public bool IsAuthenticated { get; }
+        public bool IsReadOnly { get; }
 
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
@@ -21,6 +22,7 @@ namespace WhatBug.WebUI.Services
             Email = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Email.ToString());
             FirstName = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.FirstName.ToString());
             Surname = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Surname.ToString());
+            IsReadOnly = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.WriteAccess.ToString()) == null;
             IsAuthenticated = Id > 0;
         }
     }

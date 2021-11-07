@@ -8,5 +8,6 @@
         public string FirstName { get; }
         public string Surname { get; }
         public bool IsAuthenticated { get; }
+        bool IsReadOnly { get; }
     }
 }
