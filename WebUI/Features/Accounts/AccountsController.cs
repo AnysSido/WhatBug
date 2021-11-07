@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WhatBug.Application.Accounts.Commands.Register;
 using WhatBug.Application.Common.Interfaces;
@@ -8,6 +9,7 @@ using WhatBug.WebUI.Features.Accounts.Register;
 
 namespace WhatBug.WebUI.Features.Accounts
 {
+    [AllowAnonymous]
     public class AccountsController : BaseController
     {
         private readonly IAuthenticationProvider _authProvider;
@@ -29,7 +31,7 @@ namespace WhatBug.WebUI.Features.Accounts
         {
             if (!ModelState.IsValid)
                 return View(vm);
-
+            
             await Mediator.Send(new RegisterCommand { Username = vm.Username, Email = vm.Email, Password = vm.Password });
 
             return RedirectToAction("Index", "Home");
@@ -51,9 +53,7 @@ namespace WhatBug.WebUI.Features.Accounts
             var result = await _authProvider.SignInAsync(vm.Username, vm.Password, vm.RememberMe);
 
             if (result)
-            {
                 return RedirectToAction("Index", "Home");
-            }
 
             ModelState.AddModelError("InvalidCredentials", "Incorrect username or password");
 
