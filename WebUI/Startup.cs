@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace WebUI
             services.AddPersistence(Configuration);
             services.AddApplication();
 
-            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IFileStorageService, FileSystemFileStorageService>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
