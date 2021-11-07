@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject WhatBug.Application.Common.Interfaces.ICurrentUserService CurrentUserService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -16,6 +18,14 @@
         <partial name="AdminLTE/_MainNavigation" />
 
         <div class="content-wrapper">
+
+            @if (CurrentUserService.IsReadOnly)
+            {
+                <div class="alert alert-danger alert-dismissible read-only-banner">
+                    Signed in as read-only. Changes made will not be persisted.
+                </div>
+            }
+
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">

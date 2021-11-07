@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 
@@ -30,17 +31,29 @@ namespace WhatBug.Infrastructure.Identity
             return true;
         }
 
+        public async Task<bool> SignInDemoAsync()
+        {
+            var user = await _userManager.FindByNameAsync("Anys");
+
+            if (user == null)
+                return false;
+
+            user.IsReadOnly = true;
+
+            await _signInManager.SignInAsync(user, true);
+
+            return true;
+        }
+
         public async Task<bool> SignInAsync(string username, string password, bool rememberMe)
         {
             var user = await _userManager.FindByNameAsync(username) ?? await _userManager.FindByEmailAsync(username);
 
             if (user == null)
-            {
                 return false;
-            }
 
             var result = await _signInManager.PasswordSignInAsync(user, password, rememberMe, false);
-
+            
             return result.Succeeded;
         }
 
