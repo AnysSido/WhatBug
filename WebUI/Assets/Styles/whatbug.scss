@@ -71,3 +71,13 @@
     align-items: center;
     gap: 5px;
 }
+
+.login-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.read-only-banner {
+    border-radius: 0px;
+}

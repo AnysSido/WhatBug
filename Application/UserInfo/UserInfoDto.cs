@@ -1,9 +1,9 @@
 ﻿using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
-namespace WhatBug.Application.Users.Queries.GetUserInfo
+namespace WhatBug.Application.UserInfo
 {
-    public class UserInfoDTO : IMapFrom<User>
+    public class UserInfoDto : IMapFrom<User>
     {
         public int Id { get; set; }
         public string Username { get; set; }

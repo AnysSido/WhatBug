@@ -60,6 +60,13 @@ namespace WhatBug.WebUI.Features.Accounts
             return View(vm);
         }
 
+        [HttpPost("login-demo", Name = "LoginDemo")]
+        public async Task<IActionResult> LoginDemo()
+        {
+            await _authProvider.SignInDemoAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpGet]
         public async Task<IActionResult> Logout()
         {

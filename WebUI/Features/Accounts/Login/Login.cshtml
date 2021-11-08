@@ -6,53 +6,72 @@
 }
 
 <body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a href="../../index2.html" class="h1"><b>What</b>Bug</a>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="card card-outline card-primary">
+                <div class="card-header text-center">
+                    <a href="../../index2.html" class="h1"><b>What</b>Bug</a>
+                </div>
+                <div class="card-body">
+                    <p class="login-box-msg">Sign in</p>
+
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="input-group mb-3">
+                            <input asp-for="Username" class="form-control">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input asp-for="Password" class="form-control">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="icheck-primary">
+                                    <input asp-for="RememberMe">
+                                    <label for="remember">
+                                        Remember Me
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <p class="mb-1">
+                        <a href="forgot-password.html">I forgot my password</a>
+                    </p>
+                    <p class="mb-0">
+                        <a asp-action="Register" class="text-center">Create an account</a>
+                    </p>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="login-box-msg">Sign in</p>
+        </div>
 
-                <form method="post">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="input-group mb-3">
-                        <input asp-for="Username" class="form-control">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input asp-for="Password" class="form-control">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input asp-for="RememberMe">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-                    </div>
-                </form>
+        <div class="login-box">
+            <div class="card card-outline card-danger">
+                <div class="card-header text-center">
+                    <a href="../../index2.html" class="h1"><b>Demo</b></a>
+                </div>
+                <div class="card-body">
+                    <p class="login-box-msg">Demo accounts are real accounts placed in <b>read-only</b> mode.</p>
+                    <p class="login-box-msg">Read-only mode grants complete access to the system. 
+                    The only difference is that actual database writes are skipped so no changes are persisted.</p>
 
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
-                <p class="mb-0">
-                    <a asp-action="Register" class="text-center">Create an account</a>
-                </p>
+                    <form method="post" asp-route="LoginDemo">
+                            <button type="submit" class="btn btn-danger btn-block" asp-route="LoginDemo">Admin (Read Only)</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
