@@ -7,15 +7,15 @@ using WhatBug.Application.Projects.Queries.GetCreateProject;
 using WhatBug.Application.Projects.Queries.GetProjects;
 using WhatBug.Application.Projects.Queries.GetUsersAndRoles;
 using WhatBug.WebUI.Common;
-using WhatBug.WebUI.Features.Projects.Create;
 using WhatBug.WebUI.Features.Projects.Index;
 using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Projects
 {
+    [Route("admin/projects", Name = "Projects")]
     public class ProjectsController : BaseController
     {
-        [HttpGet]
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var dto = await Mediator.Send(new GetProjectsQuery());
@@ -23,22 +23,35 @@ namespace WhatBug.WebUI.Features.Projects
             return View(vm);
         }
 
-        [HttpGet]
+        [HttpGet("create", Name = "CreateProject")]
         public async Task<IActionResult> Create()
         {
-            var dto = await Mediator.Send(new GetCreateProjectQuery());
-            var vm = Mapper.Map<CreateViewModel>(dto);
-            return View(vm);
+            var result = await Mediator.Send(new GetCreateProjectQuery());
+            return View(result.Result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateProjectCommand command)
+        [HttpPost("create", Name = "CreateProject")]
+        public async Task<IActionResult> Create(GetCreateProjectQueryResult vm)
         {
-            await Mediator.Send(command);
+            var result = await Mediator.Send(new CreateProjectCommand
+            {
+                Name = vm.Name,
+                Description = vm.Description,
+                Key = vm.Key,
+                PrioritySchemeId = vm.PrioritySchemeId,
+                PermissionSchemeId = vm.PermissionSchemeId
+            });
+
+            if (result.HasValidationErrors)
+            {
+                var dto = await Mediator.Send(new GetCreateProjectQuery());
+                return ViewWithErrors(dto.Result, result);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("{projectId}/users-and-roles", Name = "UsersAndRoles")]
         [RouteCategory(RouteCategory.Project)]
         public async Task<IActionResult> UsersAndRoles(int projectId)
         {
@@ -46,14 +59,14 @@ namespace WhatBug.WebUI.Features.Projects
             return View(dto);
         }
 
-        [HttpPost]
+        [HttpGet("{projectId}/assign-project-roles", Name = "AssignProjectRoles")]
         public async Task<IActionResult> GetAssignUsersToRolePartial(int projectId)
         {
             var dto = await Mediator.Send(new GetAssignUsersToRoleQuery { ProjectId = projectId });
             return PartialView(dto);
         }
 
-        [HttpPost]
+        [HttpPost("{projectId}/assign-project-roles", Name = "AssignProjectRoles")]
         public async Task<IActionResult> AssignUsersToRole(AssignUsersToRoleCommand command)
         {
             await Mediator.Send(command);
