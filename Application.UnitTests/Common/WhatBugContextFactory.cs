@@ -18,7 +18,7 @@ namespace WhatBug.Application.UnitTests.Common
             if (_options == null)
             {
                 _options = new DbContextOptionsBuilder<WhatBugDbContext>()
-                    .UseInMemoryDatabase(guid).Options;
+                    .UseInMemoryDatabase(guid, b => b.EnableNullChecks(false)).Options;
 
                 var mockUserService = new Mock<ICurrentUserService>();
                 mockUserService.SetupGet(x => x.Id).Returns(1);
