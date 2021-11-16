@@ -7,10 +7,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.MediatR;
+using WhatBug.Application.Common.Security;
+using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.Projects.Commands.UnassignUsersFromRole
 {
-    public record UnassignUsersFromRoleCommand : ICommand<Response>
+    [Authorize(Permissions.AssignUserRoles)]
+    public record UnassignUsersFromRoleCommand : ICommand<Response>, IRequireProjectAuthorization
     {
         public int ProjectId { get; set; }
         public int RoleId { get; set; }

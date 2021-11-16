@@ -29,7 +29,7 @@ namespace WhatBug.WebUI.Features.Projects.UsersAndRoles
         }
 
         [HttpPost("{roleId}/assign", Name = "AssignProjectRoles")]
-        public async Task<IActionResult> AssignUsersFromRole(AssignUsersToRoleCommand command)
+        public async Task<IActionResult> AssignUsersToRole(AssignUsersToRoleCommand command)
         {
             await Mediator.Send(command);
             return RedirectToAction(nameof(AssignUsersToRole), new { projectId = command.ProjectId, roleId = command.RoleId });

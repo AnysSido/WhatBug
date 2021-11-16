@@ -13,7 +13,7 @@ using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.Projects.Queries.GetUsersAndRoles
 {
-    //[Authorize(PermissionOperator.Or, Permissions.ViewProjectMembers, Permissions.ManageUserRoles)]
+    [Authorize(PermissionOperator.Or, Permissions.ViewProjectMembers, Permissions.AssignUserRoles)]
     public record GetUsersAndRolesQuery : IQuery<Response<GetUsersAndRolesQueryResult>>, IRequireProjectAuthorization
     {
         public int ProjectId { get; set; }

@@ -12,7 +12,7 @@ using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.Projects.Queries.GetAssignUsersToRole
 {
-    //[Authorize(Permissions.AssignUserRoles)]
+    [Authorize(Permissions.AssignUserRoles)]
     public record GetAssignUsersToRoleQuery : IQuery<Response<GetAssignUsersToRoleQueryResult>>, IRequireProjectAuthorization
     {
         public int ProjectId { get; set; }
