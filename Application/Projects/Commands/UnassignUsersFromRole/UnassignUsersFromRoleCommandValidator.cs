@@ -7,13 +7,13 @@ using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.Common.Extensions;
 using WhatBug.Application.Common.Interfaces;
 
-namespace WhatBug.Application.Projects.Commands.AssignsUsersToRole
+namespace WhatBug.Application.Projects.Commands.UnassignUsersFromRole
 {
-    public class AssignUsersToRoleCommandValidator : AbstractValidator<AssignUsersToRoleCommand>
+    public class UnassignUsersFromRoleCommandValidator : AbstractValidator<UnassignUsersFromRoleCommand>
     {
         private IWhatBugDbContext _context;
 
-        public AssignUsersToRoleCommandValidator(IWhatBugDbContext context)
+        public UnassignUsersFromRoleCommandValidator(IWhatBugDbContext context)
         {
             _context = context;
 
@@ -26,12 +26,12 @@ namespace WhatBug.Application.Projects.Commands.AssignsUsersToRole
                 .MustAsync(RoleExist).WithException(query => new RecordNotFoundException());
         }
 
-        public async Task<bool> ProjectExist(AssignUsersToRoleCommand query, int projectId, CancellationToken cancellationToken)
+        public async Task<bool> ProjectExist(UnassignUsersFromRoleCommand query, int projectId, CancellationToken cancellationToken)
         {
             return await _context.Projects.AnyAsync(p => p.Id == projectId);
         }
 
-        public async Task<bool> RoleExist(AssignUsersToRoleCommand query, int roleId, CancellationToken cancellationToken)
+        public async Task<bool> RoleExist(UnassignUsersFromRoleCommand query, int roleId, CancellationToken cancellationToken)
         {
             return await _context.Roles.AnyAsync(r => r.Id == roleId);
         }

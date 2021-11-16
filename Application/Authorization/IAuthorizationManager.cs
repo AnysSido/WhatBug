@@ -8,6 +8,6 @@ namespace WhatBug.Application.Authorization
         Task<List<int>> GetProjectsWithPermissionAsync(string permission);
         Task<bool> HasAllPermissions(IEnumerable<string> permissions, int projectId = default);
         Task<bool> HasAnyPermission(IEnumerable<string> permissions, int projectId = default);
-        Task<bool> HasPermission(string permission);
+        Task<bool> HasPermission(string permission, int projectId = default);
     }
 }

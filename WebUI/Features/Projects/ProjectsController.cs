@@ -1,18 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WhatBug.Application.Projects.Commands.AssignsUsersToRole;
 using WhatBug.Application.Projects.Commands.CreateProject;
-using WhatBug.Application.Projects.Queries.GetAssignUsersToRole;
 using WhatBug.Application.Projects.Queries.GetCreateProject;
 using WhatBug.Application.Projects.Queries.GetProjects;
-using WhatBug.Application.Projects.Queries.GetUsersAndRoles;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Projects.Index;
-using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Projects
 {
-    [Route("admin/projects", Name = "Projects")]
+    [Route("projects", Name = "Projects")]
     public class ProjectsController : BaseController
     {
         [HttpGet("")]
@@ -49,28 +45,6 @@ namespace WhatBug.WebUI.Features.Projects
             }
 
             return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet("{projectId}/users-and-roles", Name = "UsersAndRoles")]
-        [RouteCategory(RouteCategory.Project)]
-        public async Task<IActionResult> UsersAndRoles(int projectId)
-        {
-            var dto = await Mediator.Send(new GetUsersAndRolesQuery { ProjectId = projectId });
-            return View(dto);
-        }
-
-        [HttpGet("{projectId}/assign-project-roles", Name = "AssignProjectRoles")]
-        public async Task<IActionResult> GetAssignUsersToRolePartial(int projectId)
-        {
-            var dto = await Mediator.Send(new GetAssignUsersToRoleQuery { ProjectId = projectId });
-            return PartialView(dto);
-        }
-
-        [HttpPost("{projectId}/assign-project-roles", Name = "AssignProjectRoles")]
-        public async Task<IActionResult> AssignUsersToRole(AssignUsersToRoleCommand command)
-        {
-            await Mediator.Send(command);
-            return RedirectToAction(nameof(UsersAndRoles), new { projectId = command.ProjectId });
         }
     }
 }

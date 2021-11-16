@@ -1,0 +1,77 @@
+﻿@model WhatBug.Application.Projects.Queries.GetAssignUsersToRole.GetAssignUsersToRoleQueryResult
+
+@{
+    ViewData["Title"] = "Role Assignment";
+}
+
+<div class="page-container">
+    <div class="text-block">
+        <p>
+            Assign or unassign users to roles for this project.
+        </p>
+        <p>
+            Project: <b>@Model.ProjectName</b>
+        </p>
+        <p>
+            Role: <b> @Model.RoleName</b>
+        </p>
+    </div>
+
+    <h5>Assign Users To @Model.RoleName Role</h5>
+    <form class="form js-roleuserform" method="post">
+        <input type="hidden" asp-for="ProjectId" />
+        <input type="hidden" asp-for="RoleId" />
+
+        <div class="form__group">
+            <select class="form-control js-selectpicker js-roleuserpicker" multiple>
+                @foreach (var user in Model.AvailableUsers)
+                {
+                    <option value="@user.Id">@user.FirstName @user.Surname</option>
+                }
+            </select>
+        </div>
+        <button class="button button--primary float-right" type="submit">
+            <i class="button__icon icon icon--plus"></i>
+            Assign
+        </button>
+    </form>
+
+    <h5>Existing Users</h5>
+    <form class="form js-unassignuserform" method="post" asp-route="UnassignProjectRoles" asp-route-projectId="@Model.ProjectId">
+        <input type="hidden" asp-for="ProjectId" />
+        <input type="hidden" asp-for="RoleId" />
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th class="table__header">Full Name</th>
+                    <th class="table__header">Username</th>
+                    <th class="table__header table__header--shrink">Unassign</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.UsersInRole)
+                {
+                    <tr>
+                        <td>@user.FirstName @user.Surname</td>
+                        <td>@user.Username</td>
+                        <td class="table__cell table__cell--checkbox">
+                            <div class="custom-control custom-checkbox">
+                              <input class="custom-control-input custom-control-input custom-control-input-danger" type="checkbox" id="permissionSwitch@(user.Id)" value="@user.Id" name="unassigncheck">
+                              <label for="permissionSwitch@(user.Id)" class="custom-control-label"></label>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="button button--danger float-right" type="submit">
+            <i class="button__icon icon icon--minus"></i>
+            Unassign
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="~/js/pages/RoleAssignment.js"></script>
+}

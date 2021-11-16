@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Domain.Data;
+using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Authorization
 {
@@ -83,21 +85,30 @@ namespace WhatBug.Application.Authorization
                 .ToList();
         }
 
-        public async Task<bool> HasPermission(string permission)
+        public async Task<bool> HasPermission(string permission, int projectId = default)
         {
             if (!_currentUserService.IsAuthenticated)
                 return false;
 
-            var userPermissions = await _userPermissions.Value;
+            var permissionObj = Permissions.ToEntity(permission);
 
-            return userPermissions.Contains(permission);
+            if (permissionObj == null)
+                return false;
+
+            if (permissionObj.Type == PermissionType.Global)
+                return await HasUserPermission(permission);
+
+            if (permissionObj.Type == PermissionType.Project)
+                return await HasProjectPermission(permission, projectId);
+
+            return false;
         }
 
         public async Task<bool> HasAnyPermission(IEnumerable<string> permissions, int projectId = default)
         {
             foreach (var permission in permissions)
             {
-                if (await HasPermission(permission))
+                if (await HasPermission(permission, projectId))
                     return true;
             }
 
@@ -108,11 +119,30 @@ namespace WhatBug.Application.Authorization
         {
             foreach (var permission in permissions)
             {
-                if (!await HasPermission(permission))
+                if (!await HasPermission(permission, projectId))
                     return false;
             }
 
             return true;
+        }
+
+        private async Task<bool> HasUserPermission(string permission)
+        {
+            var userPermissions = await _userPermissions.Value;
+
+            return userPermissions.Contains(permission);
+        }
+
+        private async Task<bool> HasProjectPermission(string permission, int projectId)
+        {
+            var projectPermissions = await _projectPermissions.Value;
+
+            if (projectPermissions.TryGetValue(projectId, out var permissions))
+            {
+                return permissions.Contains(permission);
+            }
+
+            return false;
         }
     }
 }

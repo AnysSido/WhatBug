@@ -1,0 +1,62 @@
+﻿@model WhatBug.Application.Projects.Queries.GetUsersAndRoles.GetUsersAndRolesQueryResult
+
+@{
+    ViewData["Title"] = "Users And Roles";
+}
+
+<div class="page-container">
+    <div class="text-block">
+        <p>
+            Users must be granted a <a asp-route="ProjectRoles">role</a> with appropriate permissions to access a project.
+        </p>
+        <p>
+            Users will receive the same permissions as those assigned to their role(s) under the
+            <a asp-route="PermissionSchemes">permission scheme</a> used by this project.
+        </p>
+        <p>
+            Project: <b>@Model.Name</b>
+        </p>
+        <p>
+            Permission Scheme: <b>@Model.PermissionSchemeName</b>
+        </p>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table__header">Project Roles</th>
+                <th class="table__header">Users</th>
+                <th class="table__header table__header--shrink">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td class="table__cell">
+                        @role.Name
+                    </td>
+                    <td class="table__cell">
+                        @if (role.Users.Count == 0)
+                        {
+                            <p>&lt;None&gt;</p>
+                        }
+                        else
+                        {
+                            @foreach (var user in role.Users)
+                            {
+                                <p>@user.Username</p>
+                            }
+                        }
+                    </td>
+                    <td class="table__cell table__cell--icons">
+                        <a class="table__cell-icon" asp-route="AssignProjectRoles" asp-route-projectId="@Model.Id" asp-route-roleId="@role.Id">
+                            <i class="icon icon--edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
