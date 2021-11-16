@@ -58,7 +58,8 @@ $icons: (
     "trash": $fa-var-trash,
     "save": $fa-var-save,
     "tasks": $fa-var-tasks,
-    "scroll": $fa-var-scroll
+    "scroll": $fa-var-scroll,
+    "minus": $fa-var-minus
 );
 
 @each $iconName, $fa in $icons {
@@ -78,6 +79,10 @@ $icons: (
     @extend .icon--trash, .icon--danger;
 }
 
+.icon--remove {
+    @extend .icon--x-mark, .icon--danger;
+}
+
 .icon--assign {
     @extend .icon--scroll, .icon--info;
 }
@@ -85,6 +90,7 @@ $icons: (
 .icon--danger {
     @extend .icon--exclamation-triangle, .icon--danger;
 }
+
 
 .icon--disabled {
     opacity: 0.5;

@@ -23,6 +23,8 @@ namespace WhatBug.Domain.Data
         public const string CreateIssue = "Create Issue";
         public const string EditIssue = "Edit Issue";
         public const string DeleteIssue = "Delete Issue";
+        public const string AssignUserRoles = "Assign User Roles";
+        public const string ViewProjectMembers = "View Project Members";
 
         static Permissions()
         {
@@ -38,6 +40,8 @@ namespace WhatBug.Domain.Data
             CreatePermission(6, CreateIssue, "Create new issues within a project.", PermissionType.Project);
             CreatePermission(7, EditIssue, "Edit existing issues within a project.", PermissionType.Project);
             CreatePermission(8, DeleteIssue, "Delete issues within a project.", PermissionType.Project);
+            CreatePermission(12, AssignUserRoles, "Assign users to roles within a project.", PermissionType.Project);
+            CreatePermission(13, ViewProjectMembers, "View project members and their roles.", PermissionType.Project);
         }
 
         private static Permission CreatePermission(int id, string name, string description, PermissionType type)
