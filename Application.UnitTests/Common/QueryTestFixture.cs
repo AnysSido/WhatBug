@@ -9,14 +9,14 @@ namespace WhatBug.Application.UnitTests.Common
     public class QueryTestFixture
     {
         public IMapper Mapper;
-        private Guid _guid;
+        private string _guid;
         private WhatBugContextFactory _factory;
 
         public QueryTestFixture()
         {
-            var guid = Guid.NewGuid().ToString();
+            _guid = Guid.NewGuid().ToString();
             _factory = new WhatBugContextFactory();
-            _factory.CreateWithSeed(guid);
+            _factory.CreateWithSeed(_guid);
 
             var configurationProvider = new MapperConfiguration(cfg =>
             {
