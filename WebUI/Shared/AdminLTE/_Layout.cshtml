@@ -32,7 +32,6 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">@ViewBag.Title</h1>
                         </div>
-
                         @if (Context.Items.TryGetValue("Breadcrumbs", out var breadcrumbs))
                         {
                             <div class="col-sm-6">
@@ -40,26 +39,9 @@
 
                                     @foreach (var breadcrumb in (List<Breadcrumb>)breadcrumbs)
                                     {
-                                        if (breadcrumb.IsReadOnly)
-                                        {
-                                            <li class="breadcrumb-item active">
-                                                <a>@breadcrumb.Display</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li class="breadcrumb-item">
-                                                @if (breadcrumb.IsNamedRoute)
-                                                {
-                                                    <a asp-route="@breadcrumb.RouteName">@breadcrumb.Display</a>
-                                                }
-                                                else
-                                                {
-                                                    <a asp-controller="@breadcrumb.Controller"
-                                                       asp-action="@breadcrumb.Action">@breadcrumb.Display</a>
-                                                }
-                                            </li>
-                                        }
+                                        <li class="breadcrumb-item @(!breadcrumb.IsUri ? "active" : "")">
+                                            <a href="@breadcrumb.Url">@breadcrumb.Text</a>
+                                        </li>
                                     }
                                 </ol>
                             </div>

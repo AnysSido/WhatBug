@@ -50,6 +50,7 @@ namespace WebUI
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                options.Filters.Add<BreadcrumbActionFilter>();
             }).AddFeatureFolders();
 
             services.AddAuthorization(options =>
@@ -88,8 +89,6 @@ namespace WebUI
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseMiddleware<BreadcrumbMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
