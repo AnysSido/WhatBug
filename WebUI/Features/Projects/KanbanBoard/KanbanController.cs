@@ -22,9 +22,9 @@ namespace WhatBug.WebUI.Features.Projects.KanbanBoard
         [HttpPost("/kanban/set-issue-status", Name = "SetKanbanIssueStatus")]
         public async Task<IActionResult> SetIssueStatus(string issueId, int issueStatusId)
         {
-            await Mediator.Send(new SetIssueStatusCommand { IssueId = issueId, IssueStatusId = issueStatusId });
+            var result = await Mediator.Send(new SetIssueStatusCommand { IssueId = issueId, IssueStatusId = issueStatusId });
 
-            return Json(new { success = true });
+            return Json(new { success = result.Succeeded });
         }
     }
 }

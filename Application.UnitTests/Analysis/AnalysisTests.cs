@@ -42,7 +42,7 @@ namespace WhatBug.Application.UnitTests.Analysis
         }
 
         [Fact]
-        public void AuthorizeAttribute_WhenGivenProjectPermission_RequiresIRequireProjectAuthorization()
+        public void AuthorizeAttribute_WhenGivenProjectPermission_RequiresProjectOrIssueInterface()
         {
             var assembly = Assembly.GetAssembly(typeof(IQuery<>));
             var types = assembly.GetTypes().Where(t => t.GetCustomAttribute<AuthorizeAttribute>() != null);
@@ -55,9 +55,10 @@ namespace WhatBug.Application.UnitTests.Analysis
 
                 if (projectPermissions.Any())
                 {
-                    var hasRequiredInterface = type.GetInterfaces().Contains(typeof(IRequireProjectAuthorization));
+                    var hasRequiredProjectInterface = type.GetInterfaces().Contains(typeof(IRequireProjectAuthorization));
+                    var hasRequiredIssueInterface = type.GetInterfaces().Contains(typeof(IRequireIssueAuthorization));
 
-                    hasRequiredInterface.ShouldBeTrue();
+                    (hasRequiredIssueInterface || hasRequiredProjectInterface).ShouldBeTrue();
                 }
             }
         }
