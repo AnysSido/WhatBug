@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using WhatBug.Application.Issues.Commands.SetIssueStatus;
 using WhatBug.Application.Projects.Queries.GetKanbanBoard;
 using WhatBug.WebUI.Common;
+using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Projects.KanbanBoard
 {
@@ -17,6 +18,7 @@ namespace WhatBug.WebUI.Features.Projects.KanbanBoard
             return View(result.Result);
         }
 
+        [AjaxOnly]
         [HttpPost("/kanban/set-issue-status", Name = "SetKanbanIssueStatus")]
         public async Task<IActionResult> SetIssueStatus(string issueId, int issueStatusId)
         {
