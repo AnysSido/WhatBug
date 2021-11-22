@@ -17,9 +17,17 @@
 
             <!-- Board -->
             <li class="nav-item">
-                <a asp-controller="Kanban" asp-action="Index" asp-route-projectId="@Model.Id" class="nav-link">
+                <a asp-route="KanbanBoard" asp-route-projectId="@Model.Id" class="nav-link">
                     <i class="fas fa-columns nav-icon"></i>
                     <p>Board</p>
+                </a>
+            </li>
+
+            <!-- Users And Roles -->
+            <li class="nav-item">
+                <a class="nav-link" asp-route="UsersAndRoles" asp-route-projectId="@Model.Id">
+                    <i class="fas fa-columns nav-icon"></i>
+                    <p>Users And Roles</p>
                 </a>
             </li>
 

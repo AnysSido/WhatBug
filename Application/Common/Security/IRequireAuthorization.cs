@@ -6,6 +6,6 @@
 
     public interface IRequireProjectAuthorization : IRequireAuthorization
     {
-        int ProjectId { get; set; }
+        int ProjectId { get; }
     }
 }

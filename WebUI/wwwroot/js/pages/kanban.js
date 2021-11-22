@@ -28,7 +28,7 @@ drag.on('drop', (el, target, source, sibling) => {
     const issueId = $(el).find('.issueId').val();
     const issueStatusId = $(target).find('.statusId').val();
 
-    $.post('/kanban/SetIssueStatus', { issueId: issueId, issueStatusId: issueStatusId })
+    $.post('/kanban/set-issue-status', { issueId: issueId, issueStatusId: issueStatusId })
     .done((result) => {
         $(el).addClass(animationClass);
     });
