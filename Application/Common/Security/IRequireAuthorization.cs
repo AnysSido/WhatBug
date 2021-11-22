@@ -8,4 +8,9 @@
     {
         int ProjectId { get; }
     }
+
+    public interface IRequireIssueAuthorization : IRequireAuthorization
+    {
+        string IssueId { get; }
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace WhatBug.Domain.Entities
 {
-    public enum PermissionType { Global, Project, Issue }
+    public enum PermissionType { Global, Project }
 
     public class Permission
     {

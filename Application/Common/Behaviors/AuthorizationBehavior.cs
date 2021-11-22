@@ -30,15 +30,17 @@ namespace WhatBug.Application.Common.Behaviors
                 if (!_currentUserService.IsAuthenticated)
                     throw new AccessDeniedException();
 
-                var projectId = request is IRequireProjectAuthorization req ? req.ProjectId : default;
+                var projectId = request is IRequireProjectAuthorization projReq ? projReq.ProjectId : default;
+                var issueId =  request is IRequireIssueAuthorization issueReq ? issueReq.IssueId : default;
+
                 var authorized = false;
 
                 foreach (var authorizeAttribute in authorizeAttributes)
                 {
                     if (authorizeAttribute.Operator == PermissionOperator.And)
-                        authorized = await _authzManager.HasAllPermissions(authorizeAttribute.Permissions, projectId);
+                        authorized = await _authzManager.HasAllPermissions(authorizeAttribute.Permissions, projectId, issueId);
                     else
-                        authorized = await _authzManager.HasAnyPermission(authorizeAttribute.Permissions, projectId);
+                        authorized = await _authzManager.HasAnyPermission(authorizeAttribute.Permissions, projectId, issueId);
 
                     if (authorized)
                         break;
