@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using WhatBug.Application.Issues.Commands.SetIssueStatus;
 using WhatBug.Application.Projects.Queries.GetKanbanBoard;
@@ -7,17 +6,18 @@ using WhatBug.WebUI.Common;
 
 namespace WhatBug.WebUI.Features.Projects.KanbanBoard
 {
+    [Route("projects/{projectId}/kanban-board", Name = "KanbanBoard")]
     public class KanbanController : BaseController
     {
-        [HttpGet]
+        [HttpGet("")]
         public async Task<IActionResult> Index(int projectId)
         {
-            var dto = await Mediator.Send(new GetKanbanBoardQuery { ProjectId = projectId });
+            var result = await Mediator.Send(new GetKanbanBoardQuery { ProjectId = projectId });
 
-            return View(dto);
+            return View(result.Result);
         }
 
-        [HttpPost]
+        [HttpPost("/kanban/set-issue-status", Name = "SetKanbanIssueStatus")]
         public async Task<IActionResult> SetIssueStatus(string issueId, int issueStatusId)
         {
             await Mediator.Send(new SetIssueStatusCommand { IssueId = issueId, IssueStatusId = issueStatusId });
