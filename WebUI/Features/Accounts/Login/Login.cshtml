@@ -51,9 +51,18 @@
                     <p class="mb-1">
                         <a href="forgot-password.html">I forgot my password</a>
                     </p>
-                    <p class="mb-0">
-                        <a asp-action="Register" class="text-center">Create an account</a>
-                    </p>
+                    @if (@Model.RegistrationEnabled == true)
+                    {
+                        <p class="mb-0">
+                            <a asp-action="Register" class="text-center">Create an account</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="mb-0">
+                            <b>Registration currently closed</b>
+                        </p>
+                    }
                 </div>
             </div>
         </div>

@@ -15,5 +15,7 @@ namespace WhatBug.WebUI.Features.Accounts.Login
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        public bool RegistrationEnabled { get; set; }
     }
 }

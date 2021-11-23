@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using WhatBug.Application.Accounts.Commands.Register;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.Common.Settings;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Accounts.Login;
 using WhatBug.WebUI.Features.Accounts.Register;
@@ -13,22 +15,29 @@ namespace WhatBug.WebUI.Features.Accounts
     public class AccountsController : BaseController
     {
         private readonly IAuthenticationProvider _authProvider;
+        private readonly WhatBugSettings _whatBugSettings;
 
-        public AccountsController(IAuthenticationProvider authProvider)
+        public AccountsController(IAuthenticationProvider authProvider, IOptions<WhatBugSettings> whatbugSettings)
         {
             _authProvider = authProvider;
+            _whatBugSettings = whatbugSettings.Value;
         }
 
         [HttpGet]
         public IActionResult Register()
         {
-            var vm = new RegisterViewModel();
-            return View(vm);
+            if (!_whatBugSettings.Accounts.RegistrationEnabled)
+                return RedirectToAction(nameof(Login));
+
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel vm)
         {
+            if (!_whatBugSettings.Accounts.RegistrationEnabled)
+                return RedirectToAction(nameof(Login));
+
             if (!ModelState.IsValid)
                 return View(vm);
             
@@ -40,7 +49,7 @@ namespace WhatBug.WebUI.Features.Accounts
         [HttpGet]
         public IActionResult Login()
         {
-            var vm = new LoginViewModel();
+            var vm = new LoginViewModel { RegistrationEnabled = _whatBugSettings.Accounts.RegistrationEnabled };
             return View(vm);
         }
 

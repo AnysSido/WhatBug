@@ -4,7 +4,13 @@ namespace WhatBug.Application.Common.Settings
 {
     public class WhatBugSettings
     {
+        public AccountSettings Accounts { get; set; } = new AccountSettings();
         public AttachmentSettings Attachments { get; set; } = new AttachmentSettings();
+    }
+
+    public class AccountSettings
+    {
+        public bool RegistrationEnabled;
     }
 
     public class AttachmentSettings
