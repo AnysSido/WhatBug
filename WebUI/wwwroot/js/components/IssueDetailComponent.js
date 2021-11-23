@@ -38,7 +38,7 @@ class IssueDetailComponent {
     #RegisterEvents = () => {
         this.commentForm.submit((e) => {
             e.preventDefault();          
-            $.post('issuedetailcomponent/addcomment', { issueId: this.issueId.val(), comment: this.commentContent.val() })
+            $.post('/issuedetailcomponent/addcomment', { issueId: this.issueId.val(), comment: this.commentContent.val() })
             .done((result) => {
                 if (result.success) {
                     this.commentContent.val("");
@@ -53,14 +53,13 @@ class IssueDetailComponent {
     };
 
     #LoadComments = () => {
-        $.get('issuedetailcomponent/getcommentspartial', { issueId: this.issueId.val() })
+        $.get('/issuedetailcomponent/getcommentspartial', { issueId: this.issueId.val() })
             .done((resp) => {
                 this.commentsContainer.html(resp);
             });
     };
 
     #LoadQuill = () => {
-        this.issueDetailModal.find('.commentContent').on('click', () => { console.log("lol"); });
         this.quill = new QuillEditorComponent({
             container: this.issueDetailModal.find('.quill-editor'),
             isDynamic: true,
@@ -68,7 +67,7 @@ class IssueDetailComponent {
         });
 
         $(this.quill).on('save', () => {
-            $.post('issuedetailcomponent/updatedescription', { 
+            $.post('/issuedetailcomponent/updatedescription', { 
                 issueId: this.issueId.val(),
                 description: this.issueDescription.val(), 
             });
