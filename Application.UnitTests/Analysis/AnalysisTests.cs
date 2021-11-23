@@ -27,7 +27,7 @@ namespace WhatBug.Application.UnitTests.Analysis
         }
 
         [Fact]
-        public void ICommand_RequiresAuthorizeAttribute()
+        public void ICommand_RequiresAuthorizeAttributeOrNoAuthorizeAttribute()
         {
             var assembly = Assembly.GetAssembly(typeof(ICommand<>));
 
@@ -36,7 +36,9 @@ namespace WhatBug.Application.UnitTests.Analysis
                 i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommand<>)))
                 .ToList();
 
-            var typesMissingAttribute = types.Any(t => t.GetCustomAttribute<AuthorizeAttribute>() == null);
+            var typesMissingAttribute = types.Any(t => 
+                t.GetCustomAttribute<AuthorizeAttribute>() == null 
+                && t.GetCustomAttribute<NoAuthorizeAttribute>() == null);
 
             typesMissingAttribute.ShouldBeFalse();
         }

@@ -28,12 +28,12 @@ namespace WhatBug.Infrastructure.Identity
 
             var result = await _userManager.CreateAsync(user, password);
 
-            return true;
+            return result.Succeeded;
         }
 
         public async Task<bool> SignInDemoAsync()
         {
-            var user = await _userManager.FindByNameAsync("Anys");
+            var user = await _userManager.FindByNameAsync("Anys"); // TODO: Move to config
 
             if (user == null)
                 return false;
