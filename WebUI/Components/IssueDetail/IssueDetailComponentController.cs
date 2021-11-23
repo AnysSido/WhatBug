@@ -39,10 +39,9 @@ namespace WhatBug.WebUI.Components.IssueDetail
 
         public async Task<IActionResult> GetCommentsPartial(string issueId)
         {
-            var dto = await Mediator.Send(new GetCommentsQuery { IssueId = issueId });
-            var vm = Mapper.Map<CommentsViewModel>(dto);
+            var result = await Mediator.Send(new GetCommentsQuery { IssueId = issueId });
 
-            return PartialView("/Components/IssueDetail/_Comments.cshtml", vm);
+            return PartialView("/Components/IssueDetail/_Comments.cshtml", result.Result);
         }
     }
 }
