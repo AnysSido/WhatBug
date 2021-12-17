@@ -35,14 +35,8 @@ namespace WhatBug.WebUI.Features.Issues.Attachments
         [HttpPost]
         public async Task<IActionResult> Create(string issueId, IFormFile file)
         {
-            // TODO:
-            // Validate the file
-            // Verify the file
-
             var fileName = file.FileName.Trim('"');
 
-
-            // Convert the file
             byte[] buffer = new byte[file.Length];
             using (var stream = file.OpenReadStream())
             {
@@ -57,17 +51,17 @@ namespace WhatBug.WebUI.Features.Issues.Attachments
                 ContentType = file.ContentType
             };
 
-            await _mediatr.Send(command);
+            var result = await _mediatr.Send(command);
 
-            return Ok();
+            return Json(new { success = result.Succeeded });
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAttachments(string issueId)
         {
-            var attachments = await Mediator.Send(new GetAttachmentsQuery { IssueId = issueId });
+            var result = await Mediator.Send(new GetAttachmentsQuery { IssueId = issueId });
 
-            return Json(JsonSerializer.Serialize(attachments.Attachments));
+            return Json(JsonSerializer.Serialize(result.Result.Attachments));
         }
     }
 }

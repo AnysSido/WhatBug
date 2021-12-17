@@ -11,6 +11,10 @@
   min-height: 30px !important;
 }
 
+#IssueDetailComponent .editable:hover {
+  background-color: #37393b3d;
+}
+
 .attachment-thumbnail-container {
   min-height: 100%;
 }
@@ -21,10 +25,6 @@
   height: 125px;
   width: 156px;
   box-shadow: rgba(9, 30, 66, 0.31) 0px 1px 1px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-}
-
-.attachment-thumbnail-template:hover .attachment-button {
-  opacity: 0.9;
 }
 
 .attachment-buttons-container {

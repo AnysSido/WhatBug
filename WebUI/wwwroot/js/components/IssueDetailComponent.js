@@ -19,6 +19,8 @@ class IssueDetailComponent {
         this.#LoadComments();
         this.#LoadQuill();
         this.#LoadDropzone();
+        this.#LoadIssueTypeSelect();
+        this.#LoadPrioritySelect();
     }
 
     #SetVars = () => {
@@ -28,6 +30,29 @@ class IssueDetailComponent {
         // Data
         this.issueId = this.issueDetailComponent.find('.issueId');
         this.issueDescription = this.issueDetailComponent.find('.issueDescription')
+        this.issueTypeId = this.issueDetailComponent.find('.issueTypeId');
+        this.priorityId = this.issueDetailComponent.find('.priorityId');
+
+        // Issue Summary
+        this.issueSummary = this.issueDetailComponent.find('.js-issue-summary');
+        this.issueSummaryDisplay = this.issueDetailComponent.find('.js-summary-display');
+        this.issueSummaryEdit = this.issueDetailComponent.find('.js-issue-summary-edit');
+        this.issueSummaryInput = this.issueSummaryEdit.find('.js-summary-input');
+        this.issueSummaryConfirm = this.issueSummaryEdit.find('.js-summary-confirm');
+        this.issueSummaryCancel = this.issueSummaryEdit.find('.js-summary-cancel');
+
+        // Issue Type
+        this.issueType = this.issueDetailComponent.find('.js-issue-type');
+        this.issueTypeSelectWrapper = this.issueDetailComponent.find('.js-issue-type-select-wrapper');
+        this.issueTypeSelect = this.issueDetailComponent.find('.js-issue-type-select');
+
+        // Priority
+        this.priority = this.issueDetailComponent.find('.js-priority');
+        this.prioritySelectWrapper = this.issueDetailComponent.find('.js-priority-select-wrapper');
+        this.prioritySelect = this.issueDetailComponent.find('.js-priority-select');
+
+        // Attachments
+        this.requestVerificationToken = this.issueDetailComponent.find('[name="__RequestVerificationToken"]');
 
         // Comments
         this.commentForm = this.issueDetailComponent.find('.commentForm');
@@ -47,10 +72,111 @@ class IssueDetailComponent {
             });
         });
 
+        this.issueSummary.click(() => {
+            this.#ShowEditSummary();
+        });
+
+        this.issueSummaryEdit.keypress((e) => {
+            e = e || window.event;
+            if ("key" in e && e.key === "Enter")
+            {
+                this.#UpdateIssueSummary();
+                this.#HideEditSummary();
+            }
+        });
+
+        this.issueSummaryConfirm.click(() => {
+            this.#UpdateIssueSummary();
+            this.#HideEditSummary();
+        });
+
+        this.issueSummaryCancel.click(() => {
+           this.#HideEditSummary();
+        });
+
+        this.issueType.click(() => {
+            this.#ShowEditIssueType();
+        });
+
+        this.issueTypeSelect.on('select2:closing', () => {
+            this.#HideEditIssueType();
+        });
+
+        this.issueTypeSelect.on('select2:select', (e) => {
+            $.post('/issuedetailcomponent/updateissuetype', { issueId: this.issueId.val(), issueTypeId: e.params.data.id})
+        });
+
+        this.priority.click(() => {
+            this.#ShowEditPriority();
+        });
+
+        this.prioritySelect.on('select2:closing', () => {
+            this.#HideEditPriority();
+        });
+
+        this.prioritySelect.on('select2:select', (e) => {
+            $.post('/issuedetailcomponent/updatepriority', { issueId: this.issueId.val(), priorityId: e.params.data.id})
+        });
+
         this.issueDetailComponent.on('hidden.bs.modal', () => {
             this.issueDetailComponent.remove();
+            location.reload();
         });
     };
+
+    #ShowEditSummary = () => {
+        this.issueSummary.addClass('d-none');
+        this.issueSummaryEdit.removeClass('d-none');
+        this.issueSummaryInput.focus();
+    }
+
+    #HideEditSummary = () => {
+        this.issueSummaryEdit.addClass('d-none');
+        this.issueSummary.removeClass('d-none');
+    }
+
+    #ShowEditIssueType = () => {
+        this.issueType.addClass('d-none');
+        this.issueTypeSelectWrapper.removeClass('d-none');
+    }
+
+    #HideEditIssueType = () => {
+        this.issueType.removeClass('d-none');
+        this.issueTypeSelectWrapper.addClass('d-none');
+    }
+
+    #ShowEditPriority = () => {
+        this.priority.addClass('d-none');
+        this.prioritySelectWrapper.removeClass('d-none');
+    }
+
+    #HideEditPriority = () => {
+        this.priority.removeClass('d-none');
+        this.prioritySelectWrapper.addClass('d-none');
+    }
+
+    #UpdateIssueSummary = () => {
+        $.post('/issuedetailcomponent/updatesummary', { 
+            issueId: this.issueId.val(),
+            summary: this.issueSummaryInput.val(), 
+        }).done((result) => {
+            if (result.success) {
+                this.issueSummaryDisplay.html(this.issueSummaryInput.val());
+            }
+        });
+    };
+
+    #LoadIssueTypeSelect = () => {
+        new Select2Component({ container: this.issueTypeSelect });
+        this.issueTypeSelect.val(this.issueTypeId.val());
+        this.issueTypeSelect.trigger('change');
+    }
+
+    #LoadPrioritySelect = () => {
+        new Select2Component({ container: this.prioritySelect });
+        this.prioritySelect.val(this.priorityId.val());
+        this.prioritySelect.trigger('change');
+    }
 
     #LoadComments = () => {
         $.get('/issuedetailcomponent/getcommentspartial', { issueId: this.issueId.val() })
@@ -81,12 +207,13 @@ class IssueDetailComponent {
         var dropzone = new Dropzone('.issue-detail-body', {
             url: '/attachments/create',
             params: { issueId: this.issueId.val() },
+            headers: {'RequestVerificationToken': this.requestVerificationToken.val() },
             thumbnailHeight: 125,
             thumbnailWidth: 156,
             previewTemplate: previewTemplate,
             previewsContainer: '.attachment-thumbnail-container',
             init: (() => {
-                $.get('/attachments/getattachments', { issueId: this.issueId.val() })
+                $.get('/attachments/getattachments', { issueId: this.issueId.val(), })
                 .done((attachments) => {
                     attachments = jQuery.parseJSON(attachments);
 
@@ -114,9 +241,8 @@ class IssueDetailComponent {
                 });
             })
         });
-
         // dropzone.on('dragstart', () => {
-        //     $('.issue-detail-body').addClass('issue-detail-body-attaching');
+            // $('.issue-detail-body').addClass('issue-detail-body-attaching');
         // });
         // dropzone.on('dragleave', () => {
         //     $('.issue-detail-body').removeClass('issue-detail-body-attaching');

@@ -11,9 +11,9 @@
   min-height: 30px !important;
 }
 
-// #IssueDetailComponent .quill-editor:hover {
-//   background-color: #495057;
-// }
+#IssueDetailComponent .editable:hover {
+  background-color: #37393b3d;
+}
 
 // Attachments
 .attachment-thumbnail-container {
@@ -29,11 +29,11 @@
    rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
 }
 
-.attachment-thumbnail-template:hover {
-  .attachment-button {
-    opacity: 0.9;
-  }
-}
+// .attachment-thumbnail-template:hover {
+//   .attachment-button {
+//     opacity: 0.9;
+//   }
+// }
 
 .attachment-buttons-container {
   position: relative;
