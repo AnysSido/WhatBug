@@ -6,6 +6,6 @@ namespace WhatBug.Application.Common.Interfaces
     {
         string GetContentType(string fileId);
         string GetAttachmentPath(string fileId);
-        Task<bool> SaveAttachmentAsync(byte[] file, string fileName);
+        Task SaveAttachmentAsync(byte[] file, string fileName);
     }
 }

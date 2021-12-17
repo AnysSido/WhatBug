@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Collections.Generic;
 using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
@@ -11,11 +12,13 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
         public string Description { get; set; }
         public string ProjectName { get; set; }
 
+        public int PriorityId { get; set; }
         public string PriorityName { get; set; }
         public string PriorityIconName { get; set; }
         public string PriorityIconWebName { get; set; }
         public string PriorityIconColor { get; set; }
 
+        public int IssueTypeId { get; set; }
         public string IssueTypeName { get; set; }
         public string IssueTypeIconName { get; set; }
         public string IssueTypeIconWebName { get; set; }
@@ -31,6 +34,9 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
 
         public int AttachmentCount { get; set; }
 
+        public IList<IssueTypeDTO> IssueTypes { get; set; }
+        public IList<PriorityDTO> Priorities { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Issue, IssueDetailDTO>()
@@ -38,5 +44,23 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
                 .ForMember(d => d.IssueTypeIconColor, opt => opt.MapFrom(s => s.IssueType.Color.Name))
                 .ForMember(d => d.AttachmentCount, opt => opt.MapFrom(s => s.Attachments.Count));
         }
+    }
+
+    public class IssueTypeDTO : IMapFrom<IssueType>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string IconWebName { get; set; }
+        public string ColorName { get; set; }
+    }
+
+    public class PriorityDTO : IMapFrom<Priority>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string IconWebName { get; set; }
+        public string ColorName { get; set; }
+        public int Order { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.IO;
 using System.Threading.Tasks;
@@ -20,7 +19,7 @@ namespace WhatBug.WebUI.Services
             _attachmentDir = appSettings.Value.Attachments.FileLocation;
         }
 
-        public async Task<bool> SaveAttachmentAsync(byte[] file, string fileName)
+        public async Task SaveAttachmentAsync(byte[] file, string fileName)
         {
             var dir = Path.Combine(_rootPath, _attachmentDir);
 
@@ -30,8 +29,6 @@ namespace WhatBug.WebUI.Services
             var filePath = Path.Combine(dir, fileName);
 
             await File.WriteAllBytesAsync(filePath, file);
-
-            return true;
         }
 
         public string GetAttachmentPath(string fileId)

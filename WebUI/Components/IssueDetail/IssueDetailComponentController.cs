@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Issues.Commands.AddComment;
 using WhatBug.Application.Issues.Commands.SetIssueDescription;
+using WhatBug.Application.Issues.Commands.SetIssuePriority;
+using WhatBug.Application.Issues.Commands.SetIssueSummary;
+using WhatBug.Application.Issues.Commands.SetIssueType;
 using WhatBug.Application.Issues.Queries.GetComments;
 using WhatBug.Application.Issues.Queries.GetIssueDetail;
 using WhatBug.WebUI.Common;
@@ -11,36 +13,52 @@ namespace WhatBug.WebUI.Components.IssueDetail
 {
     public class IssueDetailComponentController : BaseController
     {
-        private readonly ICurrentUserService _currentUserService;
-
-        public IssueDetailComponentController(ICurrentUserService currentUserService)
-        {
-            _currentUserService = currentUserService;
-        }
-
+        [HttpGet]
         public async Task<IActionResult> GetComponent(string issueId)
         {
-            var dto = await Mediator.Send(new GetIssueDetailQuery { IssueId = issueId });
-            var vm = Mapper.Map<IssueDetailViewModel>(dto);
-            return ViewComponent("IssueDetail", vm);
+            var result = await Mediator.Send(new GetIssueDetailQuery { IssueId = issueId });
+            return ViewComponent("IssueDetail", result.Result);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateSummary(string issueId, string summary)
+        {
+            var result = await Mediator.Send(new SetIssueSummaryCommand { IssueId = issueId, Summary = summary });
+            return Json(new { success = result.Succeeded });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateIssueType(string issueId, int issueTypeId)
+        {
+            var result = await Mediator.Send(new SetIssueTypeCommand { IssueId = issueId, IssueTypeId = issueTypeId });
+            return Json(new { success = result.Succeeded });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePriority(string issueId, int priorityId)
+        {
+            var result = await Mediator.Send(new SetIssuePriorityCommand { IssueId= issueId, PriorityId = priorityId });
+            return Json(new { success = result.Succeeded});
+        }
+
+        [HttpPost]
         public async Task<IActionResult> UpdateDescription(string issueId, string description)
         {
-            await Mediator.Send(new SetIssueDescriptionCommand { IssueId = issueId, Description = description });
-            return Json(new { success = true });
+            var result = await Mediator.Send(new SetIssueDescriptionCommand { IssueId = issueId, Description = description });
+            return Json(new { success = result.Succeeded });
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddComment(string issueId, string comment)
         {
-            await Mediator.Send(new AddCommentCommand { IssueId = issueId, Content = comment, AuthorId = _currentUserService.Id });
-            return Json(new { success = true });
+            var result = await Mediator.Send(new AddCommentCommand { IssueId = issueId, Content = comment });
+            return Json(new { success = result.Succeeded });
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetCommentsPartial(string issueId)
         {
             var result = await Mediator.Send(new GetCommentsQuery { IssueId = issueId });
-
             return PartialView("/Components/IssueDetail/_Comments.cshtml", result.Result);
         }
     }

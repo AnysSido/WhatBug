@@ -1,9 +1,14 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using WhatBug.Common.Mapping;
 using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Issues.Queries.GetAttachments
 {
+    public class GetAttachmentsQueryResult
+    {
+        public List<AttachmentDTO> Attachments { get; set; }
+    }
+
     public class AttachmentDTO : IMapFrom<Attachment>
     {
         public int Id { get; set; }

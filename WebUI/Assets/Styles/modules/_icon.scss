@@ -59,7 +59,8 @@ $icons: (
     "save": $fa-var-save,
     "tasks": $fa-var-tasks,
     "scroll": $fa-var-scroll,
-    "minus": $fa-var-minus
+    "minus": $fa-var-minus,
+    "check": $fa-var-check
 );
 
 @each $iconName, $fa in $icons {

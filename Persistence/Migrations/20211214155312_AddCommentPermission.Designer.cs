@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhatBug.Persistence;
@@ -11,9 +12,10 @@ using WhatBug.Persistence;
 namespace WhatBug.Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211214155312_AddCommentPermission")]
+    partial class AddCommentPermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -934,13 +936,6 @@ namespace WhatBug.Persistence.Migrations
                             Id = 16,
                             Description = "Add comments to issues.",
                             Name = "Comment",
-                            Type = "Project"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Description = "Attach files to issues.",
-                            Name = "Attach Files",
                             Type = "Project"
                         });
                 });

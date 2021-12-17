@@ -74,6 +74,7 @@
 
     MakeReadOnly = () => {
         this.readOnlyEditor = true;
+        this.quillContainer.addClass('editable');
         this.quill.disable();
         this.quillToolbar.addClass('ql-toolbar-readonly');
         this.quillContainer.addClass('ql-container-readonly');
@@ -84,6 +85,7 @@
 
     MakeEditable = () => {
         this.readOnlyEditor = false;
+        this.quillContainer.removeClass('editable');
         this.quill.enable();
         this.quillToolbar.removeClass('ql-toolbar-readonly');
         this.quillContainer.removeClass('ql-container-readonly');

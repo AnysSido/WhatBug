@@ -27,6 +27,8 @@ namespace WhatBug.Domain.Data
         public const string ViewProjectMembers = "View Project Members";
         public const string ViewProject = "View Project";
         public const string SetIssueStatus = "Set Issue Status";
+        public const string Comment = "Comment";
+        public const string AttachFiles = "Attach Files";
 
         static Permissions()
         {
@@ -46,6 +48,8 @@ namespace WhatBug.Domain.Data
             CreatePermission(13, ViewProjectMembers, "View project members and their roles.", PermissionType.Project);
             CreatePermission(14, ViewProject, "View a project and its issues.", PermissionType.Project);
             CreatePermission(15, SetIssueStatus, "Change an issue status. For example dragging an issue on the kanban board.", PermissionType.Project);
+            CreatePermission(16, Comment, "Add comments to issues.", PermissionType.Project);
+            CreatePermission(17, AttachFiles, "Attach files to issues.", PermissionType.Project);
         }
 
         private static Permission CreatePermission(int id, string name, string description, PermissionType type)
