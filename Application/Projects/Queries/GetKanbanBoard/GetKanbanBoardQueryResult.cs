@@ -40,12 +40,14 @@ namespace WhatBug.Application.Projects.Queries.GetKanbanBoard
         public string PriorityIconName { get; set; }
         public string PriorityIconWebName { get; set; }
         public string AssigneeEmail { get; set; }
+        public int CommentCount { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Issue, IssueOverviewDTO>()
                 .ForMember(d => d.IssueTypeIconColor, opt => opt.MapFrom(s => s.IssueType.Color.Name))
-                .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name));
+                .ForMember(d => d.PriorityIconColor, opt => opt.MapFrom(s => s.Priority.Color.Name))
+                .ForMember(d => d.CommentCount, opt => opt.MapFrom(s => s.Comments.Count));
         }
     }
 }

@@ -41,8 +41,15 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <div>
+                                <div class="d-flex flex-column justify-content-between">
                                     <avatar email="@issue.AssigneeEmail" class=" user-image img-circle img-sm m-2" tooltip="hello" />
+
+                                    @if (@issue.CommentCount > 0)
+                                    {
+                                        <div class="d-flex justify-content-end align-items-center mr-2">
+                                            <span><icon icon="comments" color="cerulean" class="mr-1"/>@issue.CommentCount</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
