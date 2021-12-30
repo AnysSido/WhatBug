@@ -10,6 +10,7 @@ using WhatBug.Application;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Infrastructure;
 using WhatBug.Persistence;
+using WhatBug.WebUI.Filters;
 using WhatBug.WebUI.Routing.Breadcrumbs;
 using WhatBug.WebUI.Services;
 using WhatBug.WebUI.ViewLocators;
@@ -51,6 +52,7 @@ namespace WebUI
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 options.Filters.Add<BreadcrumbActionFilter>();
+                options.Filters.Add<ReadOnlyModeActionFilter>();
             }).AddFeatureFolders();
 
             services.AddAuthorization(options =>

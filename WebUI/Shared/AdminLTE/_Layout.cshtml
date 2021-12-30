@@ -63,6 +63,14 @@
         </aside>
         <partial name="AdminLTE/_Footer" />
     </div>
+    @if (CurrentUserService.IsReadOnly)
+    {
+        <div style="display: none" class="wb-readonly-marker"></div>
+    }
+    @if (ViewData["IsPostAction"] == "true")
+    {
+        <div style="display: none" class="wb-post-marker"></div>
+    }
     @Html.AntiForgeryToken()
     <partial name="AdminLTE/_Scripts" />
     @await RenderSectionAsync("Scripts", required: false)
