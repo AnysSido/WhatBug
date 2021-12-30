@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Routing;
+using WhatBug.WebUI.Common;
 
 namespace WhatBug.WebUI.Routing
 {
@@ -8,18 +9,7 @@ namespace WhatBug.WebUI.Routing
     {
         public override bool IsValidForRequest(RouteContext routeContext, ActionDescriptor action)
         {
-            var request = routeContext.HttpContext.Request;
-
-            if (request == null)
-                return false;
-
-            if (request.Headers == null)
-                return false;
-
-            if (request.Headers["X-Requested-With"] != "XMLHttpRequest")
-                return false;
-
-            return true;
+            return Utils.IsAjaxRequest(routeContext.HttpContext.Request);
         }
     }
 }
