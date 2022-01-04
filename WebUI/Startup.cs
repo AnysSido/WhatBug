@@ -31,7 +31,7 @@ namespace WebUI
         {
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
-            services.AddApplication();
+            services.AddApplication(Configuration);
 
             services.ConfigureApplicationCookie(options =>
             {

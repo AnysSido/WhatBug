@@ -67,22 +67,24 @@
             </div>
         </div>
 
-        <div class="login-box">
-            <div class="card card-outline card-danger">
-                <div class="card-header text-center">
-                    <a href="../../index2.html" class="h1"><b>Demo</b></a>
-                </div>
-                <div class="card-body">
-                    <p class="login-box-msg">Demo accounts are real accounts placed in <b>read-only</b> mode.</p>
-                    <p class="login-box-msg">Read-only mode grants complete access to the system. 
-                    The only difference is that actual database writes are skipped so no changes are persisted.</p>
+        @if (Model.DemoEnabled)
+        {
+            <div class="login-box align-items-stretch">
+                <div class="card card-outline card-danger h-100">
+                    <div class="card-header text-center">
+                        <a href="../../index2.html" class="h1"><b>Demo</b></a>
+                    </div>
+                    <div class="card-body">
+                        <p class="login-box-msg">Demo accounts are real accounts placed in <b>read-only</b> mode.</p>
+                        <p class="login-box-msg">Read-only mode grants complete access to the system but no changes will be saved.</p>
 
-                    <form method="post" asp-route="LoginDemo">
-                            <button type="submit" class="btn btn-danger btn-block" asp-route="LoginDemo">Admin (Read Only)</button>
-                    </form>
+                        <form method="post" asp-route="LoginDemo">
+                                <button type="submit" class="btn btn-danger btn-block" asp-route="LoginDemo">Admin (Read Only)</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
