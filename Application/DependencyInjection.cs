@@ -6,12 +6,13 @@ using WhatBug.Application.Common.Settings;
 using System;
 using WhatBug.Application.Authorization;
 using WhatBug.Application.UserInfo;
+using Microsoft.Extensions.Configuration;
 
 namespace WhatBug.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IAuthorizationManager, AuthorizationManager>();
             services.AddScoped<IUserInfoService, UserInfoService>();
@@ -31,12 +32,14 @@ namespace WhatBug.Application
                     options.Attachments.MaxFileSize = 1;
                 });
 
+            services.AddOptions().Configure<WhatBugSettings>(configuration.GetSection("WhatBug"));
+
             return services;
         }
 
-        public static IServiceCollection AddApplication(this IServiceCollection services, Action<WhatBugSettings> configureOptions)
+        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration, Action<WhatBugSettings> configureOptions)
         {
-            AddApplication(services);
+            AddApplication(services, configuration);
             services.Configure(configureOptions);
 
             return services;

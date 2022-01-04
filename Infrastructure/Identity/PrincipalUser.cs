@@ -8,6 +8,6 @@ namespace WhatBug.Infrastructure.Identity
         public int UserId { get; set; }
 
         [NotMapped]
-        public bool IsReadOnly { get; set; }
+        public bool WriteAccess { get; set; }
     }
 }

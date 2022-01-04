@@ -49,7 +49,11 @@ namespace WhatBug.WebUI.Features.Accounts
         [HttpGet]
         public IActionResult Login()
         {
-            var vm = new LoginViewModel { RegistrationEnabled = _whatBugSettings.Accounts.RegistrationEnabled };
+            var vm = new LoginViewModel 
+            { 
+                RegistrationEnabled = _whatBugSettings.Accounts.RegistrationEnabled,
+                DemoEnabled = _whatBugSettings.Accounts.DemoEnabled
+            };
             return View(vm);
         }
 

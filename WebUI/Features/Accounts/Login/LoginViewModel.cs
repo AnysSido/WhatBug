@@ -17,5 +17,6 @@ namespace WhatBug.WebUI.Features.Accounts.Login
         public bool RememberMe { get; set; }
 
         public bool RegistrationEnabled { get; set; }
+        public bool DemoEnabled { get; set; }
     }
 }

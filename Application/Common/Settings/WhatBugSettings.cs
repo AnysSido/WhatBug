@@ -10,13 +10,15 @@ namespace WhatBug.Application.Common.Settings
 
     public class AccountSettings
     {
-        public bool RegistrationEnabled;
+        public bool RegistrationEnabled { get; set; }
+        public bool DemoEnabled { get; set; }
+        public string DemoUsername { get; set; }
     }
 
     public class AttachmentSettings
     {
         public string FileLocation { get; set; }
         public List<string> AllowedExtensions { get; set; } = new List<string>();
-        public long MaxFileSize; // Size in MB
+        public long MaxFileSize { get; set; } // Size in MB
     }
 }

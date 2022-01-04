@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Settings;
 using WhatBug.Application.UserInfo;
 
 namespace WhatBug.Infrastructure.Identity
@@ -12,11 +13,14 @@ namespace WhatBug.Infrastructure.Identity
     public class PrincipalUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<PrincipalUser>
     {
         private readonly IUserInfoService _userInfoService;
+        private readonly WhatBugSettings _settings;
 
-        public PrincipalUserClaimsPrincipalFactory(UserManager<PrincipalUser> userManager, IOptions<IdentityOptions> optionsAccessor, IMediator mediator, IUserInfoService userInfoService)
+        public PrincipalUserClaimsPrincipalFactory(UserManager<PrincipalUser> userManager, IOptions<IdentityOptions> optionsAccessor, IMediator mediator, 
+            IUserInfoService userInfoService, IOptions<WhatBugSettings> settings)
             : base(userManager, optionsAccessor)
         {
             _userInfoService = userInfoService;
+            _settings = settings.Value;
         }
 
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(PrincipalUser user)
@@ -33,7 +37,7 @@ namespace WhatBug.Infrastructure.Identity
                 identity.AddClaim(new Claim(UserInfoClaim.Surname.ToString(), userInfo.Surname));
             }
 
-            if (!user.IsReadOnly)
+            if (!_settings.Accounts.DemoEnabled || user.WriteAccess)
                 identity.AddClaim(new Claim(UserInfoClaim.WriteAccess.ToString(), "true"));
 
             return identity;

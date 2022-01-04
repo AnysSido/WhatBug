@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
+using WhatBug.Application.Common.Settings;
 
 namespace WhatBug.Infrastructure.Identity
 {
@@ -10,11 +11,13 @@ namespace WhatBug.Infrastructure.Identity
     {
         private readonly UserManager<PrincipalUser> _userManager;
         private readonly SignInManager<PrincipalUser> _signInManager;
+        private readonly WhatBugSettings _settings;
 
-        public IdentityAuthenticationProvider(UserManager<PrincipalUser> userManager, SignInManager<PrincipalUser> signInManager)
+        public IdentityAuthenticationProvider(UserManager<PrincipalUser> userManager, SignInManager<PrincipalUser> signInManager, IOptions<WhatBugSettings> settings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _settings = settings.Value;
         }
 
         public async Task<bool> CreateUserAsync(string username, string password, string email, int id)
@@ -33,12 +36,18 @@ namespace WhatBug.Infrastructure.Identity
 
         public async Task<bool> SignInDemoAsync()
         {
-            var user = await _userManager.FindByNameAsync("Anys"); // TODO: Move to config
-
-            if (user == null)
+            if (!_settings.Accounts.DemoEnabled)
                 return false;
 
-            user.IsReadOnly = true;
+            var demoUsername = _settings.Accounts.DemoUsername;
+
+            if (demoUsername == null || demoUsername.Length == 0)
+                return false;
+
+            var user = await _userManager.FindByNameAsync(demoUsername);
+            
+            if (user == null)
+                return false;
 
             await _signInManager.SignInAsync(user, true);
 
@@ -51,6 +60,8 @@ namespace WhatBug.Infrastructure.Identity
 
             if (user == null)
                 return false;
+
+            user.WriteAccess = true;
 
             var result = await _signInManager.PasswordSignInAsync(user, password, rememberMe, false);
             
