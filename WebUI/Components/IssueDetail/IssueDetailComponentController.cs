@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.Issues.Commands.AddComment;
 using WhatBug.Application.Issues.Commands.SetIssueDescription;
 using WhatBug.Application.Issues.Commands.SetIssuePriority;
@@ -16,8 +17,15 @@ namespace WhatBug.WebUI.Components.IssueDetail
         [HttpGet]
         public async Task<IActionResult> GetComponent(string issueId)
         {
-            var result = await Mediator.Send(new GetIssueDetailQuery { IssueId = issueId });
-            return ViewComponent("IssueDetail", result.Result);
+            try
+            {
+                var result = await Mediator.Send(new GetIssueDetailQuery { IssueId = issueId });
+                return ViewComponent("IssueDetail", result.Result);
+            }
+            catch (AccessDeniedException)
+            {
+                return StatusCode(403);
+            }
         }
 
         [HttpPost]

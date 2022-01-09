@@ -62,6 +62,10 @@
 }
 
 @section Scripts {
+    @if (ViewBag.Issue != null)
+    {
+        <script>const issue = "@ViewBag.Issue";</script>
+    }
     <script type="text/javascript" src="~/js/pages/kanban.js"></script>
     <script type="text/javascript" src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
 }

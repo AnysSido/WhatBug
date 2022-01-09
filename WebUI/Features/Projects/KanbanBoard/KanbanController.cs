@@ -11,9 +11,15 @@ namespace WhatBug.WebUI.Features.Projects.KanbanBoard
     public class KanbanController : BaseController
     {
         [HttpGet("")]
-        public async Task<IActionResult> Index(int projectId)
+        [RouteCategory(RouteCategory.Project)]
+        public async Task<IActionResult> Index(int projectId, string issue)
         {
             var result = await Mediator.Send(new GetKanbanBoardQuery { ProjectId = projectId });
+
+            if (issue != null)
+            {
+                ViewBag.Issue = issue;
+            }
 
             return View(result.Result);
         }

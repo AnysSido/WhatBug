@@ -120,7 +120,7 @@ class IssueDetailComponent {
 
         this.issueDetailComponent.on('hidden.bs.modal', () => {
             this.issueDetailComponent.remove();
-            location.reload();
+            window.location = window.location.pathname;
         });
     };
 
