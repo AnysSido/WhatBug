@@ -60,4 +60,9 @@ $(function ($) {
         const issueId = $(this).find('.issueId').val();
         ShowIssueDetailComponent(issueId);
     });
+
+    // issue var declared in razor if issue was passed as query param
+    if(typeof issue !== 'undefined'){
+        ShowIssueDetailComponent(issue);
+    }
 });
