@@ -22,7 +22,9 @@ namespace WhatBug.Application.Projects.Commands.CreateProject
                 .NotEmpty().WithMessage("Project name cannot be empty")
                 .MustAsync(NameUnique).WithMessage(cmd => $"A project with the name {cmd.Name} already exists");
 
-            RuleFor(v => v.Key).NotEmpty()
+            RuleFor(v => v.Key)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty().WithMessage("Key cannot be empty")
                 .Length(2, 6).WithMessage("Key must be between 2 and 6 characters and contain only capital letters")
                 .Matches("^[A-Z]+$").WithMessage("Key must be between 2 and 6 characters and contain only capital letters")
                 .MustAsync(KeyUnique).WithMessage(cmd => $"The key {cmd.Key} is already in use");
