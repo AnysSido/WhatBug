@@ -62,7 +62,7 @@
 }
 
 @section Scripts {
-    @if (ViewBag.Issue != null)
+    @if (ViewBag.Issue ?? false)
     {
         <script>const issue = "@ViewBag.Issue";</script>
     }

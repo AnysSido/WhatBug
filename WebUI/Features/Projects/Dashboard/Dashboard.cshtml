@@ -1,0 +1,74 @@
+﻿@model WhatBug.Application.Projects.Queries.GetDashboard.GetDashboardQueryResult
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/pages/dashboard.min.css" />
+}
+
+@{
+    ViewData["Title"] = @Model.ProjectName + " Dashboard";
+}
+
+<!-- Data -->
+@foreach (var priority in @Model.IssuePriorities)
+{
+    <input type="hidden" name="priority-@priority.Name" class="wb-color-@(priority.PriorityColorName.ToLowerInvariant())">
+}
+@foreach (var issueType in @Model.IssueTypes)
+{
+    <input type="hidden" name="issueType-@issueType.Name" class="wb-color-@(issueType.IssueTypeColorName.ToLowerInvariant())">
+}
+
+<!-- Stats -->
+<div class="row">
+    <partial name="_Stats.cshtml" />
+</div>
+
+<div class="row">
+    <!-- Project Members -->
+    <div class="col-12 col-lg-12">
+        <partial name="_ProjectMembers.cshtml" />
+    </div>
+</div>
+
+<div class="row">
+    <!-- Issue Statuses-->
+    <div class="col-12 col-md-12 col-xl-4">
+        <partial name="_IssueStatuses.cshtml" />
+    </div>
+
+    <!-- Issue Priorities-->
+    <div class="col-12 col-md-6 col-xl-4">
+        <partial name="_IssuePriorities.cshtml" />
+    </div>
+
+    <!-- Issue Types-->
+    <div class="col-12 col-md-6 col-xl-4">
+        <partial name="_IssueTypes.cshtml" />
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Issues -->
+    <div class="col-12">
+        <partial name="_RecentIssues.cshtml"/>
+    </div>
+</div>
+
+<div class="row">   
+    <!-- Recent Comments -->
+    <div class="col-12">
+        <partial name="_RecentComments.cshtml" />
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/chart-js/Chart.min.js"></script>
+
+    <script>
+        const issueStatuses = @Json.Serialize(@Model.IssueStatuses);
+        const issuePriorities = @Json.Serialize(@Model.IssuePriorities);
+        const issueTypes = @Json.Serialize(@Model.IssueTypes);
+    </script>
+
+    <script type="text/javascript" src="~/js/Pages/Dashboard.js"></script>
+}

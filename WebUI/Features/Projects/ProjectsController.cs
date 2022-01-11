@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using WhatBug.Application.Projects.Commands.CreateProject;
 using WhatBug.Application.Projects.Queries.GetCreateProject;
+using WhatBug.Application.Projects.Queries.GetDashboard;
 using WhatBug.Application.Projects.Queries.GetProjects;
 using WhatBug.WebUI.Common;
 using WhatBug.WebUI.Features.Projects.Index;
+using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Projects
 {
@@ -17,6 +19,14 @@ namespace WhatBug.WebUI.Features.Projects
             var dto = await Mediator.Send(new GetProjectsQuery());
             var vm = Mapper.Map<ProjectsViewModel>(dto);
             return View(vm);
+        }
+
+        [HttpGet("{projectId}/dashboard", Name = "Dashboard")]
+        [RouteCategory(RouteCategory.Project)]
+        public async Task<IActionResult> Dashboard(int projectId)
+        {
+            var result = await Mediator.Send(new GetDashboardQuery { ProjectId = projectId });
+            return View(result.Result);
         }
 
         [HttpGet("create", Name = "CreateProject")]
