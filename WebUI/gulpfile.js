@@ -23,6 +23,8 @@ const libraries = [
     { from: 'animate.css', to: 'animate-css', glob: '/**/*.min.css' },
     // Bootstrap
     { from: 'bootstrap/dist', to: 'bootstrap' },
+    // ChartJS
+    { from: 'chart.js/dist', to: 'chart-js'},
     // Dragula
     { from: 'dragula/dist', to: 'dragula' },
     // Dropzone
@@ -77,7 +79,7 @@ gulp.task('styles', function () {
     return gulp.src(paths.styles)
         .pipe(sass())
 
-        .pipe(postcss(plugins))
+        //.pipe(postcss(plugins))
 
         .pipe(rename(function (path) {
             path.basename = path.basename.toLowerCase() + '.min'

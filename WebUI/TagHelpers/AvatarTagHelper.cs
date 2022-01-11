@@ -13,6 +13,7 @@ namespace WhatBug.WebUI.TagHelpers
     public class AvatarTagHelper : TagHelper
     {
         public string Email { get; set; }
+        public int Size { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -23,7 +24,8 @@ namespace WhatBug.WebUI.TagHelpers
             {
                 var result = md5.ComputeHash(Encoding.ASCII.GetBytes(Email.Trim().ToLowerInvariant()));
                 var hash = BitConverter.ToString(result).Replace("-", "").ToLower();
-                var url = $"https://gravatar.com/avatar/{hash}";
+                var size = Size != default ? $"&s={Size}" : string.Empty;
+                var url = $"https://gravatar.com/avatar/{hash}?d=identicon{size}";
 
                 output.Attributes.SetAttribute("src", url);
                 output.Attributes.SetAttribute("alt", "User Profile Picture");

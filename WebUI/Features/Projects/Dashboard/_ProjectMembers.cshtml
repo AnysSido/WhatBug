@@ -1,0 +1,26 @@
+﻿<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Project Members</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Project Members -->
+    <div class="card-body p-0">
+        <div class="member-list">
+            @foreach (var member in Model.ProjectMembers)
+            {
+                <div class="member">
+                    <avatar email="@member.Email" size=128>
+                    <a class="user-list-name" href="#">@member.Name</a>
+                    <span class="users-list-date">Assigned @member.AssignedIssueCount Issues</span>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

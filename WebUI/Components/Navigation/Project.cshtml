@@ -15,27 +15,27 @@
 
             <li class="nav-header">@Model.Name</li>
 
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a asp-route="Dashboard" asp-route-projectId="@Model.Id" class="nav-link">
+                    <i class="fas fa-tachometer-alt nav-icon"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+
             <!-- Board -->
             <li class="nav-item">
                 <a asp-route="KanbanBoard" asp-route-projectId="@Model.Id" class="nav-link">
                     <i class="fas fa-columns nav-icon"></i>
-                    <p>Board</p>
+                    <p>Kanban Board</p>
                 </a>
             </li>
 
             <!-- Users And Roles -->
             <li class="nav-item">
                 <a class="nav-link" asp-route="UsersAndRoles" asp-route-projectId="@Model.Id">
-                    <i class="fas fa-columns nav-icon"></i>
+                    <i class="fas fa-users nav-icon"></i>
                     <p>Users And Roles</p>
-                </a>
-            </li>
-
-            <!-- Create Issue -->
-            <li class="nav-item">
-                <a asp-controller="Issues" asp-action="Create" asp-route-projectId="@Model.Id" class="nav-link">
-                    <i class="fas fa-plus nav-icon"></i>
-                    <p>Create Issue</p>
                 </a>
             </li>
         </ul>
