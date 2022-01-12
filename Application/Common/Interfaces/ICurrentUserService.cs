@@ -9,5 +9,7 @@
         public string Surname { get; }
         public bool IsAuthenticated { get; }
         bool IsReadOnly { get; }
+
+        void LoadClaims();
     }
 }

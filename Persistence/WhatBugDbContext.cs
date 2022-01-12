@@ -44,6 +44,8 @@ namespace WhatBug.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            _currentUserService.LoadClaims();
+
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entry.State)
