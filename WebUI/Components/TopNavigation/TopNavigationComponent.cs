@@ -19,6 +19,7 @@ namespace WhatBug.WebUI.Components.TopNavigation
             var vm = new TopNavigationComponentViewModel
             {
                 UserLoggedIn = _currentUserService.IsAuthenticated,
+                UserId = _currentUserService.Id,
                 UserEmail = _currentUserService.Email,
                 UserFullName = $"{_currentUserService.FirstName} {_currentUserService.Surname}"
             };

@@ -1,0 +1,38 @@
+﻿<div class="card card-primary card-outline">
+    <div class="card-header p-2">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active" href="#comments" data-toggle="tab">Recent Comments</a></li>
+            <li class="nav-item"><a class="nav-link" href="#issues" data-toggle="tab">Recent Issues</a></li>
+        </ul>
+    </div>
+    <div class="card-body" style="padding: 0px;">
+        <div class="tab-content">
+
+            <!-- Recent Comments -->
+            <div class="active tab-pane" id="comments" style="padding: 1.25rem;">
+                @if (@Model.RecentComments.Count == 0)
+                {
+                    <p>This user hasn't commented on any issues.</p>
+                }
+                else
+                {
+                    <partial name="_RecentComments.cshtml" />
+                }
+            </div>
+
+            <!-- Recent Issues-->
+            @if (@Model.RecentIssues.Count == 0)
+            {
+                <div class="tab-pane" id="issues" style="padding: 1.25rem;">
+                    <p>This user hasn't created any issues.</p>
+                </div>
+            }
+            else
+            {
+                <div class="tab-pane" id="issues">
+                    <partial name="_RecentIssues.cshtml" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

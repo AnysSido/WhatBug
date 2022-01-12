@@ -15,6 +15,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Summary</th>
+                    <th>Assignee</th>
                     <th>Priority</th>
                     <th>Status</th>
                 </tr>
@@ -22,12 +23,16 @@
             <tbody>
                 @foreach (var issue in Model.RecentIssues)
                 {
-                     <tr>
+                    <tr>
                         <td style="white-space: nowrap;">
                             <a asp-route="KanbanBoard" asp-route-projectId="@Model.ProjectId" asp-route-issue="@issue.Id">@issue.Id</a>
                         </td>
                         <td>
                             @issue.Summary
+                        </td>
+                        <td>
+                            <avatar email="@issue.AssigneeEmail" class="img-circle img-bordered-sm" style="height: 40px; width: 40px;">
+                            <a asp-route="Profile" asp-route-userId="@issue.AssigneeId" asp class="user-list-name">@issue.AssigneeFullName</a>
                         </td>
                         <td style="white-space: nowrap;">
                             <span>
@@ -38,7 +43,7 @@
                         <td style="white-space: nowrap;">
                             @issue.Status
                         </td>
-                    </tr>   
+                    </tr>
                 }
             </tbody>
         </table>

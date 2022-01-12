@@ -46,7 +46,9 @@
                         {
                             @foreach (var user in role.Users)
                             {
-                                <p>@user.Username</p>
+                                <p>
+                                    <a asp-route="Profile" asp-route-userId="@user.Id" asp class="user-list-name">@user.FirstName @user.Surname</a>
+                                </p>
                             }
                         }
                     </td>

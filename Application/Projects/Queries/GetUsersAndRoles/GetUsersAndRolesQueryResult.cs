@@ -23,6 +23,7 @@ namespace WhatBug.Application.Projects.Queries.GetUsersAndRoles
     public class UserDTO : IMapFrom<User>
     {
         public int Id { get; set; }
-        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
     }
 }

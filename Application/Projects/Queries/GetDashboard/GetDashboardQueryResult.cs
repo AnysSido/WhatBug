@@ -25,6 +25,9 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
     {
         public string Id { get; set; }
         public string Summary { get; set; }
+        public int AssigneeId { get; set; }
+        public string AssigneeFullName { get; set; }
+        public string AssigneeEmail { get; set; }
         public string Icon { get; set; }
         public string IconColor { get; set; }
         public string Priority { get; set; }
@@ -53,6 +56,7 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
 
     public class ProjectMemberDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public int AssignedIssueCount { get; set; }

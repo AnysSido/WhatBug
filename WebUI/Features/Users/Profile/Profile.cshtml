@@ -1,0 +1,15 @@
+﻿@model WhatBug.Application.Users.Queries.GetUserProfile.GetUserProfileQueryResult
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <partial name="_Profile.cshtml" />
+        <partial name="_About.cshtml" />
+    </div>
+    <div class="col-md-9">
+        <partial name="_Content.cshtml" />
+    </div>
+</div>

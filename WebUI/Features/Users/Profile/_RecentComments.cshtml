@@ -1,0 +1,15 @@
+﻿@foreach (var comment in @Model.RecentComments)
+{
+    <div class="post">
+        <div class="user-block">
+            <avatar class="img-circle img-bordered-sm" email="@comment.Email" />
+            <span class="username">
+                <a href="#">@comment.Author</a>
+            </span>
+            <span class="description">Commented in issue <b><a asp-route="KanbanBoard" asp-route-projectId="@comment.ProjectId" asp-route-issue="@comment.IssueId">@comment.IssueId</a></b></span>
+        </div>
+        <p>
+            @comment.Content
+        </p>
+    </div>
+}
