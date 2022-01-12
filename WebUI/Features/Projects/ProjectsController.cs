@@ -29,14 +29,14 @@ namespace WhatBug.WebUI.Features.Projects
             return View(result.Result);
         }
 
-        [HttpGet("create", Name = "CreateProject")]
+        [HttpGet("create-project", Name = "CreateProject")]
         public async Task<IActionResult> Create()
         {
             var result = await Mediator.Send(new GetCreateProjectQuery());
             return View(result.Result);
         }
 
-        [HttpPost("create", Name = "CreateProject")]
+        [HttpPost("create-project", Name = "CreateProject")]
         public async Task<IActionResult> Create(GetCreateProjectQueryResult vm)
         {
             var result = await Mediator.Send(new CreateProjectCommand

@@ -16,7 +16,7 @@
             {
                 <div class="member">
                     <avatar email="@member.Email" size=128>
-                    <a class="user-list-name" href="#">@member.Name</a>
+                    <a asp-route="Profile" asp-route-userId="@member.Id" asp class="user-list-name">@member.Name</a>
                     <span class="users-list-date">Assigned @member.AssignedIssueCount Issues</span>
                 </div>
             }

@@ -62,6 +62,7 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
                 .DistinctBy(u => u.UserId)
                 .Select(ru => new ProjectMemberDTO
                 {
+                    Id = ru.User.Id,
                     Email = ru.User.Email,
                     Name = $"{ru.User.FirstName} {ru.User.Surname}",
                     AssignedIssueCount = project.Issues.Where(i => i.AssigneeId == ru.UserId).Count()
@@ -74,6 +75,9 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
                 {
                     Id = i.Id,
                     Summary = i.Summary,
+                    AssigneeId = i.Assignee.Id,
+                    AssigneeEmail = i.Assignee.Email,
+                    AssigneeFullName = $"{i.Assignee.FirstName} {i.Assignee.Surname}",
                     Priority = i.Priority.Name,
                     Icon = i.Priority.Icon.WebName,
                     IconColor = i.Priority.Color.Name,
@@ -123,6 +127,7 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
 
             // Pre-load all required data for the dashboard into the change tracker instead of using one giant query.
             await _context.Issues.Include(i => i.IssueStatus).Include(i => i.IssueType).Where(i => i.ProjectId == projectId).ToListAsync();
+            await _context.Issues.Include(i => i.Assignee).Where(i => i.ProjectId == projectId).ToListAsync();
             await _context.Priorities.Include(p => p.Icon).Include(p => p.Color).ToListAsync();
             await _context.IssueTypes.Include(t => t.Color).ToListAsync();
             await _context.ProjectRoleUsers.Include(r => r.Role).Include(u => u.User).Where(p => p.ProjectId == projectId).ToListAsync();

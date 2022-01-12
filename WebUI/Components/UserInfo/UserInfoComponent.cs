@@ -21,7 +21,8 @@ namespace WhatBug.WebUI.Components.UserInfo
         {
             var vm = new UserInfoViewModel
             {
-                Username = _currentUserService.Username,
+                Id = _currentUserService.Id,
+                FullName = $"{_currentUserService.FirstName} {_currentUserService.Surname}",
                 Email = _currentUserService.Email
             };
 
