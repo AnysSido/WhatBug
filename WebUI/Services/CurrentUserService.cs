@@ -7,22 +7,32 @@ namespace WhatBug.WebUI.Services
 {
     public class CurrentUserService : ICurrentUserService
     {
-        public int Id { get; }
-        public string Username { get; }
-        public string Email { get; }
-        public string FirstName { get; }
-        public string Surname { get; }
-        public bool IsAuthenticated { get; }
-        public bool IsReadOnly { get; }
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public int Id { get; private set; }
+        public string Username { get; private set; }
+        public string Email { get; private set; }
+        public string FirstName { get; private set; }
+        public string Surname { get; private set; }
+        public bool IsAuthenticated { get; private set; }
+        public bool IsReadOnly { get; private set; }
+
 
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            Id = int.TryParse(httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Id.ToString()), out var id) ? id : 0;
-            Username = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Username.ToString());
-            Email = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Email.ToString());
-            FirstName = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.FirstName.ToString());
-            Surname = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Surname.ToString());
-            IsReadOnly = httpContextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.WriteAccess.ToString()) == null;
+            _contextAccessor = httpContextAccessor;
+
+            LoadClaims();
+        }
+
+        public void LoadClaims()
+        {
+            Id = int.TryParse(_contextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Id.ToString()), out var id) ? id : 0;
+            Username = _contextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Username.ToString());
+            Email = _contextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Email.ToString());
+            FirstName = _contextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.FirstName.ToString());
+            Surname = _contextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.Surname.ToString());
+            IsReadOnly = _contextAccessor.HttpContext?.User?.FindFirstValue(UserInfoClaim.WriteAccess.ToString()) == null;
             IsAuthenticated = Id > 0;
         }
     }
