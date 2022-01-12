@@ -5,7 +5,6 @@ using WhatBug.Application.Projects.Queries.GetCreateProject;
 using WhatBug.Application.Projects.Queries.GetDashboard;
 using WhatBug.Application.Projects.Queries.GetProjects;
 using WhatBug.WebUI.Common;
-using WhatBug.WebUI.Features.Projects.Index;
 using WhatBug.WebUI.Routing;
 
 namespace WhatBug.WebUI.Features.Projects
@@ -17,7 +16,7 @@ namespace WhatBug.WebUI.Features.Projects
         public async Task<IActionResult> Index()
         {
             var dto = await Mediator.Send(new GetProjectsQuery());
-            var vm = Mapper.Map<ProjectsViewModel>(dto);
+            var vm = Mapper.Map<GetProjectsQueryResult>(dto.Result);
             return View(vm);
         }
 
