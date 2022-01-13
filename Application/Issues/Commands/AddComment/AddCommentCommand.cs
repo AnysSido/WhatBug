@@ -12,7 +12,7 @@ using WhatBug.Domain.Entities;
 namespace WhatBug.Application.Issues.Commands.AddComment
 {
     [Authorize(Permissions.Comment)]
-    public record AddCommentCommand : IRequest<Response>, IRequireIssueAuthorization
+    public record AddCommentCommand : ICommand<Response>, IRequireIssueAuthorization
     {
         public string IssueId { get; init; }
         public string Content { get; init; }
