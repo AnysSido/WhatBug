@@ -10,7 +10,7 @@ using WhatBug.Domain.Data;
 namespace WhatBug.Application.Issues.Commands.SetIssueDescription
 {
     [Authorize(Permissions.EditIssue)]
-    public record SetIssueDescriptionCommand : IRequest<Response>, IRequireIssueAuthorization
+    public record SetIssueDescriptionCommand : ICommand<Response>, IRequireIssueAuthorization
     {
         public string IssueId { get; init; }
         public string Description { get; init; }
