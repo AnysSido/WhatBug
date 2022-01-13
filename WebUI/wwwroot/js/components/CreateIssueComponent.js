@@ -88,9 +88,6 @@ class CreateIssueComponent {
                 } else {
                     this.#BuildComponent(modal);
                 }
-            })
-            .fail(() => {
-                console.log("error");
             });
         });
     }

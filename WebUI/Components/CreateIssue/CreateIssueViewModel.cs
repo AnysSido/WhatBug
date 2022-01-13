@@ -9,28 +9,22 @@ namespace WhatBug.WebUI.Components.CreateIssue
     {
         public bool CreateAnother { get; set; }
 
-        [Required]
         public string Summary { get; set; }
 
         public string Description { get; set; }
 
-        [Required]
         [Display(Name = "Project")]
         public int ProjectId { get; set; }
 
-        [Required]
         [Display(Name = "Issue Type")]
         public int IssueTypeId { get; set; }
 
-        [Required]
         [Display(Name = "Priority")]
         public int PriorityId { get; set; }
 
-        [Required]
         [Display(Name = "Assignee")]
         public int AssigneeId { get; set; }
 
-        [Display(Name = "Reporter")]
         public int ReporterId { get; set; }
 
         public ProjectDTO Project { get; set; }
