@@ -21,5 +21,13 @@ namespace WhatBug.WebUI.Common
 
             return View(model);
         }
+
+        public ViewComponentResult ViewComponentWithErrors(object model, Response result, string componentNane)
+        {
+            foreach (var error in result.ValidationErrors)
+                ModelState.AddModelError(error.PropertyName, error.Message);
+
+            return ViewComponent(componentNane, model);
+        }
     }
 }
