@@ -10,8 +10,8 @@ namespace WhatBug.WebUI.Components.CreateIssue
     {
         public async Task<IActionResult> GetComponent(int? projectId = null)
         {
-            var dto = await Mediator.Send(new GetCreateIssueQuery { ProjectId = projectId });
-            var vm = Mapper.Map<CreateIssueViewModel>(dto);
+            var result = await Mediator.Send(new GetCreateIssueQuery { ProjectId = projectId });
+            var vm = Mapper.Map<CreateIssueViewModel>(result.Result);
             return ViewComponent("CreateIssue", vm);
         }
 

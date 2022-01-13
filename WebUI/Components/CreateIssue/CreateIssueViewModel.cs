@@ -5,7 +5,7 @@ using WhatBug.Common.Mapping;
 
 namespace WhatBug.WebUI.Components.CreateIssue
 {
-    public class CreateIssueViewModel : IMapFrom<CreateIssueDTO>
+    public class CreateIssueViewModel : IMapFrom<GetCreateIssueQueryResult>
     {
         public bool CreateAnother { get; set; }
 
