@@ -3,34 +3,43 @@
         <h3 class="card-title">In Progress</h3>
     </div>
 
-    <div class="card-body table-responsive p-0">
-        <table class="table table-striped table-valign-middle">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Summary</th>
-                    <th>Priority</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var issue in Model.InProgressIssues)
-                {
-                    <tr>
-                        <td style="white-space: nowrap;">
-                            <a asp-route="KanbanBoard" asp-route-projectId="@issue.ProjectId" asp-route-issue="@issue.Id">@issue.Id</a>
-                        </td>
-                        <td>
-                            @issue.Summary
-                        </td>
-                        <td style="white-space: nowrap;">
-                            <span>
-                                <i class="wb-color-@issue.IconColor.ToLowerInvariant() icon icon--@issue.Icon"></i>
-                                <label for="priority_Name">@issue.Priority</label>
-                            </span>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    @if(@Model.InProgressIssues.Count == 0)
+        {
+            <div class="card-body">
+                <p>You have no issues with In Progress status.</p>
+            </div>
+        }            
+        else
+        {
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped table-valign-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Summary</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var issue in Model.InProgressIssues)
+                        {
+                            <tr>
+                                <td style="white-space: nowrap;">
+                                    <a asp-route="KanbanBoard" asp-route-projectId="@issue.ProjectId" asp-route-issue="@issue.Id">@issue.Id</a>
+                                </td>
+                                <td>
+                                    @issue.Summary
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    <span>
+                                        <i class="wb-color-@issue.IconColor.ToLowerInvariant() icon icon--@issue.Icon"></i>
+                                        <label for="priority_Name">@issue.Priority</label>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+    }
 </div>
