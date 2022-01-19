@@ -1,30 +1,102 @@
 ﻿@model WhatBug.Application.Navigation.Queries.GetDefaultNavigation.DefaultNavigationDTO
-
+@inject WhatBug.Application.Authorization.IAuthorizationManager authorization
 @{
-    <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        My Projects
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
+    <nav class="mt-2 main-nav">
+        <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 
-                <ul class="nav nav-treeview">
-                    @foreach (var project in Model.Projects)
-                    {
-                    <li class="nav-item">
-                        <!-- TODO: Change to Dashboard -->
-                        <a asp-controller="Projects" asp-action="UsersAndRoles" asp-route-projectId="@project.Id" class="nav-link">
-                            <i class="fas fa-columns nav-icon"></i>
-                            <p>@project.Name</p>
-                        </a>
-                    </li>
-                    }
-                </ul>
+            <!-- Home -->
+            <li class="nav-item">
+                <a asp-controller="Home" asp-action="Index" class="nav-link">
+                    <i class="fas fa-home nav-icon"></i>
+                    <p>Home</p>
+                </a>
             </li>
+
+            <!-- Recent Projects -->
+            <li class="nav-header">
+                Recent Projects
+            </li>
+
+            @foreach (var project in Model.Projects)
+            {
+                <li class="nav-item">
+                    <a asp-route="Dashboard" asp-route-projectId="@project.Id" class="nav-link">
+                        <i class="fas fa-bug nav-icon"></i>
+                        <p>@project.Name</p>
+                    </a>
+                </li>
+            }
+
+            <!-- Admin -->
+            <li class="nav-header">
+                Admin
+            </li>
+
+            @if (await authorization.HasPermission(Permissions.CreateProject))
+            {
+                <!-- Create Project -->
+                <li class="nav-item">
+                    <a asp-route="CreateProject" class="nav-link">
+                        <i class="fas fa-plus nav-icon"></i>
+                        <p>Create Project</p>
+                    </a>
+                </li>
+            }
+
+            @if (await authorization.HasPermission(Permissions.ManageProjectRoles))
+            {
+                <!-- Project Roles -->
+                <li class="nav-item">
+                    <a asp-route="ProjectRoles" class="nav-link">
+                        <i class="fas fa-users nav-icon"></i>
+                        <p>Project Roles</p>
+                    </a>
+                </li>
+            }
+
+            @if (await authorization.HasPermission(Permissions.ManageUserPermissions))
+            {
+                <!-- Global Permissions -->
+                <li class="nav-item">
+                    <a asp-route="UserPermissions" class="nav-link">
+                        <i class="fas fa-user-shield nav-icon"></i>
+                        <p>User Permissions</p>
+                    </a>
+                </li>
+            }
+
+            @if (await authorization.HasPermission(Permissions.ManagePermissionSchemes))
+            {
+                <!-- Permission Schemes -->
+                <li class="nav-item">
+                    <a asp-route="PermissionSchemes" class="nav-link">
+                        <i class="fas fa-scroll nav-icon"></i>
+                        <p>Permission Schemes</p>
+                    </a>
+                </li>
+            }
+
+            <!-- Priorities -->
+            @if (await authorization.HasPermission(Permissions.ManagePriorities))
+            {
+                <li class="nav-item">
+                    <a asp-route="Priorities" class="nav-link">
+                        <i class="fas fa-angle-double-up nav-icon"></i>
+                        <p>Priorities</p>
+                    </a>
+                </li>
+            }
+
+            <!-- Priority Schemes -->
+            @if (await authorization.HasPermission(Permissions.ManagePriorities))
+            {
+                <li class="nav-item">
+                    <a asp-route="PrioritySchemes" class="nav-link">
+                        <i class="fas fa-list-ol nav-icon"></i>
+                        <p>Priority Schemes</p>
+                    </a>
+                </li>
+            }
         </ul>
     </nav>
 }

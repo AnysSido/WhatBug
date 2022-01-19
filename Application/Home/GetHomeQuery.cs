@@ -11,27 +11,26 @@ using WhatBug.Application.Common.MediatR;
 using WhatBug.Application.Common.Security;
 using WhatBug.Domain.Data;
 
-namespace WhatBug.Application.Projects.Queries.GetProjects
+namespace WhatBug.Application.Home
 {
     [Authorize]
-    public record GetProjectsQuery : IQuery<Response<GetProjectsQueryResult>>
+    public record GetHomeQuery : IQuery<Response<GetHomeQueryResult>>
     {
     }
 
-    public partial class GetProjectsQueryHandler : IRequestHandler<GetProjectsQuery, Response<GetProjectsQueryResult>>
+    public class GetHomeQueryHandler : IRequestHandler<GetHomeQuery, Response<GetHomeQueryResult>>
     {
         private readonly IWhatBugDbContext _context;
         private readonly ICurrentUserService _currentUserService;
 
-        public GetProjectsQueryHandler(IWhatBugDbContext context, ICurrentUserService currentUserService)
+        public GetHomeQueryHandler(IWhatBugDbContext context, ICurrentUserService currentUserService)
         {
             _context = context;
             _currentUserService = currentUserService;
         }
 
-        public async Task<Response<GetProjectsQueryResult>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetHomeQueryResult>> Handle(GetHomeQuery request, CancellationToken cancellationToken)
         {
-
             var myProjectIds = await _context.ProjectRoleUsers
                 .Where(u => u.UserId == _currentUserService.Id)
                 .Select(p => p.ProjectId)
@@ -45,7 +44,7 @@ namespace WhatBug.Application.Projects.Queries.GetProjects
 
             var creators = await _context.Users.Where(u => myProjects.Select(p => p.CreatedBy).Contains(u.Id)).ToListAsync();
 
-            var dto = new GetProjectsQueryResult
+            var dto = new GetHomeQueryResult
             {
                 Projects = new List<ProjectDto>()
             };
@@ -70,7 +69,38 @@ namespace WhatBug.Application.Projects.Queries.GetProjects
                 });
             }
 
-            return Response<GetProjectsQueryResult>.Success(dto);
+            var toDoIssues = await _context.Issues
+                .Where(i => i.AssigneeId == _currentUserService.Id)
+                .Where(i => i.IssueStatus.Id == IssueStatuses.ToDo.Id)
+                .Select(i => new IssueDTO
+                {
+                    Id = i.Id,
+                    ProjectId = i.ProjectId,
+                    Summary = i.Summary,
+                    Priority = i.Priority.Name,
+                    Icon = i.Priority.Icon.WebName,
+                    IconColor = i.Priority.Color.Name,
+                })
+                .ToListAsync();
+
+            var inProgressIssues = await _context.Issues
+                .Where(i => i.AssigneeId == _currentUserService.Id)
+                .Where(i => i.IssueStatus.Id == IssueStatuses.InProgress.Id)
+                .Select(i => new IssueDTO
+                {
+                    Id = i.Id,
+                    ProjectId = i.ProjectId,
+                    Summary = i.Summary,
+                    Priority = i.Priority.Name,
+                    Icon = i.Priority.Icon.WebName,
+                    IconColor = i.Priority.Color.Name,
+                })
+                .ToListAsync();
+
+            dto.ToDoIssues = toDoIssues;
+            dto.InProgressIssues = inProgressIssues;
+
+            return Response<GetHomeQueryResult>.Success(dto);
         }
     }
 }

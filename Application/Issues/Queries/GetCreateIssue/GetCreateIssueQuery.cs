@@ -10,10 +10,12 @@ using WhatBug.Application.Authorization;
 using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.MediatR;
+using WhatBug.Application.Common.Security;
 using WhatBug.Domain.Data;
 
 namespace WhatBug.Application.Issues.Queries.GetCreateIssue
 {
+    [Authorize]
     public record GetCreateIssueQuery : IQuery<Response<GetCreateIssueQueryResult>>
     {
         public int? ProjectId { get; set; }

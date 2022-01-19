@@ -50,7 +50,7 @@ namespace WhatBug.Application.Issues.Commands.CreateIssue
                 IssueType = issueType,
                 Reporter = reporter,
                 Assignee = assignee,
-                IssueStatus = await _context.IssueStatuses.FirstAsync(s => s.Name == "Backlog") // TODO: Remove magic string
+                IssueStatus = await _context.IssueStatuses.FirstAsync(s => s.Id == IssueStatuses.Backlog.Id)
             };
 
             project.IssueCounter = issueCounter;

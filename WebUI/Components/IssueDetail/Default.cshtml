@@ -15,7 +15,7 @@
                     <!-- Header Row -->
                     <div class="row">
                         <div class="col">
-                            <span><a asp-controller="Projects" asp-action="Index">@Model.ProjectName</a> / @Model.Id</span>
+                            <span><a asp-route="Dashboard" asp-route-projectId="@Model.ProjectId">@Model.ProjectName</a> / @Model.Id</span>
                         </div>
                     </div>
 
