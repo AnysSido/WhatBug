@@ -460,3 +460,4 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 /WebUI/wwwroot/css/whatbug.min.css
+*.min.css
