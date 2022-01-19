@@ -8,11 +8,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.MediatR;
+using WhatBug.Application.Common.Security;
+using WhatBug.Domain.Data;
 using WhatBug.Domain.Entities;
 
 namespace WhatBug.Application.Projects.Queries.GetDashboard
 {
-    public record GetDashboardQuery : IQuery<Response<GetDashboardQueryResult>>
+    [Authorize(PermissionOperator.Or, Permissions.ViewProject, Permissions.ViewAllProjects)]
+    public record GetDashboardQuery : IQuery<Response<GetDashboardQueryResult>>, IRequireProjectAuthorization
     {
         public int ProjectId { get; set; }
     }
@@ -97,7 +100,7 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
                 });
 
             var totalIssues = project.Issues.Count();
-            var issuesCompleted = project.Issues.Where(i => i.IssueStatus.Name == "Done").Count(); // TODO: Remove magic string
+            var issuesCompleted = project.Issues.Where(i => i.IssueStatus.Id == IssueStatuses.Done.Id).Count();
 
             var dto = new GetDashboardQueryResult
             {

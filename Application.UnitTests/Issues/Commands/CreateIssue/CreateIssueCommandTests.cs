@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System.Linq;
 using System.Threading;
-using WhatBug.Application.Common.Result;
 using WhatBug.Application.Issues.Commands.CreateIssue;
 using WhatBug.Domain.Entities;
 using Xunit;
@@ -121,91 +120,6 @@ namespace WhatBug.Application.UnitTests.Issues.Commands.CreateIssue
                 var newIssue = context.Issues.Include(i => i.IssueStatus).First();
                 newIssue.IssueStatus.Id.ShouldBe(expectedStatusId);
             }
-        }
-
-        [Fact]
-        public async void Handle_GivenInvalidProjectId_ReturnsProjectNotFoundValidationError()
-        {
-            // Arrange
-            var sut = new CreateIssueCommandHandler(_context);
-            _command.ProjectId = 2;
-
-            // Act
-            var result = await sut.Handle(_command, CancellationToken.None);
-
-            // Assert
-            var expectedErrorCode = Errors.Issues.ProjectNotFound(_command.ProjectId).Code;
-            result.Succeeded.ShouldBe(false);
-            result.Errors.ShouldNotBeNull();
-            result.Errors.Select(e => e.Code).ShouldContain(expectedErrorCode);
-        }
-
-        [Fact]
-        public async void Handle_GivenInvalidPriorityId_ReturnsPriorityNotFoundValidationError()
-        {
-            // Arrange
-            var sut = new CreateIssueCommandHandler(_context);
-            _command.PriorityId = 2;
-
-            // Act
-            var result = await sut.Handle(_command, CancellationToken.None);
-
-            // Assert
-            var expectedErrorCode = Errors.Issues.PriorityNotFound(_command.PriorityId).Code;
-            result.Succeeded.ShouldBe(false);
-            result.Errors.ShouldNotBeNull();
-            result.Errors.Select(e => e.Code).ShouldContain(expectedErrorCode);
-        }
-
-        [Fact]
-        public async void Handle_GivenInvalidIssueTypeId_ReturnsIssueTypeNotFoundValidationError()
-        {
-            // Arrange
-            var sut = new CreateIssueCommandHandler(_context);
-            _command.IssueTypeId = 2;
-
-            // Act
-            var result = await sut.Handle(_command, CancellationToken.None);
-
-            // Assert
-            var expectedErrorCode = Errors.Issues.IssueTypeNotFound(_command.PriorityId).Code;
-            result.Succeeded.ShouldBe(false);
-            result.Errors.ShouldNotBeNull();
-            result.Errors.Select(e => e.Code).ShouldContain(expectedErrorCode);
-        }
-
-        [Fact]
-        public async void Handle_GivenInvalidReporterId_ReturnsReporterNotFoundValidationError()
-        {
-            // Arrange
-            var sut = new CreateIssueCommandHandler(_context);
-            _command.ReporterId = 2;
-
-            // Act
-            var result = await sut.Handle(_command, CancellationToken.None);
-
-            // Assert
-            var expectedErrorCode = Errors.Issues.ReporterNotFound(_command.ReporterId).Code;
-            result.Succeeded.ShouldBe(false);
-            result.Errors.ShouldNotBeNull();
-            result.Errors.Select(e => e.Code).ShouldContain(expectedErrorCode);
-        }
-
-        [Fact]
-        public async void Handle_GivenInvalidAssigneeId_ReturnsAssigneeNotFoundValidationError()
-        {
-            // Arrange
-            var sut = new CreateIssueCommandHandler(_context);
-            _command.AssigneeId = 2;
-
-            // Act
-            var result = await sut.Handle(_command, CancellationToken.None);
-
-            // Assert
-            var expectedErrorCode = Errors.Issues.AssigneeNotFound((int)_command.AssigneeId).Code;
-            result.Succeeded.ShouldBe(false);
-            result.Errors.ShouldNotBeNull();
-            result.Errors.Select(e => e.Code).ShouldContain(expectedErrorCode);
         }
     }
 }

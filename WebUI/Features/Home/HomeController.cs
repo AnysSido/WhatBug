@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using WhatBug.Application.Home;
+using WhatBug.WebUI.Common;
 
 namespace WhatBug.WebUI.Features.Home
 {
     [Route("", Name = "Home")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         [HttpGet("", Name = "Home")]
         public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            var dto = await Mediator.Send(new GetHomeQuery());
+            return View(dto.Result);
         }
     }
 }

@@ -8,9 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.MediatR;
+using WhatBug.Application.Common.Security;
 
 namespace WhatBug.Application.Users.Queries.GetUserProfile
 {
+    [Authorize]
     public record GetUserProfileQuery : IQuery<Response<GetUserProfileQueryResult>>
     {
         public int UserId { get; set; }

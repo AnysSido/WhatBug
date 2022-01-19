@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="col">
+    <div class="mt-3">
+        <a asp-route="CreateProject">Create Project</a>
+        <p>Create a new project to which you can assign user and roles, create issues and more.</p>
+    </div>
+
+    <div class="mt-3">
+        <a asp-route="ProjectRoles">Project Roles</a>
+        <p>Project roles are used in conjunction with users and permission schemes.</p>
+        <p>Each permission scheme can have different permissions for each role.</p>
+    </div>
+
+    <div class="mt-3">
+        <a asp-route="UserPermissions">User Permissions</a>
+        <p>Grant or deny user permissions.</p>
+    </div>
+
+    <div class="mt-3">
+        <a asp-route="PermissionSchemes">Permission Schemes</a>
+        <p>Permission schemes allow you to have different sets of role permissions on different projects.</p>
+    </div>
+
+    <div class="mt-3">
+        <a asp-route="Priorities">Priorities</a>
+        <p>When a project is assigned a priority scheme, priorities within that scheme become available to issues in that project.</p>
+    </div>
+
+    <div class="mt-3">
+        <a asp-route="PrioritySchemes">Priority Schemes</a>
+        <p>Priority schemes allow you to group different priorities together. Each project can be assigned a priority scheme.</p>
+    </div>
+</div>
