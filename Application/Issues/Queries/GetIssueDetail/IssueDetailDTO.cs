@@ -10,6 +10,7 @@ namespace WhatBug.Application.Issues.Queries.GetIssueDetail
         public string Id { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
+        public int ProjectId { get; set; }
         public string ProjectName { get; set; }
 
         public int PriorityId { get; set; }
