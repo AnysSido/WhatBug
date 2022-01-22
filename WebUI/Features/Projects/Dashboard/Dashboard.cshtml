@@ -62,13 +62,12 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript" src="~/lib/chart-js/Chart.min.js"></script>
-
     <script>
         const issueStatuses = @Json.Serialize(@Model.IssueStatuses);
         const issuePriorities = @Json.Serialize(@Model.IssuePriorities);
         const issueTypes = @Json.Serialize(@Model.IssueTypes);
     </script>
 
-    <script type="text/javascript" src="~/js/Pages/Dashboard.js"></script>
+    <script type="text/javascript" src="~/lib/chart-js/chart.min.js"></script>
+    <script type="text/javascript" src="~/js/dashboard.js" asp-append-version="true"></script>
 }

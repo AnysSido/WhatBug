@@ -1,6 +1,6 @@
 const gulp = require('gulp'),
     rename = require('gulp-rename'),
-    sass = require('gulp-sass')(require('sass')),
+    sass = require('gulp-sass')(require('node-sass')),
     postcss = require('gulp-postcss'),
     cssnano = require('cssnano'),
     autoprefixer = require('autoprefixer'),
@@ -16,41 +16,23 @@ var paths = {
 };
 
 const libraries = [
-    // AdminLTE
     { from: 'admin-lte/dist', to: 'admin-lte' },
-    // Animate.css
     { from: 'animate.css', to: 'animate-css', glob: '/**/*.min.js' },
     { from: 'animate.css', to: 'animate-css', glob: '/**/*.min.css' },
-    // Bootstrap
     { from: 'bootstrap/dist', to: 'bootstrap' },
-    // ChartJS
     { from: 'chart.js/dist', to: 'chart-js'},
-    // Dragula
     { from: 'dragula/dist', to: 'dragula' },
-    // Dropzone
     { from: 'dropzone/dist/min', to: 'dropzone'},
-    // FontAwesome
-    //{ from: '@fortawesome/fontawesome-free/css', to: 'fontawesome-free/css' },
     { from: '@fortawesome/fontawesome-free/webfonts', to: '', path: paths.webfonts },
-    // FontIconPicker
     { from: '@fonticonpicker/fonticonpicker/dist', to: 'fonticonpicker' },
-    // Select2
     { from: 'select2/dist', to: 'select2' },
     { from: '@ttskch/select2-bootstrap4-theme/dist/', to: 'select2-bootstrap4-theme' },
-    // Bootstrap Select
     { from: 'bootstrap-select/dist', to: 'bootstrap-select' },
-    // Highlight.js
-    { from: 'highlight.js', to: 'highlight-js' },
-    // iCheck-Bootstrap
     { from: 'icheck-bootstrap', to: 'icheck-bootstrap', glob: '/**/*.min.css'},
-    // jQuery
     { from: 'jquery/dist', to: 'jQuery' },
-    // JQuery-ui
     { from: 'jquery-ui-dist', to: 'jquery-ui', glob: '/**/*.min.js' },
     { from: 'jquery-ui-dist', to: 'jquery-ui', glob: '/**/*.min.css' },
-    // Quill
     { from: 'quill/dist', to: 'quill' },
-    // SweetAlert2
     { from: 'sweetalert2/dist', to: 'sweetalert2' }
 ];
 
@@ -67,11 +49,7 @@ gulp.task('moveLibs', function () {
     return mergestream(tasks);
 });
 
-gulp.task('cleanLibs', function () {
-    return gulp.src(paths.libs, { read: false, allowEmpty: true }).pipe(clean());
-});
-
-gulp.task('styles', function () {
+gulp.task('buildStyles', function () {
     var plugins = [
         autoprefixer(),
         cssnano()
@@ -79,7 +57,7 @@ gulp.task('styles', function () {
     return gulp.src(paths.styles)
         .pipe(sass())
 
-        //.pipe(postcss(plugins))
+        .pipe(postcss(plugins))
 
         .pipe(rename(function (path) {
             path.basename = path.basename.toLowerCase() + '.min'
@@ -88,7 +66,31 @@ gulp.task('styles', function () {
         .pipe(gulp.dest(paths.css));
 });
 
+gulp.task('copyIcon', function () {
+    return gulp.src('./Assets/favicon.ico').pipe(gulp.dest('./wwwroot'));
+})
+
+gulp.task('cleanLibs', function () {
+    return gulp.src(paths.libs, { read: false, allowEmpty: true }).pipe(clean());
+});
+
+gulp.task('cleanStyles', function () {
+    return gulp.src(paths.css, { read: false, allowEmpty: true }).pipe(clean());
+});
+
+gulp.task('cleanFonts', function () {
+    return gulp.src(paths.webfonts, { read: false, allowEmpty: true }).pipe(clean());
+});
+
+gulp.task('clean', gulp.series('cleanLibs', 'cleanStyles', 'cleanFonts'));
+
 gulp.task('libs', gulp.series('cleanLibs', 'moveLibs'));
+
+gulp.task('styles', gulp.series('cleanStyles', 'buildStyles'));
+
+gulp.task('icon', gulp.series('copyIcon'));
+
+gulp.task('build', gulp.series('libs', 'styles', 'icon'));
 
 gulp.task('watch', function () {
     gulp.watch(paths.styles, gulp.series('styles'));
