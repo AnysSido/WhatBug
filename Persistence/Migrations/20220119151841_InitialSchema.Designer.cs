@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhatBug.Persistence;
@@ -11,9 +12,10 @@ using WhatBug.Persistence;
 namespace WhatBug.Persistence.Migrations
 {
     [DbContext(typeof(WhatBugDbContext))]
-    partial class WhatBugDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220119151841_InitialSchema")]
+    partial class InitialSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("IssueId");
 
-                    b.ToTable("Attachments", (string)null);
+                    b.ToTable("Attachments");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Color", b =>
@@ -65,7 +67,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors", (string)null);
+                    b.ToTable("Colors");
 
                     b.HasData(
                         new
@@ -401,7 +403,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Icons", (string)null);
+                    b.ToTable("Icons");
 
                     b.HasData(
                         new
@@ -689,7 +691,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("ReporterId");
 
-                    b.ToTable("Issues", (string)null);
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.IssueComment", b =>
@@ -718,7 +720,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("IssueId");
 
-                    b.ToTable("IssueComments", (string)null);
+                    b.ToTable("IssueComments");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.IssueStatus", b =>
@@ -734,7 +736,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IssueStatuses", (string)null);
+                    b.ToTable("IssueStatuses");
 
                     b.HasData(
                         new
@@ -782,7 +784,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("IconId");
 
-                    b.ToTable("IssueTypes", (string)null);
+                    b.ToTable("IssueTypes");
 
                     b.HasData(
                         new
@@ -821,7 +823,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions", (string)null);
+                    b.ToTable("Permissions");
 
                     b.HasData(
                         new
@@ -976,7 +978,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PermissionSchemes", (string)null);
+                    b.ToTable("PermissionSchemes");
 
                     b.HasData(
                         new
@@ -1008,7 +1010,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("PermissionSchemeRolePermissions", (string)null);
+                    b.ToTable("PermissionSchemeRolePermissions");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Priority", b =>
@@ -1043,7 +1045,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("IconId");
 
-                    b.ToTable("Priorities", (string)null);
+                    b.ToTable("Priorities");
 
                     b.HasData(
                         new
@@ -1077,7 +1079,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrioritySchemes", (string)null);
+                    b.ToTable("PrioritySchemes");
 
                     b.HasData(
                         new
@@ -1101,7 +1103,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("PriorityId");
 
-                    b.ToTable("PrioritySchemePriorities", (string)null);
+                    b.ToTable("PrioritySchemePriorities");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Project", b =>
@@ -1149,7 +1151,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("PrioritySchemeId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.ProjectRoleUser", b =>
@@ -1169,7 +1171,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProjectRoleUsers", (string)null);
+                    b.ToTable("ProjectRoleUsers");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Role", b =>
@@ -1188,7 +1190,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.User", b =>
@@ -1225,7 +1227,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.UserPermission", b =>
@@ -1252,7 +1254,7 @@ namespace WhatBug.Persistence.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("UserPermissions", (string)null);
+                    b.ToTable("UserPermissions");
                 });
 
             modelBuilder.Entity("WhatBug.Domain.Entities.Attachment", b =>

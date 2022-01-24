@@ -13,7 +13,6 @@
     "chart.js": "^3.7.0",
     "dragula": "^3.7.3",
     "dropzone": "^5.9.2",
-    "highlight.js": "^11.1.0",
     "icheck-bootstrap": "^3.0.1",
     "jquery": "^3.6.0",
     "jquery-filepond": "^1.0.0",
@@ -23,7 +22,10 @@
     "sweetalert2": "^10.15.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.10",
+    "@babel/preset-env": "^7.16.11",
     "autoprefixer": "^10.3.1",
+    "babel-loader": "^8.2.3",
     "cssnano": "^5.0.6",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
@@ -31,10 +33,18 @@
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.0.0",
     "merge-stream": "^2.0.0",
+    "node-sass": "^5.0.0",
+    "npm-run-all": "^3.1.1",
     "postcss": "^8.3.5",
-    "sass": "^1.35.2"
+    "webpack": "^5.38.1",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "build": "gulp styles"
+    "gulp-build": "gulp build",
+    "js-build": "webpack --mode=production",
+    "build": "run-p gulp-build js-build",
+    "dev": "webpack --mode=development"
   }
 }
