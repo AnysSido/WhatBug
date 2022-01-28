@@ -462,3 +462,4 @@ $RECYCLE.BIN/
 /WebUI/wwwroot/css/whatbug.min.css
 *.min.css
 /WebUI/.config/dotnet-tools.json
+docker-compose.override.yml

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31321.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "src\Persistence\Persistence.csproj", "{D4939921-78C3-4DDD-A6E4-82E6DF7C0A84}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EF38ED14-D124-497E-B5C4-D1086C1CBDEE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "tests\Application.UnitTests\Application.UnitTests.csproj", "{C71D964C-22B4-4C33-B6DE-AF48E7B1BA65}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4EEB4F42-D7E2-4CA4-99F1-07C1E38B8C79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{C71D964C-22B4-4C33-B6DE-AF48E7B1BA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C71D964C-22B4-4C33-B6DE-AF48E7B1BA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C71D964C-22B4-4C33-B6DE-AF48E7B1BA65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EEB4F42-D7E2-4CA4-99F1-07C1E38B8C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EEB4F42-D7E2-4CA4-99F1-07C1E38B8C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EEB4F42-D7E2-4CA4-99F1-07C1E38B8C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EEB4F42-D7E2-4CA4-99F1-07C1E38B8C79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
