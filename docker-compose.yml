@@ -1,0 +1,38 @@
+version: '3.4'
+
+networks:
+    whatbug:
+
+volumes:
+    dbdata:
+    pgadmindata:
+
+services:
+  webui:
+    image: ${DOCKER_REGISTRY-}webui
+    build:
+      context: .
+      dockerfile: src/WebUI/Dockerfile
+    environment:
+      ConnectionStrings__WhatBugDatabase: "${ConnectionStrings__WhatBugDatabase:-Host=postgres;Database=WhatBug;Username=postgres;Password=admin}"
+      ConnectionStrings__IdentityDatabase: "${ConnectionStrings__IdentityDatabase:-Host=postgres;Database=WhatBugIdentity;Username=postgres;Password=admin}"
+    ports:
+      - "8080:80"
+    networks:
+      - whatbug
+    depends_on:
+      - "postgres"
+
+  postgres:
+    image: postgres:14.1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      PGDATA: /var/lib/postgressql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - "dbdata:/var/lib/postgressql/data"
+    networks:
+        - whatbug
+    restart: unless-stopped
