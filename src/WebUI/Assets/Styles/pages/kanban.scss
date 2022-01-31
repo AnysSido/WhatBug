@@ -15,6 +15,12 @@
   background-color: #37393b3d;
 }
 
+.kanban-wrapper {
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow-x: scroll;
+}
+
 // Attachments
 .attachment-thumbnail-container {
   min-height: 100%;

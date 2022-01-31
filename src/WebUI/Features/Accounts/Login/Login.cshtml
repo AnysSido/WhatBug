@@ -6,15 +6,19 @@
 }
 
 <body class="hold-transition login-page">
+    <div class="col mb-3">
+        <div class="d-flex align-content-center align-items-center justify-content-center pt-3">
+            <img src="~/images/login-banner.png" alt="WhatBug Logo" asp-append-version="true">
+        </div>
+    </div>
+
     <div class="login-container">
         <div class="login-box">
             <div class="card card-outline card-primary">
-                <div class="card-header text-center">
-                    <a href="../../index2.html" class="h1"><b>What</b>Bug</a>
+                <div class="card-header text-center login-card-header">
+                    <h2 class="login-title"><b>Sign in</b></h2>
                 </div>
                 <div class="card-body">
-                    <p class="login-box-msg">Sign in</p>
-
                     <form method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="input-group mb-3">
@@ -48,13 +52,11 @@
                         </div>
                     </form>
 
-                    <p class="mb-1">
-                        <a href="forgot-password.html">I forgot my password</a>
-                    </p>
+
                     @if (@Model.RegistrationEnabled == true)
                     {
                         <p class="mb-0">
-                            <a asp-action="Register" class="text-center">Create an account</a>
+                            <a asp-route="Register" class="text-center">Create an account</a>
                         </p>
                     }
                     else
@@ -71,25 +73,22 @@
         {
             <div class="login-box align-items-stretch">
                 <div class="card card-outline card-danger h-100">
-                    <div class="card-header text-center">
-                        <a href="../../index2.html" class="h1"><b>Demo</b></a>
+                    <div class="card-header text-center login-card-header">
+                        <h2 class="login-title"><b>Demo</b></h2>
                     </div>
                     <div class="card-body">
-                        <p class="login-box-msg">Demo accounts are real accounts placed in <b>read-only</b> mode.</p>
-                        <p class="login-box-msg">Read-only mode grants complete access to the system but no changes will be saved.</p>
+                        <p class="login-box-msg">Sign into an admin account in <b>read-only</b> mode. <br>Grants full access to the application but changes are not saved.</p>
 
-                        <form method="post" asp-route="LoginDemo">
-                                <button type="submit" class="btn btn-danger btn-block" asp-route="LoginDemo">Admin (Read Only)</button>
+                        <form method="post" asp-route="LoginDemo" class="mt-2">
+                            <button type="submit" class="btn btn-danger btn-block" asp-route="LoginDemo">Admin (Read Only)</button>
                         </form>
                     </div>
                 </div>
             </div>
         }
     </div>
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
+
+    <script type="text/javascript" src="~/lib/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/lib/admin-lte/js/adminlte.min.js"></script>
 </body>

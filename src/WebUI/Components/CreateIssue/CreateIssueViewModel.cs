@@ -25,6 +25,7 @@ namespace WhatBug.WebUI.Components.CreateIssue
         [Display(Name = "Assignee")]
         public int AssigneeId { get; set; }
 
+        [Display(Name = "Reporter")]
         public int ReporterId { get; set; }
 
         public ProjectDTO Project { get; set; }
