@@ -23,7 +23,7 @@ namespace WhatBug.WebUI.Features.Accounts
             _whatBugSettings = whatbugSettings.Value;
         }
 
-        [HttpGet]
+        [HttpGet("register", Name = "Register")]
         public IActionResult Register()
         {
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
@@ -32,7 +32,7 @@ namespace WhatBug.WebUI.Features.Accounts
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("register", Name = "Register")]
         public async Task<IActionResult> Register(RegisterViewModel vm)
         {
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
@@ -46,7 +46,7 @@ namespace WhatBug.WebUI.Features.Accounts
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
+        [HttpGet("login", Name = "Login")]
         public IActionResult Login()
         {
             var vm = new LoginViewModel 
@@ -57,7 +57,7 @@ namespace WhatBug.WebUI.Features.Accounts
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpPost("login", Name = "Login")]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -80,7 +80,7 @@ namespace WhatBug.WebUI.Features.Accounts
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
+        [HttpGet("logout", Name = "Logout")]
         public async Task<IActionResult> Logout()
         {
             await _authProvider.SignOutAsync();

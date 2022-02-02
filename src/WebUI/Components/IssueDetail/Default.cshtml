@@ -167,11 +167,11 @@
                                 <div class="ml-3">
                                     <div class="my-3">
                                         <avatar email="@Model.AssigneeEmail" class="user-image img-circle img-sm mr-2" />
-                                        @Model.AssigneeFirstName @Model.AssigneeSurname
+                                        <a asp-route="Profile" asp-route-userId="@Model.AssigneeId">@Model.AssigneeFirstName @Model.AssigneeSurname</a>
                                     </div>
                                     <div class="my-3">
                                         <avatar email="@Model.ReporterEmail" class="user-image img-circle img-sm mr-2" />
-                                        @Model.ReporterFirstName @Model.ReporterSurname
+                                        <a asp-route="Profile" asp-route-userId="@Model.ReporterId">@Model.ReporterFirstName @Model.ReporterSurname</a>
                                     </div>
                                 </div>
                             </div>

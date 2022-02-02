@@ -19,7 +19,7 @@ namespace WhatBug.Application.Common.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            if (_currentUserService.IsReadOnly)
+            if (_currentUserService.IsAuthenticated && _currentUserService.IsReadOnly)
             {
                 var responseType = typeof(TResponse);
 

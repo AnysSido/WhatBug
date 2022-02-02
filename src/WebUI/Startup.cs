@@ -36,8 +36,8 @@ namespace WebUI
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/accounts/login";
-                options.LogoutPath = "/accounts/logout";
+                options.LoginPath = "/login";
+                options.LogoutPath = "/logout";
             });
 
             services.AddTransient<ICurrentUserService, CurrentUserService>();

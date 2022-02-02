@@ -8,8 +8,10 @@ const gulp = require('gulp'),
     clean = require('gulp-clean');
 
 var paths = {
-    styles: './Assets/Styles/**/*.scss',
+    cssAssets: './Assets/Styles/**/*.scss',
+    imageAssets: './Assets/Images/**/*.*',
     css: './wwwroot/css',
+    images: './wwwroot/images',
     libs: './wwwroot/lib',
     webfonts: './wwwroot/webfonts',
     nodeModules: './node_modules'
@@ -36,6 +38,12 @@ const libraries = [
     { from: 'sweetalert2/dist', to: 'sweetalert2' }
 ];
 
+// Libs
+gulp.task('cleanLibs', function () {
+    return gulp.src(paths.libs, { read: false, allowEmpty: true }).pipe(clean());
+});
+
+
 gulp.task('moveLibs', function () {
     var tasks = [];
     for (const library of libraries) {
@@ -49,12 +57,19 @@ gulp.task('moveLibs', function () {
     return mergestream(tasks);
 });
 
+gulp.task('libs', gulp.series('cleanLibs', 'moveLibs'));
+
+// Styles
+gulp.task('cleanStyles', function () {
+    return gulp.src(paths.css, { read: false, allowEmpty: true }).pipe(clean());
+});
+
 gulp.task('buildStyles', function () {
     var plugins = [
         autoprefixer(),
         cssnano()
     ];
-    return gulp.src(paths.styles)
+    return gulp.src(paths.cssAssets)
         .pipe(sass())
 
         .pipe(postcss(plugins))
@@ -66,32 +81,34 @@ gulp.task('buildStyles', function () {
         .pipe(gulp.dest(paths.css));
 });
 
+gulp.task('styles', gulp.series('cleanStyles', 'buildStyles'));
+
+// Images
+gulp.task('cleanImages', function () {
+    return gulp.src(paths.images, { read: false, allowEmpty: true }).pipe(clean());
+});
+
+gulp.task('copyImages', function () {
+    return gulp.src(paths.imageAssets).pipe(gulp.dest(paths.images));
+})
+
+gulp.task('images', gulp.series('cleanImages', 'copyImages'));
+
+// Icon
 gulp.task('copyIcon', function () {
     return gulp.src('./Assets/favicon.ico').pipe(gulp.dest('./wwwroot'));
 })
 
-gulp.task('cleanLibs', function () {
-    return gulp.src(paths.libs, { read: false, allowEmpty: true }).pipe(clean());
-});
+gulp.task('icon', gulp.series('copyIcon'));
 
-gulp.task('cleanStyles', function () {
-    return gulp.src(paths.css, { read: false, allowEmpty: true }).pipe(clean());
-});
-
+// Fonts
 gulp.task('cleanFonts', function () {
     return gulp.src(paths.webfonts, { read: false, allowEmpty: true }).pipe(clean());
 });
 
-gulp.task('clean', gulp.series('cleanLibs', 'cleanStyles', 'cleanFonts'));
-
-gulp.task('libs', gulp.series('cleanLibs', 'moveLibs'));
-
-gulp.task('styles', gulp.series('cleanStyles', 'buildStyles'));
-
-gulp.task('icon', gulp.series('copyIcon'));
-
-gulp.task('build', gulp.series('libs', 'styles', 'icon'));
-
+// Global
+gulp.task('clean', gulp.series('cleanLibs', 'cleanStyles', 'cleanFonts', 'cleanImages'));
+gulp.task('build', gulp.series('libs', 'styles', 'icon', 'images'));
 gulp.task('watch', function () {
-    gulp.watch(paths.styles, gulp.series('styles'));
+    gulp.watch(paths.cssAssets, gulp.series('styles'));
 });

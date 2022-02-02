@@ -5,7 +5,7 @@
 
 @{
 
-    <div class="page-container">
+    <div class="page-container px-sm-3">
         <div class="text-block">
             <p>
                 Priority schemes allow you to group different priorities together.
@@ -25,7 +25,7 @@
             </p>
         </div>
 
-        <table class="table">
+        <table class="table table-responsive">
             <thead>
                 <tr>
                     <th class="table__header">Scheme Name</th>
@@ -45,7 +45,7 @@
                         <td>
                             @foreach (var priority in scheme.Priorities)
                             {
-                                <div>
+                                <div style="min-width: 100px;">
                                     <icon icon="@priority.IconWebName" color="@priority.ColorName" />
                                     <b>@priority.Name</b>
                                 </div>

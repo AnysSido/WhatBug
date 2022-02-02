@@ -72,12 +72,41 @@
     gap: 5px;
 }
 
+.login-page {
+    min-height: 100vh !important;
+    height: 100%;
+}
+
 .login-container {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.login-card-header {
+    padding: 0.1rem 1.25rem;
+}
+
+.login-title {
+    margin: 5px;
 }
 
 .read-only-banner {
     border-radius: 0px;
+}
+
+.brand-image {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    max-height: 42px !important;
+    margin-left: 0.5rem !important;
+    margin-top: 0px !important;
+}
+
+.brand-text {
+    max-height: 42px !important;
+    margin-left: 0px !important;
 }
