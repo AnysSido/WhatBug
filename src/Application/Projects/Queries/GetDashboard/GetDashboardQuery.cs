@@ -93,6 +93,7 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
                 .Take(5)
                 .Select(c => new IssueCommentDTO
                 {
+                    AuthorId = c.AuthorId,
                     Author = $"{c.Author.FirstName} {c.Author.Surname}",
                     Email = c.Author.Email,
                     IssueId = c.IssueId,

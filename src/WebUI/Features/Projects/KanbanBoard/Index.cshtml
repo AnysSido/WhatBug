@@ -6,6 +6,17 @@
 
 @{
     
+    <div class="kanban-warning d-none">
+        <div class="alert alert--danger alert--dismissible">
+            <button class="alert__dismiss" type="button" data-dismiss="alert" aria-hidden="true">×</button>
+            <p>
+                <i class="icon icon--danger"></i>
+                The kanban board is optimised for desktop use and may not function correctly with touchscreens or
+                on devices with a resolution below 1024x768.
+            </p>
+        </div>
+    </div>
+
   <div class="d-flex kanban-wrapper">
 
       @foreach (var status in Model.IssueStatusGroups)

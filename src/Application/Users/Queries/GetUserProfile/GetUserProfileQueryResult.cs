@@ -30,6 +30,7 @@ namespace WhatBug.Application.Users.Queries.GetUserProfile
 
     public class IssueCommentDTO
     {
+        public int AuthorId { get; set; }
         public string Author { get; set; }
         public string Email { get; set; }
         public string IssueId { get; set; }

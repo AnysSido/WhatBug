@@ -68,4 +68,8 @@ $(function ($) {
     if(typeof issue !== 'undefined'){
         ShowIssueDetailComponent(issue);
     }
+
+    if (window.matchMedia("(max-width: 1024px)").matches || matchMedia('(hover: none), (pointer: coarse)').matches) {
+        $('.kanban-warning').removeClass('d-none');
+      }
 });
