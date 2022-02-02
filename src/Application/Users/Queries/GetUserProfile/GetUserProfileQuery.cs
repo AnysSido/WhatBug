@@ -65,6 +65,7 @@ namespace WhatBug.Application.Users.Queries.GetUserProfile
                 .Take(10)
                 .Select(c => new IssueCommentDTO
                 {
+                    AuthorId = c.AuthorId,
                     Author = $"{c.Author.FirstName} {c.Author.Surname}",
                     Email = c.Author.Email,
                     IssueId = c.IssueId,
