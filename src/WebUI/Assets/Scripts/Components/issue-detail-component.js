@@ -57,6 +57,7 @@ class IssueDetailComponent {
 
         // Attachments
         this.requestVerificationToken = this.issueDetailComponent.find('[name="__RequestVerificationToken"]');
+        this.dropzoneEmptyContainer = this.issueDetailComponent.find('.attachments-empty');
 
         // Comments
         this.commentForm = this.issueDetailComponent.find('.commentForm');
@@ -124,7 +125,6 @@ class IssueDetailComponent {
 
         this.issueDetailComponent.on('hidden.bs.modal', () => {
             this.issueDetailComponent.remove();
-            window.location = window.location.pathname;
         });
     };
 
@@ -208,7 +208,11 @@ class IssueDetailComponent {
         var previewTemplate = $(".attachment-thumbnail-container").html();
         $(".attachment-thumbnail-container").html("");
 
-        var dropzone = new Dropzone('.issue-detail-body', {
+        if ($('.attachmentCount').val() > 0) {
+            this.dropzoneEmptyContainer.hide();
+        }
+
+        var dropzone = new Dropzone('.dropzoneNew', {
             url: '/attachments/create',
             params: { issueId: this.issueId.val() },
             headers: {'RequestVerificationToken': this.requestVerificationToken.val() },

@@ -2,16 +2,16 @@
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
+    <ul class="navbar-nav d-flex align-items-center">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
+        <li class="nav-item d-sm-inline-block">
             <a asp-route="Home" class="nav-link">Home</a>
         </li>
 
-        <li class="nav-item d-none d-sm-inline-block">
-            <button id="createIssueModal" type="button" class="btn btn-primary">Create</button>
+        <li class="nav-item d-sm-inline-block">
+            <button id="createIssueModal" type="button" class="btn btn-primary btn-sm">Create</button>
         </li>
 
     </ul>
@@ -22,8 +22,8 @@
         @if (Model.UserLoggedIn)
         {
         <li class="nav-item dropdown user-menu">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <avatar email="@Model.UserEmail" class="user-image img-circle elevation-2">
+            <a href="#" class="nav-link dropdown-toggle pr-0 pr-md-3" data-toggle="dropdown">
+                <avatar email="@Model.UserEmail" class="user-image img-circle elevation-2 mr-0 mr-md-2" style="margin-top: -5px;">
                     <span class="d-none d-md-inline">@Model.UserFullName</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

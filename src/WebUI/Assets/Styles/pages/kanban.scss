@@ -11,10 +11,6 @@
   min-height: 30px !important;
 }
 
-#IssueDetailComponent .editable:hover {
-  background-color: #37393b3d;
-}
-
 .kanban-wrapper {
   flex-wrap: nowrap;
   width: 100%;
@@ -93,26 +89,35 @@
   vertical-align: top;
 }
 
+#IssueDetailComponent .editable:hover {
+  background-color: #37393b3d;
+}
+
+#IssueDetailComponent .dropzoneNew {
+  min-height: 80px;
+}
+
+#IssueDetailComponent .attachments-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  background-color: #ebeef0;
+  border: dashed 2px #9a9b9c;
+  pointer-events: none;
+}
+
+#IssueDetailComponent .attachment-thumbnail-container {
+  pointer-events: none;
+}
+
+#IssueDetailComponent .user-image {
+  height: 1.5rem; 
+  width: 1.5rem;
+}
+
 #IssueDetailComponent {
   .ql-editor {
     resize: none;
-  }
-
-  .modal-dialog {
-    max-height: 90vh;
-    width: 70vw;
-
-    .modal-content {
-      height: 100%;
-    }
-
-    .issue-detail-body {
-      min-height: 0;
-
-      & > div {
-        height: 100%;
-        overflow-y: auto;
-      }
-    }
   }
 }

@@ -1,179 +1,185 @@
 ﻿@model WhatBug.Application.Issues.Queries.GetIssueDetail.IssueDetailDTO
 
-    <div class="issueDetailModal modal-dialog-scrollable" >
-        <div class="modal-dialog modal-xl ">
-            <div class="modal-content" >
-                <div class="modal-body d-flex flex-column px-5 pt-5 pb-0">
+<div class="issueDetailModal modal-dialog modal-xl">
+    <div class="modal-content">
 
-                    <div class="data">
-                        <input type="hidden" asp-for="@Model.Id" class="issueId" />
-                        <input type="hidden" asp-for="Description" class="issueDescription" />
-                        <input type="hidden" asp-for="@Model.IssueTypeId" class="issueTypeId" />
-                        <input type="hidden" asp-for="@Model.PriorityId" class="priorityId" />
+        <!-- Header Row -->
+        <div class="modal-header pb-0">
+            <div class="col col-12">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="px-xl-3 pt-xl-2">
+                    <a asp-route="Dashboard" asp-route-projectId="@Model.ProjectId">@Model.ProjectName</a> / @Model.Id
+                </div>
+
+                <!-- Issue Title -->
+                <div class="js-issue-summary editable px-xl-3">
+                    <h4 class="js-summary-display">@Model.Summary</h4>
+                </div>
+
+                <div class="my-2 js-issue-summary-edit d-none px-xl-3">
+                    <div class="input-group">
+                        <input class="form-control js-summary-input" asp-for="Summary" />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-success js-summary-confirm"><i class="icon icon--check"></i></button>
+                            <button type="button" class="btn btn-danger js-summary-cancel"><i class="icon icon--x-mark"></i></button>
+                        </span>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Header Row -->
-                    <div class="row">
-                        <div class="col">
-                            <span><a asp-route="Dashboard" asp-route-projectId="@Model.ProjectId">@Model.ProjectName</a> / @Model.Id</span>
+        <div class="modal-body">
+
+            <div class="data">
+                <input type="hidden" asp-for="@Model.Id" class="issueId" />
+                <input type="hidden" asp-for="Description" class="issueDescription" />
+                <input type="hidden" asp-for="@Model.IssueTypeId" class="issueTypeId" />
+                <input type="hidden" asp-for="@Model.PriorityId" class="priorityId" />
+                <input type="hidden" asp-for="@Model.AttachmentCount" class="attachmentCount" />
+            </div>
+            <div class="px-xl-4">
+                <div class="row">
+                    <div class="col-12 col-xl-8">
+                        <label>Details</label>
+                        <!-- Issue Type -->
+                        <div class="row col-12">
+                            <div class="col-6">
+                                <div>Issue Type</div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="js-issue-type-select-wrapper d-none">
+                                    <select class="select2 js-issue-type-select">
+                                        @foreach (var issueType in Model.IssueTypes)
+                                        {
+                                            <option data-icon="@issueType.IconWebName"
+                                                data-icon-color="@issueType.ColorName.ToLower()"
+                                                value="@issueType.Id">@issueType.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="editable js-issue-type"><icon icon="@Model.IssueTypeIconWebName" color="@Model.IssueTypeIconColor" /> @Model.IssueTypeName</div>
+                            </div>
+                        </div>
+
+                        <!-- Priority -->
+                        <div class="row col-12 mt-2 mt-xl-3">
+                            <div class="col-6">
+                                <div>Priority</div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="js-priority-select-wrapper d-none">
+                                    <select class="select2 js-priority-select">
+                                        @foreach (var priority in Model.Priorities)
+                                        {
+                                            <option data-icon="@priority.IconWebName"
+                                                data-icon-color="@priority.ColorName.ToLower()"
+                                                value="@priority.Id">@priority.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="editable js-priority"><icon icon="@Model.PriorityIconWebName" color="@Model.PriorityIconColor" /> @Model.PriorityName</div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Body -->
-                    <div class="row flex-grow-1 issue-detail-body">
+                    <div class="col-12 col-xl-4 mt-3 mt-xl-0">
+                        <label>People</label>
+                        <!-- Assignee -->
+                        <div class="row col-12">
+                            <div class="col-6">
+                                <div>Assignee</div>
+                            </div>
+                            <div class="col-6 d-flex align-items-center">
+                                <avatar email="@Model.AssigneeEmail" class="user-image img-circle img-sm mr-2" />
+                                <a asp-route="Profile" asp-route-userId="@Model.AssigneeId">@Model.AssigneeFirstName @Model.AssigneeSurname</a>
+                            </div>
+                        </div>
 
-                        <!-- Left Column -->
-                        <div class="col col-8">
+                        <!-- Reporter -->
+                        <div class="row col-12 mt-2 mt-xl-3">
+                            <div class="col-6">
+                                <div>Reporter</div>
+                            </div>
+                            <div class="col-6 d-flex align-items-center">
+                                <avatar email="@Model.ReporterEmail" class="user-image img-circle img-sm mr-2" />
+                                <a asp-route="Profile" asp-route-userId="@Model.ReporterId">@Model.ReporterFirstName @Model.ReporterSurname</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- Title -->
-                            <div class="my-2 js-issue-summary editable">
-                                <h4 class="js-summary-display">@Model.Summary</h4>
+                <!-- Quill Editor -->
+                <div class="row">
+                    <div class="mt-3 col-12 col-xl-8">
+                        <label asp-for="Description"></label>
+                        <div class="quill-editor"></div>
+                    </div>
+                </div>
+
+                <!-- Attachments -->
+                <div class="row">
+                    <div class="mt-2 col-12 col-xl-8">
+                        <label>Attachments (@Model.AttachmentCount) </label>
+
+                        <form class="dropzoneNew">
+                            <input name="issueId" type="hidden" value="@Model.Id" />
+                            @Html.AntiForgeryToken()
+
+                            <div class="attachments-empty">
+                                <p>Click or drop attachments here</p>
                             </div>
 
-                            <div class="my-2 js-issue-summary-edit d-none">
+                            <!-- Attachment Container -->
+                            <div class="attachment-thumbnail-container d-flex flex-row flex-wrap justify-content-start">
+                                <div class="attachment-thumbnail-template d-flex flex-column m-1">
+                                    <!-- Thumbnail -->
+                                    <img class="attachment-image" data-dz-thumbnail>
+                                    <!-- Buttons-->
+                                    <div class="attachment-buttons-container d-flex justify-content-end">
+                                        <a class="btn btn-app attachment-button">
+                                            <i class="fa fa-download"></i>
+                                        </a>
+                                        <a class="btn btn-app attachment-button">
+                                            <i class="fa fa-ellipsis-h"></i>
+                                        </a>
+                                    </div>
+                                    <!-- Progress bar -->
+                                    <div class="progress mt-auto" style="height: 5px;">
+                                        <div class="progress-bar" data-dz-uploadprogress style="width: 25%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <!-- Filename-->
+                                    <div class="attachment-name-container p-1 d-flex">
+                                        <span class="attachment-name m-auto" data-dz-name></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Comments -->
+                <div class="row">
+                    <div class="comments mt-3 col-12 col-xl-8">
+                        <label>Comments</label>
+
+                        <div class="col direct-chat direct-chat">
+                            <form method="post" class="commentForm mb-3">
                                 <div class="input-group">
-                                    <input class="form-control js-summary-input" asp-for="Summary" />
+                                    <input type="text" placeholder="Enter comment ..." class="form-control commentContent" />
                                     <span class="input-group-append">
-                                        <button type="button" class="btn btn-success js-summary-confirm"><i class="icon icon--check"></i></button>
-                                        <button type="button" class="btn btn-danger js-summary-cancel"><i class="icon icon--x-mark"></i></button>
+                                        <button type="submit" class="btn btn-secondary">Send</button>
                                     </span>
                                 </div>
-                            </div>
+                            </form>
 
-                            <!-- Issue Properties-->
-                            <div>
-                                <div class="container">
-                                    <div class="row">
-
-                                        <!-- Issue Type Selection -->
-                                        <div class="col w-50">
-                                            <div class="col-form-label">Issue Type</div>
-                                        </div>
-
-                                        <div class="col">                                            
-                                            <div class="js-issue-type-select-wrapper d-none">
-                                                <select class="select2 js-issue-type-select">
-                                                    @foreach (var issueType in Model.IssueTypes)
-                                                    {
-                                                        <option data-icon="@issueType.IconWebName" 
-                                                        data-icon-color="@issueType.ColorName.ToLower()" 
-                                                        value="@issueType.Id">@issueType.Name</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="col-form-label editable js-issue-type"><icon icon="@Model.IssueTypeIconWebName" color="@Model.IssueTypeIconColor" /> @Model.IssueTypeName</div>
-                                        </div>
-
-                                        <div class="w-100"></div>
-                                        
-                                        <!-- Issue Priority Selection -->
-                                        <div class="col w-50">
-                                            <div class="col-form-label">Priority</div>
-                                        </div>
-
-                                        <div class="col">
-                                            <div class="js-priority-select-wrapper d-none">
-                                                <select class="select2 js-priority-select">
-                                                    @foreach (var priority in Model.Priorities)
-                                                    {
-                                                        <option data-icon="@priority.IconWebName"
-                                                        data-icon-color="@priority.ColorName.ToLower()"
-                                                        value="@priority.Id">@priority.Name</option>
-                                                    }
-                                                </select>
-                                             </div>
-                                            <div class="col-form-label editable js-priority"><icon icon="@Model.PriorityIconWebName" color="@Model.PriorityIconColor" /> @Model.PriorityName</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Quill Editor -->
-                            <div class="mt-3">
-                                <label asp-for="Description"></label>
-                                <div class="quill-editor"></div>
-                            </div>
-
-                            <!-- Attachments -->
-                            <div class="mt-3">
-                                <label>Attachments (@Model.AttachmentCount) </label>
-
-                                <form class="dropzoneNew">
-                                    @*<div style="width: 100%; height: 100%;">*@
-                                        <input name="issueId" type="hidden" value="@Model.Id" />
-                                        @Html.AntiForgeryToken()
-
-                                        <!-- Attachment Container -->
-                                        <div class="attachment-thumbnail-container d-flex flex-row flex-wrap justify-content-start">             
-                                            <div class="attachment-thumbnail-template d-flex flex-column m-1">
-                                                <!-- Thumbnail -->
-                                                <img class="attachment-image" data-dz-thumbnail>
-                                                <!-- Buttons-->
-                                                <div class="attachment-buttons-container d-flex justify-content-end">
-                                                    <a class="btn btn-app attachment-button">
-                                                        <i class="fa fa-download"></i>
-                                                    </a>
-                                                    <a class="btn btn-app attachment-button">
-                                                        <i class="fa fa-ellipsis-h"></i>
-                                                    </a>
-                                                </div>
-                                                <!-- Progress bar -->
-                                                <div class="progress mt-auto" style="height: 5px;">
-                                                    <div class="progress-bar" data-dz-uploadprogress style="width: 25%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <!-- Filename-->
-                                                <div class="attachment-name-container p-1 d-flex">
-                                                    <span class="attachment-name m-auto" data-dz-name></span>
-                                                </div>
-                                            </div>                                          
-                                        </div>
-                                    @*</div>*@
-                                </form>
-                            </div>
-
-                            <!-- Comments -->
-                            <p class="mt-3"><b>Comments</b></p>
-                            <div class="col direct-chat direct-chat mb-5">
-                                <form method="post" class="commentForm mb-3">
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Enter comment ..." class="form-control commentContent" />
-                                        <span class="input-group-append">
-                                            <button type="submit" class="btn btn-secondary">Send</button>
-                                        </span>
-                                    </div>
-                                </form>
-
-                                <div class="issueComments">
-                                    <!-- Comments are loaded here via ajax -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right Column-->
-                        <div class="col col-4">
-                            <!-- People -->
-                            <p class="ml-3"><b>People</b></p>
-                            <div class="d-flex align-content-start ml-3">
-                                <!-- Labels -->
-                                <div class="mr-3">
-                                    <div class="my-3">
-                                        Assignee
-                                    </div>
-                                    <div class="my-3">
-                                        Reporter
-                                    </div>
-                                </div>
-                                <!-- Values -->
-                                <div class="ml-3">
-                                    <div class="my-3">
-                                        <avatar email="@Model.AssigneeEmail" class="user-image img-circle img-sm mr-2" />
-                                        <a asp-route="Profile" asp-route-userId="@Model.AssigneeId">@Model.AssigneeFirstName @Model.AssigneeSurname</a>
-                                    </div>
-                                    <div class="my-3">
-                                        <avatar email="@Model.ReporterEmail" class="user-image img-circle img-sm mr-2" />
-                                        <a asp-route="Profile" asp-route-userId="@Model.ReporterId">@Model.ReporterFirstName @Model.ReporterSurname</a>
-                                    </div>
-                                </div>
+                            <div class="issueComments">
+                                <!-- Comments are loaded here via ajax -->
                             </div>
                         </div>
                     </div>
@@ -181,3 +187,4 @@
             </div>
         </div>
     </div>
+</div>

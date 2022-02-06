@@ -14,10 +14,11 @@ class CreateIssueComponent {
         });
     }
 
-    #BuildComponent(modal) {
+    #BuildComponent(modal, firstLoad) {
         this.createIssueComponent.html(modal);
         this.#SetVars();
         this.#RegisterEvents();
+        this.#RegisterModalEvents();
         this.#LoadComponents();        
     }
 
@@ -34,7 +35,7 @@ class CreateIssueComponent {
         this.projectSelector = this.createIssueModal.find('.projectselector');
 
         // Cancel confirm modal
-        this.confirmModal = this.createIssueModal.find('.confirmCancelModel');
+        this.confirmModal = this.createIssueComponent.find('.confirmCancelModel');
         this.cancelConfirm = this.confirmModal.find('.cancelConfirm');
         this.cancelGoBack = this.confirmModal.find('.cancelGoBack');
 
@@ -56,23 +57,39 @@ class CreateIssueComponent {
         });
     }
 
-    #RegisterEvents = () => {       
-        this.cancelIssueButton.click(() => {
-            if (this.#HasChanges()) {
+    #RegisterModalEvents = () => {
+        // Intercept the main modal closing with changes and show the confirm modal if not already shown
+        this.createIssueComponent.on('hide.bs.modal', (e) => {
+            if (this.#HasChanges() && !this.confirmModal.hasClass('show')) {
+                e.preventDefault();
                 $('body').append(this.confirmModal);
                 this.confirmModal.modal('show');
-            } else {
-                this.createIssueComponent.modal('hide');
             }
         });
 
+        // Hack to close the main modal after the confirm modal because for some reason
+        // they won't both close if 'hide' is called at the same time on both.
         this.cancelConfirm.on('click', () => {
+            this.confirmModal.one('hide.bs.modal', () => {
+                this.createIssueComponent.modal('hide');
+            });
             this.confirmModal.modal('hide');
-            this.createIssueComponent.modal('hide');
         });
 
+        // Hide the confirm modal if cancel is clicked
         this.cancelGoBack.on('click', () => {
             this.confirmModal.modal('hide');
+        });
+
+        // When the main modal has closed, remove the whole element
+        this.createIssueComponent.one('hidden.bs.modal', () => {
+            this.createIssueComponent.remove();
+        }); 
+    }
+
+    #RegisterEvents = () => {      
+        this.cancelIssueButton.click(() => {
+            this.createIssueComponent.modal('hide');
         });
 
         this.projectSelector.on('select2:select', (e) => {
@@ -87,6 +104,7 @@ class CreateIssueComponent {
             $.post('/createissuecomponent/createissue', this.mainForm.serialize())
             .done((modal) => {
                 if (modal.success) {
+                    this.confirmModal.addClass('show'); // See hack above
                     this.createIssueComponent.modal('hide');
                 } else {
                     this.#BuildComponent(modal);

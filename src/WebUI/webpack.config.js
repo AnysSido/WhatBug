@@ -6,6 +6,7 @@ const path = require('path');
 var config = {
     entry: {
         'whatbug': './Assets/Scripts/whatbug',
+        'home': './Assets/Scripts/Pages/home',
         'dashboard': './Assets/Scripts/Pages/dashboard',
         'kanban': './Assets/Scripts/Pages/kanban',
         'create-edit-project': './Assets/Scripts/Pages/create-edit-project',
