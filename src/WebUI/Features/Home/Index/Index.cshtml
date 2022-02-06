@@ -4,14 +4,16 @@
     ViewData["Title"] = "Home";
 }
 
-<h5 class="mb-3">My Projects</h5>
-<partial name="_MyProjects.cshtml" />
+<h5>My Projects</h5>
+<div class="row justify-content-center justify-content-md-start">
+    <partial name="_MyProjects.cshtml" />
+</div>
 
 
-<h5 class="mt-5 mb-3">My Tasks</h5>
+<h5 class="mt-4 mb-4">My Tasks</h5>
 
 <div class="row">
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-6 mb-3">
         <partial name="_ToDoIssues.cshtml" />
     </div>
 
@@ -20,3 +22,7 @@
     </div>
 </div>
 
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-knob/jquery.knob.min.js"></script>
+    <script type="text/javascript" src="~/js/home.js" asp-append-version="true"></script>
+}
