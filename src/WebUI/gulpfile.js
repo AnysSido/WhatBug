@@ -32,6 +32,7 @@ const libraries = [
     { from: 'bootstrap-select/dist', to: 'bootstrap-select' },
     { from: 'icheck-bootstrap', to: 'icheck-bootstrap', glob: '/**/*.min.css'},
     { from: 'jquery/dist', to: 'jQuery' },
+    { from: 'jquery-knob/dist', to: 'jquery-knob'},
     { from: 'jquery-ui-dist', to: 'jquery-ui', glob: '/**/*.min.js' },
     { from: 'jquery-ui-dist', to: 'jquery-ui', glob: '/**/*.min.css' },
     { from: 'quill/dist', to: 'quill' },

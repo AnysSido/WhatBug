@@ -1,4 +1,45 @@
-﻿<div class="card">
+﻿@foreach (var project in @Model.Projects)
+{
+    <div class="card px-0 m-3 col-12 col-sm-6 col-lg-4 d-xl-none" style="max-width: 300px;">
+        <div class="card-body p-0">
+            <div class="col m-0 pt-2 bg-primary d-flex flex-column align-items-center" style="height: 150px; border-radius: 0.25rem 0.25rem 0 0;">
+                <input type="text" class="dial" value="@project.ProgressPercent">
+                <h5 style="color: rgba(255, 255, 255, 0.7)">Complete</h5>
+            </div>
+            <div class="py-3 px-3">
+                <div class="row m-0">
+                    <h3 class="card-title"><b>@project.Name</b></h3>
+                </div>
+
+                <div class="row m-0">
+                    <small class="text-secondary">
+                        Created @project.Created.ToString("dd-MM-yyyy") by <a asp-route="Profile" asp-route-userId="@project.CreatorId" asp class="user-list-name">@project.CreatorName</a>
+                    </small>
+                </div>
+
+                <div class="row m-0 mt-2">
+                    <p class="text-secondary">@project.Description</p>
+                </div>
+
+                <div class="row m-0 mt-3 w-100">
+                    <a asp-route="Dashboard" asp-route-projectId="@project.Id" class="btn btn-sm btn-primary btn-block">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </div>
+
+                <div class="row m-0 mt-2 w-100">
+                    <a asp-route="KanbanBoard" asp-route-projectId="@project.Id" class="btn btn-sm btn-primary btn-block">
+                        <i class="fas fa-columns -alt"></i>
+                        Kanban Board
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card d-none d-xl-block w-100">
     <div class="card-body table-responsive p-0">
         <table class="table table-striped projects">
             <thead>
@@ -30,7 +71,7 @@
                         </td>
                         <td>
                             <avatar email="@project.CreatorEmail" class="img-circle img-bordered-sm" style="height: 40px; width: 40px;">
-                            <a asp-route="Profile" asp-route-userId="@project.CreatorId" asp class="user-list-name">@project.CreatorName</a>
+                                <a asp-route="Profile" asp-route-userId="@project.CreatorId" asp class="user-list-name">@project.CreatorName</a>
                         </td>
                         <td class="project_progress">
                             <div class="progress progress-sm">
