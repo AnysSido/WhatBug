@@ -4,7 +4,7 @@
 
 WhatBug is a responsive, full-featured issue tracker written in ASP.Net Core 6.
 
-## Technologies
+# Technologies
 
 * Frontend with [ASP.Net Core 6 MVC](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-6.0&tabs=visual-studio)
 * Security using [ASP.Net Core 6 Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio)
@@ -17,6 +17,10 @@ WhatBug is a responsive, full-featured issue tracker written in ASP.Net Core 6.
 * Automated testing with [xUnit](https://xunit.net/), [Moq](https://github.com/Moq/moq4), [Shouldly](https://github.com/shouldly/shouldly)
 * Deployment with [Docker](https://www.docker.com/)
 * Automated builds with [Jenkins](https://www.jenkins.io/) or [GitHub Actions](https://github.com/features/actions)
+
+# Features
+
+For a list of application features please view the project page on my [portfolio](https://anys.dev/projects/whatbug).
 
 # Architecture
 
@@ -90,7 +94,7 @@ The architecture of WhatBug allows for a transition towards a dedicated Read Mod
 
 It is also possible to move to a completely separate read model using a different storage mechanism entirely by pushing events to an event bus and allowing those events to be read by other processes, however this is a much larger move and introduces concerns such as eventual consistenty where the data in the read model is not always guaranteed to be up to date, but should always eventually get there.
 
-### Building & Deploying
+# Building & Deploying
 The WebUI project contains a Dockerfile that will build, test and publish a deployable docker image.
 
 The project can be built and deployed using either Jenkins or GitHub Actions.
@@ -102,3 +106,6 @@ I have created a Docker image with a Jenkins build agent pre-installed with the 
 
 #### GitHub Actions
 The Github Action found in the .github directory will build the WhatBug docker image whenever code changes are pushed and will deploy it to an image repository defined in your github account.
+
+#### Docker
+WhatBug is available as a prebuilt docker image [here](https://hub.docker.com/repository/docker/anyssido/whatbug).
