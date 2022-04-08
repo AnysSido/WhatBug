@@ -22,6 +22,10 @@ WhatBug is a responsive, full-featured issue tracker written in ASP.Net Core 6.
 
 For a list of application features please view the project page on my [portfolio](https://anys.dev/projects/whatbug).
 
+# Live Demo
+
+Live demo available [here](https://whatbug.anys.dev). The demo contains the real tickets used for the creation of WhatBug (yes it was used to build itself).
+
 # Architecture
 
 WhatBug was designed using a combination of both the **Clean** and **Vertical Slice** architectures along with the **CQRS** pattern.
