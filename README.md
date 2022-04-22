@@ -6,7 +6,7 @@ WhatBug is a responsive, full-featured issue tracker written in ASP.Net Core 6.
 
 # Technologies
 
-* Frontend with [ASP.Net Core 6 MVC](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-6.0&tabs=visual-studio)
+* MVC with [ASP.Net Core 6 MVC](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-6.0&tabs=visual-studio)
 * Security using [ASP.Net Core 6 Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio)
 * Data access with [Entity Framework Core 6](https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-6.0/whatsnew)
 * CQRS with [MediatR](https://github.com/jbogard/MediatR)
