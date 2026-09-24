@@ -1,6 +1,8 @@
+const path = require('path');
+const { pathToFileURL } = require('url');
 const gulp = require('gulp'),
     rename = require('gulp-rename'),
-    sass = require('gulp-sass')(require('node-sass')),
+    sass = require('gulp-sass')(require('sass')),
     postcss = require('gulp-postcss'),
     cssnano = require('cssnano'),
     autoprefixer = require('autoprefixer'),
@@ -71,7 +73,15 @@ gulp.task('buildStyles', function () {
         cssnano()
     ];
     return gulp.src(paths.cssAssets)
-        .pipe(sass())
+        .pipe(sass({
+            importers: [{
+                findFileUrl(url) {
+                    return url.startsWith('~')
+                        ? pathToFileURL(path.resolve('node_modules', url.slice(1)))
+                        : null;
+                }
+            }]
+        }))
 
         .pipe(postcss(plugins))
 

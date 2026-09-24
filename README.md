@@ -98,6 +98,27 @@ The architecture of WhatBug allows for a transition towards a dedicated Read Mod
 
 It is also possible to move to a completely separate read model using a different storage mechanism entirely by pushing events to an event bus and allowing those events to be read by other processes, however this is a much larger move and introduces concerns such as eventual consistenty where the data in the read model is not always guaranteed to be up to date, but should always eventually get there.
 
+## Local container startup
+
+Install Docker Desktop with Linux containers, then run from the repository root:
+
+```sh
+docker compose up --build
+```
+
+Open http://localhost:8080. PostgreSQL uses host port 5432, which must be free.
+The application applies migrations for both databases at startup. On a fresh
+volume, PostgreSQL may still be initializing when the application first starts;
+if startup reports a database connection error, wait for PostgreSQL to be ready
+and run `docker compose up webui` again.
+
+The image builds frontend assets in a Node.js 24 stage using Yarn 1.22.22 and
+Dart Sass, then copies the generated files into the .NET 6 application image.
+Node is not required on the host for Docker builds and is not in the runtime image.
+For non-container builds, install Node.js 24 with Corepack available; the project
+uses `corepack yarn` and the committed lockfile. UI library upgrades and a .NET
+runtime upgrade are separate from this build-tool refresh.
+
 # Building & Deploying
 The WebUI project contains a Dockerfile that will build, test and publish a deployable docker image.
 
