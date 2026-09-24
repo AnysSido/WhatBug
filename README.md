@@ -2,13 +2,13 @@
 
 <br/>
 
-WhatBug is a responsive, full-featured issue tracker written in ASP.Net Core 6.
+WhatBug is a responsive, full-featured issue tracker originally written in ASP.NET Core 6, now updated to ASP.NET Core 10.
 
 # Technologies
 
-* MVC with [ASP.Net Core 6 MVC](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-6.0&tabs=visual-studio)
-* Security using [ASP.Net Core 6 Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio)
-* Data access with [Entity Framework Core 6](https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-6.0/whatsnew)
+* MVC with ~~[ASP.Net Core 6 MVC](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-6.0&tabs=visual-studio)~~ → [ASP.NET Core 10 MVC](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-10.0&tabs=visual-studio)
+* Security using ~~[ASP.Net Core 6 Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio)~~ → [ASP.NET Core 10 Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-10.0&tabs=visual-studio)
+* Data access with ~~[Entity Framework Core 6](https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-6.0/whatsnew)~~ → [Entity Framework Core 10](https://learn.microsoft.com/en-us/ef/core/what-is-new/ef-core-10.0/whatsnew)
 * CQRS with [MediatR](https://github.com/jbogard/MediatR)
 * Validation with [FluentValidation](https://fluentvalidation.net/)
 * Object-Object Mapping with [AutoMapper](https://automapper.org/)
