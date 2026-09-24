@@ -45,6 +45,7 @@ namespace WhatBug.Application.PermissionSchemes.Queries.GetRolesAndPermissions
                 Roles = permissionScheme.RolePermissions.GroupBy(p => p.RoleId).Select(grouping => new RoleDto
                 {
                     Id = grouping.Key,
+                    IsProjectAdministrator = grouping.First().Role.IsProjectAdministrator,
                     Name = grouping.First().Role.Name,
                     Description = grouping.First().Role.Description,
                     Permissions = grouping.Select(g => new PermissionDto
@@ -60,6 +61,7 @@ namespace WhatBug.Application.PermissionSchemes.Queries.GetRolesAndPermissions
             rolesWithoutPermissions.ForEach(r => dto.Roles.Add(new RoleDto
             {
                 Id = r.Id,
+                IsProjectAdministrator = r.IsProjectAdministrator,
                 Name = r.Name,
                 Description = r.Description,
                 Permissions = new List<PermissionDto>()

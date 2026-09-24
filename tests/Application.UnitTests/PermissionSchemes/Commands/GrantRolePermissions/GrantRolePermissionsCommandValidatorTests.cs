@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using System;
+using System.Threading.Tasks;
 using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions;
 using WhatBug.Application.UnitTests.Common;
@@ -135,6 +136,26 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.GrantRolePerm
 
             // Assert
             result.ShouldHaveExceptionFor(command => command.PermissionIds, typeof(ArgumentException));
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task Given_Role_OnlyProtectsProjectAdministrator(bool isProjectAdministrator)
+        {
+            using var context = new WhatBugContextFactory().CreateWithSeed(Guid.NewGuid().ToString());
+            var role = await context.Roles.FindAsync(1);
+            role.IsProjectAdministrator = isProjectAdministrator;
+            await context.SaveChangesAsync();
+            var validator = new GrantRolePermissionsCommandValidator(context);
+            var command = new GrantRolePermissionsCommand { SchemeId = 1, RoleId = 1, PermissionIds = new[] { 4, 5 } };
+
+            var result = await validator.TestValidateAsync(command);
+
+            if (isProjectAdministrator)
+                result.ShouldHaveExceptionFor(cmd => cmd.RoleId, typeof(ArgumentException));
+            else
+                result.ShouldNotHaveAnyValidationErrors();
         }
     }
 }

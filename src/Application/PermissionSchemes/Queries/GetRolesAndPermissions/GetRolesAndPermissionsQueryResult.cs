@@ -11,6 +11,7 @@ namespace WhatBug.Application.PermissionSchemes.Queries.GetRolesAndPermissions
 
     public class RoleDto
     {
+        public bool IsProjectAdministrator { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

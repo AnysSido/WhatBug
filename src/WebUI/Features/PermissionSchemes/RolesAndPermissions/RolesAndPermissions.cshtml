@@ -59,7 +59,14 @@
                         }
 
                         <td class="table__cell table__cell--icons">
+                            @if (!role.IsProjectAdministrator)
+                            {
                             <i class="table__cell-icon icon icon--scroll icon--info js__GrantRolePermissions" data-schemeid="@Model.SchemeId" , data-roleId="@role.Id"></i>
+                            }
+                            else
+                            {
+                                <span>Built-in administrator</span>
+                            }
                         </td>
                     </tr>
                 }

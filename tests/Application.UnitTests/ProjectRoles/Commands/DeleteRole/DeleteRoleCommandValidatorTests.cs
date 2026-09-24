@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using System;
+using System.Threading.Tasks;
 using WhatBug.Application.Common.Exceptions;
 using WhatBug.Application.ProjectRoles.Commands.DeleteRole;
 using WhatBug.Application.UnitTests.Common;
@@ -43,6 +44,26 @@ namespace WhatBug.Application.UnitTests.ProjectRoles.Commands.DeleteRole
 
             // Assert
             result.ShouldHaveExceptionFor(command => command.RoleId, typeof(RecordNotFoundException));
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task Given_Role_OnlyProtectsProjectAdministrator(bool isProjectAdministrator)
+        {
+            using var context = new WhatBugContextFactory().CreateWithSeed(Guid.NewGuid().ToString());
+            var role = await context.Roles.FindAsync(1);
+            role.IsProjectAdministrator = isProjectAdministrator;
+            await context.SaveChangesAsync();
+            var validator = new DeleteRoleCommandValidator(context);
+            var command = new DeleteRoleCommand { RoleId = 1 };
+
+            var result = await validator.TestValidateAsync(command);
+
+            if (isProjectAdministrator)
+                result.ShouldHaveExceptionFor(cmd => cmd.RoleId, typeof(ArgumentException));
+            else
+                result.ShouldNotHaveAnyValidationErrors();
         }
     }
 }

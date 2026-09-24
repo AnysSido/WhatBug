@@ -66,7 +66,7 @@ namespace WhatBug.Application.Projects.Queries.GetProjects
                     CreatorId = creator.Id,
                     CreatorEmail = creator.Email,
                     CreatorName = $"{creator.FirstName} {creator.Surname}",
-                    ProgressPercent = (int)Math.Round((double)completedIssueCount / totalIssueCount * 100)
+                    ProgressPercent = totalIssueCount == 0 ? 0 : (int)Math.Round((double)completedIssueCount / totalIssueCount * 100)
                 });
             }
 

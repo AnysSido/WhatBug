@@ -170,3 +170,21 @@ project, random localhost web port, and empty database volume. It checks failed
 and concurrent registrations, initial administrator permissions, sign-in,
 project creation, and ordinary-user access. It removes only its own containers
 and volume afterward.
+
+## Project defaults
+
+Fresh installations include Critical, Very High, High, Medium, Low, Very Low and
+Trivial in the default priority scheme, with Medium selected for new issues.
+The migration upgrades the unchanged placeholder priority setup only when no
+issues exist; customized priorities and scheme memberships remain unchanged.
+
+Creating a project also assigns its creator the built-in Project Administrator
+role. This role receives every project permission through the normal permission
+scheme mappings, including in newly created schemes. Its permissions and the role
+itself cannot be removed through role administration. Other project roles remain
+configurable. Existing projects without any members are assigned their creator
+when that user still exists; existing project memberships are preserved.
+
+The CompleteProjectDefaults migration is intentionally forward-only because
+automatically removing defaults and memberships after they have been used could
+destroy data. Restore a database backup if reverting this migration is necessary.

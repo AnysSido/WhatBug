@@ -63,6 +63,7 @@ namespace WhatBug.Application.Issues.Queries.GetCreateIssue
             var dto = new GetCreateIssueQueryResult
             {
                 Project = project,
+                PriorityId = project.Priorities.FirstOrDefault(p => p.IsDefault)?.Id ?? project.Priorities.FirstOrDefault()?.Id ?? 0,
                 Projects = projectSummaries,
                 IssueTypes = issueTypes,
                 AssignableUsers = projectUsers,

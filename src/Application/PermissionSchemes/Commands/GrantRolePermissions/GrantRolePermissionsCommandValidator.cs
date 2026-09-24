@@ -29,7 +29,8 @@ namespace WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions
             RuleFor(v => v.RoleId)
                 .Cascade(CascadeMode.Stop)
                 .GreaterThan(0).WithException(cmd => new ArgumentException(nameof(cmd.RoleId)))
-                .MustAsync(RoleExist).WithException(cmd => new RecordNotFoundException());
+                .MustAsync(RoleExist).WithException(cmd => new RecordNotFoundException())
+                .MustAsync(NotBeProjectAdministrator).WithException(cmd => new ArgumentException(nameof(cmd.RoleId)));
 
             RuleFor(v => v.PermissionIds)
                 .Cascade(CascadeMode.Stop)
@@ -58,6 +59,11 @@ namespace WhatBug.Application.PermissionSchemes.Commands.GrantRolePermissions
         public async Task<bool> RoleExist(GrantRolePermissionsCommand command, int roleId, CancellationToken cancellationToken)
         {
             return await _context.Roles.AnyAsync(r => r.Id == roleId);
+        }
+
+        public async Task<bool> NotBeProjectAdministrator(GrantRolePermissionsCommand command, int roleId, CancellationToken cancellationToken)
+        {
+            return !await _context.Roles.AnyAsync(r => r.Id == roleId && r.IsProjectAdministrator, cancellationToken);
         }
     }
 }

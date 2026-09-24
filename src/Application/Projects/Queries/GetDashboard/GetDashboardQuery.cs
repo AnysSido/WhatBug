@@ -78,9 +78,9 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
                 {
                     Id = i.Id,
                     Summary = i.Summary,
-                    AssigneeId = i.Assignee.Id,
-                    AssigneeEmail = i.Assignee.Email,
-                    AssigneeFullName = $"{i.Assignee.FirstName} {i.Assignee.Surname}",
+                    AssigneeId = i.AssigneeId ?? 0,
+                    AssigneeEmail = i.Assignee?.Email,
+                    AssigneeFullName = $"{i.Assignee?.FirstName} {i.Assignee?.Surname}",
                     Priority = i.Priority.Name,
                     Icon = i.Priority.Icon.WebName,
                     IconColor = i.Priority.Color.Name,
@@ -110,7 +110,7 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
                 TotalIssues = totalIssues,
                 RemainingIssues = totalIssues - issuesCompleted,
                 IssuesCompleted = issuesCompleted,
-                IssuesCompletedPercent = (int)Math.Round((double)issuesCompleted / totalIssues * 100),
+                IssuesCompletedPercent = totalIssues == 0 ? 0 : (int)Math.Round((double)issuesCompleted / totalIssues * 100),
                 IssueStatuses = issueStatuses.ToList(),
                 IssuePriorities = issuePriorities.ToList(),
                 IssueTypes = issueTypes.ToList(),
@@ -137,7 +137,8 @@ namespace WhatBug.Application.Projects.Queries.GetDashboard
             await _context.ProjectRoleUsers.Include(r => r.Role).Include(u => u.User).Where(p => p.ProjectId == projectId).ToListAsync();
             await _context.Issues.Include(i => i.Comments).ThenInclude(c => c.Author).Where(i => i.ProjectId == projectId).ToListAsync();
 
-            return await _context.Projects.Where(p => p.Id == projectId).FirstOrDefaultAsync();
+            return await _context.Projects.Include(p => p.RoleUsers).ThenInclude(r => r.User)
+                .Where(p => p.Id == projectId).FirstOrDefaultAsync();
         }
     }
 }

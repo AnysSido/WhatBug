@@ -8,6 +8,7 @@ namespace WhatBug.Application.Issues.Queries.GetCreateIssue
 {
     public class GetCreateIssueQueryResult
     {
+        public int PriorityId { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
         public ProjectDTO Project { get; set; }
@@ -28,6 +29,7 @@ namespace WhatBug.Application.Issues.Queries.GetCreateIssue
 
     public class PriorityDTO : IMapFrom<Priority>
     {
+        public bool IsDefault { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
         public string ColorName { get; set; }

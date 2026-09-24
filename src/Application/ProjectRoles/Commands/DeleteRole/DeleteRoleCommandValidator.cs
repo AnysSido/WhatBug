@@ -18,13 +18,20 @@ namespace WhatBug.Application.ProjectRoles.Commands.DeleteRole
             _context = context;
 
             RuleFor(v => v.RoleId)
+                .Cascade(CascadeMode.Stop)
                 .GreaterThan(0).WithException(cmd => new ArgumentException(nameof(cmd.RoleId)))
-                .MustAsync(Exist).WithException(cmd => new RecordNotFoundException());
+                .MustAsync(Exist).WithException(cmd => new RecordNotFoundException())
+                .MustAsync(NotBeProjectAdministrator).WithException(cmd => new ArgumentException(nameof(cmd.RoleId)));
         }
 
         public async Task<bool> Exist(DeleteRoleCommand command, int roleId, CancellationToken cancellationToken)
         {
             return await _context.Roles.AnyAsync(r => r.Id == roleId);
+        }
+
+        public async Task<bool> NotBeProjectAdministrator(DeleteRoleCommand command, int roleId, CancellationToken cancellationToken)
+        {
+            return !await _context.Roles.AnyAsync(r => r.Id == roleId && r.IsProjectAdministrator, cancellationToken);
         }
     }
 }
