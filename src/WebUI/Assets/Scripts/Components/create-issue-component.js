@@ -11,6 +11,14 @@ class CreateIssueComponent {
             this.createIssueComponent = $('<div id="CreateIssueComponent" class="modal fade"></div>')
             this.#BuildComponent(modal);
             this.createIssueComponent.modal('show');
+        }).fail((response) => {
+            Swal.fire({
+                icon: response.status === 403 ? 'info' : 'error',
+                title: 'Unable to create an issue',
+                text: response.status === 403
+                    ? 'You need access to a project before creating an issue. Create a project or ask an administrator to give you access to one.'
+                    : 'The issue form could not be loaded. Please try again.'
+            });
         });
     }
 
