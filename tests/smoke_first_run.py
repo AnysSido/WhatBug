@@ -42,8 +42,9 @@ class Client:
         assert token, path
         return html.unescape(token.group(1)), body
 
-    def register(self, name, token):
+    def register(self, name, token, first_name="Jamie", surname="Taylor"):
         return self.request("/register", {
+            "FirstName": first_name, "Surname": surname,
             "Username": name, "Email": name.replace(" ", "") + "@example.test",
             "Password": PASSWORD, "ConfirmPassword": PASSWORD, "AgreeToTerms": "true",
             "__RequestVerificationToken": token,
@@ -90,6 +91,13 @@ with tempfile.TemporaryDirectory(prefix=PROJECT) as temp:
         assert "Create an account" in login and "Admin (Read Only)" not in login
         token, body = client.form("/register")
         assert "Create your administrator account" in body
+        assert 'name="FirstName"' in body and 'name="Surname"' in body
+        for first_name, surname in [("", "Taylor"), ("Jamie", ""), ("   ", "Taylor"), ("Jamie", "   ")]:
+            status, body, url = client.register("missingname", token, first_name, surname)
+            assert status == 200 and "/register" in url
+            assert "field is required" in body
+            assert sql('SELECT COUNT(*) FROM "Users";') == "0"
+        print("PASS: registration requires first name and surname", flush=True)
         client.register("invalid user!", token)
         assert sql('SELECT COUNT(*) FROM "Users";') == "0"
         assert sql('SELECT COUNT(*) FROM "UserPermissions";') == "0"
@@ -163,6 +171,10 @@ with tempfile.TemporaryDirectory(prefix=PROJECT) as temp:
         sql('INSERT INTO "ProjectRoleUsers" ("ProjectId", "RoleId", "UserId") VALUES (' +
             project_id + ', ' + role_id + ', ' + admin_id + ');')
         token, issue_form = session.form("/createissuecomponent/getcomponent?projectId=" + project_id)
+        for field in ["AssigneeId", "ReporterId"]:
+            user_select = re.search(r'<select[^>]*id="' + field + r'"[^>]*>(.*?)</select>', issue_form, re.S).group(1)
+            assert re.search(r'<option[^>]*value="' + admin_id + r'"[^>]*>Jamie Taylor</option>', user_select), user_select
+        print("PASS: registered names appear in assignee and reporter options", flush=True)
         priority_select = re.search(r'<select[^>]*id="PriorityId"[^>]*>(.*?)</select>', issue_form, re.S).group(1)
         assert re.findall(r'value="\d+"[^>]*>([^<]+)</option>', priority_select) == [
             "Critical", "Very High", "High", "Medium", "Low", "Very Low", "Trivial"]

@@ -16,6 +16,8 @@ namespace WhatBug.Application.Accounts.Commands.Register
     [NoAuthorize]
     public record RegisterCommand : ICommand<Response>
     {
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
@@ -42,7 +44,7 @@ namespace WhatBug.Application.Accounts.Commands.Register
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
             await _context.Database.ExecuteSqlRawAsync("SELECT pg_advisory_xact_lock(1463964226)", cancellationToken);
             var isFirstUser = !await _context.Users.AnyAsync(cancellationToken);
-            var user = new User { Username = request.Username, Email = request.Email };
+            var user = new User { Username = request.Username, Email = request.Email, FirstName = request.FirstName.Trim(), Surname = request.Surname.Trim() };
             if (isFirstUser)
             {
                 user.UserPermissions = await _context.Permissions

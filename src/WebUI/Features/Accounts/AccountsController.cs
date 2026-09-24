@@ -43,7 +43,7 @@ namespace WhatBug.WebUI.Features.Accounts
             if (!ModelState.IsValid)
                 return View(vm);
             
-            await Mediator.Send(new RegisterCommand { Username = vm.Username, Email = vm.Email, Password = vm.Password });
+            await Mediator.Send(new RegisterCommand { Username = vm.Username, Email = vm.Email, Password = vm.Password, FirstName = vm.FirstName, Surname = vm.Surname });
 
             return RedirectToAction("Index", "Home");
         }

@@ -25,6 +25,22 @@
                 <form asp-route="Register" method="post">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="input-group mb-3">
+                        <input asp-for="FirstName" class="form-control" autocomplete="given-name" aria-required="true" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input asp-for="Surname" class="form-control" autocomplete="family-name" aria-required="true" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
                         <input asp-for="Username" class="form-control" autocomplete="username" aria-required="true" />
                         <div class="input-group-append">
                             <div class="input-group-text">

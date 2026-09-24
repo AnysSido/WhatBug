@@ -7,6 +7,14 @@ namespace WhatBug.WebUI.Features.Accounts.Register
         public bool IsFirstUser { get; set; }
 
         [Required]
+        [Display(Name = "First name", Prompt = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Surname", Prompt = "Surname")]
+        public string Surname { get; set; }
+
+        [Required]
         [Display(Name = "Username", Prompt = "Username")]
         public string Username { get; set; }
 
