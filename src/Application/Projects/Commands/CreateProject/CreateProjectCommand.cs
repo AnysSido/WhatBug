@@ -23,10 +23,12 @@ namespace WhatBug.Application.Projects.Commands.CreateProject
     public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Response<int>>
     {
         private readonly IWhatBugDbContext _context;
+        private readonly ICurrentUserService _currentUser;
 
-        public CreateProjectCommandHandler(IWhatBugDbContext context)
+        public CreateProjectCommandHandler(IWhatBugDbContext context, ICurrentUserService currentUser)
         {
             _context = context;
+            _currentUser = currentUser;
         }
 
         public async Task<Response<int>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
@@ -41,6 +43,8 @@ namespace WhatBug.Application.Projects.Commands.CreateProject
                 IssueCounter = 0
             };
 
+            var administratorRole = await _context.Roles.SingleAsync(r => r.IsProjectAdministrator, cancellationToken);
+            project.RoleUsers.Add(new ProjectRoleUser { UserId = _currentUser.Id, RoleId = administratorRole.Id });
             _context.Projects.Add(project);
             await _context.SaveChangesAsync(cancellationToken);
 

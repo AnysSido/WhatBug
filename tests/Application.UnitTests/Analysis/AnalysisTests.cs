@@ -12,7 +12,7 @@ namespace WhatBug.Application.UnitTests.Analysis
     public class AnalysisTests
     {
         [Fact]
-        public void IQuery_RequiresAuthorizeAttribute()
+        public void IQuery_RequiresAuthorizeAttributeOrNoAuthorizeAttribute()
         {
             var assembly = Assembly.GetAssembly(typeof(IQuery<>));
 
@@ -21,7 +21,9 @@ namespace WhatBug.Application.UnitTests.Analysis
                 i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQuery<>)))
                 .ToList();
 
-            var typesMissingAttribute = types.Any(t => t.GetCustomAttribute<AuthorizeAttribute>() == null);
+            var typesMissingAttribute = types.Any(t =>
+                t.GetCustomAttribute<AuthorizeAttribute>() == null
+                && t.GetCustomAttribute<NoAuthorizeAttribute>() == null);
 
             typesMissingAttribute.ShouldBeFalse();
         }

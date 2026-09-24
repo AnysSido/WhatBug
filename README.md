@@ -98,18 +98,14 @@ The architecture of WhatBug allows for a transition towards a dedicated Read Mod
 
 It is also possible to move to a completely separate read model using a different storage mechanism entirely by pushing events to an event bus and allowing those events to be read by other processes, however this is a much larger move and introduces concerns such as eventual consistenty where the data in the read model is not always guaranteed to be up to date, but should always eventually get there.
 
-# Building & Deploying
-The WebUI project contains a Dockerfile that will build, test and publish a deployable docker image.
+## Running locally
 
-The project can be built and deployed using either Jenkins or GitHub Actions.
+With Docker installed and running, run the following from the repository root:
 
-#### Jenkins
-A Jenkinsfile can be found in the .jenkins directory that can be pasted into Jenkins.
+```sh
+docker compose up --build
+```
 
-I have created a Docker image with a Jenkins build agent pre-installed with the Docker CLI that can be used to build the project. It can be found at [Jenkins Inbound Agent with Docker CLI](https://github.com/AnysSido/jenkins-inbound-docker-agent).
+Open [http://localhost:8080](http://localhost:8080) and choose **Create an account**. The first account becomes the administrator.
 
-#### GitHub Actions
-The Github Action found in the .github directory will build the WhatBug docker image whenever code changes are pushed and will deploy it to an image repository defined in your github account.
-
-#### Docker
-WhatBug is available as a prebuilt docker image [here](https://hub.docker.com/repository/docker/anyssido/whatbug).
+To build without starting the app, use `docker compose build`.

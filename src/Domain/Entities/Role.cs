@@ -9,6 +9,7 @@ namespace WhatBug.Domain.Entities
     public class Role
     {
         public int Id { get; set; }
+        public bool IsProjectAdministrator { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<ProjectRoleUser> ProjectUsers { get; set; }

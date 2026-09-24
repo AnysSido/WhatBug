@@ -136,17 +136,10 @@ namespace WhatBug.Persistence
             modelBuilder.Entity<Color>().HasData(Domain.Data.Colors.Seed());
             modelBuilder.Entity<IssueStatus>().HasData(Domain.Data.IssueStatuses.Seed());
 
-            modelBuilder.Entity<Priority>()
-                .HasData(new Priority
-                {
-                    Id = 1,
-                    Name = "Default",
-                    Description = "The default priority used by all issues without any other priority assigned.",
-                    IsDefault = true,
-                    Order = 0,
-                    IconId = Domain.Data.Icons.WaveSquare.Id,
-                    ColorId = Domain.Data.Colors.Black.Id
-                });
+            modelBuilder.Entity<Priority>().HasData(Domain.Data.Priorities.Seed());
+            modelBuilder.Entity<PrioritySchemePriority>().HasData(
+                System.Linq.Enumerable.Select(Domain.Data.Priorities.Seed(),
+                    p => new PrioritySchemePriority { PrioritySchemeId = 1, PriorityId = p.Id }));
 
             modelBuilder.Entity<PriorityScheme>()
                 .HasData(new PriorityScheme

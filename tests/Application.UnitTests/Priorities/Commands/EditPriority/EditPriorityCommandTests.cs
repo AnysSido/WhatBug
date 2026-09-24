@@ -71,7 +71,7 @@ namespace WhatBug.Application.UnitTests.Priorities.Commands.EditPriority
         }
 
         [Fact]
-        public async Task Handle_GivenDefaultPriority_DoesNotChangeName()
+        public async Task Handle_GivenDefaultPriority_UpdatesNameAndPreservesDefault()
         {
             // Arrange
             var sut = new EditPriorityCommandHandler(_context);
@@ -84,7 +84,11 @@ namespace WhatBug.Application.UnitTests.Priorities.Commands.EditPriority
             // Assert
             result.Succeeded.ShouldBe(true);
             priority.ShouldNotBeNull();
-            priority.Name.ShouldBe("Name2");
+            priority.Name.ShouldBe("NewName");
+            priority.IsDefault.ShouldBeTrue();
+            priority.Id.ShouldBe(2);
+            priority.ColorId.ShouldBe(1);
+            priority.IconId.ShouldBe(1);
             priority.Description.ShouldBe("NewDesc");
         }
     }

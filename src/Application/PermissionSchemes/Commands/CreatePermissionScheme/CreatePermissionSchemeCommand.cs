@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhatBug.Application.Common.Interfaces;
@@ -28,6 +30,9 @@ namespace WhatBug.Application.PermissionSchemes.Commands.CreatePermissionScheme
         public async Task<Response<int>> Handle(CreatePermissionSchemeCommand request, CancellationToken cancellationToken)
         {
             var permissionScheme = new PermissionScheme { Name = request.Name, Description = request.Description };
+            var administratorRole = await _context.Roles.SingleAsync(r => r.IsProjectAdministrator, cancellationToken);
+            permissionScheme.RolePermissions = Permissions.GetAll(PermissionType.Project)
+                .Select(p => new PermissionSchemeRolePermission { RoleId = administratorRole.Id, PermissionId = p.Id }).ToList();
             _context.PermissionSchemes.Add(permissionScheme);
 
             await _context.SaveChangesAsync(cancellationToken);

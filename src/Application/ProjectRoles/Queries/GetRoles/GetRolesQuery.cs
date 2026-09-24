@@ -41,6 +41,7 @@ namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
                 Roles = roles.Select(role => new RoleDto
                 {
                     Id = role.Id,
+                    IsProjectAdministrator = role.IsProjectAdministrator,
                     Name = role.Name,
                     Description = role.Description,
                     Projects = role.ProjectUsers.GroupBy(p => p.ProjectId).Select(grouping => new ProjectDto

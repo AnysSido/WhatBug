@@ -33,6 +33,7 @@ namespace WhatBug.WebUI.Errors
                     break;
             }
 
+            Response.StatusCode = int.Parse(code);
             return View("/Errors/Error.cshtml", new ErrorViewModel { Code = code, Title = title });
         }
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using WhatBug.Application.Accounts.Commands.Register;
+using WhatBug.Application.Accounts.Queries.IsFirstUser;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Settings;
 using WhatBug.WebUI.Common;
@@ -24,12 +25,12 @@ namespace WhatBug.WebUI.Features.Accounts
         }
 
         [HttpGet("register", Name = "Register")]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
                 return RedirectToAction(nameof(Login));
 
-            return View();
+            return View(new RegisterViewModel { IsFirstUser = (await Mediator.Send(new IsFirstUserQuery())).Result });
         }
 
         [HttpPost("register", Name = "Register")]
@@ -38,10 +39,11 @@ namespace WhatBug.WebUI.Features.Accounts
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
                 return RedirectToAction(nameof(Login));
 
+            vm.IsFirstUser = (await Mediator.Send(new IsFirstUserQuery())).Result;
             if (!ModelState.IsValid)
                 return View(vm);
             
-            await Mediator.Send(new RegisterCommand { Username = vm.Username, Email = vm.Email, Password = vm.Password });
+            await Mediator.Send(new RegisterCommand { Username = vm.Username, Email = vm.Email, Password = vm.Password, FirstName = vm.FirstName, Surname = vm.Surname });
 
             return RedirectToAction("Index", "Home");
         }

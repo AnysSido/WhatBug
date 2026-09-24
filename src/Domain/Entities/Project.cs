@@ -17,7 +17,7 @@ namespace WhatBug.Domain.Entities
         public int? PermissionSchemeId { get; set; }
         public PermissionScheme PermissionScheme { get; set; }
 
-        public List<ProjectRoleUser> RoleUsers { get; set; }
+        public List<ProjectRoleUser> RoleUsers { get; set; } = new List<ProjectRoleUser>();
         public List<Issue> Issues { get; set; } = new List<Issue>();
     }
 }

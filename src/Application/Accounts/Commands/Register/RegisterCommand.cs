@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading;
@@ -14,6 +16,8 @@ namespace WhatBug.Application.Accounts.Commands.Register
     [NoAuthorize]
     public record RegisterCommand : ICommand<Response>
     {
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
@@ -37,7 +41,17 @@ namespace WhatBug.Application.Accounts.Commands.Register
             if (!_whatbugSettings.Accounts.RegistrationEnabled)
                 throw new InvalidOperationException();
 
-            var user = new User { Username = request.Username, Email = request.Email };
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+            await _context.Database.ExecuteSqlRawAsync("SELECT pg_advisory_xact_lock(1463964226)", cancellationToken);
+            var isFirstUser = !await _context.Users.AnyAsync(cancellationToken);
+            var user = new User { Username = request.Username, Email = request.Email, FirstName = request.FirstName.Trim(), Surname = request.Surname.Trim() };
+            if (isFirstUser)
+            {
+                user.UserPermissions = await _context.Permissions
+                    .Where(p => p.Type == PermissionType.Global)
+                    .Select(p => new UserPermission { PermissionId = p.Id })
+                    .ToListAsync(cancellationToken);
+            }
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -46,12 +60,27 @@ namespace WhatBug.Application.Accounts.Commands.Register
 
             if (!success)
             {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
-
-                throw new InvalidOperationException(); // TODO: Improve handling
+                throw new InvalidOperationException("Unable to create the account.");
             }
 
+            try
+            {
+                await transaction.CommitAsync(cancellationToken);
+            }
+            catch (Exception commitException)
+            {
+                try
+                {
+                    if (!await _authenticationProvider.DeleteUserAsync(user.Id))
+                        throw new InvalidOperationException("Unable to remove the identity after registration failed.");
+                }
+                catch (Exception cleanupException)
+                {
+                    throw new AggregateException("Registration failed and identity cleanup failed.", commitException, cleanupException);
+                }
+
+                throw;
+            }
             return Response.Success();
         }
     }

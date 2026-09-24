@@ -14,6 +14,7 @@ namespace WhatBug.Application.ProjectRoles.Queries.GetRoles
     public class RoleDto : IMapFrom<Role>
     {
         public int Id { get; set; }
+        public bool IsProjectAdministrator { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public IList<ProjectDto> Projects { get; set; }

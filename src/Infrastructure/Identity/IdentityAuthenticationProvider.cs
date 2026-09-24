@@ -34,6 +34,15 @@ namespace WhatBug.Infrastructure.Identity
             return result.Succeeded;
         }
 
+        public async Task<bool> DeleteUserAsync(int userId)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(u => u.UserId == userId);
+            if (user == null)
+                return true;
+
+            return (await _userManager.DeleteAsync(user)).Succeeded;
+        }
+
         public async Task<bool> SignInDemoAsync()
         {
             if (!_settings.Accounts.DemoEnabled)

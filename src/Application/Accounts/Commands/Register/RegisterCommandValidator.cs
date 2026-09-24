@@ -7,6 +7,8 @@ namespace WhatBug.Application.Accounts.Commands.Register
         public RegisterCommandValidator()
         {
             // TODO: Add rules
+            RuleFor(v => v.FirstName).NotEmpty();
+            RuleFor(v => v.Surname).NotEmpty();
             RuleFor(v => v.Username).NotEmpty();
             RuleFor(v => v.Email).NotEmpty().EmailAddress();
             RuleFor(v => v.Password).NotEmpty();

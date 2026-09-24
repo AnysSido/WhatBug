@@ -54,7 +54,10 @@
                             <a class="table__cell-icon" asp-route="EditRole" asp-route-roleId="@role.Id">
                                 <i class="icon icon--edit"></i>
                             </a>                            
+                            @if (!role.IsProjectAdministrator)
+                            {
                             <i class="table__cell-icon icon icon--delete js__delete-role" data-roleid="@role.Id"></i>                            
+                            }
                         </td>
                     </tr>
                 }

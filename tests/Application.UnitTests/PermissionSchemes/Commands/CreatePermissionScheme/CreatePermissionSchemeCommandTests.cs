@@ -10,6 +10,12 @@ namespace WhatBug.Application.UnitTests.PermissionSchemes.Commands.CreatePermiss
 {
     public class CreatePermissionSchemeCommandTests : CommandTestBase
     {
+        public CreatePermissionSchemeCommandTests()
+        {
+            _context.Roles.Add(new WhatBug.Domain.Entities.Role { Id = 1, Name = "Project Administrator", IsProjectAdministrator = true });
+            _context.SaveChanges();
+        }
+
         [Fact]
         public async Task Handle_GivenValidRequest_CreatesPermissionScheme()
         {
