@@ -1,5 +1,4 @@
-﻿using AutoMapper.Internal;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
 using System;
@@ -20,7 +19,9 @@ namespace WhatBug.Application.UnitTests.Common
             this TestValidationResult<T> result, Expression<Func<T, TProperty>> memberAccessor, Type exceptionType)
             where T : class
         {
-            string propertyName = ValidatorOptions.Global.PropertyNameResolver(typeof(T), memberAccessor.GetMember(), memberAccessor);
+            var body = memberAccessor.Body is UnaryExpression conversion ? conversion.Operand : memberAccessor.Body;
+            var member = (body as MemberExpression)?.Member;
+            string propertyName = ValidatorOptions.Global.PropertyNameResolver(typeof(T), member, memberAccessor);
 
             var failures = result.Errors.Where(x =>
                  Regex.Replace(x.PropertyName, @"\[.*\]", string.Empty) == propertyName && x.CustomState.GetType() == exceptionType).ToArray();

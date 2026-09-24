@@ -30,7 +30,7 @@ namespace WhatBug.Infrastructure
 
             services.AddScoped<IAuthenticationProvider, IdentityAuthenticationProvider>();
 
-            services.AddAutoMapper(typeof(DependencyInjection));
+            services.AddAutoMapper(cfg => { }, typeof(DependencyInjection));
 
             return services;
         }

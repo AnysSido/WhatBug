@@ -17,7 +17,7 @@ namespace WhatBug.Application
             services.AddScoped<IAuthorizationManager, AuthorizationManager>();
             services.AddScoped<IUserInfoService, UserInfoService>();
 
-            services.AddAutoMapper(typeof(DependencyInjection));
+            services.AddAutoMapper(cfg => { }, typeof(DependencyInjection));
             services.AddMediatR(typeof(DependencyInjection));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));

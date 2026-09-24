@@ -45,7 +45,7 @@ namespace WebUI
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(cfg => { }, typeof(Startup));
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
