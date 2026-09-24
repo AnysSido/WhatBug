@@ -5,6 +5,7 @@ namespace WhatBug.Application.Common.Interfaces
     public interface IAuthenticationProvider
     {
         Task<bool> CreateUserAsync(string username, string password, string email, int id);
+        Task<bool> DeleteUserAsync(int userId);
         Task<string> GetUsername(int userId);
         Task<bool> SignInAsync(string username, string password, bool rememberMe);
         Task<bool> SignInDemoAsync();

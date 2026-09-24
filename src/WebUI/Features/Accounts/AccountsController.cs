@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using WhatBug.Application.Accounts.Commands.Register;
+using WhatBug.Application.Accounts.Queries.IsFirstUser;
 using WhatBug.Application.Common.Interfaces;
 using WhatBug.Application.Common.Settings;
 using WhatBug.WebUI.Common;
@@ -15,13 +15,11 @@ namespace WhatBug.WebUI.Features.Accounts
     [AllowAnonymous]
     public class AccountsController : BaseController
     {
-        private readonly IWhatBugDbContext _context;
         private readonly IAuthenticationProvider _authProvider;
         private readonly WhatBugSettings _whatBugSettings;
 
-        public AccountsController(IAuthenticationProvider authProvider, IOptions<WhatBugSettings> whatbugSettings, IWhatBugDbContext context)
+        public AccountsController(IAuthenticationProvider authProvider, IOptions<WhatBugSettings> whatbugSettings)
         {
-            _context = context;
             _authProvider = authProvider;
             _whatBugSettings = whatbugSettings.Value;
         }
@@ -32,7 +30,7 @@ namespace WhatBug.WebUI.Features.Accounts
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
                 return RedirectToAction(nameof(Login));
 
-            return View(new RegisterViewModel { IsFirstUser = !await _context.Users.AnyAsync() });
+            return View(new RegisterViewModel { IsFirstUser = (await Mediator.Send(new IsFirstUserQuery())).Result });
         }
 
         [HttpPost("register", Name = "Register")]
@@ -41,7 +39,7 @@ namespace WhatBug.WebUI.Features.Accounts
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
                 return RedirectToAction(nameof(Login));
 
-            vm.IsFirstUser = !await _context.Users.AnyAsync();
+            vm.IsFirstUser = (await Mediator.Send(new IsFirstUserQuery())).Result;
             if (!ModelState.IsValid)
                 return View(vm);
             

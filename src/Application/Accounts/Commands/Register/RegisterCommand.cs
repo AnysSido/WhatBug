@@ -61,7 +61,24 @@ namespace WhatBug.Application.Accounts.Commands.Register
                 throw new InvalidOperationException("Unable to create the account.");
             }
 
-            await transaction.CommitAsync(cancellationToken);
+            try
+            {
+                await transaction.CommitAsync(cancellationToken);
+            }
+            catch (Exception commitException)
+            {
+                try
+                {
+                    if (!await _authenticationProvider.DeleteUserAsync(user.Id))
+                        throw new InvalidOperationException("Unable to remove the identity after registration failed.");
+                }
+                catch (Exception cleanupException)
+                {
+                    throw new AggregateException("Registration failed and identity cleanup failed.", commitException, cleanupException);
+                }
+
+                throw;
+            }
             return Response.Success();
         }
     }

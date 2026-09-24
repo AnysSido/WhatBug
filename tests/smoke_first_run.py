@@ -70,7 +70,7 @@ with tempfile.TemporaryDirectory(prefix=PROJECT) as temp:
     compose = ["docker", "compose", "-p", PROJECT, "-f", str(ROOT / "docker-compose.yml"), "-f", str(override)]
 
     def sql(query, database="WhatBug"):
-        return run(*compose, "exec", "-T", "postgres", "psql", "-U", "postgres", "-d", database, "-At", data=query).strip()
+        return run(*compose, "exec", "-T", "postgres", "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres", "-d", database, "-At", data=query).strip()
 
     try:
         run(*compose, "up", "-d", "--no-build", "--wait", "--wait-timeout", "120")
@@ -95,6 +95,19 @@ with tempfile.TemporaryDirectory(prefix=PROJECT) as temp:
         assert sql('SELECT COUNT(*) FROM "UserPermissions";') == "0"
         print("PASS: failed identity creation leaves initial-admin setup available", flush=True)
 
+        sql("""CREATE FUNCTION reject_registration_commit() RETURNS trigger LANGUAGE plpgsql AS $$
+        BEGIN RAISE EXCEPTION 'injected commit failure'; END; $$;
+        CREATE CONSTRAINT TRIGGER reject_registration_commit AFTER INSERT ON "Users"
+        DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION reject_registration_commit();""")
+        token, _ = client.form("/register")
+        status, _, _ = client.register("firstcandidate", token)
+        assert status == 500
+        assert sql('SELECT COUNT(*) FROM "Users";') == "0"
+        assert sql('SELECT COUNT(*) FROM "UserPermissions";') == "0"
+        assert sql('SELECT COUNT(*) FROM "AspNetUsers";', "WhatBugIdentity") == "0"
+        sql('DROP TRIGGER reject_registration_commit ON "Users"; DROP FUNCTION reject_registration_commit();')
+        print("PASS: application commit failure removes the newly created identity", flush=True)
+
         barrier = threading.Barrier(2)
 
         def register(name):
@@ -118,6 +131,13 @@ with tempfile.TemporaryDirectory(prefix=PROJECT) as temp:
         ordinary = next(x["name"] for x in counts if not x["permissions"])
         assert "Create your administrator account" not in Client(base).form("/register")[1]
         print("PASS: simultaneous registrations produce exactly one administrator", flush=True)
+
+        duplicate = Client(base)
+        token, _ = duplicate.form("/register")
+        assert duplicate.register(admin, token)[0] == 500
+        assert sql('SELECT COUNT(*) FROM "AspNetUsers";', "WhatBugIdentity") == "2"
+        assert sql('SELECT COUNT(*) FROM "Users";') == "2"
+        print("PASS: rejected duplicate registration preserves existing accounts", flush=True)
 
         session = Client(base)
         token, _ = session.form("/register")
