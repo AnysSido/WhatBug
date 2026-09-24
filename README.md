@@ -98,93 +98,14 @@ The architecture of WhatBug allows for a transition towards a dedicated Read Mod
 
 It is also possible to move to a completely separate read model using a different storage mechanism entirely by pushing events to an event bus and allowing those events to be read by other processes, however this is a much larger move and introduces concerns such as eventual consistenty where the data in the read model is not always guaranteed to be up to date, but should always eventually get there.
 
-## Local container startup
+## Running locally
 
-Install Docker Desktop with Linux containers, then run from the repository root:
+With Docker installed and running, run the following from the repository root:
 
 ```sh
 docker compose up --build
 ```
 
-Open http://localhost:8080. PostgreSQL uses host port 5432, which must be free.
-Compose waits for PostgreSQL readiness, then the application applies migrations
-for both databases. No database backup or existing account is required.
+Open [http://localhost:8080](http://localhost:8080) and choose **Create an account**. The first account becomes the administrator.
 
-Registration is enabled and demo mode is disabled in the standard Compose setup.
-Choose **Create an account**. The first successful registration receives all
-global administrative permissions; later accounts receive no administrative
-permissions automatically. Sign in with your new account to configure projects
-and permissions. Concurrent registrations cannot both become the initial admin.
-These account defaults also apply when running in Development mode.
-
-The standard Compose ports bind to localhost. Complete initial registration
-before exposing a fresh installation publicly: the first registrant becomes
-the administrator. Existing installations with users are not promoted or reset.
-
-For a hosted portfolio demo, explicitly set these environment variables:
-
-```text
-WhatBug__Accounts__RegistrationEnabled=false
-WhatBug__Accounts__DemoEnabled=true
-WhatBug__Accounts__DemoUsername=your-existing-demo-account
-```
-
-The demo account must already exist and have the desired permissions. Direct
-Production runs keep registration disabled unless explicitly enabled.
-If port 5432 is already occupied, use the optional override:
-
-```sh
-docker compose -f docker-compose.yml -f docker-compose.local-test.yml up --build
-```
-
-This exposes PostgreSQL on localhost:5433 instead.
-
-The image builds frontend assets in a Node.js 24 stage using Yarn 1.22.22 and
-Dart Sass, then copies the generated files into the .NET 6 application image.
-Node is not required on the host for Docker builds and is not in the runtime image.
-For non-container builds, install Node.js 24 with Corepack available; the project
-uses `corepack yarn` and the committed lockfile. UI library upgrades and a .NET
-runtime upgrade are separate from this build-tool refresh.
-
-# Building & Deploying
-The WebUI project contains a Dockerfile that will build, test and publish a deployable docker image.
-
-The project can be built and deployed using either Jenkins or GitHub Actions.
-
-#### Jenkins
-A Jenkinsfile can be found in the .jenkins directory that can be pasted into Jenkins.
-
-I have created a Docker image with a Jenkins build agent pre-installed with the Docker CLI that can be used to build the project. It can be found at [Jenkins Inbound Agent with Docker CLI](https://github.com/AnysSido/jenkins-inbound-docker-agent).
-
-#### GitHub Actions
-The Github Action found in the .github directory will build the WhatBug docker image whenever code changes are pushed and will deploy it to an image repository defined in your github account.
-
-#### Docker
-WhatBug is available as a prebuilt docker image [here](https://hub.docker.com/repository/docker/anyssido/whatbug).
-
-## Fresh-install regression check
-
-After building the image with `docker compose build webui`, run
-`python tests/smoke_first_run.py` with Python 3. The test creates its own Compose
-project, random localhost web port, and empty database volume. It checks failed
-and concurrent registrations, initial administrator permissions, sign-in,
-project creation, and ordinary-user access. It removes only its own containers
-and volume afterward.
-
-## Project defaults
-
-Fresh installations include Critical, Very High, High, Medium, Low, Very Low and
-Trivial in the default priority scheme, with Medium selected for new issues.
-The migration upgrades the unchanged placeholder priority setup only when no
-issues exist; customized priorities and scheme memberships remain unchanged.
-
-Creating a project also assigns its creator the built-in Project Administrator
-role. This role receives every project permission through the normal permission
-scheme mappings, including in newly created schemes. Its permissions and the role
-itself cannot be removed through role administration. Other project roles remain
-configurable. Existing projects without any members are assigned their creator
-when that user still exists; existing project memberships are preserved.
-
-The CompleteProjectDefaults migration is intentionally forward-only because
-automatically removing defaults and memberships after they have been used could
-destroy data. Restore a database backup if reverting this migration is necessary.
+To build without starting the app, use `docker compose build`.
