@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using WhatBug.Application.Accounts.Commands.Register;
@@ -14,22 +15,24 @@ namespace WhatBug.WebUI.Features.Accounts
     [AllowAnonymous]
     public class AccountsController : BaseController
     {
+        private readonly IWhatBugDbContext _context;
         private readonly IAuthenticationProvider _authProvider;
         private readonly WhatBugSettings _whatBugSettings;
 
-        public AccountsController(IAuthenticationProvider authProvider, IOptions<WhatBugSettings> whatbugSettings)
+        public AccountsController(IAuthenticationProvider authProvider, IOptions<WhatBugSettings> whatbugSettings, IWhatBugDbContext context)
         {
+            _context = context;
             _authProvider = authProvider;
             _whatBugSettings = whatbugSettings.Value;
         }
 
         [HttpGet("register", Name = "Register")]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
                 return RedirectToAction(nameof(Login));
 
-            return View();
+            return View(new RegisterViewModel { IsFirstUser = !await _context.Users.AnyAsync() });
         }
 
         [HttpPost("register", Name = "Register")]
@@ -38,6 +41,7 @@ namespace WhatBug.WebUI.Features.Accounts
             if (!_whatBugSettings.Accounts.RegistrationEnabled)
                 return RedirectToAction(nameof(Login));
 
+            vm.IsFirstUser = !await _context.Users.AnyAsync();
             if (!ModelState.IsValid)
                 return View(vm);
             

@@ -4,6 +4,8 @@ namespace WhatBug.WebUI.Features.Accounts.Register
 {
     public class RegisterViewModel
     {
+        public bool IsFirstUser { get; set; }
+
         [Required]
         [Display(Name = "Username", Prompt = "Username")]
         public string Username { get; set; }

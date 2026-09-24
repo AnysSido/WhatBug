@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading;
@@ -37,7 +39,17 @@ namespace WhatBug.Application.Accounts.Commands.Register
             if (!_whatbugSettings.Accounts.RegistrationEnabled)
                 throw new InvalidOperationException();
 
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+            await _context.Database.ExecuteSqlRawAsync("SELECT pg_advisory_xact_lock(1463964226)", cancellationToken);
+            var isFirstUser = !await _context.Users.AnyAsync(cancellationToken);
             var user = new User { Username = request.Username, Email = request.Email };
+            if (isFirstUser)
+            {
+                user.UserPermissions = await _context.Permissions
+                    .Where(p => p.Type == PermissionType.Global)
+                    .Select(p => new UserPermission { PermissionId = p.Id })
+                    .ToListAsync(cancellationToken);
+            }
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -46,12 +58,10 @@ namespace WhatBug.Application.Accounts.Commands.Register
 
             if (!success)
             {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
-
-                throw new InvalidOperationException(); // TODO: Improve handling
+                throw new InvalidOperationException("Unable to create the account.");
             }
 
+            await transaction.CommitAsync(cancellationToken);
             return Response.Success();
         }
     }

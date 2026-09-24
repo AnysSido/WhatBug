@@ -107,10 +107,37 @@ docker compose up --build
 ```
 
 Open http://localhost:8080. PostgreSQL uses host port 5432, which must be free.
-The application applies migrations for both databases at startup. On a fresh
-volume, PostgreSQL may still be initializing when the application first starts;
-if startup reports a database connection error, wait for PostgreSQL to be ready
-and run `docker compose up webui` again.
+Compose waits for PostgreSQL readiness, then the application applies migrations
+for both databases. No database backup or existing account is required.
+
+Registration is enabled and demo mode is disabled in the standard Compose setup.
+Choose **Create an account**. The first successful registration receives all
+global administrative permissions; later accounts receive no administrative
+permissions automatically. Sign in with your new account to configure projects
+and permissions. Concurrent registrations cannot both become the initial admin.
+These account defaults also apply when running in Development mode.
+
+The standard Compose ports bind to localhost. Complete initial registration
+before exposing a fresh installation publicly: the first registrant becomes
+the administrator. Existing installations with users are not promoted or reset.
+
+For a hosted portfolio demo, explicitly set these environment variables:
+
+```text
+WhatBug__Accounts__RegistrationEnabled=false
+WhatBug__Accounts__DemoEnabled=true
+WhatBug__Accounts__DemoUsername=your-existing-demo-account
+```
+
+The demo account must already exist and have the desired permissions. Direct
+Production runs keep registration disabled unless explicitly enabled.
+If port 5432 is already occupied, use the optional override:
+
+```sh
+docker compose -f docker-compose.yml -f docker-compose.local-test.yml up --build
+```
+
+This exposes PostgreSQL on localhost:5433 instead.
 
 The image builds frontend assets in a Node.js 24 stage using Yarn 1.22.22 and
 Dart Sass, then copies the generated files into the .NET 6 application image.
@@ -134,3 +161,12 @@ The Github Action found in the .github directory will build the WhatBug docker i
 
 #### Docker
 WhatBug is available as a prebuilt docker image [here](https://hub.docker.com/repository/docker/anyssido/whatbug).
+
+## Fresh-install regression check
+
+After building the image with `docker compose build webui`, run
+`python tests/smoke_first_run.py` with Python 3. The test creates its own Compose
+project, random localhost web port, and empty database volume. It checks failed
+and concurrent registrations, initial administrator permissions, sign-in,
+project creation, and ordinary-user access. It removes only its own containers
+and volume afterward.

@@ -33,8 +33,8 @@ namespace WhatBug.Infrastructure.Identity
                 identity.AddClaim(new Claim(UserInfoClaim.Id.ToString(), userInfo.Id.ToString()));
                 identity.AddClaim(new Claim(UserInfoClaim.Username.ToString(), userInfo.Username));
                 identity.AddClaim(new Claim(UserInfoClaim.Email.ToString(), userInfo.Email));
-                identity.AddClaim(new Claim(UserInfoClaim.FirstName.ToString(), userInfo.FirstName));
-                identity.AddClaim(new Claim(UserInfoClaim.Surname.ToString(), userInfo.Surname));
+                identity.AddClaim(new Claim(UserInfoClaim.FirstName.ToString(), userInfo.FirstName ?? string.Empty));
+                identity.AddClaim(new Claim(UserInfoClaim.Surname.ToString(), userInfo.Surname ?? string.Empty));
             }
 
             if (!_settings.Accounts.DemoEnabled || user.WriteAccess)
